@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom:defaultLayout xmlns:jsp="http://java.sun.com/JSP/Page"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:spring="http://www.springframework.org/tags"
+    xmlns:custom="urn:jsptagdir:/WEB-INF/tags">
+<div id="main" 
+    version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" />
+    <jsp:directive.page session="false" />
+    <jsp:output omit-xml-declaration="yes" />
+    <spring:message code="game_help" var="game_help_var" />
+    <spring:message code="server_info" var="server_info_var" />
+    <spring:message code="information" var="information_var" />
+    <spring:message code="statistics" var="statistics_var" />
+    <H1>${information}</H1>
+    <p>
+        <spring:url value="/site/information/gameHelp" var="game_help_url" />
+        <a href="${game_help_url}">${game_help_var}</a>
+    </p>
+    <p>
+        <spring:url value="/site/information/serverInfo" var="server_info_url" />
+        <a href="${server_info_url}">${server_info_var}</a>
+    </p>
+    <p>
+        <spring:url value="/site/information/statistics" var="statistics_url" />
+        <a href="${statistics_url}">${statistics_var}</a>
+    </p>
+</div>
+</custom:defaultLayout>

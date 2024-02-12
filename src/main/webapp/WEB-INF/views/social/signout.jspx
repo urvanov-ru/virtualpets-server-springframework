@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<div id="main" xmlns:jsp="http://java.sun.com/JSP/Page"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:output doctype-root-element="HTML"
+        doctype-system="about:legacy-compat" />
+    <jsp:directive.page contentType="text/html;charset=UTF-8" />
+    <jsp:directive.page session="false" />
+    <jsp:output omit-xml-declaration="yes" />
+    <jsp:directive.page pageEncoding="UTF-8" />
+    <H1>Sign out page</H1>
+</div>

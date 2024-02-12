@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom:defaultLayout xmlns:jsp="http://java.sun.com/JSP/Page"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:spring="http://www.springframework.org/tags"
+    xmlns:custom="urn:jsptagdir:/WEB-INF/tags">
+<div id="main" 
+    version="2.0">
+<jsp:directive.page contentType="text/html;charset=UTF-8" />
+<jsp:directive.page session="false" />
+<jsp:output omit-xml-declaration="yes" />
+
+    <spring:message code="welcome_message1" var="welcome_message1_var" />
+    ${welcome_message1_var}
+    
+    <spring:message code="welcome_message2" var="welcome_message2_var" />
+    ${welcome_message2_var}
+    <spring:url value="/resources/images/screenshot001.jpg" var="screenshot001_url" />
+    <img alt="screenshot001" src="${screenshot001_url}" width="457" height="351" />
+    
+    <spring:message code="welcome_message3" var="welcome_message3_var" />
+    ${welcome_message3_var}
+    <spring:url value="/resources/images/screenshot002.jpg" var="screenshot002_url" />
+    <img alt="screenshot002" src="${screenshot002_url}" width="457" height="351" />
+    
+    <spring:message code="welcome_message4" var="welcome_message4_var" />
+    ${welcome_message4_var}
+    <spring:url value="/resources/images/screenshot003.jpg" var="screenshot003_url" />
+    <img alt="screenshot003" src="${screenshot003_url}" width="457" height="351" />
+
+</div>
+</custom:defaultLayout>

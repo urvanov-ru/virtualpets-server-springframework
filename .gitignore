@@ -1,0 +1,14 @@
+/data
+.project
+dependency-reduced-pom.xml
+*.log
+.settings
+.factorypath
+*.log.*
+*.idea
+/target
+/.classpath
+/Users
+/.springBeans
+/.factoryPath
+/bin

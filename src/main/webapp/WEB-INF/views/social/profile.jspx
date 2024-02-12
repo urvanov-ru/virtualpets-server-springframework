@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<div id="main" xmlns:jsp="http://java.sun.com/JSP/Page"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8" />
+    <jsp:directive.page session="false" />
+    <jsp:output omit-xml-declaration="yes" />
+
+    <ul>
+        <spring:url value="/site/signout" var="signout_url" />
+        <li><a href="${signout_url}">Sign Out</a></li>
+    </ul>
+    <spring:message code="name" var="name_label_var" />
+    <spring:message code="email" var="email_label_var" />
+    <spring:message code="birthdate" var="birthdate_label_var" />
+    <table>
+        <tr>
+            <td>${name_label_var}:</td>
+            <td>${userProfile.name}</td>
+        </tr>
+        <tr>
+            <td>${email_label_var}:</td>
+            <td>${userProfile.email}</td>
+        </tr>
+        <tr>
+            <td>${birthdate_label_var}:</td>
+            <td>${userProfile.birthdate}</td>
+        </tr>
+    </table>
+</div>

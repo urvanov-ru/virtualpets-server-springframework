@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:task="http://www.springframework.org/schema/task"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop.xsd
+    http://www.springframework.org/schema/task
+    http://www.springframework.org/schema/task/spring-task.xsd">
+
+    <!-- Root Context: defines shared resources visible to all other web 
+        components -->
+
+    <context:property-placeholder location="classpath:application.properties"
+        ignore-unresolvable="true" />
+
+    <import resource="servlet-jee.xml" />
+    <import resource="servlet-tx.xml" />
+    <!-- <import resource="spring-security.xml" /> -->
+
+
+    <bean id="version" class="java.lang.String">
+        <constructor-arg value="0.21" />
+    </bean>
+
+
+
+
+
+
+    <bean id="conversionService"
+        class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean
+                    class="ru.urvanov.virtualpets.server.convserv.PetTypeServerToSharedConverter" />
+                <bean
+                    class="ru.urvanov.virtualpets.server.convserv.PetTypeSharedToServerConverter" />
+                <bean
+                    class="ru.urvanov.virtualpets.server.convserv.RoleServerToSharedConverter" />
+                <bean
+                    class="ru.urvanov.virtualpets.server.convserv.RoleSharedToServerConverter" />
+                <bean
+                    class="ru.urvanov.virtualpets.server.convserv.FoodTypeServerToSharedConverter" />
+                <bean
+                    class="ru.urvanov.virtualpets.server.convserv.FoodTypeSharedToServerConverter" />
+                <bean
+                    class="ru.urvanov.virtualpets.server.convserv.ClothTypeServerToSharedConverter" />
+                <bean
+                    class="ru.urvanov.virtualpets.server.convserv.ClothTypeSharedToServerConverter" />
+                <bean
+                    class="ru.urvanov.virtualpets.server.convserv.SexServerToSharedConverter" />
+                <bean
+                    class="ru.urvanov.virtualpets.server.convserv.SexSharedToServerConverter" />
+                <bean
+                    class="ru.urvanov.virtualpets.server.convserv.BuildingMaterialTypeServerToSharedConverter" />
+                <bean
+                    class="ru.urvanov.virtualpets.server.convserv.BuildingMaterialTypeSharedToServerConverter" />
+                <bean
+                    class="ru.urvanov.virtualpets.server.convserv.DrinkTypeServerToSharedConverter" />
+                <bean
+                    class="ru.urvanov.virtualpets.server.convserv.DrinkTypeSharedToServerConverter" />
+                <bean
+                    class="ru.urvanov.virtualpets.server.convserv.JournalEntryTypeSharedToServerConverter" />
+                <bean
+                    class="ru.urvanov.virtualpets.server.convserv.JournalEntryTypeServerToSharedConverter" />
+                <bean
+                    class="ru.urvanov.virtualpets.server.convserv.AchievementCodeServerToSharedConverter" />
+                <bean
+                    class="ru.urvanov.virtualpets.server.convserv.AchievementCodeSharedToServerConverter" />
+            </set>
+        </property>
+    </bean>
+
+    <context:property-placeholder location="classpath:mail.properties"
+        ignore-unresolvable="true" />
+
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.auth">true</prop>
+            </props>
+        </property>
+        <property name="host" value="${mail.host}" />
+        <property name="port" value="${mail.port}" />
+        <property name="username" value="${mail.username}" />
+        <property name="password" value="${mail.password}" />
+    </bean>
+    <!-- this is a template message that we can pre-load with default state -->
+    <bean id="templateMessage" class="org.springframework.mail.SimpleMailMessage">
+        <property name="from" value="${mail.from}" />
+        <property name="subject" value="Recover password" />
+    </bean>
+
+    <context:component-scan
+            base-package="ru.urvanov.virtualpets.server.dao,
+                          ru.urvanov.virtualpets.server.service
+            " />
+
+    <task:scheduler id="sheduler" pool-size="1" />
+
+    <task:scheduled-tasks scheduler="sheduler">
+        <task:scheduled ref="petService" method="updatePetsTask"
+            fixed-delay="3600000" />
+    </task:scheduled-tasks>
+
+</beans>

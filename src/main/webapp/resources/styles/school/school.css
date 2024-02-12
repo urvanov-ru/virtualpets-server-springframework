@@ -1,0 +1,142 @@
+* {
+	color: #000082;
+	font-style : italic;
+}
+
+body {
+	background-image : url('images/background.jpg');
+}
+
+a:link {
+	color: #4f4fff;
+	text-decoration: underline;
+	font-family: serif;
+}
+
+a:hover {
+	color: #0000ff;
+	font-family: serif;
+	text-decoration: underline;
+}
+
+a:active {
+	color: #ffffff;
+	text-decoration: underline;
+	font-family: serif;
+}
+
+a:visited {
+	color: #010191;
+	font-family: serif;
+	text-decoration: underline;
+}
+
+.header {
+	margin-bottom: 1em;
+	margin-left: auto;
+	margin-right: auto;
+	width: 500px;
+}
+
+.menu {
+	background: #afafff;
+	position: relative;
+	float: left;
+	left: 0px;
+	width: 220px;
+	margin-right: 15px;
+	padding: 1px 5px 1px 5px;
+}
+
+.menu ul {
+	list-style: none;
+	background-color: #afafff;
+}
+
+.menu a {
+	background: #afafff;
+	display: block;
+	color: #FFFFFF;
+	text-decoration: none;
+	padding: 15px;
+	margin: 0px;
+}
+
+.menu a:hover {
+	color: #cfcfff;
+	background-color: #0000ff;
+}
+
+.body {
+	overflow: hidden;
+	display: box;
+	font-size: 1em;
+	font-family: "Times New Roman";
+	text-indent: 20px;
+}
+
+
+}
+.footer {
+	margin-top: 15px;
+	border-top: 1px dashed #999999;
+}
+
+table {
+	margin: 2px 0 0 0;
+	border: 1px solid #772c6d;
+	border-collapse: collapse;
+	width: 100%
+}
+
+table td,table th {
+	padding: 2px;
+	border: 2px solid #24246d;
+}
+
+table th {
+	font-size: 0.9em;
+	text-align: left;
+	font-weight: bold;
+	color: #ffc5f7;
+	background: #8181ff;
+}
+
+table thead {
+	font-weight: bold;
+	font-style: italic;
+	background-color: #8181ff;
+}
+
+input,select {
+	border-color: #8181ff #c0c0ff #c0c0ff #8181ff;
+	border-style: solid;
+}
+
+input:hover,select:hover {
+	border-style: solid;
+}
+
+input[type=text] {
+	border-color: #8181ff #c0c0ff #c0c0ff #8181ff;
+	border-style: solid;
+}
+
+input[type=button],input[type=submit],select option {
+	border-style: solid;
+	border-color: #c0c0ff #8181ff #8181ff #c0c0ff;
+	border-width: 3px;
+}
+
+input[type=button]:hover,input[type=submit]:hover,select option:hover {
+	border-style: solid;
+	border-color: #c0c0ff #8181ff #8181ff #c0c0ff;
+	border-width: 3px;
+}
+
+input[type=button]:active,input[type=submit]:active,select option:active
+	{
+	border-style: solid;
+	border-color: #8181ff #c0c0ff #c0c0ff #8181ff;
+	border-width: 3px;
+}

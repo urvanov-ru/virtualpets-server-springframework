@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom:defaultLayout xmlns:jsp="http://java.sun.com/JSP/Page"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:spring="http://www.springframework.org/tags"
+    xmlns:custom="urn:jsptagdir:/WEB-INF/tags">
+<div id="main" 
+    version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" />
+    <jsp:directive.page session="false" />
+    <jsp:output omit-xml-declaration="yes" />
+    <spring:message code="server_info" var="server_info" />
+
+    <H1>${server_info}</H1>
+        <p>
+        <table>
+            <caption>${server_info}</caption>
+            <c:forEach var="info" items="${infos}">
+                <tr>
+                    <td>${info.key}</td>
+                    <td>${info.value}</td>
+                </tr>
+            </c:forEach>
+        </table>
+        </p>
+</div>
+</custom:defaultLayout>

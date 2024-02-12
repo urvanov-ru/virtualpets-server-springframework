@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom:defaultLayout xmlns:jsp="http://java.sun.com/JSP/Page"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:spring="http://www.springframework.org/tags"
+    xmlns:custom="urn:jsptagdir:/WEB-INF/tags">
+<div id="main" 
+    version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" />
+    <jsp:directive.page session="false" />
+    <jsp:output omit-xml-declaration="yes" />
+    <spring:message code="information_brief" var="information_brief_var" />
+    <spring:message code="food_list" var="food_list_var" />
+    <spring:message code="carrot" var="carrot_var" />
+    <spring:message code="dry_food" var="dry_food_var" />
+    <spring:message code="fish" var="fish_var" />
+    <spring:message code="ice_cream" var="ice_cream_var" />
+    <spring:message code="apple" var="apple_var" />
+    <spring:message code="cabbage" var="cabbage_var" />
+    <spring:message code="chocolate" var="chocolate_var" />
+    <spring:message code="french_fries" var="french_fries_var" />
+    <spring:message code="japanese_rolls" var="japanese_rolls_var" />
+    <spring:message code="pie" var="pie_var" />
+    <spring:message code="potatoes" var="potatoes_var" />
+    <spring:message code="sandwich" var="sandwich_var" />
+    <spring:message code="banana" var="banana_var" />
+    <spring:message code="watermelon" var="watermelon_var" />
+    
+    <spring:message code="building_materials_list" var="building_materials_list_var" />
+    <spring:message code="timber" var="timber_var" />
+    <spring:message code="board" var="board_var" />
+    <spring:message code="stone" var="stone_var" />
+    <spring:message code="chip" var="chip_var" />
+    <spring:message code="wire" var="wire_var" />
+    <spring:message code="iron" var="iron_var" />
+    <spring:message code="oil" var="oil_var" />
+    <spring:message code="blue_crystal" var="blue_crystal_var" />
+    <spring:message code="rubber" var="rubber_var" />
+    
+    
+    <p>${information_brief_var}</p>
+    <H2>${food_list_var}</H2>
+    <p>
+    <ul style="list-style-type: square;">
+        <li>${carrot_var}</li>
+        <li>${dry_food_var}</li>
+        <li>${fish_var}</li>
+        <li>${ice_cream_var}</li>
+        <li>${apple_var}</li>
+        <li>${cabbage_var}</li>
+        <li>${chocolate_var}</li>
+        <li>${french_fries_var}</li>
+        <li>${japanese_rolls_var}</li>
+        <li>${pie_var}</li>
+        <li>${potatoes_var}</li>
+        <li>${sandwich_var}</li>
+        <li>${banana_var}</li>
+        <li>${watermelon_var}</li>
+    </ul>
+    </p>
+    <H2>${building_materials_list_var}</H2>
+    <p>
+    <ol style="list-style-type: lower-greek;">
+    <li>${timber_var}</li>
+    <li>${board_var}</li>
+    <li>${stone_var}</li>
+    <li>${chip_var}</li>
+    <li>${wire_var}</li>
+    <li>${iron_var}</li>
+    <li>${oil_var}</li>
+    <li>${blue_crystal_var}</li>
+    <li>${rubber_var}</li>
+    </ol>
+    </p>
+</div>
+</custom:defaultLayout>

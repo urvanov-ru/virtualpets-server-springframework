@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xmlns:security="http://www.springframework.org/schema/security"
+    xmlns:http="http://www.springframework.org/schema/http"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd 
+http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+http://www.springframework.org/schema/http http://www.springframework.org/schema/http/spring-http.xsd
+ ">
+
+    <security:http pattern="/site/*" security="none" /> 
+
+    <security:http pattern="/rest/**" realm="SecRemoting" create-session="always"
+            authentication-manager-ref="authenticationManager"
+            entry-point-ref="authenticationEntryPoint"
+            security-context-repository-ref="securityContextRepository">
+        
+        <!-- <security:http-basic />  -->
+        <security:custom-filter ref="customSecurityFilter" after = "BASIC_AUTH_FILTER" />
+        <security:intercept-url pattern="/rest/v1/PublicService/**"
+            access="permitAll" />
+        <security:intercept-url pattern="/rest/v1/UserService/login"
+            access="permitAll" />
+        <security:intercept-url pattern="/rest/**"
+            access="hasRole('ROLE_USER')" />
+        <!-- Default to Spring MVC's CORS configuration -->
+        <security:cors /> 
+        <security:csrf disabled="true"/>
+        
+    </security:http>
+    
+    <bean id = "securityContextRepository" class = "org.springframework.security.web.context.DelegatingSecurityContextRepository">
+        <constructor-arg ref="securityContextRepositoryList" />
+    </bean>
+    
+    <util:list id = "securityContextRepositoryList">
+        <bean class = "org.springframework.security.web.context.RequestAttributeSecurityContextRepository"></bean>
+        <bean class = "org.springframework.security.web.context.HttpSessionSecurityContextRepository"></bean>
+    </util:list>
+    
+    <bean id = "authenticationEntryPoint" class = "ru.urvanov.virtualpets.server.auth.CustomAuthenticationEntryPoint">
+    </bean>
+    
+    
+    <bean id="customSecurityFilter" class = "ru.urvanov.virtualpets.server.auth.CustomAuthenticationProcessingFilter">
+        <property name="securityContextRepository" ref="securityContextRepository" />
+    </bean>
+    
+    <bean id="authenticationProvider"
+        class="ru.urvanov.virtualpets.server.auth.DatabaseAuthenticationProvider">
+        <property name="userService" ref="userService" />
+    </bean>
+    
+    <security:authentication-manager
+        alias="authenticationManager" >
+        <security:authentication-provider
+            ref="authenticationProvider" >
+        </security:authentication-provider>
+    </security:authentication-manager>
+</beans>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<div id="main" xmlns:jsp="http://java.sun.com/JSP/Page"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:output omit-xml-declaration="yes" />
+    <jsp:directive.page contentType="text/html;charset=UTF-8" />
+    <jsp:directive.page session="false" />
+    <jsp:output doctype-root-element="HTML"
+        doctype-system="about:legacy-compat" />
+    <jsp:directive.page pageEncoding="UTF-8" />
+
+    <div>
+        <spring:message code="sign_in_with_facebook" var="sign_in_with_facebook_var" />
+        <c:if test="${type == 'facebook'}">
+            <spring:url value="/site/signin/facebook"
+                var="facebook_signin_url" />
+            <form action="${facebook_signin_url}" method="POST">
+                <button type="submit">${sign_in_with_facebook_var}</button>
+                <input type="hidden" name="scope"
+                    value="email,publish_stream,offline_access,user_birthday" />
+            </form>
+        </c:if>
+    </div>
+    <div>
+        <spring:message code="sign_in_with_vkontakte" var="sign_in_with_vkontakte_var" />
+        <c:if test="${type == 'vkontakte'}">
+            <spring:url value="/site/signin/vkontakte"
+                var="vkontakte_signin_url" />
+            <form action="${vkontakte_signin_url}" method="POST">
+                <button type="submit">${sign_in_with_vkontakte_var}</button>
+            </form>
+        </c:if>
+    </div>
+    <div>
+        <spring:message code="sign_in_with_twitter" var="sign_in_with_twitter_var" />
+        <c:if test="${type == 'twitter'}">
+            <spring:url value="/site/signin/twitter"
+                var="twitter_signin_url" />
+            <form action="${twitter_signin_url}" method="POST">
+                <button type="submit">${sign_in_with_twitter_var}</button>
+            </form>
+        </c:if>
+    </div>
+
+</div>

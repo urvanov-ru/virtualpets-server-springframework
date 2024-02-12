@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"
+        pageEncoding="UTF-8" />
+    <jsp:directive.page session="false" />
+    <jsp:output omit-xml-declaration="yes" />
+    <spring:message code="app_name" var="app_name_var" />
+    <spring:url value="/resources/images/logo.jpg" var="logo_url" />
+    <img alt="virtualpets logo" src="${logo_url}" width="500" height="100" />
+    <H1>${app_name_var}</H1>
+    
+</div>

@@ -1,0 +1,184 @@
+* {
+    background-color: #e8d0af;
+    color: #1f1301;
+}
+
+a:link {
+    text-decoration: underline;
+    font-family: serif;
+}
+
+a:hover {
+    font-family: serif;
+    text-decoration: underline;
+}
+
+a:active {
+    text-decoration: underline;
+    font-family: serif;
+}
+
+a:visited {
+    font-family: serif;
+    text-decoration: underline;
+}
+
+.header {
+    margin-bottom: 1em;
+    margin-left: auto;
+    margin-right: auto;
+    width: 500px;
+}
+
+.menu {
+    background: #805b20;
+    position: relative;
+    float: left;
+    left: 0px;
+    width: 220px;
+    margin-right: 15px;
+    padding: 1px 5px 1px 5px;
+}
+
+.menu ul {
+    list-style: none;
+    background-color: #805b20;
+}
+
+.menu a {
+    background: #805b20;
+    display: block;
+    color: #1f1301;
+    text-decoration: none;
+    padding: 15px;
+    margin: 0px;
+}
+
+.menu a:hover {
+    color: #dbc199;
+    background-color: #553707;
+}
+
+.body {
+    overflow: hidden;
+    display: box;
+    font-size: 1em;
+    font-family: "Times New Roman";
+    text-indent: 20px;
+}
+
+.body:first-letter {
+    font-size: 2em;
+    font-family: fantasy;
+}
+
+.footer {
+    margin-top: 15px;
+    border-top: 1px dashed #999999;
+}
+
+table {
+    background-color: #dbc199;
+    margin: 2px 0 0 0;
+    border: 1px solid #772c6d;
+    border-collapse: collapse;
+    width: 100%
+}
+
+table td,table th {
+    padding: 2px;
+    border: 2px solid #ac8d5c;
+}
+
+table th {
+    font-size: 0.9em;
+    text-align: left;
+    font-weight: bold;
+    color: #1f1301;
+    background: #ac8d5c;
+}
+
+table thead {
+    font-weight: bold;
+    font-style: italic;
+    background-color: #ac8d5c;
+}
+
+input,select {
+    border-color: #1f1301 #efe7db #efe7db #1f1301;
+    background-color: #e8d0af;
+    border-style: solid;
+}
+
+input:hover,select:hover {
+    background-color: #e8d0af;
+    border-style: solid;
+}
+
+input[type=text] {
+    border-color: #1f1301 #efe7db #efe7db #1f1301;
+    border-style: solid;
+}
+
+input[type=button],input[type=submit],select option {
+    background: #ac8d5c;
+    border-style: solid;
+    border-color: #efe7db #1f1301 #1f1301 #efe7db;
+    border-width: 3px;
+}
+
+input[type=button]:hover,input[type=submit]:hover,select option:hover {
+    background: #dbc199;
+    border-style: solid;
+    border-color: #efe7db #1f1301 #1f1301 #efe7db;
+    border-width: 3px;
+}
+
+input[type=button]:active,input[type=submit]:active,select option:active
+    {
+    background: #dbc199;
+    border-style: solid;
+    border-color: #1f1301 #efe7db #efe7db #1f1301;
+    border-width: 3px;
+}
+
+.form {
+	text-indent:0px;
+}
+
+.error {
+	color:#ff0000;
+	font-size: 0.8em;
+	font-size: Arial;
+}
+
+.achievementLocked {
+	color: gray;
+	padding-left:50px;
+	font-size: 1em;
+	background-image: url('/virtualpets-server/resources/images/achievement_background_gray.png');
+	background-repeat : no-repeat;
+	background-position: left top;
+	height : 100px;
+	color : #5f5a32;
+}
+
+.achievementUnlocked {
+	padding-left:50px;
+	font-size: 1em;
+	background-image: url('/virtualpets-server/resources/images/achievement_background.png');
+	background-repeat : no-repeat;
+	background-position: left top;
+	height : 100px;
+	color : #f9e115;
+}
+
+.achievementLocked>p {
+    background-color : transparent;
+    color : #5f5a32;
+}
+
+.achievementUnlocked>p {
+    background-color : transparent;
+    color : #f9e115;
+}

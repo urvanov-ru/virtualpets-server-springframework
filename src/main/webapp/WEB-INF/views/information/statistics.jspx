@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom:defaultLayout xmlns:jsp="http://java.sun.com/JSP/Page"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:spring="http://www.springframework.org/tags"
+    xmlns:form="http://www.springframework.org/tags/form"
+    xmlns:custom="urn:jsptagdir:/WEB-INF/tags">
+<div id="main" 
+    version="2.0">
+    
+
+    <jsp:directive.page contentType="text/html;charset=UTF-8"
+        pageEncoding="UTF-8" />
+    <jsp:directive.page session="false" />
+    <jsp:output omit-xml-declaration="yes" />
+
+    <spring:message code="records_in_page" var="records_in_page_var" />
+    <spring:message code="statistics_type" var="statistics_type_var" />
+    <spring:message code="show_statistics" var="show_statistics_var" />
+    <spring:message code="statistics" var="statistics_var" />
+    <spring:message code="last_registered_users"
+        var="last_registered_users_var" />
+    <spring:message code="last_created_pets" var="last_created_pets_var" />
+
+
+    <H1>${statistics_var}</H1>
+    <form:form modelAttribute ="statisticsParams" >
+        <div style="width: 300px;" class="form">
+            <div style="width: 100px; display: inline;">${records_in_page_var}</div>
+            <div
+                style="width: 200px; display: inline; margin-right: auto;">
+                <form:input path="maxRecordsCount" />
+            </div>
+            <div style="width: 300px;">
+                <form:errors path="maxRecordsCount" class="error" />
+            </div>
+            <div style="width: 100px; display: inline;">${statistics_type_var}</div>
+            <div
+                style="width: 200px; display: inline; margin-right: auto;">
+                <form:select path="type" multiple="false">
+                    <option value="LAST_REGISTERED_USERS">${last_registered_users_var}</option>
+                    <option value="LAST_CREATED_PETS">${last_created_pets_var}</option>
+                </form:select>
+            </div>
+            <div style="width: 300px;">
+                <form:errors path="type" class="error" />
+            </div>
+            <div
+                style="width: 300px; display: inline; margin-left: auto;">
+                <input type="submit" value="${show_statistics_var}" />
+            </div>
+        </div>
+    </form:form>
+    <c:if test="${users.size()>0}">
+        <table>
+            <c:forEach var="user" items="${users}">
+                <tr>
+                    <td>${user.registrationDate}</td>
+                    <td>${user.name}</td>
+                </tr>
+            </c:forEach>
+        </table>
+    </c:if>
+    <c:if test="${pets.size() >0}">
+        <table>
+            <c:forEach var="pet" items="${pets}">
+                <tr>
+                    <td>${pet.createdDate}</td>
+                    <spring:url value="/site/information/pet?id=${pet.id}" var="pet_url" />
+                    <td><a href="${pet_url}">${pet.name}</a></td>
+                </tr>
+            </c:forEach>
+        </table>
+    </c:if>
+</div>
+</custom:defaultLayout>

@@ -1,0 +1,145 @@
+
+* {
+}
+
+a:link {
+    color: #c8c100;
+    text-decoration: underline;
+    font-family: serif;
+}
+
+a:hover {
+    background-color: #4a0057;
+    color: #fff600;
+    font-family: serif;
+    text-decoration: underline;
+}
+
+a:active {
+    text-decoration: underline;
+    font-family: serif;
+}
+
+a:visited {
+    font-family: serif;
+    text-decoration: underline;
+}
+
+.header {
+    margin-bottom: 1em;
+    margin-left: auto;
+    margin-right: auto;
+    width: 500px;
+}
+
+.menu {
+    background: #eee;
+    position: relative;
+    float: left;
+    left: 0px;
+    width: 220px;
+    margin-right: 15px;
+    padding: 1px 5px 1px 5px;
+}
+
+.menu ul {
+    list-style: none;
+    background-color: #eee;
+}
+
+.menu a {
+    display: block;
+    color: #666666;
+    text-decoration: none;
+    padding: 15px;
+    margin: 0px;
+}
+
+.menu a:hover {
+    background-color: #fff;
+}
+
+.body {
+    overflow: hidden;
+    display: box;
+    font-size: 1em;
+    font-family: "Times New Roman";
+    text-indent: 20px;
+}
+
+.body:first-letter {
+    font-size: 2em;
+    font-family: fantasy;
+}
+
+}
+.footer {
+    margin-top: 15px;
+    border-top: 1px dashed #999999;
+}
+
+table {
+    background-color: #b543a6;
+    margin: 2px 0 0 0;
+    border: 1px solid #772c6d;
+    border-collapse: collapse;
+    width: 100%
+}
+
+table td,table th {
+    padding: 2px;
+    border: 2px solid #772c6d;
+}
+
+table th {
+    font-size: 0.9em;
+    text-align: left;
+    font-weight: bold;
+    color: #ffc5f7;
+    background: #772c6d;
+}
+
+table thead {
+    font-weight: bold;
+    font-style: italic;
+    background-color: #772c6d;
+}
+
+input,select {
+    border-color: #940181 #ff92f1 #ff92f1 #940181;
+    background-color: #ae0e99;
+    border-style: solid;
+}
+
+input:hover,select:hover {
+    background-color: #ae51a2;
+    border-style: solid;
+}
+
+input[type=text] {
+    border-color: #940181 #ff92f1 #ff92f1 #940181;
+    border-style: solid;
+}
+
+input[type=button],input[type=submit],select option {
+    background: #b543a6;
+    border-style: solid;
+    border-color: #ff92f1 #940181 #940181 #ff92f1;
+    border-width: 3px;
+}
+
+input[type=button]:hover,input[type=submit]:hover,select option:hover {
+    background: #f45ce0;
+    border-style: solid;
+    border-color: #ff92f1 #940181 #940181 #ff92f1;
+    border-width: 3px;
+}
+
+input[type=button]:active,input[type=submit]:active,select option:active
+    {
+    background: #f45ce0;
+    border-style: solid;
+    border-color: #940181 #ff92f1 #ff92f1 #940181;
+    border-width: 3px;
+}
+
