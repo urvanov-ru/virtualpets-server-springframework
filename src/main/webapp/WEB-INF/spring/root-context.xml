@@ -84,6 +84,10 @@
                 <value>Шурик</value>
                 <value>Оксана</value>
                 <value>Семён</value>
+                <ref bean="version" />
+                <bean class="java.lang.String">
+                    <constructor-arg value="Святослав-Бинов" />
+                </bean>
             </list>
         </property>
         <property name="numberSumMap">
@@ -91,6 +95,17 @@
                 <entry key="D-001" value="100.00" />
                 <entry key="D-002" value="55.01" />
                 <entry key="D-003" value="34.23" />
+                <entry>
+                    <key>
+                        <ref bean="version"/>
+                    </key>
+                    <value>1000.00</value>
+                </entry>
+                <entry key="D-005">
+                    <bean class="java.math.BigDecimal">
+                        <constructor-arg value = "100000.00" />
+                    </bean>
+                </entry>
             </map>
         </property>
     </bean>

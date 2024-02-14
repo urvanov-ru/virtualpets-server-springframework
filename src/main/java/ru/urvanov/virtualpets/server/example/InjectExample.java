@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 public class InjectExample {
-    
+
     private List<String> names;
-    
+
     private Map<String, BigDecimal> numberSumMap;
 
     public List<String> getNames() {
@@ -25,7 +25,5 @@ public class InjectExample {
     public void setNumberSumMap(Map<String, BigDecimal> numberSumMap) {
         this.numberSumMap = numberSumMap;
     }
-    
-    
 
 }
