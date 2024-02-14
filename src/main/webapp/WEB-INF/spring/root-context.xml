@@ -22,7 +22,6 @@
 
     <import resource="servlet-jee.xml" />
     <import resource="servlet-tx.xml" />
-    <!-- <import resource="spring-security.xml" /> -->
 
 
     <bean id="version" class="java.lang.String">
