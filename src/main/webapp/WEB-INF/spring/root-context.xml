@@ -76,6 +76,24 @@
             </set>
         </property>
     </bean>
+    
+    <bean class="ru.urvanov.virtualpets.server.example.InjectExample">
+        <property name="names">
+            <list>
+                <value>Вася</value>
+                <value>Шурик</value>
+                <value>Оксана</value>
+                <value>Семён</value>
+            </list>
+        </property>
+        <property name="numberSumMap">
+            <map>
+                <entry key="D-001" value="100.00" />
+                <entry key="D-002" value="55.01" />
+                <entry key="D-003" value="34.23" />
+            </map>
+        </property>
+    </bean>
 
     <context:property-placeholder location="classpath:mail.properties"
         ignore-unresolvable="true" />
