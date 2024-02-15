@@ -109,6 +109,10 @@
             </map>
         </property>
     </bean>
+    
+    <bean class="ru.urvanov.virtualpets.server.example.InitDestroyExample"
+            init-method = "initMethodFromXmlConfiguration"
+            destroy-method = "destroyMethodFromXmlConfiguration" />
 
     <context:property-placeholder location="classpath:mail.properties"
         ignore-unresolvable="true" />
