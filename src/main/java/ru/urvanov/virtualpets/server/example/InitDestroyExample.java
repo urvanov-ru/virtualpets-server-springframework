@@ -11,7 +11,9 @@ import jakarta.annotation.PreDestroy;
 /**
  * Пример управления жизненным циклом бина.
  */
-public class InitDestroyExample implements InitializingBean, DisposableBean{
+public class InitDestroyExample
+        implements InitializingBean,
+                   DisposableBean {
 
     private static final Logger logger = LoggerFactory.getLogger(InitDestroyExample.class);
     
