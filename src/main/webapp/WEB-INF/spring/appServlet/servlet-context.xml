@@ -85,6 +85,6 @@
     <view-controller path="site/information/gameHelp" view-name="information/gameHelp" />
     
     <mvc:cors>
-        <mvc:mapping path="/rest/**" allow-credentials="true" allowed-origins="http://localhost:8080,http://localhost:8080/"/>
+        <mvc:mapping path="/rest/**" allow-credentials="true" allowed-origins="http://localhost:8081,http://localhost:8081/"/>
     </mvc:cors> 
 </beans:beans>

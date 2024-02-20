@@ -110,6 +110,31 @@
         </property>
     </bean>
     
+    <bean id = "schemaBasedAspectTarget" class="ru.urvanov.virtualpets.server.example.SchemaBasedAspectTargetImpl" />
+    <bean id = "schemaBasedAdvice" class="ru.urvanov.virtualpets.server.example.SchemaBasedAdvice" />
+    
+    <aop:config>
+        <aop:aspect id="beforeAspectExample" ref="schemaBasedAdvice">
+            <aop:pointcut id="beforeDaoPointcut"
+                expression="execution(* ru.urvanov.virtualpets.server.dao.*.*(..))" />
+            <aop:before pointcut-ref="beforeDaoPointcut"
+                method = "beforeDaoAdvice" />
+
+            <aop:after-returning pointcut="execution(* ru.urvanov.virtualpets.server.service.HiddenObjectsServiceImpl.joinGame(..))"
+                method = "afterJoinGameReturningAdvice" />
+            
+            <aop:after-throwing pointcut="execution(* ru.urvanov.virtualpets.server.service.RoomServiceImpl.build*(..))"
+                method = "afterBuildThrowingAdvice" />
+            
+            <aop:after pointcut="execution(* ru.urvanov.virtualpets.server.service.RoomServiceImpl.build*(..))"
+                method = "afterBuildAdvice" />
+            
+            <aop:around pointcut="execution(* ru.urvanov.virtualpets.server.service.RoomServiceImpl.openBoxNewbie(..))"
+                method = "aroundOpenBoxNewbieAdvice" />
+        </aop:aspect>
+    </aop:config>
+    
+    
     <bean class="ru.urvanov.virtualpets.server.example.InitDestroyExample"
             init-method = "initMethodFromXmlConfiguration"
             destroy-method = "destroyMethodFromXmlConfiguration" />
