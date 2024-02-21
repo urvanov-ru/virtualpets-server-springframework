@@ -21,7 +21,9 @@ public class SchemaBasedAdvice {
                 joinPoint.getArgs().length);
     }
     
-    public void afterBuildThrowingAdvice(JoinPoint joinPoint) {
+    public void afterBuildThrowingAdvice(
+            JoinPoint joinPoint,
+            Throwable throwableParameter) {
         logger.info("A build method thrown an exception. Arguments count {}.",
                 joinPoint.getArgs().length);
     }

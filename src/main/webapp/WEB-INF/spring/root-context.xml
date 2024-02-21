@@ -109,8 +109,7 @@
             </map>
         </property>
     </bean>
-    
-    <bean id = "schemaBasedAspectTarget" class="ru.urvanov.virtualpets.server.example.SchemaBasedAspectTargetImpl" />
+
     <bean id = "schemaBasedAdvice" class="ru.urvanov.virtualpets.server.example.SchemaBasedAdvice" />
     
     <aop:config>
@@ -126,6 +125,7 @@
             
             <aop:after-throwing
                 pointcut="execution(* ru.urvanov.virtualpets.server.service.RoomServiceImpl.build*(..))"
+                throwing = "throwableParameter"
                 method = "afterBuildThrowingAdvice" />
             
             <aop:after
