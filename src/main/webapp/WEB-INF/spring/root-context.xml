@@ -109,6 +109,8 @@
             </map>
         </property>
     </bean>
+    
+    <!-- Примеры аспектно-ориентированного программирования -->
 
     <bean id = "schemaBasedAdvice" class="ru.urvanov.virtualpets.server.example.SchemaBasedAdvice" />
     
@@ -121,7 +123,8 @@
 
             <aop:after-returning
                 pointcut="execution(* ru.urvanov.virtualpets.server.service.HiddenObjectsServiceImpl.joinGame(..))"
-                method = "afterJoinGameReturningAdvice" />
+                method = "afterJoinGameReturningAdvice"
+                returning="hiddenObjectsGame" />
             
             <aop:after-throwing
                 pointcut="execution(* ru.urvanov.virtualpets.server.service.RoomServiceImpl.build*(..))"
@@ -137,6 +140,12 @@
                 method = "aroundOpenBoxNewbieAdvice" />
         </aop:aspect>
     </aop:config>
+    
+    <aop:aspectj-autoproxy />
+    
+    <bean class = "ru.urvanov.virtualpets.server.example.AnnotationBasedAspect" />
+    
+    <!-- *** -->
     
     
     <bean class="ru.urvanov.virtualpets.server.example.InitDestroyExample"

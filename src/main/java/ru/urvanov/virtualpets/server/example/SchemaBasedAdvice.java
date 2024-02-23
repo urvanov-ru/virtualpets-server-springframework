@@ -5,6 +5,8 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ru.urvanov.virtualpets.shared.domain.HiddenObjectsGame;
+
 public class SchemaBasedAdvice {
 
     private static final Logger logger = LoggerFactory.getLogger(SchemaBasedAdvice.class);
@@ -16,9 +18,16 @@ public class SchemaBasedAdvice {
                 joinPoint.getArgs().length);
     }
     
-    public void afterJoinGameReturningAdvice(JoinPoint joinPoint) {
-        logger.info("A player joined hidden objects game. Arguments count {}.",
-                joinPoint.getArgs().length);
+    public void afterJoinGameReturningAdvice(
+            JoinPoint joinPoint,
+            HiddenObjectsGame hiddenObjectsGame) {
+        logger.info("""
+                A player joined hidden objects game. \
+                Arguments count {}. \
+                Returning {}. \
+                """,
+                joinPoint.getArgs().length,
+                hiddenObjectsGame);
     }
     
     public void afterBuildThrowingAdvice(

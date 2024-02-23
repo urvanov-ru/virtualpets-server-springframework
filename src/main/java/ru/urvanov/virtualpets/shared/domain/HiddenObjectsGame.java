@@ -132,5 +132,11 @@ public class HiddenObjectsGame implements Serializable {
         this.secondsLeft = secondsLeft;
     }
 
+    @Override
+    public String toString() {
+        return "HiddenObjectsGame [gameStarted=" + gameStarted + ", gameOver="
+                + gameOver + ", secondsLeft=" + secondsLeft + "]";
+    }
+
     
 }
