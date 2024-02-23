@@ -10,7 +10,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.springframework-version>6.0.11</org.springframework-version>
-        <org.aspectj-version>1.9.20.1</org.aspectj-version>
+        <org.aspectj-version>1.9.21</org.aspectj-version>
         <org.springframework-security-version>6.1.2</org.springframework-security-version>
         <jackson.version>2.15.2</jackson.version>
         <hibernate.version>6.2.6.Final</hibernate.version>
@@ -31,11 +31,6 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
-            <version>${org.springframework-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-aspects</artifactId>
             <version>${org.springframework-version}</version>
         </dependency>
         <dependency>
@@ -257,6 +252,13 @@
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
             <version>4.25.1</version>
+        </dependency>
+        
+        <!-- For @AspectJ style AOP -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${org.aspectj-version}</version>
         </dependency>
     </dependencies>
 
