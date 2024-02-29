@@ -9,8 +9,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import ru.urvanov.virtualpets.server.service.domain.LastRegisteredUser;
-import ru.urvanov.virtualpets.server.service.mapper.LastRegisteredUserMapper;
+import ru.urvanov.virtualpets.server.dao.domain.LastRegisteredUser;
+import ru.urvanov.virtualpets.server.dao.mapper.LastRegisteredUserMapper;
 
 @Repository
 public class JdbcReportDaoImpl implements JdbcReportDao {

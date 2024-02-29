@@ -1,11 +1,11 @@
-package ru.urvanov.virtualpets.server.service.mapper;
+package ru.urvanov.virtualpets.server.dao.mapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import ru.urvanov.virtualpets.server.service.domain.LastRegisteredUser;
+import ru.urvanov.virtualpets.server.dao.domain.LastRegisteredUser;
 
 public class LastRegisteredUserMapper implements RowMapper<LastRegisteredUser> {
 
