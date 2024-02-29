@@ -1,8 +1,8 @@
 
 
-CREATE SCHEMA IF NOT EXISTS virtualpets;-- CHARACTER SET=utf8 COLLATE=utf8_bin;
+CREATE SCHEMA IF NOT EXISTS virtualpets_springframework;-- CHARACTER SET=utf8 COLLATE=utf8_bin;
 
-SET search_path TO virtualpets;
+SET search_path TO virtualpets_springframework;
 
 
 CREATE TABLE chat (

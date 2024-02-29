@@ -39,7 +39,7 @@ public class AbstractDaoImplTest {
     @Container
     public static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:16.1")
             .withReuse(true)
-            .withDatabaseName("virtualpets");
+            .withDatabaseName("virtualpets_springframework");
     
     @PersistenceContext
     protected EntityManager em;
