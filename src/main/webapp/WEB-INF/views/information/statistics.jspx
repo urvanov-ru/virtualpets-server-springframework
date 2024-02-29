@@ -20,6 +20,9 @@
     <spring:message code="last_registered_users"
         var="last_registered_users_var" />
     <spring:message code="last_created_pets" var="last_created_pets_var" />
+    <spring:message code="registration_date" var="registration_date_var" />
+    <spring:message code="name" var="name_var" />
+    <spring:message code="pets_count" var="pets_count_var" />
 
 
     <H1>${statistics_var}</H1>
@@ -52,12 +55,24 @@
     </form:form>
     <c:if test="${users.size()>0}">
         <table>
+            <caption>${last_registered_users_var}</caption>
+            <thead>
+               <tr>
+                <th>${registration_date_var}</th>
+                <th>${name_var}</th>
+                <th>${pets_count_var}</th>
+                </tr>
+            </thead>
+            <tbody>
             <c:forEach var="user" items="${users}">
+                
                 <tr>
                     <td>${user.registrationDate}</td>
                     <td>${user.name}</td>
+                    <td>${user.petsCount}</td>
                 </tr>
             </c:forEach>
+            </tbody>
         </table>
     </c:if>
     <c:if test="${pets.size() >0}">

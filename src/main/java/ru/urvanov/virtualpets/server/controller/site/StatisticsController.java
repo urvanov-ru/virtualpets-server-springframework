@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import jakarta.validation.Valid;
 import ru.urvanov.virtualpets.server.controller.site.domain.StatisticsParams;
 import ru.urvanov.virtualpets.server.controller.site.domain.StatisticsParams.StatisticsType;
+import ru.urvanov.virtualpets.server.dao.JdbcReportDao;
 import ru.urvanov.virtualpets.server.dao.domain.Pet;
 import ru.urvanov.virtualpets.server.dao.domain.User;
 import ru.urvanov.virtualpets.server.service.PetService;
 import ru.urvanov.virtualpets.server.service.UserService;
+import ru.urvanov.virtualpets.server.service.domain.LastRegisteredUser;
 
 /**
  * @author fedya
@@ -36,6 +38,9 @@ public class StatisticsController {
 
     @Autowired
     private PetService petService;
+    
+    @Autowired
+    private JdbcReportDao jdbcReportDao;
 
     @RequestMapping(value = "/information/statistics", method = RequestMethod.GET)
     public String showStatistics(Locale locale, Model model) {
@@ -51,13 +56,12 @@ public class StatisticsController {
             @Valid @ModelAttribute StatisticsParams statisticsParams,
             BindingResult statisticsParamsBindingResult) {
 
-        List<User> users = new ArrayList<User>();
+        List<LastRegisteredUser> users = new ArrayList<>();
         List<Pet> pets = new ArrayList<Pet>();
         if (!statisticsParamsBindingResult.hasErrors()) {
             switch (statisticsParams.getType()) {
             case LAST_REGISTERED_USERS:
-                users = userService.findLastRegisteredUsers(0,
-                        statisticsParams.getMaxRecordsCount());
+                users = jdbcReportDao.findLastRegisteredUsers(0, statisticsParams.getMaxRecordsCount());
                 break;
             case LAST_CREATED_PETS:
                 pets = petService.findLastCreatedPets(0,
