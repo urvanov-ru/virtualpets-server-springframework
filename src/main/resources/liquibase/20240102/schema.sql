@@ -66,7 +66,7 @@ CREATE TABLE "user" (
                      id serial NOT NULL,
                      login varchar(50) DEFAULT NULL,
                      name varchar(50) NOT NULL,
-                     password varchar(50) NULL,
+                     password varchar(100) NULL,
                      facebook_key varchar(50) DEFAULT NULL,
                      registration_date timestamp with time zone NOT NULL,
                      login_date timestamp with time zone DEFAULT NULL,
@@ -89,7 +89,7 @@ CREATE TABLE "user" (
 create unique index idx_user_login on "user"(login);
 
 INSERT INTO "user"(login, name,password,registration_date,role)
-values('admin', 'admin','202CB962AC59075B964B07152D234B70',now(),4);
+values('admin', 'admin','$2a$10$JT0l8oNHQuohL8SMLHCBludsjTiJNpG.uDHc3QGkP5V.aMMLSEa7G',now(),4);
 
 
 INSERT INTO pet(name,created_date,login_date,user_id,pet_type)
@@ -614,9 +614,18 @@ create table pet_journal_entry(
                                   created_at timestamp with time zone NOT NULL,
                                   pet_id INT NOT NULL,
                                   journal_entry_id INT NOT NULL,
+                                  readed boolean NOT NULL default false,
                                   version INT NOT NULL DEFAULT 0,
                                   PRIMARY KEY(id)
 );
+
+alter table pet_journal_entry add constraint fk_pet_journal_entry_pet_id foreign key (pet_id)
+    references pet(id) on update no action on delete no action;
+
+alter table pet_journal_entry add constraint fk_pet_journal_entry_journal_entry_id foreign key (journal_entry_id)
+    references journal_entry(id) on update no action on delete no action;
+
+
 
 insert into journal_entry(id, code) values(1, 'WELCOME');
 insert into journal_entry(id, code) values(2, 'OPEN_NEWBIE_BOXES');
@@ -626,10 +635,6 @@ insert into journal_entry(id, code) values(5, 'BUILD_REFRIGERATOR');
 insert into journal_entry(id, code) values(6, 'EAT_SOMETHING');
 insert into journal_entry(id, code) values(7, 'BUILD_BOOKCASE');
 insert into journal_entry(id, code) values(8, 'READ_SOMETHING');
-
-
-alter table pet_journal_entry add column readed boolean NOT NULL default false;
-
 insert into journal_entry(id, code) values(9, 'LEAVE_ROOM');
 
 
