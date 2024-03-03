@@ -37,9 +37,7 @@ import ru.urvanov.virtualpets.server.test.listener.DaoTestExecutionListener;
 public class AbstractDaoImplTest {
 
     @Container
-    public static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:16.1")
-            .withReuse(true)
-            .withDatabaseName("virtualpets_springframework");
+    public static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:16.1");
     
     @PersistenceContext
     protected EntityManager em;

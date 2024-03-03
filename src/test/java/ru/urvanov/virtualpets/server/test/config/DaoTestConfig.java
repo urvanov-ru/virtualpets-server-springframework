@@ -66,7 +66,7 @@ public class DaoTestConfig {
         //result.setConnectionInitSqls(List.of("GRANT ALL PRIVILEGES ON *.* TO 'test'@'%';"));
         //result.setUsername("root");
         //result.setPassword("");
-        result.setDefaultSchema("virtualpets");
+        result.setDefaultSchema("virtualpets_springframework");
         return result;
     }
 

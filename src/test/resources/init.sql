@@ -1,1 +1,1 @@
-CREATE SCHEMA IF NOT EXISTS virtualpets;
+CREATE SCHEMA IF NOT EXISTS virtualpets_springframework;

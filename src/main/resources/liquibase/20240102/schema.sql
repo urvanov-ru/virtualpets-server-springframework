@@ -411,6 +411,9 @@ create table room(
                      PRIMARY KEY(pet_id)
 );
 
+alter table room add constraint fk_room_pet_id foreign key (pet_id)
+    references pet(id) on update no action on delete no action;
+
 alter table room add constraint fk_room_machine_with_drinks_id foreign key (machine_with_drinks_id)
     references machine_with_drinks(id) on update no action on delete no action;
 
@@ -667,6 +670,11 @@ create table pet_achievement(
                                 PRIMARY KEY(id)
 );
 
+alter table pet_achievement add constraint fk_pet_achievement_pet_id foreign key (pet_id)
+    references pet(id) on update no action on delete no action;
+
+alter table pet_achievement add constraint fk_pet_achievement_achievement_id foreign key (achievement_id)
+    references achievement(id) on update no action on delete no action;
 
 insert into achievement(id, code) values(1, 'BUILD_1');
 insert into achievement(id, code) values(2, 'FEED_1');
