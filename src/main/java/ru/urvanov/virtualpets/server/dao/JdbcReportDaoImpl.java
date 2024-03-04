@@ -17,7 +17,8 @@ public class JdbcReportDaoImpl implements JdbcReportDao {
     
     private JdbcTemplate jdbcTemplate;
     
-    private LastRegisteredUserMapper lastRegisteredUsersMapper = new LastRegisteredUserMapper();
+    private LastRegisteredUserMapper lastRegisteredUsersMapper
+            = new LastRegisteredUserMapper();
     
     @Autowired
     public void setDataSource(DataSource dataSource) {
