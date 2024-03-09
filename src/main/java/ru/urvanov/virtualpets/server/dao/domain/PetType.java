@@ -1,11 +1,7 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.dao.domain;
 
 /**
- * @author fedya
- *
+ * Типы питомцев.
  */
 public enum PetType {
     CAT

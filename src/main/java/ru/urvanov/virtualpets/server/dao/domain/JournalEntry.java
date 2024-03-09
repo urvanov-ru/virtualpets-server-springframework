@@ -1,6 +1,7 @@
 package ru.urvanov.virtualpets.server.dao.domain;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,28 +9,30 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.persistence.Version;
 
+/**
+ * Запись из справочника записей в дневник питомца.
+ */
 @Entity
 @Table(name = "journal_entry")
 public class JournalEntry implements Serializable {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 5753060754198528542L;
 
+    /**
+     * Первичный ключ записи в справочник записей в дневник питомца.
+     * Новые записи добавляются только скриптами liquibase, поэтому первичный
+     * ключ не генерируется ни в БД, ни в Java-коде.
+     */
     @Id
-    @Column(name = "id")
     private Integer id;
 
+    /**
+     * Натуральный ключ. Код записи из справочника записей в дневник питомца.
+     */
     @Enumerated(EnumType.STRING)
     @Column(name = "code")
     private JournalEntryType code;
-
-    @Version
-    @Column(name = "version")
-    private Integer version;
 
     public Integer getId() {
         return id;
@@ -47,28 +50,22 @@ public class JournalEntry implements Serializable {
         this.code = code;
     }
 
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
-
     @Override
     public int hashCode() {
-        return id == null ? -1 : id.hashCode();
+        return Objects.hash(code);
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof JournalEntry) {
-            JournalEntry other = (JournalEntry) obj;
-            if (other.getId() != null && other.getId().equals(id))
-                return true;
-            else
-                return false;
-        } else
+        if (this == obj)
+            return true;
+        if (obj == null)
             return false;
+        if (getClass() != obj.getClass())
+            return false;
+        JournalEntry other = (JournalEntry) obj;
+        return code == other.code;
     }
+    
+    
 }

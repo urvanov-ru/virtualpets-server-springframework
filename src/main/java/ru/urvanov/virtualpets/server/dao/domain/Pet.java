@@ -1,12 +1,10 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.dao.domain;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
@@ -33,8 +31,7 @@ import jakarta.persistence.Version;
 import jakarta.validation.constraints.Size;
 
 /**
- * @author fedya
- * 
+ * Питомец.
  */
 @Entity
 @Table(name = "pet")
@@ -46,9 +43,6 @@ import jakarta.validation.constraints.Size;
         )
 public class Pet implements Serializable {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 2699175148933987413L;
 
     @Id
@@ -129,7 +123,6 @@ public class Pet implements Serializable {
     private Integer hiddenObjectsGameCount = 0;
     
     @Version
-    @Column(name = "version")
     private Integer version;
 
     @OneToMany(mappedBy = "pet", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -159,282 +152,154 @@ public class Pet implements Serializable {
     @OneToMany(mappedBy="pet", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @MapKey(name = "achievement")
     private Map<Achievement, PetAchievement> achievements;
-//    
-    /**
-     * 
-     */
+
     public Pet() {
-        // TODO Auto-generated constructor stub
     }
 
-    /**
-     * @return the id
-     */
     public Integer getId() {
         return id;
     }
 
-    /**
-     * @param id
-     *            the id to set
-     */
     public void setId(Integer id) {
         this.id = id;
     }
 
-    /**
-     * @return the name
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * @param name
-     *            the name to set
-     */
     public void setName(String name) {
         this.name = name;
     }
 
-    /**
-     * @return the sessionKey
-     */
     public String getSessionKey() {
         return sessionKey;
     }
 
-    /**
-     * @param sessionKey
-     *            the sessionKey to set
-     */
     public void setSessionKey(String sessionKey) {
         this.sessionKey = sessionKey;
     }
 
-    /**
-     * @return the createdDate
-     */
     public Date getCreatedDate() {
         return createdDate;
     }
 
-    /**
-     * @param createdDate
-     *            the createdDate to set
-     */
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
 
-    /**
-     * @return the loginDate
-     */
     public Date getLoginDate() {
         return loginDate;
     }
 
-    /**
-     * @param loginDate
-     *            the loginDate to set
-     */
     public void setLoginDate(Date loginDate) {
         this.loginDate = loginDate;
     }
 
-    /**
-     * @return the satiety
-     */
     public int getSatiety() {
         return satiety;
     }
 
-    /**
-     * @param satiety
-     *            the satiety to set
-     */
     public void setSatiety(int satiety) {
         this.satiety = satiety;
     }
 
-    /**
-     * @return the mood
-     */
     public int getMood() {
         return mood;
     }
 
-    /**
-     * @param mood
-     *            the mood to set
-     */
     public void setMood(int mood) {
         this.mood = mood;
     }
 
-    /**
-     * @return the education
-     */
     public int getEducation() {
         return education;
     }
 
-    /**
-     * @param education
-     *            the education to set
-     */
     public void setEducation(int education) {
         this.education = education;
     }
 
-    /**
-     * @return the drink
-     */
     public int getDrink() {
         return drink;
     }
 
-    /**
-     * @param drink
-     *            the drink to set
-     */
     public void setDrink(int drink) {
         this.drink = drink;
     }
 
-    /**
-     * @return the comment
-     */
     public String getComment() {
         return comment;
     }
 
-    /**
-     * @param comment
-     *            the comment to set
-     */
     public void setComment(String comment) {
         this.comment = comment;
     }
 
-    /**
-     * @return the user
-     */
     public User getUser() {
         return user;
     }
 
-    /**
-     * @param user
-     *            the user to set
-     */
     public void setUser(User user) {
         this.user = user;
     }
 
-    /**
-     * @return the petType
-     */
     public PetType getPetType() {
         return petType;
     }
 
-    /**
-     * @param petType
-     *            the petType to set
-     */
     public void setPetType(PetType petType) {
         this.petType = petType;
     }
 
-    /**
-     * @return the version
-     */
     public Integer getVersion() {
         return version;
     }
 
-    /**
-     * @return the foods
-     */
     public Map<Food, PetFood> getFoods() {
         return foods;
     }
 
-    /**
-     * @param foods the foods to set
-     */
     public void setFoods(Map<Food, PetFood> foods) {
         this.foods = foods;
     }
 
-    /**
-     * @return the cloths
-     */
     public Set<Cloth> getCloths() {
         return cloths;
     }
 
-    /**
-     * @param cloths
-     *            the cloths to set
-     */
     public void setCloths(Set<Cloth> cloths) {
         this.cloths = cloths;
     }
 
-    /**
-     * @return the hat
-     */
     public Cloth getHat() {
         return hat;
     }
 
-    /**
-     * @param hat the hat to set
-     */
     public void setHat(Cloth hat) {
         this.hat = hat;
     }
 
-    /**
-     * @return the cloth
-     */
     public Cloth getCloth() {
         return cloth;
     }
 
-    /**
-     * @param cloth the cloth to set
-     */
     public void setCloth(Cloth cloth) {
         this.cloth = cloth;
     }
 
-    /**
-     * @return the bow
-     */
     public Cloth getBow() {
         return bow;
     }
 
-    /**
-     * @param bow the bow to set
-     */
     public void setBow(Cloth bow) {
         this.bow = bow;
     }
 
-    /**
-     * @return the buildingMaterials
-     */
     public Map<BuildingMaterial, PetBuildingMaterial> getBuildingMaterials() {
         return buildingMaterials;
     }
 
-    /**
-     * @param buildingMaterials the buildingMaterials to set
-     */
     public void setBuildingMaterials(
             Map<BuildingMaterial, PetBuildingMaterial> buildingMaterials) {
         this.buildingMaterials = buildingMaterials;
@@ -463,8 +328,6 @@ public class Pet implements Serializable {
     public void setJournalEntries(Map<JournalEntry, PetJournalEntry> journalEntries) {
         this.journalEntries = journalEntries;
     }
-
-    
 
     public Level getLevel() {
         return level;
@@ -530,4 +393,32 @@ public class Pet implements Serializable {
         this.hiddenObjectsGameCount = hiddenObjectsGameCount;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(createdDate, name, petType, user.getId());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Pet other = (Pet) obj;
+        return Objects.equals(createdDate, other.createdDate)
+                && Objects.equals(name, other.name) && petType == other.petType
+                && Objects.equals(user.getId(), other.user.getId());
+    }
+
+    @Override
+    public String toString() {
+        return "Pet [id=" + id + ", name=" + name + ", createdDate="
+                + createdDate + ", comment=" + comment
+                + ", user.id=" + user.getId()
+                + ", petType=" + petType + "]";
+    }
+
+    
 }

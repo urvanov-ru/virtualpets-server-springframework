@@ -1,9 +1,7 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.dao.domain;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,83 +9,69 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.persistence.Version;
 
 /**
- * @author fedya
- * 
+ * Запись из справочника материалов для строительства.
  */
 @Entity
 @Table(name = "building_material")
 public class BuildingMaterial implements Serializable {
-    /**
-     * 
-     */
+
     private static final long serialVersionUID = -6611026384958159106L;
 
+    /**
+     * Первичный ключ. Новые записи в справочник материалов для строительства
+     * добавляются скриптами liquibase, первичный ключ не генерируется ни в БД,
+     * ни в Java-коде.
+     */
     @Id
-    @Column(name = "id")
     private Integer id;
 
+    /**
+     * Натуральный ключ. Код материала.
+     */
     @Column(name = "code")
     @Enumerated(value = EnumType.STRING)
     private BuildingMaterialType code;
 
-    @Version
-    @Column(name = "version")
-    private Integer version;
-
-    /**
-     * @return the id
-     */
     public Integer getId() {
         return id;
     }
 
-    /**
-     * @param id
-     *            the id to set
-     */
     public void setId(Integer id) {
         this.id = id;
     }
 
-    /**
-     * @return the code
-     */
     public BuildingMaterialType getCode() {
         return code;
     }
 
-    /**
-     * @param code
-     *            the code to set
-     */
     public void setCode(BuildingMaterialType code) {
         this.code = code;
     }
 
-    /**
-     * @return the version
-     */
-    public Integer getVersion() {
-        return version;
-    }
 
     @Override
     public int hashCode() {
-        return id == null ? 0 : id;
+        return Objects.hash(code);
     }
 
     @Override
     public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
         if (obj == null)
             return false;
-        if (obj instanceof BuildingMaterial) {
-            BuildingMaterial other = (BuildingMaterial) obj;
-            return getId() != null && other.getId() != null
-                    && getId().equals(other.getId());
-        }
-        return false;
+        if (getClass() != obj.getClass())
+            return false;
+        BuildingMaterial other = (BuildingMaterial) obj;
+        return code == other.code;
     }
+
+    @Override
+    public String toString() {
+        return "BuildingMaterial [id=" + id + ", code=" + code +  "]";
+    }
+
+    
 }

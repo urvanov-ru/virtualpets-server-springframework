@@ -1,9 +1,7 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.dao.domain;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,20 +15,18 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 
 /**
- * @author fedya
- *
+ * Запись о количестве строительного материала у питомца.
  */
 @Entity
 @Table (name = "pet_building_material")
 public class PetBuildingMaterial implements Serializable {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 2864536542057382514L;
 
+    /**
+     * Первичный ключ. Генерируемый.
+     */
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="pet_building_material_seq")
     @SequenceGenerator(name="pet_building_material_seq",
         sequenceName="pet_building_material_id_seq", allocationSize=1)
@@ -48,71 +44,70 @@ public class PetBuildingMaterial implements Serializable {
     private Integer buildingMaterialCount;
     
     @Version
-    @Column(name = "version")
     private Integer version;
 
-    /**
-     * @return the id
-     */
     public Integer getId() {
         return id;
     }
 
-    /**
-     * @param id the id to set
-     */
     public void setId(Integer id) {
         this.id = id;
     }
 
-    /**
-     * @return the pet
-     */
     public Pet getPet() {
         return pet;
     }
 
-    /**
-     * @param pet the pet to set
-     */
     public void setPet(Pet pet) {
         this.pet = pet;
     }
 
-    /**
-     * @return the buildingMaterial
-     */
     public BuildingMaterial getBuildingMaterial() {
         return buildingMaterial;
     }
 
-    /**
-     * @param buildingMaterial the buildingMaterial to set
-     */
     public void setBuildingMaterial(BuildingMaterial buildingMaterial) {
         this.buildingMaterial = buildingMaterial;
     }
 
-    /**
-     * @return the buildingMaterialCount
-     */
     public Integer getBuildingMaterialCount() {
         return buildingMaterialCount;
     }
 
-    /**
-     * @param buildingMaterialCount the buildingMaterialCount to set
-     */
     public void setBuildingMaterialCount(Integer buildingMaterialCount) {
         this.buildingMaterialCount = buildingMaterialCount;
     }
 
-    /**
-     * @return the version
-     */
     public Integer getVersion() {
         return version;
     }
-    
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(buildingMaterial.getId(), buildingMaterialCount, pet.getId());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        PetBuildingMaterial other = (PetBuildingMaterial) obj;
+        return Objects.equals(buildingMaterial.getId(), other.buildingMaterial.getId())
+                && Objects.equals(buildingMaterialCount,
+                        other.buildingMaterialCount)
+                && Objects.equals(pet.getId(), other.pet.getId());
+    }
+
+    @Override
+    public String toString() {
+        return "PetBuildingMaterial [id=" + id + ", pet.id=" + pet.getId()
+                + ", buildingMaterial.id=" + buildingMaterial.getId()
+                + ", buildingMaterialCount=" + buildingMaterialCount
+                + ", version=" + version + "]";
+    }
     
 }

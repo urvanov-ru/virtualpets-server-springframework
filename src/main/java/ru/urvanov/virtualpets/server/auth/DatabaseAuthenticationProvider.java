@@ -1,23 +1,16 @@
 package ru.urvanov.virtualpets.server.auth;
 
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.HashSet;
-import java.util.Set;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
-import jakarta.xml.bind.annotation.adapters.HexBinaryAdapter;
-import ru.urvanov.virtualpets.server.dao.UserDao;
-import ru.urvanov.virtualpets.server.dao.domain.User;
-import ru.urvanov.virtualpets.server.service.UserService;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * @author fedya
@@ -25,49 +18,37 @@ import ru.urvanov.virtualpets.server.service.UserService;
  */
 public class DatabaseAuthenticationProvider implements AuthenticationProvider {
 
-    private UserService userService;
+    private static final Logger logger = LoggerFactory.getLogger(DatabaseAuthenticationProvider.class);
+    
+    private UserDetailsService userDetailsService;
+    
+    private BCryptPasswordEncoder bcryptEncoder;
 
     @Override
     public Authentication authenticate(Authentication authentication)
             throws AuthenticationException {
-        User user;
-        try {
-            String password = authentication.getCredentials().toString();
-            MessageDigest md5;
-            try {
-                md5 = MessageDigest.getInstance("MD5");
-            } catch (NoSuchAlgorithmException e) {
-                throw new AuthenticationException(
-                        "MD5 encrypting is not available.", e) {
-
-                    /**
-                      * 
-                      */
-                    private static final long serialVersionUID = 4256048706139297120L;
-                };
+        logger.info("authenticate started.");
+        String password = authentication.getCredentials().toString();
+        String userName = authentication.getName();
+        UserDetails userDetails = userDetailsService
+                .loadUserByUsername(userName);
+        if (userDetails == null) {
+            logger.error("User not found. UserName=" + userName);
+            throw new BadCredentialsException(userName);
+        } else if (!userDetails.isEnabled()) {
+            logger.error("Not enabled.");
+            throw new DisabledException(userName);
+        } else {
+            if (bcryptEncoder.matches(password, userDetails.getPassword())) {
+                UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+                        userDetails, null, userDetails.getAuthorities());
+                logger.info("authenticate finished.");
+                return token;
+            } else {
+                logger.error("Password does not match. UserName=" + userName);
+                throw new BadCredentialsException(userName);
             }
-            String hexPasswordMd5;
-            try {
-                hexPasswordMd5 = (new HexBinaryAdapter()).marshal(md5
-                        .digest(password.getBytes("UTF-8")));
-            } catch (UnsupportedEncodingException e) {
-                throw new AuthenticationException("UnsupportedEncoding", e){
-
-                    /**
-                     * 
-                     */
-                    private static final long serialVersionUID = -6946605296392709613L;};
-            }
-            user = userService.findByLoginAndPassword(authentication.getName(),
-                    hexPasswordMd5);
-        } catch (jakarta.persistence.NoResultException ex) {
-            throw new BadCredentialsException(authentication.getName());
         }
-        Set<GrantedAuthority> granted = new HashSet<GrantedAuthority>();
-        granted.add(new SimpleGrantedAuthority("ROLE_USER"));
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-                user, null, granted);
-        return token;
     }
 
     @Override
@@ -75,12 +56,21 @@ public class DatabaseAuthenticationProvider implements AuthenticationProvider {
         return true;
     }
 
-    public UserService getUserService() {
-        return userService;
+    public UserDetailsService getUserDetailsService() {
+        return userDetailsService;
     }
 
-    public void setUserService(UserService userService) {
-        this.userService = userService;
+    public void setUserDetailsService(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
     }
+
+    public BCryptPasswordEncoder getBcryptEncoder() {
+        return bcryptEncoder;
+    }
+
+    public void setBcryptEncoder(BCryptPasswordEncoder bcryptEncoder) {
+        this.bcryptEncoder = bcryptEncoder;
+    }
+
 
 }

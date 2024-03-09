@@ -1,36 +1,29 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.dao.domain;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Version;
 
 /**
- * @author fedya
- *
+ * Запись строки из таблицы информации о затратах на строительство или
+ * улучшение книжного шкафа.
  */
 @Entity
 @Table(name="bookcase_cost")
 public class BookcaseCost implements Serializable {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 2619627580580783008L;
 
+    /**
+     * Первичный ключ.
+     */
     @Id
-    @Column(name="id")
-    @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
     
     @ManyToOne
@@ -43,71 +36,66 @@ public class BookcaseCost implements Serializable {
     
     @Column(name="cost")
     private Integer cost;
-    
-    @Version
-    @Column(name="version")
-    private int version;
 
-    /**
-     * @return the id
-     */
     public Integer getId() {
         return id;
     }
 
-    /**
-     * @param id the id to set
-     */
     public void setId(Integer id) {
         this.id = id;
     }
 
-    /**
-     * @return the bookcase
-     */
     public Bookcase getBookcase() {
         return bookcase;
     }
 
-    /**
-     * @param bookcase the bookcase to set
-     */
     public void setBookcase(Bookcase bookcase) {
         this.bookcase = bookcase;
     }
 
-    /**
-     * @return the buildingMaterial
-     */
     public BuildingMaterial getBuildingMaterial() {
         return buildingMaterial;
     }
 
-    /**
-     * @param buildingMaterial the buildingMaterial to set
-     */
     public void setBuildingMaterial(BuildingMaterial buildingMaterial) {
         this.buildingMaterial = buildingMaterial;
     }
 
-    /**
-     * @return the cost
-     */
     public Integer getCost() {
         return cost;
     }
 
-    /**
-     * @param cost the cost to set
-     */
     public void setCost(Integer cost) {
         this.cost = cost;
     }
 
-    /**
-     * @return the version
-     */
-    public int getVersion() {
-        return version;
+    @Override
+    public int hashCode() {
+        return Objects.hash(bookcase.getId(), buildingMaterial.getId(), cost);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        BookcaseCost other = (BookcaseCost) obj;
+        return Objects.equals(bookcase.getId(), other.bookcase.getId())
+                && Objects.equals(buildingMaterial.getId(),
+                        other.buildingMaterial.getId())
+                && Objects.equals(cost, other.cost);
+    }
+
+    @Override
+    public String toString() {
+        return "BookcaseCost [id=" + id + ", bookcase.id=" + bookcase.getId()
+                + ", buildingMaterial.id=" + buildingMaterial.getId()
+                + ", cost=" + cost
+                + "]";
+    }
+
+    
 }

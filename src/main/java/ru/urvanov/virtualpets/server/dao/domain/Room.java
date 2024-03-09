@@ -1,9 +1,7 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.dao.domain;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,17 +12,18 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 
 /**
- * @author fedya
- * 
+ * Комната питомца.
  */
 @Entity
 @Table(name = "room")
 public class Room implements Serializable {
-    /**
-     * 
-     */
+
     private static final long serialVersionUID = 2236553964596693179L;
 
+    /**
+     * Первичный ключ комнаты. По совместительству идентификатор питомца, так
+     * как у одного питомца может быть только одна комната.
+     */
     @Id
     @Column(name = "pet_id")
     private Integer petId;
@@ -73,7 +72,7 @@ public class Room implements Serializable {
     
     @Column(name="journal_on_floor")
     private Boolean journalOnFloor = true;
-
+    
     public Integer getPetId() {
         return petId;
     }
@@ -194,5 +193,30 @@ public class Room implements Serializable {
         this.journalOnFloor = journalOnFloor;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(petId);
+    }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Room other = (Room) obj;
+        return Objects.equals(petId, other.petId);
+    }
+
+    @Override
+    public String toString() {
+        return "Room [petId=" + petId + ", boxNewbie1=" + boxNewbie1
+                + ", boxNewbie2=" + boxNewbie2 + ", boxNewbie3=" + boxNewbie3
+                + ", journalOnFloor=" + journalOnFloor + "]";
+    }
+
+
+    
 }

@@ -15,6 +15,9 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -38,7 +41,7 @@ import ru.urvanov.virtualpets.shared.exception.ServiceException;
  * 
  */
 @Service("userService")
-public class UserServiceImpl implements UserService, ru.urvanov.virtualpets.shared.service.UserService {
+public class UserServiceImpl implements UserService, ru.urvanov.virtualpets.shared.service.UserService, UserDetailsService  {
 
     @Autowired
     private UserDao userDao;
@@ -224,8 +227,9 @@ public class UserServiceImpl implements UserService, ru.urvanov.virtualpets.shar
     }
 
     @Override
-    public User findByLoginAndPassword(String name, String hexPasswordMd5) {
-        return userDao.findByLoginAndPassword(name, hexPasswordMd5);
+    public UserDetails loadUserByUsername(String username)
+            throws UsernameNotFoundException {
+        return userDao.findByLogin(username);
     }
 
 }

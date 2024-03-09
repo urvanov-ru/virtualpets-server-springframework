@@ -1,6 +1,7 @@
 package ru.urvanov.virtualpets.server.dao.domain;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,75 +9,67 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.persistence.Version;
 
+/**
+ * Запись из справочника еды.
+ */
 @Entity
 @Table(name = "food")
 public class Food implements Serializable {
-    /**
-     * 
-     */
+
     private static final long serialVersionUID = 8791181701061581183L;
 
+    /**
+     * Первичный ключ. Новые записи в справочник еды добавляются только
+     * скриптами liquibase, поэтому первичный ключ не генерируется ни в БД,
+     * ни в Java-коде.
+     */
     @Id
-    @Column(name = "id")
     private Integer id;
     
+    /**
+     * Натуральный ключ. Код еды.
+     */
     @Enumerated(value = EnumType.STRING)
     @Column(name = "code")
     private FoodType code;
-    
-    @Version
-    @Column(name = "version")
-    private Integer version;
 
-    /**
-     * @return the id
-     */
     public Integer getId() {
         return id;
     }
 
-    /**
-     * @param id the id to set
-     */
     public void setId(Integer id) {
         this.id = id;
     }
 
-    /**
-     * @return the code
-     */
     public FoodType getCode() {
         return code;
     }
 
-    /**
-     * @param code the code to set
-     */
     public void setCode(FoodType code) {
         this.code = code;
     }
 
-    /**
-     * @return the version
-     */
-    public Integer getVersion() {
-        return version;
+    @Override
+    public int hashCode() {
+        return Objects.hash(code);
     }
 
     @Override
-    public int hashCode() {
-        return id == null ? -1 : id.hashCode();
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Food other = (Food) obj;
+        return code == other.code;
     }
-    
+
     @Override
-    public boolean equals(Object other) {
-        if (other instanceof Food) {
-            Food foodOther = (Food)other;
-            if (foodOther.getId() != null && id != null && id.equals(foodOther.getId())) 
-                return true;
-        }
-        return false;
+    public String toString() {
+        return "Food [id=" + id + ", code=" + code + "]";
     }
+
 }

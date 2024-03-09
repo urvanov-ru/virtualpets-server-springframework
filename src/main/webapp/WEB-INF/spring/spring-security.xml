@@ -53,9 +53,12 @@
         <property name="securityContextRepository" ref="securityContextRepository" />
     </bean>
     
+    <bean id = "bcryptEncoder" class = "org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+    
     <bean id="authenticationProvider"
         class="ru.urvanov.virtualpets.server.auth.DatabaseAuthenticationProvider">
-        <property name="userService" ref="userService" />
+        <property name = "userDetailsService" ref = "userService" />
+        <property name = "bcryptEncoder" ref = "bcryptEncoder" />
     </bean>
     
     <security:authentication-manager

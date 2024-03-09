@@ -1,11 +1,7 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.dao.domain;
 
 /**
- * @author fedya
- *
+ * Коды материалов для строительства.
  */
 public enum BuildingMaterialType {
     TIMBER,

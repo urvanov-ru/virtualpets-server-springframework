@@ -1,14 +1,7 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.dao.domain;
 
 import ru.urvanov.virtualpets.shared.domain.LevelInfo;
 
-/**
- * @author fedya
- *
- */
 public class HiddenObjectsReward {
     private FoodType food;
     private Integer clothId;
@@ -19,30 +12,18 @@ public class HiddenObjectsReward {
     private DrinkType drinkType;
     private AchievementCode[] achievements;
 
-    /**
-     * @return the food
-     */
     public FoodType getFood() {
         return food;
     }
 
-    /**
-     * @param food the food to set
-     */
     public void setFood(FoodType food) {
         this.food = food;
     }
 
-    /**
-     * @return the clothId
-     */
     public Integer getClothId() {
         return clothId;
     }
 
-    /**
-     * @param clothId the clothId to set
-     */
     public void setClothId(Integer clothId) {
         this.clothId = clothId;
     }
@@ -95,7 +76,5 @@ public class HiddenObjectsReward {
     public void setDrinkType(DrinkType drinkType) {
         this.drinkType = drinkType;
     }
-
-    
 
 }

@@ -1,10 +1,8 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.dao.domain;
 
 import java.io.Serializable;
 import java.util.Map;
+import java.util.Objects;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -17,81 +15,82 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 
 /**
- * @author fedya
- *
+ * Запись справочника холодильников.
  */
 @Entity
 @Table(name = "refrigerator")
 public class Refrigerator implements Serializable {
     
-    /**
-     * 
-     */
     private static final long serialVersionUID = -6335332962524762996L;
 
+    /**
+     * Первичный ключ. Новые записи в справочник холодильников добавляются
+     * только скриптами liqubiase, поэтому первичный ключ не генерируется
+     * ни в БД, ни в Java-коде.
+     */
     @Id
-    @Column(name = "id")
     private Integer id;
     
+    /**
+     * Максимальный индекс еды из перечисления {@link FoodType},
+     * который может храниться в этом холодильнике.
+     */
     @Column(name = "max_food_type")
     private int maxFoodType;
     
-    @Version
-    @Column(name  = "version")
-    private Integer version;
-    
+    /**
+     * Количество ресурсов, необходимое для строительства / улучшения
+     * холодильника.
+     */
     @OneToMany(mappedBy = "refrigerator", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @MapKey(name="buildingMaterial")
     private Map<BuildingMaterial, RefrigeratorCost> refrigeratorCost;
 
-    /**
-     * @return the id
-     */
     public Integer getId() {
         return id;
     }
 
-    /**
-     * @param id the id to set
-     */
     public void setId(Integer id) {
         this.id = id;
     }
 
-    /**
-     * @return the maxFoodType
-     */
     public int getMaxFoodType() {
         return maxFoodType;
     }
 
-    /**
-     * @param maxFoodType the maxFoodType to set
-     */
     public void setMaxFoodType(int maxFoodType) {
         this.maxFoodType = maxFoodType;
     }
 
-    /**
-     * @return the version
-     */
-    public Integer getVersion() {
-        return version;
-    }
-
-    /**
-     * @return the refrigeratorCost
-     */
     public Map<BuildingMaterial, RefrigeratorCost> getRefrigeratorCost() {
         return refrigeratorCost;
     }
 
-    /**
-     * @param refrigeratorCost the refrigeratorCost to set
-     */
     public void setRefrigeratorCost(
             Map<BuildingMaterial, RefrigeratorCost> refrigeratorCost) {
         this.refrigeratorCost = refrigeratorCost;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Refrigerator other = (Refrigerator) obj;
+        return Objects.equals(id, other.id);
+    }
+
+    @Override
+    public String toString() {
+        return "Refrigerator [id=" + id + ", maxFoodType=" + maxFoodType + "]";
     }
 
 }

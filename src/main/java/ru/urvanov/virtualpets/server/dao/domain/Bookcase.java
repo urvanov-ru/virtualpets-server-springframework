@@ -1,10 +1,8 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.dao.domain;
 
 import java.io.Serializable;
 import java.util.Map;
+import java.util.Objects;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -14,64 +12,64 @@ import jakarta.persistence.Id;
 import jakarta.persistence.MapKey;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Version;
+
 /**
- * @author fedya
- *
+ * Книжный шкаф.
  */
 @Entity
 @Table(name="bookcase")
 public class Bookcase implements Serializable {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 6636132588014164542L;
 
+    /**
+     * Первичный ключ. Новые записи в справочнике книжных шкафов добавляются
+     * только скриптами liquibase, поэтому первичные ключи не генерируются
+     * ни в БД, ни в Java-коде.
+     */
     @Id
-    @Column(name="id")
     private Integer id;
-    
-    @Version
-    @Column(name="version")
-    private int version;
 
     @OneToMany(mappedBy = "bookcase", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @MapKey(name="buildingMaterial")
     private Map<BuildingMaterial, BookcaseCost> bookcaseCost;
-    /**
-     * @return the id
-     */
+
     public Integer getId() {
         return id;
     }
 
-    /**
-     * @param id the id to set
-     */
     public void setId(Integer id) {
         this.id = id;
     }
 
-    /**
-     * @return the version
-     */
-    public int getVersion() {
-        return version;
-    }
-
-    /**
-     * @return the bookcaseCost
-     */
     public Map<BuildingMaterial, BookcaseCost> getBookcaseCost() {
         return bookcaseCost;
     }
 
-    /**
-     * @param bookcaseCost the bookcaseCost to set
-     */
     public void setBookcaseCost(Map<BuildingMaterial, BookcaseCost> bookcaseCost) {
         this.bookcaseCost = bookcaseCost;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Bookcase other = (Bookcase) obj;
+        return Objects.equals(id, other.id);
+    }
+
+    @Override
+    public String toString() {
+        return "Bookcase [id=" + id + "]";
     }
 
 }

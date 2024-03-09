@@ -1,36 +1,29 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.dao.domain;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Version;
 
 /**
- * @author fedya
- *
+ * Запись о количестве строительного материала, необходимого для
+ * постройки / улучшения холодильника.
  */
 @Entity
 @Table(name="refrigerator_cost")
 public class RefrigeratorCost implements Serializable {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -4597700957457308301L;
 
+    /**
+     * Первичный ключ.
+     */
     @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     
     @ManyToOne
@@ -44,71 +37,66 @@ public class RefrigeratorCost implements Serializable {
     @Column(name="cost")
     private Integer cost;
     
-    @Column
-    @Version
-    private Integer version;
-
-    /**
-     * @return the id
-     */
     public Integer getId() {
         return id;
     }
 
-    /**
-     * @param id the id to set
-     */
     public void setId(Integer id) {
         this.id = id;
     }
 
-    /**
-     * @return the refrigerator
-     */
     public Refrigerator getRefrigerator() {
         return refrigerator;
     }
 
-    /**
-     * @param refrigerator the refrigerator to set
-     */
     public void setRefrigerator(Refrigerator refrigerator) {
         this.refrigerator = refrigerator;
     }
 
-    /**
-     * @return the buildingMaterial
-     */
     public BuildingMaterial getBuildingMaterial() {
         return buildingMaterial;
     }
 
-    /**
-     * @param buildingMaterial the buildingMaterial to set
-     */
     public void setBuildingMaterial(BuildingMaterial buildingMaterial) {
         this.buildingMaterial = buildingMaterial;
     }
 
-    /**
-     * @return the cost
-     */
     public Integer getCost() {
         return cost;
     }
 
-    /**
-     * @param cost the cost to set
-     */
     public void setCost(Integer cost) {
         this.cost = cost;
     }
 
-    /**
-     * @return the version
-     */
-    public Integer getVersion() {
-        return version;
+    @Override
+    public int hashCode() {
+        return Objects.hash(buildingMaterial.getId(), cost,
+                refrigerator.getId());
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        RefrigeratorCost other = (RefrigeratorCost) obj;
+        return Objects.equals(buildingMaterial.getId(),
+                other.buildingMaterial.getId())
+                && Objects.equals(cost, other.cost)
+                && Objects.equals(refrigerator, other.refrigerator);
+    }
+
+    @Override
+    public String toString() {
+        return "RefrigeratorCost [id=" + id
+                + ", refrigerator.id=" + refrigerator.getId()
+                + ", buildingMaterial.id=" + buildingMaterial.getId()
+                + ", cost=" + cost + "]";
+    }
+
+    
 }

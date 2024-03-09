@@ -2,10 +2,10 @@ package ru.urvanov.virtualpets.server.dao.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -15,20 +15,22 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 
+/**
+ * Запись о добавленной записи в журнал питомца.
+ */
 @Entity
 @Table(name="pet_journal_entry")
 public class PetJournalEntry implements Serializable {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 2334211168307341971L;
 
+    /**
+     * Первичный ключ. Генерируемый.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="pet_journal_entry_seq")
     @SequenceGenerator(name="pet_journal_entry_seq",
         sequenceName="pet_journal_entry_id_seq", allocationSize=1)
-    @Column(name="id")
     private Integer id;
     
     @Column(name = "created_at")
@@ -46,8 +48,10 @@ public class PetJournalEntry implements Serializable {
     @Column
     private Boolean readed = false;
     
+    /**
+     * Для оптимистичной блокировки.
+     */
     @Version
-    @Column(name="version")
     private Integer version;
 
     public Integer getId() {
@@ -96,6 +100,36 @@ public class PetJournalEntry implements Serializable {
 
     public void setReaded(Boolean readed) {
         this.readed = readed;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(createdAt, journalEntry, pet, readed);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        PetJournalEntry other = (PetJournalEntry) obj;
+        return Objects.equals(createdAt, other.createdAt)
+                && Objects.equals(journalEntry.getId(), other.journalEntry.getId())
+                && Objects.equals(pet.getId(), other.pet.getId())
+                && Objects.equals(readed, other.readed);
+    }
+
+    @Override
+    public String toString() {
+        return "PetJournalEntry [id=" + id
+                + ", createdAt=" + createdAt
+                + ", journalEntry.id=" + journalEntry.getId()
+                + ", pet.id=" + pet.getId()
+                + ", readed=" + readed
+                + ", version=" + version + "]";
     }
     
     

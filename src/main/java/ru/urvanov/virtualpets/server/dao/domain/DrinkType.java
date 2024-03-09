@@ -1,5 +1,8 @@
 package ru.urvanov.virtualpets.server.dao.domain;
 
+/**
+ * Код напитка.
+ */
 public enum DrinkType {
     WATER,
     MILK,

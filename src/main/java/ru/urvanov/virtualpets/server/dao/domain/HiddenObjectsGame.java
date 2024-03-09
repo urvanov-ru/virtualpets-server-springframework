@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.dao.domain;
 
 import java.util.ArrayList;
@@ -10,16 +7,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author fedya
- *
+ * Состояние игры с поиском скрытых предметов.
  */
 public class HiddenObjectsGame {
     public static final int COUNT_DISPLAYABLE_OBJECTS = 4;
     public static final int MAX_PLAYERS_COUNT = 4;
     
-    /**
-     * Ключ - идентификатор пользователя.
-     */
     private Map<Integer, HiddenObjectsPlayer> players = new HashMap<Integer, HiddenObjectsPlayer>();
     private List<Integer> objects = new ArrayList<Integer>();
     private List<HiddenObjectsCollected> collectedObjects = new ArrayList<HiddenObjectsCollected>();
@@ -62,30 +55,18 @@ public class HiddenObjectsGame {
         this.objects = objects;
     }
     
-    /**
-     * @param player Информация и игроке.
-     */
     public void addPlayer(HiddenObjectsPlayer player) {
         players.put(player.getUserId(), player);
     }
     
-    /**
-     * @param id Идентификатор пользователя.
-     */
     public void removePlayer(Integer id) {
         players.remove(id);
     }
 
-    /**
-     * @return the started
-     */
     public boolean isStarted() {
         return started;
     }
 
-    /**
-     * @param started the started to set
-     */
     public void setStarted(boolean started) {
         this.started = started;
     }
@@ -119,30 +100,18 @@ public class HiddenObjectsGame {
         return objects.size();
     }
 
-    /**
-     * @return the gameOver
-     */
     public boolean isGameOver() {
         return gameOver;
     }
 
-    /**
-     * @param gameOver the gameOver to set
-     */
     public void setGameOver(boolean gameOver) {
         this.gameOver = gameOver;
     }
 
-    /**
-     * @return the startTime
-     */
     public Calendar getStartTime() {
         return startTime;
     }
 
-    /**
-     * @param startTime the startTime to set
-     */
     public void setStartTime(Calendar startTime) {
         this.startTime = startTime;
     }

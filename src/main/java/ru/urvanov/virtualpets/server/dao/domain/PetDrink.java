@@ -1,6 +1,7 @@
 package ru.urvanov.virtualpets.server.dao.domain;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,15 +14,18 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 
+/**
+ * Запись о количестве напитка у питомца.
+ */
 @Entity
 @Table(name="pet_drink")
 public class PetDrink implements Serializable {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -8225590371680345671L;
 
+    /**
+     * Первичный ключ. Генерируемый.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="pet_drink_seq")
     @SequenceGenerator(name="pet_drink_seq",
@@ -39,6 +43,9 @@ public class PetDrink implements Serializable {
     @Column(name = "drink_count")
     private Integer drinkCount;
 
+    /**
+     * Для оптимистичной блокировки.
+     */
     @Version
     @Column(name = "version")
     private Integer version;
@@ -81,6 +88,33 @@ public class PetDrink implements Serializable {
 
     public void setVersion(Integer version) {
         this.version = version;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(drink.getId(), drinkCount, pet.getId());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        PetDrink other = (PetDrink) obj;
+        return Objects.equals(drink.getId(), other.drink.getId())
+                && Objects.equals(drinkCount, other.drinkCount)
+                && Objects.equals(pet.getId(), other.pet.getId());
+    }
+
+    @Override
+    public String toString() {
+        return "PetDrink [id=" + id + ", pet.id=" + pet.getId()
+                + ", drink.id=" + drink.getId()
+                + ", drinkCount=" + drinkCount
+                + ", version=" + version + "]";
     }
 
 }
