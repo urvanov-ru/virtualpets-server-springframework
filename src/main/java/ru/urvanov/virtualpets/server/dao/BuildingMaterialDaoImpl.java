@@ -33,7 +33,7 @@ public class BuildingMaterialDaoImpl implements BuildingMaterialDao {
      * @see ru.urvanov.virtualpets.server.dao.BuildingMaterialDao#findById(java.lang.Integer)
      */
     @Override
-    public BuildingMaterial findById(Integer id) {
+    public BuildingMaterial findById(BuildingMaterialType id) {
         return em.find(BuildingMaterial.class, id);
     }
 
@@ -57,7 +57,7 @@ public class BuildingMaterialDaoImpl implements BuildingMaterialDao {
         CriteriaQuery<BuildingMaterial> criteriaQuery = criteriaBuilder.createQuery(BuildingMaterial.class);
         Root<BuildingMaterial> rootBuildingMaterial = criteriaQuery.from(BuildingMaterial.class);
         criteriaQuery.select(rootBuildingMaterial);
-        Predicate predicate = criteriaBuilder.equal(rootBuildingMaterial.get(BuildingMaterial_.code), code);
+        Predicate predicate = criteriaBuilder.equal(rootBuildingMaterial.get(BuildingMaterial_.id), code);
         criteriaQuery.where(predicate);
         TypedQuery<BuildingMaterial> query = em.createQuery(criteriaQuery);
         List<BuildingMaterial> lst = query.getResultList();
@@ -66,6 +66,12 @@ public class BuildingMaterialDaoImpl implements BuildingMaterialDao {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public BuildingMaterial getReference(
+            BuildingMaterialType id) {
+        return em.getReference(BuildingMaterial.class, id);
     }
 
 }

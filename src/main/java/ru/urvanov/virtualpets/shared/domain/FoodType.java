@@ -1,12 +1,5 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.shared.domain;
 
-/**
- * @author fedya
- *
- */
 public enum FoodType {
     CARROT,
     DRY_FOOD,

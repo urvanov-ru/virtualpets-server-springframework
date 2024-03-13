@@ -25,35 +25,53 @@ public class Drink implements Serializable {
      * ни в Java-коде.
      */
     @Id
-    private Integer id;
-
-    /**
-     * Натуральный ключ. Код напитка.
-     */
     @Enumerated(EnumType.STRING)
-    @Column(name = "code")
-    private DrinkType drinkType;
+    private DrinkType id;
 
+    @Column(name = "machine_with_drinks_level")
+    private int machineWithDrinksLevel;
+    
+    @Column(name = "machine_with_drinks_order")
+    private int machineWithDrinksOrder;
+    
+    @Column(name = "hidden_objects_game_drop_rate")
+    private float hiddenObjectsGameDropRate;
 
-    public Integer getId() {
+    public DrinkType getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public int getMachineWithDrinksLevel() {
+        return machineWithDrinksLevel;
+    }
+
+    public void setMachineWithDrinksLevel(int machineWithDrinksLevel) {
+        this.machineWithDrinksLevel = machineWithDrinksLevel;
+    }
+
+    public int getMachineWithDrinksOrder() {
+        return machineWithDrinksOrder;
+    }
+
+    public void setMachineWithDrinksOrder(int machineWithDrinksOrder) {
+        this.machineWithDrinksOrder = machineWithDrinksOrder;
+    }
+
+    public float getHiddenObjectsGameDropRate() {
+        return hiddenObjectsGameDropRate;
+    }
+
+    public void setHiddenObjectsGameDropRate(float hiddenObjectsGameDropRate) {
+        this.hiddenObjectsGameDropRate = hiddenObjectsGameDropRate;
+    }
+
+    public void setId(DrinkType id) {
         this.id = id;
-    }
-
-    public DrinkType getDrinkType() {
-        return drinkType;
-    }
-
-    public void setDrinkType(DrinkType drinkType) {
-        this.drinkType = drinkType;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(drinkType);
+        return Objects.hash(id);
     }
 
     @Override
@@ -65,13 +83,14 @@ public class Drink implements Serializable {
         if (getClass() != obj.getClass())
             return false;
         Drink other = (Drink) obj;
-        return drinkType == other.drinkType;
+        return id == other.id;
     }
 
     @Override
     public String toString() {
-        return "Drink [id=" + id + ", drinkType=" + drinkType + "]";
+        return "Drink [id=" + id + ", machineWithDrinksLevel="
+                + machineWithDrinksLevel + ", machineWithDrinksOrder="
+                + machineWithDrinksOrder + ", hiddenObjectsGameDropRate="
+                + hiddenObjectsGameDropRate + "]";
     }
-
-    
 }

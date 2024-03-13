@@ -5,6 +5,8 @@ import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,9 +34,9 @@ public class PetAchievement implements Serializable {
         sequenceName="pet_achievement_id_seq", allocationSize=1)
     private Integer id;
     
-    @ManyToOne
-    @JoinColumn(name="achievement_id")
-    private Achievement achievement;
+    @Column(name = "achievement_id")
+    @Enumerated(EnumType.STRING)
+    private AchievementCode achievement;
     
     @ManyToOne
     @JoinColumn(name = "pet_id")
@@ -51,7 +53,7 @@ public class PetAchievement implements Serializable {
      */
     @Version
     private Integer version;
-    
+
     public Integer getId() {
         return id;
     }
@@ -60,11 +62,11 @@ public class PetAchievement implements Serializable {
         this.id = id;
     }
 
-    public Achievement getAchievement() {
+    public AchievementCode getAchievement() {
         return achievement;
     }
 
-    public void setAchievement(Achievement achievement) {
+    public void setAchievement(AchievementCode achievement) {
         this.achievement = achievement;
     }
 
@@ -75,10 +77,6 @@ public class PetAchievement implements Serializable {
     public void setPet(Pet pet) {
         this.pet = pet;
     }
-    
-    public Integer getVersion() {
-        return version;
-    }
 
     public Boolean getWasShown() {
         return wasShown;
@@ -88,9 +86,17 @@ public class PetAchievement implements Serializable {
         this.wasShown = wasShown;
     }
 
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
     @Override
     public int hashCode() {
-        return Objects.hash(achievement, pet, wasShown);
+        return Objects.hash(id);
     }
 
     @Override
@@ -102,18 +108,15 @@ public class PetAchievement implements Serializable {
         if (getClass() != obj.getClass())
             return false;
         PetAchievement other = (PetAchievement) obj;
-        return Objects.equals(achievement.getId(), other.achievement.getId())
-                && Objects.equals(pet.getId(), other.pet.getId())
-                && Objects.equals(wasShown, other.wasShown);
+        return Objects.equals(id, other.id);
     }
 
     @Override
     public String toString() {
-        return "PetAchievement [id=" + id
-                + ", achievement.id=" + achievement.getId()
-                + ", pet.id=" + pet.getId()
-                + ", wasShown=" + wasShown + ", version="
+        return "PetAchievement [id=" + id + ", achievement=" + achievement
+                + ", pet=" + pet + ", wasShown=" + wasShown + ", version="
                 + version + "]";
     }
-
+    
+    
 }

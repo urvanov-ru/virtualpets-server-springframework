@@ -41,7 +41,7 @@ public class PetBuildingMaterial implements Serializable {
     private BuildingMaterial buildingMaterial;
     
     @Column(name = "building_material_count")
-    private Integer buildingMaterialCount;
+    private int buildingMaterialCount;
     
     @Version
     private Integer version;
@@ -70,11 +70,11 @@ public class PetBuildingMaterial implements Serializable {
         this.buildingMaterial = buildingMaterial;
     }
 
-    public Integer getBuildingMaterialCount() {
+    public int getBuildingMaterialCount() {
         return buildingMaterialCount;
     }
 
-    public void setBuildingMaterialCount(Integer buildingMaterialCount) {
+    public void setBuildingMaterialCount(int buildingMaterialCount) {
         this.buildingMaterialCount = buildingMaterialCount;
     }
 

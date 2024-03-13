@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -24,20 +25,23 @@ public class Cloth implements Serializable {
      * в БД, ни в Java-коде.
      */
     @Id
-    private Integer id;
+    private String id;
     
     /**
-     * Натуральный ключ. Код одежды.
+     * Тип одежды.
      */
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     @Column(name="cloth_type")
     private ClothType clothType;
 
-    public Integer getId() {
+    @Column(name = "wardrobe_order")
+    private int wardrobeOrder;
+    
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -48,10 +52,18 @@ public class Cloth implements Serializable {
     public void setClothType(ClothType clothType) {
         this.clothType = clothType;
     }
+    
+    public int getWardrobeOrder() {
+        return wardrobeOrder;
+    }
+
+    public void setWardrobeOrder(int wardrobeOrder) {
+        this.wardrobeOrder = wardrobeOrder;
+    }
 
     @Override
     public int hashCode() {
-        return Objects.hash(clothType);
+        return Objects.hash(id);
     }
 
     @Override
@@ -63,13 +75,13 @@ public class Cloth implements Serializable {
         if (getClass() != obj.getClass())
             return false;
         Cloth other = (Cloth) obj;
-        return clothType == other.clothType;
+        return Objects.equals(id, other.id);
     }
 
     @Override
     public String toString() {
-        return "Cloth [id=" + id + ", clothType=" + clothType + "]";
+        return "Cloth [id=" + id + ", clothType=" + clothType
+                + ", wardrobeOrder=" + wardrobeOrder + "]";
     }
-
 
 }

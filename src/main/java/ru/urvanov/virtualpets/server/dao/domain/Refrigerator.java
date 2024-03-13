@@ -7,12 +7,13 @@ import java.util.Objects;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
-import jakarta.persistence.MapKey;
+import jakarta.persistence.MapKeyColumn;
+import jakarta.persistence.MapKeyEnumerated;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Version;
 
 /**
  * Запись справочника холодильников.
@@ -43,8 +44,9 @@ public class Refrigerator implements Serializable {
      * холодильника.
      */
     @OneToMany(mappedBy = "refrigerator", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @MapKey(name="buildingMaterial")
-    private Map<BuildingMaterial, RefrigeratorCost> refrigeratorCost;
+    @MapKeyEnumerated(EnumType.STRING)
+    @MapKeyColumn(name = "building_material_id")
+    private Map<BuildingMaterialType, RefrigeratorCost> refrigeratorCost;
 
     public Integer getId() {
         return id;
@@ -62,12 +64,12 @@ public class Refrigerator implements Serializable {
         this.maxFoodType = maxFoodType;
     }
 
-    public Map<BuildingMaterial, RefrigeratorCost> getRefrigeratorCost() {
+    public Map<BuildingMaterialType, RefrigeratorCost> getRefrigeratorCost() {
         return refrigeratorCost;
     }
 
     public void setRefrigeratorCost(
-            Map<BuildingMaterial, RefrigeratorCost> refrigeratorCost) {
+            Map<BuildingMaterialType, RefrigeratorCost> refrigeratorCost) {
         this.refrigeratorCost = refrigeratorCost;
     }
 

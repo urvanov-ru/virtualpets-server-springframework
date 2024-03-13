@@ -39,7 +39,7 @@ public class PetFood implements Serializable {
     private Food food;
 
     @Column(name = "food_count")
-    private Integer foodCount;
+    private int foodCount;
 
     /**
      * Для оптимистичной блокировки.
@@ -71,11 +71,11 @@ public class PetFood implements Serializable {
         this.food = food;
     }
 
-    public Integer getFoodCount() {
+    public int getFoodCount() {
         return foodCount;
     }
 
-    public void setFoodCount(Integer foodCount) {
+    public void setFoodCount(int foodCount) {
         this.foodCount = foodCount;
     }
 

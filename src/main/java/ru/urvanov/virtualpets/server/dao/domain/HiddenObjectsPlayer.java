@@ -7,9 +7,9 @@ public class HiddenObjectsPlayer {
     private String petName;
     private int score = 0;
     private HiddenObjectsReward reward;
-    private Integer hatId;
-    private Integer clothId;
-    private Integer bowId;
+    private String hatId;
+    private String clothId;
+    private String bowId;
     
     public Integer getUserId() {
         return userId;
@@ -59,27 +59,27 @@ public class HiddenObjectsPlayer {
         this.reward = reward;
     }
 
-    public Integer getHatId() {
+    public String getHatId() {
         return hatId;
     }
 
-    public void setHatId(Integer hatId) {
+    public void setHatId(String hatId) {
         this.hatId = hatId;
     }
 
-    public Integer getClothId() {
+    public String getClothId() {
         return clothId;
     }
 
-    public void setClothId(Integer clothId) {
+    public void setClothId(String clothId) {
         this.clothId = clothId;
     }
 
-    public Integer getBowId() {
+    public String getBowId() {
         return bowId;
     }
 
-    public void setBowId(Integer bowId) {
+    public void setBowId(String bowId) {
         this.bowId = bowId;
     }
     

@@ -25,35 +25,75 @@ public class BuildingMaterial implements Serializable {
      * ни в Java-коде.
      */
     @Id
-    private Integer id;
+    @Enumerated(EnumType.STRING)
+    private BuildingMaterialType id;
 
-    /**
-     * Натуральный ключ. Код материала.
-     */
-    @Column(name = "code")
-    @Enumerated(value = EnumType.STRING)
-    private BuildingMaterialType code;
+    @Column(name = "rucksack_order")
+    private int rucksackOrder;
+    
+    @Column(name = "newbie_box_drop_min")
+    private int newbieBoxDropMin;
+    
+    @Column(name = "newbie_box_drop_max")
+    private int newbieBoxDropMax;
+    
+    @Column(name = "newbie_box_drop_rate")
+    private float newbieBoxDropRate;
+    
+    @Column(name = "hidden_objects_game_drop_rate")
+    private float hiddenObjectsGameDropRate;
 
-    public Integer getId() {
+    public BuildingMaterialType getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(BuildingMaterialType id) {
         this.id = id;
     }
 
-    public BuildingMaterialType getCode() {
-        return code;
+    public int getRucksackOrder() {
+        return rucksackOrder;
     }
 
-    public void setCode(BuildingMaterialType code) {
-        this.code = code;
+    public void setRucksackOrder(int rucksackOrder) {
+        this.rucksackOrder = rucksackOrder;
     }
 
+    public int getNewbieBoxDropMin() {
+        return newbieBoxDropMin;
+    }
+
+    public void setNewbieBoxDropMin(int newbieBoxDropMin) {
+        this.newbieBoxDropMin = newbieBoxDropMin;
+    }
+
+    public int getNewbieBoxDropMax() {
+        return newbieBoxDropMax;
+    }
+
+    public void setNewbieBoxDropMax(int newbieBoxDropMax) {
+        this.newbieBoxDropMax = newbieBoxDropMax;
+    }
+
+    public float getNewbieBoxDropRate() {
+        return newbieBoxDropRate;
+    }
+
+    public void setNewbieBoxDropRate(float newbieBoxDropRate) {
+        this.newbieBoxDropRate = newbieBoxDropRate;
+    }
+
+    public float getHiddenObjectsGameDropRate() {
+        return hiddenObjectsGameDropRate;
+    }
+
+    public void setHiddenObjectsGameDropRate(float hiddenObjectsGameDropRate) {
+        this.hiddenObjectsGameDropRate = hiddenObjectsGameDropRate;
+    }
 
     @Override
     public int hashCode() {
-        return Objects.hash(code);
+        return Objects.hash(id);
     }
 
     @Override
@@ -65,13 +105,17 @@ public class BuildingMaterial implements Serializable {
         if (getClass() != obj.getClass())
             return false;
         BuildingMaterial other = (BuildingMaterial) obj;
-        return code == other.code;
+        return id == other.id;
     }
 
     @Override
     public String toString() {
-        return "BuildingMaterial [id=" + id + ", code=" + code +  "]";
+        return "BuildingMaterial [id=" + id + ", rucksackOrder=" + rucksackOrder
+                + ", newbieBoxDropMin=" + newbieBoxDropMin
+                + ", newbieBoxDropMax=" + newbieBoxDropMax
+                + ", newbieBoxDropRate=" + newbieBoxDropRate
+                + ", hiddenObjectsGameDropRate=" + hiddenObjectsGameDropRate
+                + "]";
     }
 
-    
 }

@@ -109,10 +109,6 @@ public class Room implements Serializable {
         return version;
     }
 
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
-
     public Bookcase getBookcase() {
         return bookcase;
     }

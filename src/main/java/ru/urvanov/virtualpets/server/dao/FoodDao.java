@@ -13,4 +13,5 @@ import ru.urvanov.virtualpets.server.dao.domain.FoodType;
 public interface FoodDao {
     public Food findById(Integer id);
     public Food findByCode(FoodType code);
+    public Food getReference(FoodType id);
 }

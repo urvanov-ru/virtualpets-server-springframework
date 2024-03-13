@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import ru.urvanov.virtualpets.server.dao.AchievementDao;
 import ru.urvanov.virtualpets.server.dao.BookDao;
 import ru.urvanov.virtualpets.server.dao.BuildingMaterialDao;
 import ru.urvanov.virtualpets.server.dao.ClothDao;
@@ -31,14 +30,11 @@ import ru.urvanov.virtualpets.server.dao.PetDao;
 import ru.urvanov.virtualpets.server.dao.PetFoodDao;
 import ru.urvanov.virtualpets.server.dao.RoomDao;
 import ru.urvanov.virtualpets.server.dao.UserDao;
-import ru.urvanov.virtualpets.server.dao.domain.Achievement;
 import ru.urvanov.virtualpets.server.dao.domain.AchievementCode;
 import ru.urvanov.virtualpets.server.dao.domain.Book;
 import ru.urvanov.virtualpets.server.dao.domain.Bookcase;
-import ru.urvanov.virtualpets.server.dao.domain.BuildingMaterial;
 import ru.urvanov.virtualpets.server.dao.domain.BuildingMaterialType;
 import ru.urvanov.virtualpets.server.dao.domain.Cloth;
-import ru.urvanov.virtualpets.server.dao.domain.Drink;
 import ru.urvanov.virtualpets.server.dao.domain.DrinkType;
 import ru.urvanov.virtualpets.server.dao.domain.FoodType;
 import ru.urvanov.virtualpets.server.dao.domain.HiddenObjectsCollected;
@@ -114,9 +110,9 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsService {
 
     @Autowired
     private BuildingMaterialDao buildingMaterialDao;
-
-    @Autowired
-    private AchievementDao achievementDao;
+//
+//    @Autowired
+//    private AchievementDao achievementDao;
 
     private Map<Integer, HiddenObjectsGame> games = new HashMap<Integer, HiddenObjectsGame>();
     private Map<Integer, HiddenObjectsGame> finishedGames = new HashMap<Integer, HiddenObjectsGame>();
@@ -491,19 +487,17 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsService {
                     reward.setClothId(clothId);
                 }
                 if (buildingMaterialType != null) {
-                    Map<BuildingMaterial, PetBuildingMaterial> mapBuildingMaterials = fullPet
+                    Map<BuildingMaterialType, PetBuildingMaterial> mapBuildingMaterials = fullPet
                             .getBuildingMaterials();
-                    BuildingMaterial buildingMaterial = buildingMaterialDao
-                            .findByCode(buildingMaterialType);
                     PetBuildingMaterial petBuildingMaterial = mapBuildingMaterials
-                            .get(buildingMaterial);
+                            .get(buildingMaterialType);
                     if (petBuildingMaterial == null) {
                         petBuildingMaterial = new PetBuildingMaterial();
                         petBuildingMaterial
-                                .setBuildingMaterial(buildingMaterial);
+                                .setBuildingMaterial(buildingMaterialDao.findById(buildingMaterialType));
                         petBuildingMaterial.setPet(fullPet);
                         petBuildingMaterial.setBuildingMaterialCount(0);
-                        fullPet.getBuildingMaterials().put(buildingMaterial,
+                        fullPet.getBuildingMaterials().put(buildingMaterialType,
                                 petBuildingMaterial);
                     }
                     petBuildingMaterial
@@ -511,15 +505,14 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsService {
                                     .getBuildingMaterialCount() + 1);
                 }
                 if (drinkType != null) {
-                    Map<Drink, PetDrink> mapDrinks = fullPet.getDrinks();
-                    Drink drink = drinkDao.findByCode(drinkType);
-                    PetDrink petDrink = mapDrinks.get(drink);
+                    Map<DrinkType, PetDrink> mapDrinks = fullPet.getDrinks();
+                    PetDrink petDrink = mapDrinks.get(drinkType);
                     if (petDrink == null) {
                         petDrink = new PetDrink();
-                        petDrink.setDrink(drink);
+                        petDrink.setDrink(drinkDao.findByCode(drinkType));
                         petDrink.setPet(fullPet);
                         petDrink.setDrinkCount(0);
-                        fullPet.getDrinks().put(drink, petDrink);
+                        fullPet.getDrinks().put(drinkType, petDrink);
                     }
                     petDrink.setDrinkCount(petDrink.getDrinkCount() + 1);
                 }
@@ -539,24 +532,18 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsService {
                 if (fullPet.getHiddenObjectsGameCount() < Integer.MAX_VALUE)
                     fullPet.setHiddenObjectsGameCount(fullPet
                             .getHiddenObjectsGameCount() + 1);
-                Achievement achievementHiddenObjectsGame1 = achievementDao
-                        .findByCode(AchievementCode.HIDDEN_OBJECTS_GAME_1);
-                Achievement achievementHiddenObjectsGame10 = achievementDao
-                        .findByCode(AchievementCode.HIDDEN_OBJECTS_GAME_10);
-                Achievement achievementHiddenObjectsGame100 = achievementDao
-                        .findByCode(AchievementCode.HIDDEN_OBJECTS_GAME_100);
                 if (fullPet.getHiddenObjectsGameCount().equals(
                         Integer.valueOf(1)))
                     petService.addAchievementIfNot(fullPet,
-                            achievementHiddenObjectsGame1);
+                            AchievementCode.HIDDEN_OBJECTS_GAME_1);
                 if (fullPet.getHiddenObjectsGameCount().equals(
                         Integer.valueOf(10)))
                     petService.addAchievementIfNot(fullPet,
-                            achievementHiddenObjectsGame10);
+                            AchievementCode.HIDDEN_OBJECTS_GAME_10);
                 if (fullPet.getHiddenObjectsGameCount().equals(
                         Integer.valueOf(100)))
                     petService.addAchievementIfNot(fullPet,
-                            achievementHiddenObjectsGame100);
+                            AchievementCode.HIDDEN_OBJECTS_GAME_100);
 
                 
                 int experienceReward = 1;
@@ -777,14 +764,6 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsService {
 
     public void setBuildingMaterialDao(BuildingMaterialDao buildingMaterialDao) {
         this.buildingMaterialDao = buildingMaterialDao;
-    }
-
-    public AchievementDao getAchievementDao() {
-        return achievementDao;
-    }
-
-    public void setAchievementDao(AchievementDao achievementDao) {
-        this.achievementDao = achievementDao;
     }
 
     public Map<Integer, HiddenObjectsGame> getGames() {

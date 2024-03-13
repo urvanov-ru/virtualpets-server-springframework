@@ -41,7 +41,7 @@ public class PetDrink implements Serializable {
     private Drink drink;
 
     @Column(name = "drink_count")
-    private Integer drinkCount;
+    private int drinkCount;
 
     /**
      * Для оптимистичной блокировки.
@@ -74,20 +74,16 @@ public class PetDrink implements Serializable {
         this.drink = drink;
     }
 
-    public Integer getDrinkCount() {
+    public int getDrinkCount() {
         return drinkCount;
     }
 
-    public void setDrinkCount(Integer drinkCount) {
+    public void setDrinkCount(int drinkCount) {
         this.drinkCount = drinkCount;
     }
 
     public Integer getVersion() {
         return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
     }
 
     @Override

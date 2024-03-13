@@ -15,7 +15,7 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     @Transactional(readOnly = true)
-    public Book findById(Integer id) {
+    public Book findById(String id) {
         return em.find(Book.class, id);
     }
 

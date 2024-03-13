@@ -1,31 +1,22 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.shared.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * @author fedya
- *
- */
 public class GetPetBooksResult implements Serializable {
 
-    
-    /**
-     * 
-     */
     private static final long serialVersionUID = -5317436753255391619L;
-    private boolean[] books;
+    
+    private List<Book> books = new ArrayList<>();
 
-    public boolean[] getBooks() {
+    public List<Book> getBooks() {
         return books;
     }
 
-    public void setBooks(boolean[] books) {
+    public void setBooks(List<Book> books) {
         this.books = books;
     }
     
     
-
 }

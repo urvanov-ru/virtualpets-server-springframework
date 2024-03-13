@@ -141,12 +141,6 @@
         
         <dependency>
             <groupId>ru.urvanov.virtualpets</groupId>
-            <artifactId>virtualpets-shared</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>ru.urvanov.virtualpets</groupId>
             <artifactId>fileinfo</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>

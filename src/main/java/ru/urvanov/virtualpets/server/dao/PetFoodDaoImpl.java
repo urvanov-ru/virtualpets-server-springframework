@@ -118,7 +118,7 @@ public class PetFoodDaoImpl implements PetFoodDao {
         criteriaQuery.select(petFoodRoot).distinct(true);
         
         Predicate predicatePetId = cb.equal(petFoodRoot.get(PetFood_.pet).get(Pet_.id), petId);
-        Predicate predicateFoodType = cb.equal(petFoodRoot.get(PetFood_.food).get(Food_.code), foodType);
+        Predicate predicateFoodType = cb.equal(petFoodRoot.get(PetFood_.food).get(Food_.id), foodType);
         Predicate predicate = cb.and(predicatePetId, predicateFoodType);
         criteriaQuery.where(predicate);
         List<PetFood> foods = em.createQuery(criteriaQuery).getResultList();

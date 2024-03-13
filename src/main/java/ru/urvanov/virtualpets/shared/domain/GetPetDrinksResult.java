@@ -1,34 +1,22 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.shared.domain;
 
 import java.io.Serializable;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * @author fedya
- *
- */
 public class GetPetDrinksResult implements Serializable {
-    /**
-     * 
-     */
+
     private static final long serialVersionUID = -2119506370052876533L;
+    
+    private List<Drink> drinks = new ArrayList<>();
 
-
-    private Map<DrinkType, Integer> drinkCounts;
-
-
-    public Map<DrinkType, Integer> getDrinkCounts() {
-        return drinkCounts;
+    public List<Drink> getDrinks() {
+        return drinks;
     }
 
-
-    public void setDrinkCounts(Map<DrinkType, Integer> drinkCounts) {
-        this.drinkCounts = drinkCounts;
+    public void setDrinks(List<Drink> drinks) {
+        this.drinks = drinks;
     }
-
-
-
+    
+    
 }

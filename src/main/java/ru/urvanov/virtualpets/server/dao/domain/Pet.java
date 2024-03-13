@@ -2,7 +2,6 @@ package ru.urvanov.virtualpets.server.dao.domain;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -10,6 +9,7 @@ import java.util.Set;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -20,14 +20,14 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapKey;
-import jakarta.persistence.MapKeyJoinColumn;
+import jakarta.persistence.MapKeyColumn;
+import jakarta.persistence.MapKeyEnumerated;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
-
 import jakarta.validation.constraints.Size;
 
 /**
@@ -126,32 +126,37 @@ public class Pet implements Serializable {
     private Integer version;
 
     @OneToMany(mappedBy = "pet", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @MapKey(name="food")
-    private Map<Food, PetFood> foods;
+    @MapKeyEnumerated(EnumType.STRING)
+    @MapKeyColumn(name="food_id")
+    private Map<FoodType, PetFood> foods;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "pet_cloth", joinColumns = @JoinColumn(name = "pet_id"), inverseJoinColumns = @JoinColumn(name = "cloth_id"))
     private Set<Cloth> cloths;
     
     @OneToMany(mappedBy = "pet", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @MapKey(name="buildingMaterial")
-    private Map<BuildingMaterial, PetBuildingMaterial> buildingMaterials;
+    @MapKeyEnumerated(EnumType.STRING)
+    @MapKeyColumn(name = "building_material_id")
+    private Map<BuildingMaterialType, PetBuildingMaterial> buildingMaterials;
     
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name="pet_book", joinColumns = @JoinColumn(name="pet_id"), inverseJoinColumns = @JoinColumn(name="book_id"))
     private Set<Book> books;
     
     @OneToMany(mappedBy= "pet", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @MapKey(name="drink")
-    private Map<Drink, PetDrink> drinks;
+    @MapKeyEnumerated(EnumType.STRING)
+    @MapKeyColumn(name = "drink_id")
+    private Map<DrinkType, PetDrink> drinks;
     
     @OneToMany(mappedBy="pet", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @MapKey(name="journalEntry")
-    private Map<JournalEntry, PetJournalEntry> journalEntries;
+    @MapKeyEnumerated(EnumType.STRING)
+    @MapKeyColumn(name = "journal_entry_id")
+    private Map<JournalEntryType, PetJournalEntry> journalEntries;
     
     @OneToMany(mappedBy="pet", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @MapKey(name = "achievement")
-    private Map<Achievement, PetAchievement> achievements;
+    @MapKeyEnumerated(EnumType.STRING)
+    @MapKeyColumn(name = "achievement_id")
+    private Map<AchievementCode, PetAchievement> achievements;
 
     public Pet() {
     }
@@ -256,11 +261,11 @@ public class Pet implements Serializable {
         return version;
     }
 
-    public Map<Food, PetFood> getFoods() {
+    public Map<FoodType, PetFood> getFoods() {
         return foods;
     }
 
-    public void setFoods(Map<Food, PetFood> foods) {
+    public void setFoods(Map<FoodType, PetFood> foods) {
         this.foods = foods;
     }
 
@@ -296,12 +301,12 @@ public class Pet implements Serializable {
         this.bow = bow;
     }
 
-    public Map<BuildingMaterial, PetBuildingMaterial> getBuildingMaterials() {
+    public Map<BuildingMaterialType, PetBuildingMaterial> getBuildingMaterials() {
         return buildingMaterials;
     }
 
     public void setBuildingMaterials(
-            Map<BuildingMaterial, PetBuildingMaterial> buildingMaterials) {
+            Map<BuildingMaterialType, PetBuildingMaterial> buildingMaterials) {
         this.buildingMaterials = buildingMaterials;
     }
 
@@ -313,19 +318,19 @@ public class Pet implements Serializable {
         this.books = books;
     }
 
-    public Map<Drink, PetDrink> getDrinks() {
+    public Map<DrinkType, PetDrink> getDrinks() {
         return drinks;
     }
 
-    public void setDrinks(Map<Drink, PetDrink> drinks) {
+    public void setDrinks(Map<DrinkType, PetDrink> drinks) {
         this.drinks = drinks;
     }
 
-    public Map<JournalEntry, PetJournalEntry> getJournalEntries() {
+    public Map<JournalEntryType, PetJournalEntry> getJournalEntries() {
         return journalEntries;
     }
 
-    public void setJournalEntries(Map<JournalEntry, PetJournalEntry> journalEntries) {
+    public void setJournalEntries(Map<JournalEntryType, PetJournalEntry> journalEntries) {
         this.journalEntries = journalEntries;
     }
 
@@ -345,11 +350,11 @@ public class Pet implements Serializable {
         this.experience = experience;
     }
 
-    public Map<Achievement, PetAchievement> getAchievements() {
+    public Map<AchievementCode, PetAchievement> getAchievements() {
         return achievements;
     }
 
-    public void setAchievements(Map<Achievement, PetAchievement> achievements) {
+    public void setAchievements(Map<AchievementCode, PetAchievement> achievements) {
         this.achievements = achievements;
     }
 

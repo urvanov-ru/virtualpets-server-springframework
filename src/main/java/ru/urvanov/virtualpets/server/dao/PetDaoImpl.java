@@ -5,6 +5,15 @@ package ru.urvanov.virtualpets.server.dao;
 
 import java.util.List;
 
+import org.hibernate.CacheMode;
+import org.hibernate.ScrollMode;
+import org.hibernate.ScrollableResults;
+import org.hibernate.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
@@ -15,17 +24,7 @@ import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.MapJoin;
 import jakarta.persistence.criteria.Order;
 import jakarta.persistence.criteria.Root;
-
-import org.hibernate.CacheMode;
-import org.hibernate.ScrollMode;
-import org.hibernate.ScrollableResults;
-import org.hibernate.Session;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
-import ru.urvanov.virtualpets.server.dao.domain.JournalEntry;
+import ru.urvanov.virtualpets.server.dao.domain.JournalEntryType;
 import ru.urvanov.virtualpets.server.dao.domain.Pet;
 import ru.urvanov.virtualpets.server.dao.domain.PetJournalEntry;
 import ru.urvanov.virtualpets.server.dao.domain.PetJournalEntry_;
@@ -147,7 +146,7 @@ public class PetDaoImpl implements PetDao {
         CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
         Root<Pet> rootPet = criteriaQuery.from(Pet.class);
         //Fetch<Pet, PetJournalEntry> fetchPetJournalEntries = rootPet.fetch(Pet_.journalEntries);
-        MapJoin<Pet, JournalEntry, PetJournalEntry> joinPetJournalEntries = rootPet.join(Pet_.journalEntries, JoinType.LEFT);
+        MapJoin<Pet, JournalEntryType, PetJournalEntry> joinPetJournalEntries = rootPet.join(Pet_.journalEntries, JoinType.LEFT);
         criteriaQuery.where(criteriaBuilder.and(criteriaBuilder.equal(joinPetJournalEntries.get(PetJournalEntry_.readed), false)),
                 criteriaBuilder.equal(rootPet.get(Pet_.id), petId));
         

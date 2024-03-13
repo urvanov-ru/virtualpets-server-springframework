@@ -64,7 +64,7 @@ public class FoodDaoImpl implements FoodDao {
                 .createQuery(Food.class);
         Root<Food> rootFood = criteriaQuery.from(Food.class);
         criteriaQuery.select(rootFood);
-        Predicate predicate = criteriaBuilder.equal(rootFood.get(Food_.code),
+        Predicate predicate = criteriaBuilder.equal(rootFood.get(Food_.id),
                 code);
         criteriaQuery.where(predicate);
         TypedQuery<Food> query = em.createQuery(criteriaQuery);
@@ -74,6 +74,11 @@ public class FoodDaoImpl implements FoodDao {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public Food getReference(FoodType id) {
+        return em.getReference(Food.class, id);
     }
 
 }

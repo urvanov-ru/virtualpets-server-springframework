@@ -2,19 +2,17 @@ package ru.urvanov.virtualpets.server.dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
-
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
 import ru.urvanov.virtualpets.server.dao.domain.JournalEntryType;
 import ru.urvanov.virtualpets.server.dao.domain.PetJournalEntry;
-import ru.urvanov.virtualpets.server.dao.domain.JournalEntry_;
 import ru.urvanov.virtualpets.server.dao.domain.PetJournalEntry_;
 import ru.urvanov.virtualpets.server.dao.domain.Pet_;
 
@@ -52,8 +50,7 @@ public class PetJournalEntryDaoImpl implements PetJournalEntryDao {
         Root<PetJournalEntry> rootPetJournalEntry = criteriaQuery
                 .from(PetJournalEntry.class);
         criteriaQuery.where(criteriaBuilder.and(criteriaBuilder.equal(
-                rootPetJournalEntry.get(PetJournalEntry_.journalEntry).get(
-                        JournalEntry_.code), code), criteriaBuilder.equal(
+                rootPetJournalEntry.get(PetJournalEntry_.journalEntry), code), criteriaBuilder.equal(
                 rootPetJournalEntry.get(PetJournalEntry_.pet).get(Pet_.id),
                 petId)));
         criteriaQuery.select(rootPetJournalEntry);

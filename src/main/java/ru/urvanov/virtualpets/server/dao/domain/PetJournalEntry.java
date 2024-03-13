@@ -6,6 +6,8 @@ import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -36,9 +38,9 @@ public class PetJournalEntry implements Serializable {
     @Column(name = "created_at")
     private Date createdAt;
     
-    @ManyToOne
-    @JoinColumn(name="journal_entry_id")
-    private JournalEntry journalEntry;
+    @Column(name = "journal_entry_id")
+    @Enumerated(EnumType.STRING)
+    private JournalEntryType journalEntry;
     
     @ManyToOne
     @JoinColumn(name="pet_id")
@@ -70,11 +72,11 @@ public class PetJournalEntry implements Serializable {
         this.createdAt = createdAt;
     }
 
-    public JournalEntry getJournalEntry() {
+    public JournalEntryType getJournalEntry() {
         return journalEntry;
     }
 
-    public void setJournalEntry(JournalEntry journalEntry) {
+    public void setJournalEntry(JournalEntryType journalEntry) {
         this.journalEntry = journalEntry;
     }
 
@@ -86,14 +88,6 @@ public class PetJournalEntry implements Serializable {
         this.pet = pet;
     }
 
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
-
     public Boolean getReaded() {
         return readed;
     }
@@ -102,9 +96,13 @@ public class PetJournalEntry implements Serializable {
         this.readed = readed;
     }
 
+    public Integer getVersion() {
+        return version;
+    }
+
     @Override
     public int hashCode() {
-        return Objects.hash(createdAt, journalEntry, pet, readed);
+        return Objects.hash(id);
     }
 
     @Override
@@ -116,21 +114,14 @@ public class PetJournalEntry implements Serializable {
         if (getClass() != obj.getClass())
             return false;
         PetJournalEntry other = (PetJournalEntry) obj;
-        return Objects.equals(createdAt, other.createdAt)
-                && Objects.equals(journalEntry.getId(), other.journalEntry.getId())
-                && Objects.equals(pet.getId(), other.pet.getId())
-                && Objects.equals(readed, other.readed);
+        return Objects.equals(id, other.id);
     }
 
     @Override
     public String toString() {
-        return "PetJournalEntry [id=" + id
-                + ", createdAt=" + createdAt
-                + ", journalEntry.id=" + journalEntry.getId()
-                + ", pet.id=" + pet.getId()
-                + ", readed=" + readed
-                + ", version=" + version + "]";
+        return "PetJournalEntry [id=" + id + ", createdAt=" + createdAt
+                + ", journalEntry=" + journalEntry + ", pet=" + pet
+                + ", readed=" + readed + ", version=" + version + "]";
     }
-    
-    
+
 }

@@ -10,13 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import ru.urvanov.virtualpets.server.dao.AchievementDao;
-import ru.urvanov.virtualpets.server.dao.JournalEntryDao;
 import ru.urvanov.virtualpets.server.dao.LevelDao;
 import ru.urvanov.virtualpets.server.dao.PetDao;
-import ru.urvanov.virtualpets.server.dao.domain.Achievement;
 import ru.urvanov.virtualpets.server.dao.domain.AchievementCode;
-import ru.urvanov.virtualpets.server.dao.domain.JournalEntry;
 import ru.urvanov.virtualpets.server.dao.domain.JournalEntryType;
 import ru.urvanov.virtualpets.server.dao.domain.Level;
 import ru.urvanov.virtualpets.server.dao.domain.Pet;
@@ -35,12 +31,6 @@ public class TownServiceImpl implements ru.urvanov.virtualpets.shared.service.To
 
     @Autowired
     private LevelDao levelDao;
-
-    @Autowired
-    private JournalEntryDao journalEntryDao;
-
-    @Autowired
-    private AchievementDao achievementDao;
     
     @Autowired
     private PetDao petDao;
@@ -57,21 +47,17 @@ public class TownServiceImpl implements ru.urvanov.virtualpets.shared.service.To
                 ServletRequestAttributes.SCOPE_SESSION);
         Pet pet = petDao.findFullById(selectedPet.getId());
 
-        Map<JournalEntry, PetJournalEntry> mapJournalEntries = pet
+        Map<JournalEntryType, PetJournalEntry> mapJournalEntries = pet
                 .getJournalEntries();
-        JournalEntry playHiddenObjectGames = journalEntryDao
-                .findByCode(JournalEntryType.PLAY_HIDDEN_OBJECT_GAMES);
-        if (!mapJournalEntries.containsKey(playHiddenObjectGames)) {
+        if (!mapJournalEntries.containsKey(JournalEntryType.PLAY_HIDDEN_OBJECT_GAMES)) {
             PetJournalEntry petJournalEntry = new PetJournalEntry();
             petJournalEntry.setCreatedAt(new Date());
             petJournalEntry.setPet(pet);
-            petJournalEntry.setJournalEntry(playHiddenObjectGames);
-            mapJournalEntries.put(playHiddenObjectGames, petJournalEntry);
+            petJournalEntry.setJournalEntry(JournalEntryType.PLAY_HIDDEN_OBJECT_GAMES);
+            mapJournalEntries.put(JournalEntryType.PLAY_HIDDEN_OBJECT_GAMES, petJournalEntry);
         }
 
-        Achievement leaveTownAchievement = achievementDao
-                .findByCode(AchievementCode.LEAVE_ROOM);
-        petService.addAchievementIfNot(pet, leaveTownAchievement);
+        petService.addAchievementIfNot(pet, AchievementCode.LEAVE_ROOM);
         
         petService.addExperience(petDao.findFullById(pet.getId()), 1);
         

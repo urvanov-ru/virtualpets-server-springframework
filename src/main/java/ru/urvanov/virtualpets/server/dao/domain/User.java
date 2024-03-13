@@ -66,9 +66,6 @@ public class User implements UserDetails, Serializable{
     @Size(max = 100)
     private String password;
     
-    @Column(name = "facebook_key")
-    @Size(max = 50)
-    private String facebookKey;
 
     @Column(name = "registration_date")
     private Date registrationDate;
@@ -80,7 +77,7 @@ public class User implements UserDetails, Serializable{
     private Date activeDate;
 
     @Column(name = "sex")
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private Sex sex;
 
     @Column(name = "birthdate")
@@ -99,17 +96,12 @@ public class User implements UserDetails, Serializable{
     private String city;
 
     @Column(name = "role")
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @Column(name = "email")
     @Size(max = 100)
     private String email;
-    
-    //@Basic(fetch = FetchType.LAZY)
-    //@Lob
-    //@Column(name="photo")
-    //private byte[] photo;
     
     @Column(name="recover_password_key")
     @Size(max=50)
@@ -130,12 +122,6 @@ public class User implements UserDetails, Serializable{
     
     @Version
     private Integer version;
-    
-    @Column(name="vkontakte_key")
-    private String vkontakteKey;
-    
-    @Column(name="twitter_key")
-    private String twitterKey;
 
     public Integer getId() {
         return id;
@@ -167,14 +153,6 @@ public class User implements UserDetails, Serializable{
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getFacebookKey() {
-        return facebookKey;
-    }
-
-    public void setFacebookKey(String facebookKey) {
-        this.facebookKey = facebookKey;
     }
 
     public Date getRegistrationDate() {
@@ -257,20 +235,6 @@ public class User implements UserDetails, Serializable{
         this.email = email;
     }
 
-//    /**
-//     * @return the photo
-//     */
-//    public byte[] getPhoto() {
-//        return photo;
-//    }
-//
-//    /**
-//     * @param photo the photo to set
-//     */
-//    public void setPhoto(byte[] photo) {
-//        this.photo = photo;
-//    }
-
     public Set<Pet> getPets() {
         return pets;
     }
@@ -305,22 +269,6 @@ public class User implements UserDetails, Serializable{
 
     public void setUnid(String unid) {
         this.unid = unid;
-    }
-
-    public String getVkontakteKey() {
-        return vkontakteKey;
-    }
-
-    public void setVkontakteKey(String vkontakteKey) {
-        this.vkontakteKey = vkontakteKey;
-    }
-
-    public String getTwitterKey() {
-        return twitterKey;
-    }
-
-    public void setTwitterKey(String twitterKey) {
-        this.twitterKey = twitterKey;
     }
 
     @Override

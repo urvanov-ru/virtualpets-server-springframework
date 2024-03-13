@@ -24,7 +24,7 @@ public class DrinkDaoImpl implements DrinkDao {
     
     @Transactional(readOnly=true)
     @Override
-    public Drink findById(Integer id) {
+    public Drink findById(DrinkType id) {
         return em.find(Drink.class, id);
     }
 
@@ -41,7 +41,7 @@ public class DrinkDaoImpl implements DrinkDao {
         CriteriaQuery<Drink> criteriaQuery = cb.createQuery(Drink.class);
         Root<Drink> root = criteriaQuery.from(Drink.class);
         criteriaQuery.select(root);
-        criteriaQuery.where(cb.equal(root.get(Drink_.drinkType), code));
+        criteriaQuery.where(cb.equal(root.get(Drink_.id), code));
         TypedQuery<Drink> query = em.createQuery(criteriaQuery);
         List<Drink> result = query.getResultList();
         if (result.size() >= 1) {
@@ -49,6 +49,11 @@ public class DrinkDaoImpl implements DrinkDao {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public Drink getReference(DrinkType id) {
+        return em.getReference(Drink.class, id);
     }
 
 }

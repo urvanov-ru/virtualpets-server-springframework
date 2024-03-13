@@ -1,11 +1,7 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.service;
 
 import java.util.List;
 
-import ru.urvanov.virtualpets.server.dao.domain.Achievement;
 import ru.urvanov.virtualpets.server.dao.domain.AchievementCode;
 import ru.urvanov.virtualpets.server.dao.domain.Bookcase;
 import ru.urvanov.virtualpets.server.dao.domain.MachineWithDrinks;
@@ -14,10 +10,6 @@ import ru.urvanov.virtualpets.server.dao.domain.Refrigerator;
 import ru.urvanov.virtualpets.server.service.domain.PetDetails;
 import ru.urvanov.virtualpets.server.service.exception.NotEnoughPetResourcesException;
 
-/**
- * @author fedya
- * 
- */
 public interface PetService {
 
     public void updatePetsTask();
@@ -39,7 +31,7 @@ public interface PetService {
 
     List<Pet> findLastCreatedPets(int start, int limit);
 
-    void addAchievementIfNot(Pet pet, Achievement achievement);
+    void addAchievementIfNot(Pet pet, AchievementCode achievement);
 
     public PetDetails petInformationPage(Integer id);
 }

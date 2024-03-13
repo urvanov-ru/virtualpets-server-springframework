@@ -3,6 +3,7 @@ package ru.urvanov.virtualpets.server.dao.domain;
 import java.io.Serializable;
 import java.util.Objects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -15,25 +16,57 @@ import jakarta.persistence.Table;
 public class Book implements Serializable {
 
     private static final long serialVersionUID = 1086408475266576270L;
-
-    public static final int MAX_ID = 18;
     
+    public static final String FIRST_BOOOK_ID = "DESTINY";
+
     /**
      * Первичный ключ книги. Новые книги добавляются скриптами liquibase,
      * первичный ключ не генерируется ни в БД, ни в Java-коде.
      */
     @Id
-    private Integer id;
+    private String id;
+    
+    @Column(name = "bookcase_level")
+    private int bookcaseLevel;
+    
+    @Column(name = "bookcase_order")
+    private int bookcaseOrder;
+    
+    @Column(name = "hidden_objects_game_drop_rate")
+    private float hiddenObjectsGameDropRate;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    
+    public int getBookcaseLevel() {
+        return bookcaseLevel;
+    }
+
+    public void setBookcaseLevel(int bookcaseLevel) {
+        this.bookcaseLevel = bookcaseLevel;
+    }
+
+    public int getBookcaseOrder() {
+        return bookcaseOrder;
+    }
+
+    public void setBookcaseOrder(int bookcaseOrder) {
+        this.bookcaseOrder = bookcaseOrder;
+    }
+
+    public float getHiddenObjectsGameDropRate() {
+        return hiddenObjectsGameDropRate;
+    }
+
+    public void setHiddenObjectsGameDropRate(float hiddenObjectsGameDropRate) {
+        this.hiddenObjectsGameDropRate = hiddenObjectsGameDropRate;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(id);
@@ -53,6 +86,11 @@ public class Book implements Serializable {
 
     @Override
     public String toString() {
-        return "Book id=" + id;
+        return "Book [id=" + id + ", bookcaseLevel=" + bookcaseLevel
+                + ", bookcaseOrder=" + bookcaseOrder
+                + ", hiddenObjectsGameDropRate=" + hiddenObjectsGameDropRate
+                + "]";
     }
+
+    
 }

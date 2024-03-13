@@ -107,22 +107,6 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User findByFacebookKey(String facebookKey) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<User> criteriaQuery = cb.createQuery(User.class);
-        Root<User> root = criteriaQuery.from(User.class);
-        criteriaQuery.select(root);
-        Predicate predicate = cb.equal(root.get(User_.facebookKey), facebookKey);
-        criteriaQuery.where(predicate);
-        List<User> lst = em.createQuery(criteriaQuery).getResultList();
-        if (lst.size() == 0) {
-            return null;
-        } else {
-            return lst.get(0);
-        }
-    }
-
-    @Override
     public User findByUnid(String unid) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<User> criteriaQuery = cb.createQuery(User.class);
@@ -154,39 +138,6 @@ public class UserDaoImpl implements UserDao {
         } else {
             return lst.get(0);
         }
-    }
-
-    @Override
-    public User findByVkontakteKey(String vkontakteKey) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<User> criteriaQuery = cb.createQuery(User.class);
-        Root<User> root = criteriaQuery.from(User.class);
-        criteriaQuery.select(root);
-        Predicate predicate = cb.equal(root.get(User_.vkontakteKey), vkontakteKey);
-        criteriaQuery.where(predicate);
-        List<User> lst = em.createQuery(criteriaQuery).getResultList();
-        if (lst.size() == 0) {
-            return null;
-        } else {
-            return lst.get(0);
-        }
-    }
-
-    @Override
-    public User findByTwitterKey(String twitterKey) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<User> criteriaQuery = cb.createQuery(User.class);
-        Root<User> root = criteriaQuery.from(User.class);
-        criteriaQuery.select(root);
-        Predicate predicate = cb.equal(root.get(User_.twitterKey), twitterKey);
-        criteriaQuery.where(predicate);
-        List<User> lst = em.createQuery(criteriaQuery).getResultList();
-        if (lst.size() == 0) {
-            return null;
-        } else {
-            return lst.get(0);
-        }
-        
     }
 
     @Override

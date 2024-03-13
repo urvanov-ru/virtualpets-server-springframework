@@ -14,14 +14,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import ru.urvanov.virtualpets.server.dao.FoodDao;
-import ru.urvanov.virtualpets.server.dao.JournalEntryDao;
-import ru.urvanov.virtualpets.server.dao.LevelDao;
-import ru.urvanov.virtualpets.server.dao.PetDao;
-import ru.urvanov.virtualpets.server.dao.UserDao;
 import ru.urvanov.virtualpets.server.dao.domain.Food;
 import ru.urvanov.virtualpets.server.dao.domain.FoodType;
-import ru.urvanov.virtualpets.server.dao.domain.JournalEntry;
 import ru.urvanov.virtualpets.server.dao.domain.JournalEntryType;
 import ru.urvanov.virtualpets.server.dao.domain.Pet;
 import ru.urvanov.virtualpets.server.dao.domain.PetFood;
@@ -43,9 +37,6 @@ public class PetDaoImplTest extends AbstractDaoImplTest {
     
     @Autowired
     private LevelDao levelDao;
-    
-    @Autowired
-    private JournalEntryDao journalEntryDao;
     
     @Autowired
     private FoodDao foodDao;
@@ -79,17 +70,16 @@ public class PetDaoImplTest extends AbstractDaoImplTest {
     @Test
     public void testAddJournalEntry() {
         Pet pet = petDao.findById(1);
-        JournalEntry journalEntry = journalEntryDao.findByCode(JournalEntryType.EAT_SOMETHING);
         PetJournalEntry petJournalEntry = new PetJournalEntry();
-        petJournalEntry.setJournalEntry(journalEntry);
+        petJournalEntry.setJournalEntry(JournalEntryType.WELCOME);
         petJournalEntry.setReaded(true);
         
-        pet.getJournalEntries().put(journalEntry, petJournalEntry);
+        pet.getJournalEntries().put(JournalEntryType.WELCOME, petJournalEntry);
         //petJournalEntry.setPet(pet);
         petDao.save(pet);
         
         pet = petDao.findFullById(1);
-        assertTrue(pet.getJournalEntries().get(journalEntry).getReaded());
+        assertTrue(pet.getJournalEntries().get(JournalEntryType.WELCOME).getReaded());
     }
     
     
@@ -98,16 +88,16 @@ public class PetDaoImplTest extends AbstractDaoImplTest {
     @Transactional
     public void testAddFood() {
         Pet pet = petDao.findById(1);
-        Food food = foodDao.findByCode(FoodType.CARROT);
+        Food food = foodDao.getReference(FoodType.CARROT);
         PetFood petFood = new PetFood();
         petFood.setPet(pet);
         petFood.setFood(food);
         petFood.setFoodCount(10);
-        pet.getFoods().put(food,  petFood);
+        pet.getFoods().put(FoodType.CARROT,  petFood);
         petDao.save(pet);
         
         pet = petDao.findFullById(1);
-        assertEquals(10, pet.getFoods().get(food).getFoodCount());
+        assertEquals(10, pet.getFoods().get(FoodType.CARROT).getFoodCount());
     }
 
 }
