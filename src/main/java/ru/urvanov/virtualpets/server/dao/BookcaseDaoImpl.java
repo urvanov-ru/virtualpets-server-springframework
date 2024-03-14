@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.dao;
 
 import java.util.List;
@@ -21,10 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.urvanov.virtualpets.server.dao.domain.Bookcase;
 import ru.urvanov.virtualpets.server.dao.domain.Bookcase_;
 
-/**
- * @author fedya
- *
- */
 @Repository(value="bookcaseDao")
 @Transactional
 public class BookcaseDaoImpl implements BookcaseDao {
@@ -73,5 +66,6 @@ public class BookcaseDaoImpl implements BookcaseDao {
     public Bookcase findById(Integer id) {
         return em.find(Bookcase.class, id);
     }
+
 
 }

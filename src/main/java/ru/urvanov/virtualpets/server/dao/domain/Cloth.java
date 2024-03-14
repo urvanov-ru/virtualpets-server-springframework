@@ -37,6 +37,9 @@ public class Cloth implements Serializable {
     @Column(name = "wardrobe_order")
     private int wardrobeOrder;
     
+    @Column(name = "hidden_objects_game_drop_rate")
+    private double hiddenObjectsGameDropRate;
+    
     public String getId() {
         return id;
     }
@@ -61,6 +64,14 @@ public class Cloth implements Serializable {
         this.wardrobeOrder = wardrobeOrder;
     }
 
+    public double getHiddenObjectsGameDropRate() {
+        return hiddenObjectsGameDropRate;
+    }
+
+    public void setHiddenObjectsGameDropRate(double hiddenObjectsGameDropRate) {
+        this.hiddenObjectsGameDropRate = hiddenObjectsGameDropRate;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(id);
@@ -81,7 +92,10 @@ public class Cloth implements Serializable {
     @Override
     public String toString() {
         return "Cloth [id=" + id + ", clothType=" + clothType
-                + ", wardrobeOrder=" + wardrobeOrder + "]";
+                + ", wardrobeOrder=" + wardrobeOrder
+                + ", hiddenObjectsGameDropRate=" + hiddenObjectsGameDropRate
+                + "]";
     }
+
 
 }

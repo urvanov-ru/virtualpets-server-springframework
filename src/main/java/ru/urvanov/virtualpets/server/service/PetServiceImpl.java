@@ -344,7 +344,7 @@ public class PetServiceImpl implements PetService, ru.urvanov.virtualpets.shared
                         conversionService.convert(
                                 f.getFood().getId(),
                                 ru.urvanov.virtualpets.shared.domain.FoodType.class),
-                        f.getFood().getRefrigeratorlevel(),
+                        f.getFood().getRefrigeratorLevel(),
                         f.getFood().getRefrigeratorOrder(),
                         f.getFoodCount()
                         ))

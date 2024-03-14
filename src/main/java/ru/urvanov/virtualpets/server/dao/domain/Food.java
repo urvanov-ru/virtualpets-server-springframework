@@ -28,8 +28,8 @@ public class Food implements Serializable {
     @Enumerated(EnumType.STRING)
     private FoodType id;
     
-    @Column(name = "refrigerator_level")
-    private int refrigeratorlevel;
+    @Column(name = "refrigerator_id")
+    private int refrigeratorLevel;
     
     @Column(name = "refrigerator_order")
     private int refrigeratorOrder;
@@ -45,12 +45,12 @@ public class Food implements Serializable {
         this.id = id;
     }
 
-    public int getRefrigeratorlevel() {
-        return refrigeratorlevel;
+    public int getRefrigeratorLevel() {
+        return refrigeratorLevel;
     }
 
-    public void setRefrigeratorlevel(int refrigeratorlevel) {
-        this.refrigeratorlevel = refrigeratorlevel;
+    public void setRefrigeratorLevel(int refrigeratorLevel) {
+        this.refrigeratorLevel = refrigeratorLevel;
     }
 
     public int getRefrigeratorOrder() {
@@ -88,8 +88,8 @@ public class Food implements Serializable {
 
     @Override
     public String toString() {
-        return "Food [id=" + id + ", refrigeratorlevel=" + refrigeratorlevel
-                + ", refrigerator_order=" + refrigeratorOrder
+        return "Food [id=" + id + ", refrigeratorLevel=" + refrigeratorLevel
+                + ", refrigeratorOrder=" + refrigeratorOrder
                 + ", hiddenObjectsGameDropRate=" + hiddenObjectsGameDropRate
                 + "]";
     }

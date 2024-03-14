@@ -1,53 +1,32 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.shared.domain;
 
 import java.io.Serializable;
 
-/**
- * @author fedya
- *
- */
 public class HiddenObjectsReward implements Serializable {
-    /**
-     * 
-     */
+
     private static final long serialVersionUID = 7176544599291504383L;
     private FoodType food;
-    private Integer clothId;
+    private String clothId;
     private LevelInfo levelInfo;
     private int experience;
     private BuildingMaterialType buildingMaterialType;
     private AchievementCode[] achievements;
-    private Integer bookId;
+    private String bookId;
     private DrinkType drinkType;
 
-    /**
-     * @return the food
-     */
     public FoodType getFood() {
         return food;
     }
 
-    /**
-     * @param food the food to set
-     */
     public void setFood(FoodType food) {
         this.food = food;
     }
 
-    /**
-     * @return the clothId
-     */
-    public Integer getClothId() {
+    public String getClothId() {
         return clothId;
     }
 
-    /**
-     * @param clothId the clothId to set
-     */
-    public void setClothId(Integer clothId) {
+    public void setClothId(String clothId) {
         this.clothId = clothId;
     }
 
@@ -83,11 +62,11 @@ public class HiddenObjectsReward implements Serializable {
         this.achievements = achievements;
     }
 
-    public Integer getBookId() {
+    public String getBookId() {
         return bookId;
     }
 
-    public void setBookId(Integer bookId) {
+    public void setBookId(String bookId) {
         this.bookId = bookId;
     }
 

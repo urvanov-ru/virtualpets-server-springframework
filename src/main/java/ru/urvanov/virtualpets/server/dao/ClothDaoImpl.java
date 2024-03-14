@@ -6,9 +6,12 @@ package ru.urvanov.virtualpets.server.dao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
+
+import java.util.List;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,7 +39,7 @@ public class ClothDaoImpl implements ClothDao {
      */
     @Override
     @Transactional(readOnly= true)
-    public Cloth findById(Integer id) {
+    public Cloth findById(String id) {
         return em.find(Cloth.class, id);
     }
 
@@ -48,7 +51,7 @@ public class ClothDaoImpl implements ClothDao {
      * .Integer)
      */
     @Override
-    public Cloth getReference(Integer id) {
+    public Cloth getReference(String id) {
         return em.getReference(Cloth.class, id);
     }
 
@@ -76,6 +79,17 @@ public class ClothDaoImpl implements ClothDao {
         criteriaQuery.select(cb.count(rootCloth.get(Cloth_.id)));
         Query query = em.createQuery(criteriaQuery);
         return ((Long)query.getSingleResult()).intValue();
+    }
+
+    @Override
+    public List<Cloth> findAll() {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Cloth> criteriaQuery = cb.createQuery(Cloth.class);
+        
+        Root<Cloth> rootCloth = criteriaQuery.from(Cloth.class);
+        criteriaQuery.select(rootCloth);
+        TypedQuery<Cloth> query = em.createQuery(criteriaQuery);
+        return query.getResultList();
     }
 
 }

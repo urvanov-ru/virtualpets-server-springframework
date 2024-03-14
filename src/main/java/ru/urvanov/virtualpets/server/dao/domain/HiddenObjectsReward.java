@@ -4,11 +4,11 @@ import ru.urvanov.virtualpets.shared.domain.LevelInfo;
 
 public class HiddenObjectsReward {
     private FoodType food;
-    private Integer clothId;
+    private String clothId;
     private LevelInfo levelInfo;
     private int experience;
     private BuildingMaterialType buildingMaterialType;
-    private Integer bookId;
+    private String bookId;
     private DrinkType drinkType;
     private AchievementCode[] achievements;
 
@@ -20,11 +20,11 @@ public class HiddenObjectsReward {
         this.food = food;
     }
 
-    public Integer getClothId() {
+    public String getClothId() {
         return clothId;
     }
 
-    public void setClothId(Integer clothId) {
+    public void setClothId(String clothId) {
         this.clothId = clothId;
     }
 
@@ -61,11 +61,11 @@ public class HiddenObjectsReward {
         this.achievements = achievements;
     }
 
-    public Integer getBookId() {
+    public String getBookId() {
         return bookId;
     }
 
-    public void setBookId(Integer bookId) {
+    public void setBookId(String bookId) {
         this.bookId = bookId;
     }
 

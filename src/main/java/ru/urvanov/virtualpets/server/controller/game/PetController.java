@@ -87,7 +87,7 @@ public class PetController {
     
     @PostMapping(value = "savePetCloths")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void savePetCloth(SavePetCloths saveClothArg) throws DaoException, ServiceException {
+    public void savePetCloth(@RequestBody SavePetCloths saveClothArg) throws DaoException, ServiceException {
         petService.savePetCloths(saveClothArg);
     }
     

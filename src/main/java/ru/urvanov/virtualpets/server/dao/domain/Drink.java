@@ -28,14 +28,14 @@ public class Drink implements Serializable {
     @Enumerated(EnumType.STRING)
     private DrinkType id;
 
-    @Column(name = "machine_with_drinks_level")
+    @Column(name = "machine_with_drinks_id")
     private int machineWithDrinksLevel;
     
     @Column(name = "machine_with_drinks_order")
     private int machineWithDrinksOrder;
     
     @Column(name = "hidden_objects_game_drop_rate")
-    private float hiddenObjectsGameDropRate;
+    private double hiddenObjectsGameDropRate;
 
     public DrinkType getId() {
         return id;
@@ -57,11 +57,11 @@ public class Drink implements Serializable {
         this.machineWithDrinksOrder = machineWithDrinksOrder;
     }
 
-    public float getHiddenObjectsGameDropRate() {
+    public double getHiddenObjectsGameDropRate() {
         return hiddenObjectsGameDropRate;
     }
 
-    public void setHiddenObjectsGameDropRate(float hiddenObjectsGameDropRate) {
+    public void setHiddenObjectsGameDropRate(double hiddenObjectsGameDropRate) {
         this.hiddenObjectsGameDropRate = hiddenObjectsGameDropRate;
     }
 

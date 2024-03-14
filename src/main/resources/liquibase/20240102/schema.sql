@@ -114,29 +114,30 @@ CREATE TABLE cloth (
                        id varchar(50) NOT NULL,
                        cloth_type varchar(50) NOT NULL,
                        wardrobe_order INT NOT NULL,
+                       hidden_objects_game_drop_rate REAL NOT NULL,
                        PRIMARY KEY(id)
 );
 
 ALTER TABLE cloth ADD CONSTRAINT chk_cloth_type CHECK (cloth_type IN ('HAT', 'CLOTH', 'BOW'));
 
-INSERT INTO cloth(id, cloth_type, wardrobe_order)
-VALUES('RED_HAT', 'HAT', 0);
-INSERT INTO cloth(id, cloth_type, wardrobe_order)
-VALUES('COWBOY_HAT', 'HAT', 1);
-INSERT INTO cloth(id, cloth_type, wardrobe_order)
-VALUES('TIARA', 'HAT', 2);
-INSERT INTO cloth(id, cloth_type, wardrobe_order)
-VALUES('COLORED_BODY', 'CLOTH', 0);
-INSERT INTO cloth(id, cloth_type, wardrobe_order)
-VALUES('SUIT_JACKET', 'CLOTH', 1);
-INSERT INTO cloth(id, cloth_type, wardrobe_order)
-VALUES('PINKY_WINGS', 'CLOTH', 2);
-INSERT INTO cloth(id, cloth_type, wardrobe_order)
-VALUES('RED_BOW', 'BOW', 0);
-INSERT INTO cloth(id, cloth_type, wardrobe_order)
-VALUES('BLUE_BOW', 'BOW', 1);
-INSERT INTO cloth(id, cloth_type, wardrobe_order)
-VALUES('BLUE_FLOWER', 'BOW', 2);
+INSERT INTO cloth(id, cloth_type, wardrobe_order, hidden_objects_game_drop_rate)
+VALUES('RED_HAT', 'HAT', 0, 0.1);
+INSERT INTO cloth(id, cloth_type, wardrobe_order, hidden_objects_game_drop_rate)
+VALUES('COWBOY_HAT', 'HAT', 1, 0.1);
+INSERT INTO cloth(id, cloth_type, wardrobe_order, hidden_objects_game_drop_rate)
+VALUES('TIARA', 'HAT', 2, 0.1);
+INSERT INTO cloth(id, cloth_type, wardrobe_order, hidden_objects_game_drop_rate)
+VALUES('COLORED_BODY', 'CLOTH', 0, 0.1);
+INSERT INTO cloth(id, cloth_type, wardrobe_order, hidden_objects_game_drop_rate)
+VALUES('SUIT_JACKET', 'CLOTH', 1, 0.1);
+INSERT INTO cloth(id, cloth_type, wardrobe_order, hidden_objects_game_drop_rate)
+VALUES('PINKY_WINGS', 'CLOTH', 2, 0.1);
+INSERT INTO cloth(id, cloth_type, wardrobe_order, hidden_objects_game_drop_rate)
+VALUES('RED_BOW', 'BOW', 0, 0.1);
+INSERT INTO cloth(id, cloth_type, wardrobe_order, hidden_objects_game_drop_rate)
+VALUES('BLUE_BOW', 'BOW', 1, 0.1);
+INSERT INTO cloth(id, cloth_type, wardrobe_order, hidden_objects_game_drop_rate)
+VALUES('BLUE_FLOWER', 'BOW', 2, 0.1);
 
 
  create table UserConnection (userId varchar(255) not null,
@@ -274,40 +275,14 @@ create table pet_food(
 
 create table food(
                      id varchar(50) NOT NULL,
+                     refrigerator_id INT NOT NULL,
                      refrigerator_order INT NOT NULL,
-                     refrigerator_level INT NOT NULL,
                      hidden_objects_game_drop_rate REAL NOT NULL,
                      PRIMARY KEY(id)
 );
+alter table food add constraint fk_food_refrigerator_id foreign key (refrigerator_id)
+    references refrigerator(id) on update no action on delete no action;
 
-insert into food(id, refrigerator_level, refrigerator_order, hidden_objects_game_drop_rate)
-values('CARROT',         0, 0, 0.5);
-insert into food(id, refrigerator_level, refrigerator_order, hidden_objects_game_drop_rate)
-values('DRY_FOOD',       0, 1, 0.5);
-insert into food(id, refrigerator_level, refrigerator_order, hidden_objects_game_drop_rate)
-values('FISH',           0, 2, 0.5);
-insert into food(id, refrigerator_level, refrigerator_order, hidden_objects_game_drop_rate)
-values('ICE_CREAM',      1, 0, 0.4);
-insert into food(id, refrigerator_level, refrigerator_order, hidden_objects_game_drop_rate)
-values('APPLE',          1, 1, 0.4);
-insert into food(id, refrigerator_level, refrigerator_order, hidden_objects_game_drop_rate)
-values('CABBAGE',        1, 2, 0.4);
-insert into food(id, refrigerator_level, refrigerator_order, hidden_objects_game_drop_rate)
-values('CHOCOLATE',      2, 0, 0.3);
-insert into food(id, refrigerator_level, refrigerator_order, hidden_objects_game_drop_rate)
-values('FRENCH_FRIES',   2, 1, 0.3);
-insert into food(id, refrigerator_level, refrigerator_order, hidden_objects_game_drop_rate)
-values('JAPANESE_ROLLS', 2, 2, 0.3);
-insert into food(id, refrigerator_level, refrigerator_order, hidden_objects_game_drop_rate)
-values('PIE',            3, 0, 0.2);
-insert into food(id, refrigerator_level, refrigerator_order, hidden_objects_game_drop_rate)
-values('POTATOES',       3, 1, 0.2);
-insert into food(id, refrigerator_level, refrigerator_order, hidden_objects_game_drop_rate)
-values('SANDWICH',       3, 2, 0.2);
-insert into food(id, refrigerator_level, refrigerator_order, hidden_objects_game_drop_rate)
-values('BANANA',         4, 0, 0.1);
-insert into food(id, refrigerator_level, refrigerator_order, hidden_objects_game_drop_rate)
-values('WATERMELON',     4, 1, 0.1);
 
 create unique index idx_pet_food_unique on pet_food(pet_id, food_id);
 
@@ -335,26 +310,11 @@ insert into bookcase(id, max_book_type) values(6, 17);
 
 create table drink(
                       id varchar(50) NOT NULL,
-                      machine_with_drinks_level INT NOT NULL,
+                      machine_with_drinks_id INT NOT NULL,
                       machine_with_drinks_order INT NOT NULL,
                       hidden_objects_game_drop_rate REAL NOT NULL,
                       PRIMARY KEY(id)
 );
-
-insert into drink(id, machine_with_drinks_level, machine_with_drinks_order, hidden_objects_game_drop_rate)
-values('WATER',        0, 0, 1.0);
-insert into drink(id, machine_with_drinks_level, machine_with_drinks_order, hidden_objects_game_drop_rate)
-values('MILK',         1, 0, 0.5);
-insert into drink(id, machine_with_drinks_level, machine_with_drinks_order, hidden_objects_game_drop_rate)
-values('BOTTLE',       2, 0, 0.4);
-insert into drink(id, machine_with_drinks_level, machine_with_drinks_order, hidden_objects_game_drop_rate)
-values('TEA',          3, 0, 0.2);
-insert into drink(id, machine_with_drinks_level, machine_with_drinks_order, hidden_objects_game_drop_rate)
-values('COFFEE',       4, 0, 0.2);
-insert into drink(id, machine_with_drinks_level, machine_with_drinks_order, hidden_objects_game_drop_rate)
-values('ORANGE_JUICE', 5, 0, 0.1);
-
-
 
 
 create table machine_with_drinks(
@@ -555,11 +515,14 @@ values(6, 'BOARD', 6);  -- 6 досок
 
 create table book(
                      id varchar(50) NOT NULL,
-                     bookcase_level INT NOT NULL,
+                     bookcase_id INT NOT NULL,
                      bookcase_order INT NOT NULL,
                      hidden_objects_game_drop_rate real NOT NULL,
                      PRIMARY KEY(id)
 );
+
+alter table book add constraint fk_book_bookcase_id foreign key (bookcase_id)
+    references bookcase(id) on update no action on delete no action;
 
 CREATE TABLE pet_book (
                           id serial NOT NULL,
@@ -576,56 +539,6 @@ alter table pet_book add constraint fk_pet_book_pet_id foreign key (pet_id)
 
 alter table pet_book add constraint fk_pet_book_book_id foreign key (book_id)
     references book(id) on update no action on delete no action;
-
-insert into book (id, bookcase_level, bookcase_order, hidden_objects_game_drop_rate)
-values('DESTINY',       0, 0, 0.1);
-insert into book (id, bookcase_level, bookcase_order, hidden_objects_game_drop_rate)
-values('SQL',           0, 1, 0.1);
-insert into book (id, bookcase_level, bookcase_order, hidden_objects_game_drop_rate)
-values('PURPLE',        0, 2, 0.1);
-insert into book (id, bookcase_level, bookcase_order, hidden_objects_game_drop_rate)
-values('PLAID',         1, 0, 0.1);
-insert into book (id, bookcase_level, bookcase_order, hidden_objects_game_drop_rate)
-values('PUSHKIN',       1, 1, 0.1);
-insert into book (id, bookcase_level, bookcase_order, hidden_objects_game_drop_rate)
-values('BLACK',         1, 2, 0.1);
-insert into book (id, bookcase_level, bookcase_order, hidden_objects_game_drop_rate)
-values('WHITE',         2, 0, 0.1);
-insert into book (id, bookcase_level, bookcase_order, hidden_objects_game_drop_rate)
-values('DIRTY',         2, 1, 0.1);
-insert into book (id, bookcase_level, bookcase_order, hidden_objects_game_drop_rate)
-values('EARTH',         2, 2, 0.1);
-insert into book (id, bookcase_level, bookcase_order, hidden_objects_game_drop_rate)
-values('MOON_AND_STAR', 3, 0, 0.1);
-insert into book (id, bookcase_level, bookcase_order, hidden_objects_game_drop_rate)
-values('GIRL',          3, 1, 0.1);
-insert into book (id, bookcase_level, bookcase_order, hidden_objects_game_drop_rate)
-values('SUNSET',        3, 2, 0.1);
-insert into book (id, bookcase_level, bookcase_order, hidden_objects_game_drop_rate)
-values('SAGA',          4, 0, 0.1);
-insert into book (id, bookcase_level, bookcase_order, hidden_objects_game_drop_rate)
-values('NONAME',        4, 1, 0.1);
-insert into book (id, bookcase_level, bookcase_order, hidden_objects_game_drop_rate)
-values('CATS',          4, 2, 0.1);
-insert into book (id, bookcase_level, bookcase_order, hidden_objects_game_drop_rate)
-values('GOLD_TITLE',    5, 0, 0.1);
-insert into book (id, bookcase_level, bookcase_order, hidden_objects_game_drop_rate)
-values('DARK',          5, 1, 0.1);
-insert into book (id, bookcase_level, bookcase_order, hidden_objects_game_drop_rate)
-values('SCHEME',        5, 2, 0.1);
-
-insert into pet_book(pet_id, book_id)
-select p.id, 'SQL'
-from pet p
-where not exists(select * from pet_book pb where pb.pet_id = p.id and pb.book_id = 'SQL');
-
-
-
-
-
-
-
-
 
 create table pet_drink(
                           id serial NOT NULL,
@@ -673,6 +586,7 @@ create table pet_achievement(
                                 id serial NOT NULL,
                                 pet_id INT NOT NULL,
                                 achievement_id varchar(50) NOT NULL,
+                                was_shown boolean default false,
                                 version INT NOT NULL default 0,
                                 PRIMARY KEY(id)
 );
@@ -681,8 +595,106 @@ alter table pet_achievement add constraint fk_pet_achievement_pet_id foreign key
     references pet(id) on update no action on delete no action;
 
     
--- 2015-02-12
-alter table pet_achievement add column was_shown boolean default false;
+alter table drink add constraint fk_drink_machine_with_drinks_id foreign key (machine_with_drinks_id)
+    references machine_with_drinks(id) on update no action on delete no action;
 
 
 update "settings" set db_version = '0.21.0' where id = 1;
+
+
+
+
+insert into food(id, refrigerator_id, refrigerator_order, hidden_objects_game_drop_rate)
+values('CARROT',         1, 0, 0.5);
+insert into food(id, refrigerator_id, refrigerator_order, hidden_objects_game_drop_rate)
+values('DRY_FOOD',       1, 1, 0.5);
+insert into food(id, refrigerator_id, refrigerator_order, hidden_objects_game_drop_rate)
+values('FISH',           1, 2, 0.5);
+insert into food(id, refrigerator_id, refrigerator_order, hidden_objects_game_drop_rate)
+values('ICE_CREAM',      2, 0, 0.4);
+insert into food(id, refrigerator_id, refrigerator_order, hidden_objects_game_drop_rate)
+values('APPLE',          2, 1, 0.4);
+insert into food(id, refrigerator_id, refrigerator_order, hidden_objects_game_drop_rate)
+values('CABBAGE',        2, 2, 0.4);
+insert into food(id, refrigerator_id, refrigerator_order, hidden_objects_game_drop_rate)
+values('CHOCOLATE',      3, 0, 0.3);
+insert into food(id, refrigerator_id, refrigerator_order, hidden_objects_game_drop_rate)
+values('FRENCH_FRIES',   3, 1, 0.3);
+insert into food(id, refrigerator_id, refrigerator_order, hidden_objects_game_drop_rate)
+values('JAPANESE_ROLLS', 3, 2, 0.3);
+insert into food(id, refrigerator_id, refrigerator_order, hidden_objects_game_drop_rate)
+values('PIE',            4, 0, 0.2);
+insert into food(id, refrigerator_id, refrigerator_order, hidden_objects_game_drop_rate)
+values('POTATOES',       4, 1, 0.2);
+insert into food(id, refrigerator_id, refrigerator_order, hidden_objects_game_drop_rate)
+values('SANDWICH',       4, 2, 0.2);
+insert into food(id, refrigerator_id, refrigerator_order, hidden_objects_game_drop_rate)
+values('BANANA',         5, 0, 0.1);
+insert into food(id, refrigerator_id, refrigerator_order, hidden_objects_game_drop_rate)
+values('WATERMELON',     4, 1, 0.1);
+
+
+
+
+
+insert into drink(id, machine_with_drinks_id, machine_with_drinks_order, hidden_objects_game_drop_rate)
+values('WATER',        1, 0, 1.0);
+insert into drink(id, machine_with_drinks_id, machine_with_drinks_order, hidden_objects_game_drop_rate)
+values('MILK',         2, 0, 0.5);
+insert into drink(id, machine_with_drinks_id, machine_with_drinks_order, hidden_objects_game_drop_rate)
+values('BOTTLE',       3, 0, 0.4);
+insert into drink(id, machine_with_drinks_id, machine_with_drinks_order, hidden_objects_game_drop_rate)
+values('TEA',          4, 0, 0.2);
+insert into drink(id, machine_with_drinks_id, machine_with_drinks_order, hidden_objects_game_drop_rate)
+values('COFFEE',       5, 0, 0.2);
+insert into drink(id, machine_with_drinks_id, machine_with_drinks_order, hidden_objects_game_drop_rate)
+values('ORANGE_JUICE', 6, 0, 0.1);
+
+
+
+
+insert into book (id, bookcase_id, bookcase_order, hidden_objects_game_drop_rate)
+values('DESTINY',       1, 0, 0.1);
+insert into book (id, bookcase_id, bookcase_order, hidden_objects_game_drop_rate)
+values('SQL',           1, 1, 0.1);
+insert into book (id, bookcase_id, bookcase_order, hidden_objects_game_drop_rate)
+values('PURPLE',        1, 2, 0.1);
+insert into book (id, bookcase_id, bookcase_order, hidden_objects_game_drop_rate)
+values('PLAID',         2, 0, 0.1);
+insert into book (id, bookcase_id, bookcase_order, hidden_objects_game_drop_rate)
+values('PUSHKIN',       2, 1, 0.1);
+insert into book (id, bookcase_id, bookcase_order, hidden_objects_game_drop_rate)
+values('BLACK',         2, 2, 0.1);
+insert into book (id, bookcase_id, bookcase_order, hidden_objects_game_drop_rate)
+values('WHITE',         3, 0, 0.1);
+insert into book (id, bookcase_id, bookcase_order, hidden_objects_game_drop_rate)
+values('DIRTY',         3, 1, 0.1);
+insert into book (id, bookcase_id, bookcase_order, hidden_objects_game_drop_rate)
+values('EARTH',         3, 2, 0.1);
+insert into book (id, bookcase_id, bookcase_order, hidden_objects_game_drop_rate)
+values('MOON_AND_STAR', 4, 0, 0.1);
+insert into book (id, bookcase_id, bookcase_order, hidden_objects_game_drop_rate)
+values('GIRL',          4, 1, 0.1);
+insert into book (id, bookcase_id, bookcase_order, hidden_objects_game_drop_rate)
+values('SUNSET',        4, 2, 0.1);
+insert into book (id, bookcase_id, bookcase_order, hidden_objects_game_drop_rate)
+values('SAGA',          5, 0, 0.1);
+insert into book (id, bookcase_id, bookcase_order, hidden_objects_game_drop_rate)
+values('NONAME',        5, 1, 0.1);
+insert into book (id, bookcase_id, bookcase_order, hidden_objects_game_drop_rate)
+values('CATS',          5, 2, 0.1);
+insert into book (id, bookcase_id, bookcase_order, hidden_objects_game_drop_rate)
+values('GOLD_TITLE',    6, 0, 0.1);
+insert into book (id, bookcase_id, bookcase_order, hidden_objects_game_drop_rate)
+values('DARK',          6, 1, 0.1);
+insert into book (id, bookcase_id, bookcase_order, hidden_objects_game_drop_rate)
+values('SCHEME',        6, 2, 0.1);
+
+
+
+
+insert into pet_book(pet_id, book_id)
+select p.id, 'SQL'
+from pet p
+where not exists(select * from pet_book pb where pb.pet_id = p.id and pb.book_id = 'SQL');
+

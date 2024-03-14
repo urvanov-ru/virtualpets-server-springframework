@@ -1,67 +1,31 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.shared.domain;
 
 import java.io.Serializable;
 
-/**
- * @author fedya
- * 
- */
 public class SavePetCloths implements Serializable {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 4732810658992905727L;
 
-    private Integer hatId;
-    private Integer clothId;
-    private Integer bowId;
-
-    /**
-     * @return the hatId
-     */
-    public Integer getHatId() {
+    private String hatId;
+    private String clothId;
+    private String bowId;
+    
+    public String getHatId() {
         return hatId;
     }
-
-    /**
-     * @param hatId
-     *            the hatId to set
-     */
-    public void setHatId(Integer hatId) {
+    public void setHatId(String hatId) {
         this.hatId = hatId;
     }
-
-    /**
-     * @return the clothId
-     */
-    public Integer getClothId() {
+    public String getClothId() {
         return clothId;
     }
-
-    /**
-     * @param clothId
-     *            the clothId to set
-     */
-    public void setClothId(Integer clothId) {
+    public void setClothId(String clothId) {
         this.clothId = clothId;
     }
-
-    /**
-     * @return the bowId
-     */
-    public Integer getBowId() {
+    public String getBowId() {
         return bowId;
     }
-
-    /**
-     * @param bowId
-     *            the bowId to set
-     */
-    public void setBowId(Integer bowId) {
+    public void setBowId(String bowId) {
         this.bowId = bowId;
     }
 

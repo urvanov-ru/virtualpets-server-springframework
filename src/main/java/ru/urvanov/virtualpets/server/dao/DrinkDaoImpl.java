@@ -12,6 +12,7 @@ import jakarta.persistence.criteria.Root;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import ru.urvanov.virtualpets.server.dao.domain.Cloth;
 import ru.urvanov.virtualpets.server.dao.domain.Drink;
 import ru.urvanov.virtualpets.server.dao.domain.DrinkType;
 import ru.urvanov.virtualpets.server.dao.domain.Drink_;
@@ -54,6 +55,18 @@ public class DrinkDaoImpl implements DrinkDao {
     @Override
     public Drink getReference(DrinkType id) {
         return em.getReference(Drink.class, id);
+    }
+
+    @Override
+    public List<Drink> findAllOrderByMachineWithDrinksLevelAndMachineWithDrinksOrder() {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Drink> criteriaQuery = cb.createQuery(Drink.class);
+        
+        Root<Drink> rootDrink = criteriaQuery.from(Drink.class);
+        criteriaQuery.select(rootDrink);
+        criteriaQuery.orderBy(cb.asc(rootDrink.get(Drink_.machineWithDrinksLevel)), cb.asc(rootDrink.get(Drink_.machineWithDrinksOrder)));
+        TypedQuery<Drink> query = em.createQuery(criteriaQuery);
+        return query.getResultList();
     }
 
 }

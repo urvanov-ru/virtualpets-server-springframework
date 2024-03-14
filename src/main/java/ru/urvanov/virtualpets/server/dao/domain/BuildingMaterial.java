@@ -41,7 +41,7 @@ public class BuildingMaterial implements Serializable {
     private float newbieBoxDropRate;
     
     @Column(name = "hidden_objects_game_drop_rate")
-    private float hiddenObjectsGameDropRate;
+    private double hiddenObjectsGameDropRate;
 
     public BuildingMaterialType getId() {
         return id;
@@ -83,11 +83,11 @@ public class BuildingMaterial implements Serializable {
         this.newbieBoxDropRate = newbieBoxDropRate;
     }
 
-    public float getHiddenObjectsGameDropRate() {
+    public double getHiddenObjectsGameDropRate() {
         return hiddenObjectsGameDropRate;
     }
 
-    public void setHiddenObjectsGameDropRate(float hiddenObjectsGameDropRate) {
+    public void setHiddenObjectsGameDropRate(double hiddenObjectsGameDropRate) {
         this.hiddenObjectsGameDropRate = hiddenObjectsGameDropRate;
     }
 
