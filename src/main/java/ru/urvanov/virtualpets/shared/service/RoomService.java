@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.shared.service;
 
 import ru.urvanov.virtualpets.shared.domain.GetRoomInfoResult;
@@ -10,10 +7,6 @@ import ru.urvanov.virtualpets.shared.domain.RoomBuildMenuCosts;
 import ru.urvanov.virtualpets.shared.exception.DaoException;
 import ru.urvanov.virtualpets.shared.exception.ServiceException;
 
-/**
- * @author fedya
- *
- */
 public interface RoomService {
     GetRoomInfoResult getRoomInfo() throws DaoException, ServiceException;
     void buildRefrigerator(Point arg) throws DaoException, ServiceException;

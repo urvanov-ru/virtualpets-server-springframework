@@ -66,6 +66,7 @@ import ru.urvanov.virtualpets.shared.domain.SelectPetArg;
 import ru.urvanov.virtualpets.shared.domain.SelectPetResult;
 import ru.urvanov.virtualpets.shared.exception.DaoException;
 import ru.urvanov.virtualpets.shared.exception.ServiceException;
+
 @Service("petService")
 public class PetServiceImpl implements PetService, ru.urvanov.virtualpets.shared.service.PetService {
 
@@ -106,16 +107,10 @@ public class PetServiceImpl implements PetService, ru.urvanov.virtualpets.shared
         }
     }
 
-    /**
-     * @return the petDao
-     */
     public PetDao getPetDao() {
         return petDao;
     }
 
-    /**
-     * @param petDao the petDao to set
-     */
     public void setPetDao(PetDao petDao) {
         this.petDao = petDao;
     }
@@ -291,7 +286,8 @@ public class PetServiceImpl implements PetService, ru.urvanov.virtualpets.shared
     }
     
     @Override
-    public void savePetCloths(SavePetCloths saveClothArg) {
+    @Transactional(rollbackFor = {DaoException.class, ServiceException.class})
+    public void savePetCloths(SavePetCloths saveClothArg) throws DaoException, ServiceException {
         ServletRequestAttributes sra = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
         SelectedPet selectedPet = (SelectedPet) sra.getAttribute("pet", ServletRequestAttributes.SCOPE_SESSION);
         Pet pet = petDao.findById(selectedPet.getId());
@@ -314,7 +310,7 @@ public class PetServiceImpl implements PetService, ru.urvanov.virtualpets.shared
     }
     
     @Override
-    public GetPetDrinksResult getPetDrinks() {
+    public GetPetDrinksResult getPetDrinks() throws DaoException, ServiceException {
         ServletRequestAttributes sra = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
         SelectedPet selectedPet = (SelectedPet) sra.getAttribute("pet", ServletRequestAttributes.SCOPE_SESSION);
         Pet fullPet = petDao.findFullById(selectedPet.getId());
@@ -335,7 +331,7 @@ public class PetServiceImpl implements PetService, ru.urvanov.virtualpets.shared
     }
 
     @Override
-    public GetPetFoodsResult getPetFoods() {
+    public GetPetFoodsResult getPetFoods() throws DaoException, ServiceException {
         ServletRequestAttributes sra = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
         SelectedPet selectedPet = (SelectedPet) sra.getAttribute("pet", ServletRequestAttributes.SCOPE_SESSION);
         List<PetFood> petFoods = petFoodDao.findByPetId(selectedPet.getId());
@@ -355,7 +351,7 @@ public class PetServiceImpl implements PetService, ru.urvanov.virtualpets.shared
     }
 
     @Override
-    public GetPetJournalEntriesResult getPetJournalEntries(int count) {
+    public GetPetJournalEntriesResult getPetJournalEntries(int count) throws DaoException, ServiceException {
         ServletRequestAttributes sra = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
         SelectedPet selectedPet = (SelectedPet) sra.getAttribute("pet", ServletRequestAttributes.SCOPE_SESSION);
         List<ru.urvanov.virtualpets.server.dao.domain.PetJournalEntry> serverPetJournalEntries = petJournalEntryDao.findLastByPetId(selectedPet.getId(), count);
@@ -430,7 +426,7 @@ public class PetServiceImpl implements PetService, ru.urvanov.virtualpets.shared
      * .virtualpets.shared.domain.CreatePetArg)
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = {ServiceException.class, DaoException.class})
     public CreatePetResult create(CreatePetArg arg) throws DaoException,
             ServiceException {
         SecurityContext securityContext = SecurityContextHolder.getContext();
@@ -482,7 +478,7 @@ public class PetServiceImpl implements PetService, ru.urvanov.virtualpets.shared
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = {DaoException.class, ServiceException.class})
     public void drink(DrinkArg drinkArg) throws DaoException, ServiceException {
         ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder
                 .getRequestAttributes();
@@ -523,7 +519,7 @@ public class PetServiceImpl implements PetService, ru.urvanov.virtualpets.shared
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = {DaoException.class, ServiceException.class})
     public void satiety(SatietyArg satietyArg) throws DaoException,
             ServiceException {
         ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder
@@ -564,7 +560,7 @@ public class PetServiceImpl implements PetService, ru.urvanov.virtualpets.shared
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = {DaoException.class, ServiceException.class})
     public void education() throws DaoException, ServiceException {
         ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder
                 .getRequestAttributes();
@@ -593,6 +589,7 @@ public class PetServiceImpl implements PetService, ru.urvanov.virtualpets.shared
     }
 
     @Override
+    @Transactional(rollbackFor = {DaoException.class, ServiceException.class})
     public void mood() throws DaoException, ServiceException {
         ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder
                 .getRequestAttributes();

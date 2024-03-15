@@ -27,6 +27,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.xml.bind.annotation.adapters.HexBinaryAdapter;
 import ru.urvanov.virtualpets.server.dao.UserDao;
@@ -84,6 +85,7 @@ public class PublicServiceImpl implements PublicService {
     }
 
     @Override
+    @Transactional(rollbackFor = ServiceException.class)
     public void register(RegisterArgument arg) throws ServiceException {
         try {
             String clientVersion = arg.getVersion();
@@ -125,6 +127,7 @@ public class PublicServiceImpl implements PublicService {
 
 
     @Override
+    @Transactional(rollbackFor = ServiceException.class)
     public RecoverPasswordResult recoverPassword(RecoverPasswordArg argument)
             throws ServiceException {
         String clientVersion = argument.getVersion();
@@ -174,37 +177,24 @@ public class PublicServiceImpl implements PublicService {
         return result;
     }
 
-    /**
-     * @return the mailSender
-     */
     public MailSender getMailSender() {
         return mailSender;
     }
 
-    /**
-     * @param mailSender
-     *            the mailSender to set
-     */
     public void setMailSender(MailSender mailSender) {
         this.mailSender = mailSender;
     }
 
-    /**
-     * @return the templateMessage
-     */
     public SimpleMailMessage getTemplateMessage() {
         return templateMessage;
     }
 
-    /**
-     * @param templateMessage
-     *            the templateMessage to set
-     */
     public void setTemplateMessage(SimpleMailMessage templateMessage) {
         this.templateMessage = templateMessage;
     }
 
     @Override
+    @Transactional(rollbackFor = ServiceException.class, readOnly = true)
     public LoginResult recoverSession(RecoverSessionArg arg)
             throws ServiceException, DaoException {
         String clientVersion = arg.getVersion();

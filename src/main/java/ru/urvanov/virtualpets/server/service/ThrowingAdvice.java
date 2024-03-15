@@ -8,10 +8,6 @@ import org.slf4j.LoggerFactory;
 
 import ru.urvanov.virtualpets.shared.exception.ServiceException;
 
-/**
- * @author fedya
- *
- */
 public class ThrowingAdvice {
     private static final Logger log = LoggerFactory.getLogger(ThrowingAdvice.class);
 

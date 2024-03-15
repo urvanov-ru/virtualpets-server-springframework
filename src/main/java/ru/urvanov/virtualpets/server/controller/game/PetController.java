@@ -102,7 +102,7 @@ public class PetController {
     }
     
     @RequestMapping(method = RequestMethod.GET, value = "getPetJournalEntries")
-    public GetPetJournalEntriesResult getPetJournalEntries(@RequestParam(name = "count") int count) {
+    public GetPetJournalEntriesResult getPetJournalEntries(@RequestParam(name = "count") int count) throws DaoException, ServiceException {
         return petService.getPetJournalEntries(count);
     }
     

@@ -124,9 +124,6 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsService {
 
     @Autowired
     private BuildingMaterialDao buildingMaterialDao;
-//
-//    @Autowired
-//    private AchievementDao achievementDao;
 
     private Map<Integer, HiddenObjectsGame> games = new HashMap<Integer, HiddenObjectsGame>();
     private Map<Integer, HiddenObjectsGame> finishedGames = new HashMap<Integer, HiddenObjectsGame>();

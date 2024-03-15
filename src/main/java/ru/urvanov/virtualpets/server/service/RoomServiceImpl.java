@@ -36,7 +36,6 @@ import ru.urvanov.virtualpets.server.dao.domain.BookcaseCost;
 import ru.urvanov.virtualpets.server.dao.domain.BuildingMaterialType;
 import ru.urvanov.virtualpets.server.dao.domain.Cloth;
 import ru.urvanov.virtualpets.server.dao.domain.DrinkType;
-import ru.urvanov.virtualpets.server.dao.domain.Food;
 import ru.urvanov.virtualpets.server.dao.domain.FoodType;
 import ru.urvanov.virtualpets.server.dao.domain.JournalEntryType;
 import ru.urvanov.virtualpets.server.dao.domain.Level;
@@ -223,6 +222,7 @@ public class RoomServiceImpl implements RoomService {
     
 
     @Override
+    @Transactional(rollbackFor = {DaoException.class, ServiceException.class})
     public OpenBoxNewbieResult openBoxNewbie(int index) throws DaoException,
             ServiceException {
         ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder
@@ -312,7 +312,7 @@ public class RoomServiceImpl implements RoomService {
     }
     
     @Override
-    @Transactional
+    @Transactional(rollbackFor = {DaoException.class, ServiceException.class})
     public void buildRefrigerator(
             ru.urvanov.virtualpets.shared.domain.Point arg)
             throws DaoException, ServiceException {
@@ -366,6 +366,7 @@ public class RoomServiceImpl implements RoomService {
 
 
     @Override
+    @Transactional(rollbackFor = {DaoException.class, ServiceException.class})
     public void moveRefrigerator(Point arg) throws DaoException,
             ServiceException {
         ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder
@@ -382,6 +383,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
+    @Transactional(rollbackFor = {DaoException.class, ServiceException.class})
     public void upgradeRefrigerator() throws DaoException, ServiceException {
         ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder
                 .getRequestAttributes();
@@ -410,7 +412,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = {DaoException.class, ServiceException.class})
     public void buildBookcase(Point arg) throws DaoException, ServiceException {
         ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder
                 .getRequestAttributes();
@@ -456,6 +458,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
+    @Transactional(rollbackFor = {DaoException.class, ServiceException.class})
     public void upgradeBookcase() throws DaoException, ServiceException {
         ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder
                 .getRequestAttributes();
@@ -483,6 +486,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
+    @Transactional(rollbackFor = {DaoException.class, ServiceException.class})
     public void moveBookcase(Point arg) throws DaoException, ServiceException {
         ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder
                 .getRequestAttributes();
@@ -498,7 +502,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = {DaoException.class, ServiceException.class})
     public void buildMachineWithDrinks(Point arg) throws DaoException,
             ServiceException {
         ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder
@@ -553,6 +557,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
+    @Transactional(rollbackFor = {DaoException.class, ServiceException.class})
     public void moveMachineWithDrinks(Point arg) throws DaoException,
             ServiceException {
         ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder
@@ -630,6 +635,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
+    @Transactional(rollbackFor = {DaoException.class, ServiceException.class})
     public void upgradeMachineWithDrinks() throws DaoException,
             ServiceException {
         ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder
@@ -658,7 +664,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = {DaoException.class, ServiceException.class})
     public void pickJournalOnFloor() throws DaoException, ServiceException {
         ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder
                 .getRequestAttributes();
@@ -686,6 +692,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
+    @Transactional(rollbackFor = {DaoException.class, ServiceException.class})
     public void journalClosed() throws DaoException, ServiceException {
         ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder
                 .getRequestAttributes();

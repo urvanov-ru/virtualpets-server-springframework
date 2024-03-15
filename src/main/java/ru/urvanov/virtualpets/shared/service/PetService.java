@@ -42,7 +42,7 @@ public interface PetService {
     
     public GetPetFoodsResult getPetFoods() throws DaoException, ServiceException;
     
-    GetPetJournalEntriesResult getPetJournalEntries(int count);
+    GetPetJournalEntriesResult getPetJournalEntries(int count) throws DaoException, ServiceException;
     
     public GetPetRucksackInnerResult getPetRucksackInner() throws DaoException, ServiceException;
 }
