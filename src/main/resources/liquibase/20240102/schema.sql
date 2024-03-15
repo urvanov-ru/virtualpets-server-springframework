@@ -53,13 +53,6 @@ create unique index idx_pet_session_key on pet(session_key);
 
 create index idx_pet_user_id on pet(user_id);
 
-CREATE TABLE "settings" (
-                     id INT NOT NULL,
-                     last_process_all timestamp with time zone NOT NULL,
-                     db_version varchar(10) NOT NULL,
-                     version INT NOT NULL DEFAULT 0,
-                     PRIMARY KEY (id)
-);
 
 
 CREATE TABLE "user" (
@@ -71,7 +64,7 @@ CREATE TABLE "user" (
                      login_date timestamp with time zone DEFAULT NULL,
                      active_date timestamp with time zone DEFAULT NULL,
                      sex varchar(5) DEFAULT NULL,
-                     birthdate timestamp with time zone DEFAULT NULL,
+                     birthdate date DEFAULT NULL,
                      comment varchar(50) DEFAULT NULL,
                      country varchar(50) DEFAULT NULL,
                      city varchar(50) DEFAULT NULL,
@@ -95,9 +88,6 @@ values('admin', 'admin','$2a$10$JT0l8oNHQuohL8SMLHCBludsjTiJNpG.uDHc3QGkP5V.aMML
 INSERT INTO pet(name,created_date,login_date,user_id,pet_type)
 select 'admin',now(),now(),t_user.id,0
 from "user" t_user where t_user.name='admin';
-
-INSERT INTO "settings"(id,last_process_all,db_version) values(1,now(),'0.20.1');
-
 
 
 CREATE TABLE pet_cloth (
@@ -597,9 +587,6 @@ alter table pet_achievement add constraint fk_pet_achievement_pet_id foreign key
     
 alter table drink add constraint fk_drink_machine_with_drinks_id foreign key (machine_with_drinks_id)
     references machine_with_drinks(id) on update no action on delete no action;
-
-
-update "settings" set db_version = '0.21.0' where id = 1;
 
 
 
