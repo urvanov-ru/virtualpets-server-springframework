@@ -1,9 +1,7 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.service;
 
-import java.util.Date;
+import java.time.Clock;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +23,6 @@ import ru.urvanov.virtualpets.shared.exception.DaoException;
 import ru.urvanov.virtualpets.shared.exception.ServiceException;
 import ru.urvanov.virtualpets.shared.service.ChatService;
 
-/**
- * @author fedya
- *
- */
 @Service
 public class ChatServiceImpl implements ChatService {
 
@@ -37,6 +31,9 @@ public class ChatServiceImpl implements ChatService {
     
     @Autowired
     private UserDao userDao;
+    
+    @Autowired
+    private Clock clock;
 
 
     /* (non-Javadoc)
@@ -52,7 +49,7 @@ public class ChatServiceImpl implements ChatService {
         Integer userId = user.getId();
         
         user = userDao.findById(userId);
-        user.setActiveDate(new Date());
+        user.setActiveDate(OffsetDateTime.now(clock));
         userDao.save(user);
         
         
@@ -85,8 +82,9 @@ public class ChatServiceImpl implements ChatService {
             chatMessages[n].setSendTime(c.getSendTime());
             chatMessages[n].setId(c.getId());
             n++;
-        }
+            }
         
+
         if (chatMessages.length > 0) {
             result.setLastChatMessageId(chatMessages[chatMessages.length-1].getId());
         } else {
@@ -108,11 +106,11 @@ public class ChatServiceImpl implements ChatService {
         
         Chat chat = new Chat();
         if (arg.getAddresseeId() != null) {
-            chat.setAddressee(userDao.findById(arg.getAddresseeId()));
+            chat.setAddressee(userDao.getReference(arg.getAddresseeId()));
         }
         chat.setMessage(arg.getMessage());
-        chat.setSender(userDao.findById(user.getId()));
-        chat.setSendTime(new Date());
+        chat.setSender(userDao.getReference(user.getId()));
+        chat.setSendTime(OffsetDateTime.now(clock));
         chatDao.save(chat);
         
         SendChatMessageResult result = new SendChatMessageResult();

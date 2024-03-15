@@ -7,8 +7,6 @@ import ru.urvanov.virtualpets.server.dao.domain.DrinkType;
 
 public interface DrinkDao {
     Drink findById(DrinkType id);
-    Drink getReference(Integer id);
-    Drink findByCode(DrinkType code);
     Drink getReference(DrinkType id);
     List<Drink> findAllOrderByMachineWithDrinksLevelAndMachineWithDrinksOrder();
 }

@@ -1,6 +1,7 @@
 package ru.urvanov.virtualpets.server.service;
 
-import java.util.Date;
+import java.time.Clock;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -37,6 +38,9 @@ public class TownServiceImpl implements ru.urvanov.virtualpets.shared.service.To
 
     @Autowired
     private ConversionService conversionService;
+    
+    @Autowired
+    private Clock clock;
 
     @Override
     public GetTownInfoResult getTownInfo() throws DaoException,
@@ -51,7 +55,7 @@ public class TownServiceImpl implements ru.urvanov.virtualpets.shared.service.To
                 .getJournalEntries();
         if (!mapJournalEntries.containsKey(JournalEntryType.PLAY_HIDDEN_OBJECT_GAMES)) {
             PetJournalEntry petJournalEntry = new PetJournalEntry();
-            petJournalEntry.setCreatedAt(new Date());
+            petJournalEntry.setCreatedAt(OffsetDateTime.now(clock));
             petJournalEntry.setPet(pet);
             petJournalEntry.setJournalEntry(JournalEntryType.PLAY_HIDDEN_OBJECT_GAMES);
             mapJournalEntries.put(JournalEntryType.PLAY_HIDDEN_OBJECT_GAMES, petJournalEntry);

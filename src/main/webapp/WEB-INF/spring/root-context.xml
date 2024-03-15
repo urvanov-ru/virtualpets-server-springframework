@@ -27,10 +27,9 @@
     <bean id="version" class="java.lang.String">
         <constructor-arg value="0.21" />
     </bean>
-
-
-
-
+    
+    <bean id = "clock" class = "java.time.Clock"
+            factory-method = "systemDefaultZone" />
 
 
     <bean id="conversionService"

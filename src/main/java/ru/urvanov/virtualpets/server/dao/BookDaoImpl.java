@@ -38,4 +38,9 @@ public class BookDaoImpl implements BookDao {
         return query.getResultList();
     }
 
+    @Override
+    public Book getReference(String id) {
+        return em.getReference(Book.class, id);
+    }
+
 }

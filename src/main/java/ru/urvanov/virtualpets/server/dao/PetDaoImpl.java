@@ -50,26 +50,9 @@ public class PetDaoImpl implements PetDao {
 
     @Override
     public Pet findFullById(Integer id) {
-        //Query query = em.createNamedQuery("findFullById");
-        //query.setParameter("id", id);
-        //@SuppressWarnings("unchecked")
-        //List<Pet> lst = query.getResultList();
-        //if (lst.size() == 0) {
-        //    return null;
-        //} else {
-        //    return lst.get(0);
-        //}
-        Pet pet =  em.find(Pet.class, id);
-        
-        // Загружаем подчинённые сущности:
-        logger.debug("Pet.achievement.size={}.", pet.getAchievements().size());
-        logger.debug("Pet.books.size={}.", pet.getBooks().size());
-        logger.debug("Pet.buildingMaterials.size={}.", pet.getBuildingMaterials().size());
-        logger.debug("Pet.cloth.size={}.", pet.getCloths().size());
-        logger.debug("Pet.drinks.size={}.", pet.getDrinks().size());
-        logger.debug("Pet.foods.size={}.", pet.getFoods().size());
-        logger.debug("Pet.journalEntries.size={}.", pet.getJournalEntries().size());
-        return pet;
+        TypedQuery<Pet> query = em.createNamedQuery("findFullById", Pet.class);
+        query.setParameter("id", id);
+        return query.getSingleResult();
     }
 
     @Override
@@ -87,10 +70,9 @@ public class PetDaoImpl implements PetDao {
         em.remove(pet);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public List<Pet> findByUserId(Integer userId) {
-        Query query = em.createNamedQuery("findByUserId");
+        TypedQuery<Pet> query = em.createNamedQuery("findByUserId", Pet.class);
         query.setParameter("userId", userId);
         return query.getResultList();
     }

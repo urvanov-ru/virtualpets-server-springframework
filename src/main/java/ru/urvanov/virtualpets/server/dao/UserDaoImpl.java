@@ -1,10 +1,7 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.dao;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.time.Clock;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 import jakarta.persistence.EntityManager;
@@ -17,18 +14,19 @@ import jakarta.persistence.criteria.Order;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import ru.urvanov.virtualpets.server.dao.domain.User;
 import ru.urvanov.virtualpets.server.dao.domain.User_;
-/**
- * @author fedya
- *
- */
+
 @Repository(value="userDao")
 @Transactional
 public class UserDaoImpl implements UserDao {
+    
+    @Autowired
+    private Clock clock;
     
     @PersistenceContext
     private EntityManager em;
@@ -92,9 +90,9 @@ public class UserDaoImpl implements UserDao {
     @Override
     public List<User> findOnline() {
         Query query = em.createNamedQuery("findOnline");
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MINUTE, -5);
-        query.setParameter("date", calendar.getTime());
+        OffsetDateTime offsetDateTime = OffsetDateTime.now(clock);
+        offsetDateTime = offsetDateTime.minusMinutes(5);
+        query.setParameter("date", offsetDateTime);
         return query.getResultList();
     }
 
@@ -129,7 +127,7 @@ public class UserDaoImpl implements UserDao {
         Root<User> root = criteriaQuery.from(User.class);
         criteriaQuery.select(root);
         Predicate predicate1 = cb.equal(root.get(User_.recoverPasswordKey), recoverKey);
-        Predicate predicate2 = cb.lessThan(root.get(User_.recoverPasswordValid), new Date());
+        Predicate predicate2 = cb.lessThan(root.get(User_.recoverPasswordValid), OffsetDateTime.now(clock));
         Predicate predicate = cb.and(predicate1, predicate2);
         criteriaQuery.where(predicate);
         List<User> lst = em.createQuery(criteriaQuery).getResultList();

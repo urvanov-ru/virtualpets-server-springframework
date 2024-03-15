@@ -457,17 +457,18 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsService {
                 reward.setBookId(bookId);
                 player.setReward(reward);
 
-                PetFood food = petFoodDao.findByPetIdAndFoodType(
-                        player.getPetId(), foodType);
-                if (food == null) {
-                    food = new PetFood();
-                    food.setPet(petDao.getReference(player.getPetId()));
-                    food.setFood(foodDao.findByCode(foodType));
-                    food.setFoodCount(0);
-                }
-                food.setFoodCount(food.getFoodCount() + 1);
-                petFoodDao.save(food);
                 Pet fullPet = petDao.findFullById(player.getPetId());
+                if (!fullPet.getFoods().containsKey(foodType)) {
+                    PetFood food = new PetFood();
+                    food.setPet(fullPet);
+                    food.setFood(foodDao.getReference(foodType));
+                    food.setFoodCount(1);
+                    fullPet.getFoods().put(foodType, food);
+                } else {
+                    PetFood food = fullPet.getFoods().get(foodType);
+                    food.setFoodCount(food.getFoodCount() + 1);
+                }
+                
                 fullPet.setMood(100);
                 Set<Cloth> cloths = fullPet.getCloths();
                 boolean clothFound = false;
@@ -487,8 +488,7 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsService {
                             .get(buildingMaterialType);
                     if (petBuildingMaterial == null) {
                         petBuildingMaterial = new PetBuildingMaterial();
-                        petBuildingMaterial
-                                .setBuildingMaterial(buildingMaterialDao.findById(buildingMaterialType));
+                        petBuildingMaterial.setBuildingMaterial(buildingMaterialDao.getReference(buildingMaterialType));
                         petBuildingMaterial.setPet(fullPet);
                         petBuildingMaterial.setBuildingMaterialCount(0);
                         fullPet.getBuildingMaterials().put(buildingMaterialType,
@@ -503,7 +503,7 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsService {
                     PetDrink petDrink = mapDrinks.get(drinkType);
                     if (petDrink == null) {
                         petDrink = new PetDrink();
-                        petDrink.setDrink(drinkDao.findByCode(drinkType));
+                        petDrink.setDrink(drinkDao.getReference(drinkType));
                         petDrink.setPet(fullPet);
                         petDrink.setDrinkCount(0);
                         fullPet.getDrinks().put(drinkType, petDrink);
@@ -519,7 +519,7 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsService {
                 }
                 if (bookId != null && !bookFound) {
                     Set<Book> books = fullPet.getBooks();
-                    books.add(bookDao.findById(bookId));
+                    books.add(bookDao.getReference(bookId));
                     reward.setBookId(bookId);
                 }
 

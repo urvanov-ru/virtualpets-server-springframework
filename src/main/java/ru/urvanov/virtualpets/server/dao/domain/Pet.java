@@ -35,9 +35,8 @@ import jakarta.validation.constraints.Size;
 @Entity
 @Table(name = "pet")
 @NamedQueries({
-        @NamedQuery(name = "findByUserId", query = "from Pet p where p.user.id = :userId")
-        //,
-//        @NamedQuery(name = "findFullById", query = " from Pet p left outer join fetch p.cloths c left outer join fetch p.books b left outer join fetch p.foods f left outer join fetch p.buildingMaterials bm left outer join fetch bm.buildingMaterial left outer join fetch p.drinks d left outer join fetch p.journalEntries je left outer join fetch p.achievements ach where p.id = :id") 
+        @NamedQuery(name = "findByUserId", query = "from Pet p where p.user.id = :userId"),
+        @NamedQuery(name = "findFullById", query = " from Pet p left outer join fetch p.cloths c left outer join fetch p.books b left outer join fetch p.foods f left outer join fetch p.buildingMaterials bm left outer join fetch bm.buildingMaterial left outer join fetch p.drinks d left outer join fetch p.journalEntries je left outer join fetch p.achievements ach where p.id = :id") 
         }
         )
 public class Pet implements Serializable {

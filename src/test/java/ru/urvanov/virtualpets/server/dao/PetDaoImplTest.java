@@ -1,12 +1,14 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.dao;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.Clock;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.Date;
 import java.util.List;
 
@@ -23,10 +25,6 @@ import ru.urvanov.virtualpets.server.dao.domain.PetJournalEntry;
 import ru.urvanov.virtualpets.server.dao.domain.PetType;
 import ru.urvanov.virtualpets.server.test.annotation.DataSets;
 
-/**
- * @author fedya
- *
- */
 public class PetDaoImplTest extends AbstractDaoImplTest {
     
     @Autowired
@@ -40,7 +38,10 @@ public class PetDaoImplTest extends AbstractDaoImplTest {
     
     @Autowired
     private FoodDao foodDao;
-        
+    
+    @Autowired
+    private Clock clock;
+    
     @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/PetServiceImplTest.xls")
     @Test
     public void testSave() {
@@ -48,8 +49,8 @@ public class PetDaoImplTest extends AbstractDaoImplTest {
         int lastSize = pets.size();
         Pet pet = new Pet();
         pet.setName("test4y84hg4");
-        pet.setCreatedDate(new Date());
-        pet.setLoginDate(new Date());
+        pet.setCreatedDate(OffsetDateTime.now(clock));
+        pet.setLoginDate(OffsetDateTime.now(clock));
         pet.setPetType(PetType.CAT);
         pet.setUser(userDao.findByLogin("Clarence"));
         pet.setLevel(levelDao.findById(1));

@@ -1,14 +1,14 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.test.config;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.sql.Driver;
-import java.util.List;
+import java.time.Clock;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.temporal.TemporalAccessor;
 
 import javax.sql.DataSource;
 
@@ -16,27 +16,14 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.dbunit.DataSourceDatabaseTester;
 import org.dbunit.database.DatabaseConfig;
 import org.dbunit.database.IDatabaseConnection;
-import org.dbunit.ext.h2.H2DataTypeFactory;
-import org.dbunit.ext.mysql.MySqlDataTypeFactory;
 import org.dbunit.ext.postgresql.PostgresqlDataTypeFactory;
-import org.dbunit.operation.DatabaseOperation;
 import org.dbunit.util.fileloader.XlsDataFileLoader;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.Profile;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.jdbc.datasource.SimpleDriverDataSource;
-import org.springframework.jdbc.datasource.embedded.ConnectionProperties;
-import org.springframework.jdbc.datasource.embedded.DataSourceFactory;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
-/**
- * @author fedya
- * 
- */
 @Configuration
 @ImportResource("file:src/main/webapp/WEB-INF/spring/servlet-tx.xml")
 @ComponentScan(basePackages = {"ru.urvanov.virtualpets.server.dao"})
@@ -87,5 +74,13 @@ public class DaoTestConfig {
     @Bean(name = "xlsDataFileLoader")
     public XlsDataFileLoader xlsDataFileLoader() {
         return new XlsDataFileLoader();
+    }
+    
+    @Bean
+    public Clock clock() {
+        ZoneId zoneId = ZoneId.of("Europe/Moscow");
+        TemporalAccessor offsetDateTime = ZonedDateTime.of(2024, 3, 15, 18, 52, 0, 0, zoneId);
+        Instant instant = Instant.from(offsetDateTime );
+        return Clock.fixed(instant, zoneId);
     }
 }

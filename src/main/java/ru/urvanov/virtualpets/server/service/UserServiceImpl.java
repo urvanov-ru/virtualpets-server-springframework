@@ -1,8 +1,10 @@
 package ru.urvanov.virtualpets.server.service;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.Clock;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 import org.apache.commons.codec.binary.Base64;
@@ -36,6 +38,9 @@ import ru.urvanov.virtualpets.shared.exception.ServiceException;
 @Service("userService")
 public class UserServiceImpl implements UserService, ru.urvanov.virtualpets.shared.service.UserService, UserDetailsService  {
 
+    private static final DateTimeFormatter unidDateTimeFormatter
+            = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS", Locale.ROOT);
+    
     @Autowired
     private UserDao userDao;
     
@@ -48,7 +53,10 @@ public class UserServiceImpl implements UserService, ru.urvanov.virtualpets.shar
     
     @Autowired
     private String version;
-
+    
+    @Autowired
+    private Clock clock;
+    
     @Override
     public LoginResult login(LoginArg arg) throws ServiceException, DaoException {
         String clientVersion = arg.getVersion();
@@ -66,9 +74,8 @@ public class UserServiceImpl implements UserService, ru.urvanov.virtualpets.shar
         Random r = new Random();
         r.nextBytes(b);
         String uniqueIdentifier = Base64.encodeBase64String(b);
-        Date d = new Date();
-        SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-        uniqueIdentifier = uniqueIdentifier + f.format(d);
+        uniqueIdentifier = uniqueIdentifier
+                + unidDateTimeFormatter.format(OffsetDateTime.now(clock));
         user.setUnid(uniqueIdentifier);
         userDao.save(user);
         

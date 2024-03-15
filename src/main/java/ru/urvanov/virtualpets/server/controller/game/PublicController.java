@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.controller.game;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import ru.urvanov.virtualpets.server.service.PublicServiceImpl;
 import ru.urvanov.virtualpets.shared.domain.GetServersArg;
 import ru.urvanov.virtualpets.shared.domain.LoginResult;
 import ru.urvanov.virtualpets.shared.domain.RecoverPasswordArg;
@@ -21,17 +17,14 @@ import ru.urvanov.virtualpets.shared.domain.ServerInfo;
 import ru.urvanov.virtualpets.shared.domain.ServerTechnicalInfo;
 import ru.urvanov.virtualpets.shared.exception.DaoException;
 import ru.urvanov.virtualpets.shared.exception.ServiceException;
+import ru.urvanov.virtualpets.shared.service.PublicService;
 
-/**
- * @author fedya
- * 
- */
 @RestController
 @RequestMapping(value = "rest/v1/PublicService")
 public class PublicController {
 
     @Autowired
-    public PublicServiceImpl publicService;
+    public PublicService publicService;
     
 
     @RequestMapping(method = RequestMethod.GET, value="servers")
@@ -43,13 +36,13 @@ public class PublicController {
     }
 
     @RequestMapping(method=RequestMethod.POST, value="register")
-    public void register(@RequestBody RegisterArgument arg) throws ServiceException {
+    public void register(@RequestBody RegisterArgument arg) throws ServiceException, DaoException {
         publicService.register(arg);
     }
 
     @RequestMapping(method = RequestMethod.POST, value="recoverPassword")
     public RecoverPasswordResult recoverPassword(RecoverPasswordArg argument)
-            throws ServiceException {
+            throws ServiceException, DaoException {
         return publicService.recoverPassword(argument);
     }
 

@@ -1,13 +1,9 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.service;
 
-import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.Clock;
+import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -26,10 +22,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.xml.bind.annotation.adapters.HexBinaryAdapter;
 import ru.urvanov.virtualpets.server.dao.UserDao;
 import ru.urvanov.virtualpets.server.dao.domain.User;
 import ru.urvanov.virtualpets.shared.domain.GetServersArg;
@@ -47,10 +43,6 @@ import ru.urvanov.virtualpets.shared.exception.SendMailException;
 import ru.urvanov.virtualpets.shared.exception.ServiceException;
 import ru.urvanov.virtualpets.shared.service.PublicService;
 
-/**
- * @author fedya
- * 
- */
 @Service
 public class PublicServiceImpl implements PublicService {
 
@@ -69,6 +61,12 @@ public class PublicServiceImpl implements PublicService {
     @Value("${application.url}")
     private String applicationUrl;
 
+    @Autowired
+    private BCryptPasswordEncoder bcryptEncoder;
+    
+    @Autowired
+    private Clock clock;
+
     @Override
     public ServerInfo[] getServers(GetServersArg arg) throws ServiceException,
             DaoException {
@@ -86,7 +84,7 @@ public class PublicServiceImpl implements PublicService {
 
     @Override
     @Transactional(rollbackFor = ServiceException.class)
-    public void register(RegisterArgument arg) throws ServiceException {
+    public void register(RegisterArgument arg) throws ServiceException, DaoException {
         try {
             String clientVersion = arg.getVersion();
             if (!version.equals(clientVersion)) {
@@ -104,22 +102,9 @@ public class PublicServiceImpl implements PublicService {
             User user = new User();
             user.setLogin(arg.getLogin());
             user.setName(arg.getLogin());
-            MessageDigest md5;
-            try {
-                md5 = MessageDigest.getInstance("MD5");
-            } catch (NoSuchAlgorithmException e) {
-                throw new ServiceException("MD5 is not available.", e);
-            }
-            String hexPasswordMd5 = null;
-            try {
-                hexPasswordMd5 = (new HexBinaryAdapter()).marshal(md5
-                        .digest(arg.getPassword().getBytes("UTF-8")));
-            } catch (UnsupportedEncodingException e) {
-                throw new ServiceException(e);
-            }
-            user.setPassword(hexPasswordMd5);
+            user.setPassword(bcryptEncoder.encode(arg.getPassword()));
             user.setEmail(arg.getEmail());
-            user.setRegistrationDate(new Date());
+            user.setRegistrationDate(OffsetDateTime.now(clock));
             user.setRole(ru.urvanov.virtualpets.server.dao.domain.Role.USER);
             userDao.save(user);
         }
@@ -129,7 +114,7 @@ public class PublicServiceImpl implements PublicService {
     @Override
     @Transactional(rollbackFor = ServiceException.class)
     public RecoverPasswordResult recoverPassword(RecoverPasswordArg argument)
-            throws ServiceException {
+            throws ServiceException, DaoException {
         String clientVersion = argument.getVersion();
         if (!version.equals(clientVersion)) {
             throw new IncompatibleVersionException("", version, clientVersion);
@@ -152,11 +137,11 @@ public class PublicServiceImpl implements PublicService {
             sb.append(String.format("%02x", b & 0xff));
         }
         String key = sb.toString();
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_MONTH, -1);
+        OffsetDateTime recoverPasswordValid = OffsetDateTime.now(clock);
+        recoverPasswordValid = recoverPasswordValid.minusMonths(1);
         User user = userDao.findByLoginAndEmail(login, email);
         user.setRecoverPasswordKey(key);
-        user.setRecoverPasswordValid(calendar.getTime());
+        user.setRecoverPasswordValid(recoverPasswordValid);
         userDao.save(user);
 
         // Create a thread safe "copy" of the template message and customize it
