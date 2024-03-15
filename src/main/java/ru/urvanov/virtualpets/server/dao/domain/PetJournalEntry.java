@@ -1,7 +1,7 @@
 package ru.urvanov.virtualpets.server.dao.domain;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.OffsetDateTime;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -36,7 +36,7 @@ public class PetJournalEntry implements Serializable {
     private Integer id;
     
     @Column(name = "created_at")
-    private Date createdAt;
+    private OffsetDateTime createdAt;
     
     @Column(name = "journal_entry_id")
     @Enumerated(EnumType.STRING)
@@ -64,11 +64,11 @@ public class PetJournalEntry implements Serializable {
         this.id = id;
     }
 
-    public Date getCreatedAt() {
+    public OffsetDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(OffsetDateTime createdAt) {
         this.createdAt = createdAt;
     }
 

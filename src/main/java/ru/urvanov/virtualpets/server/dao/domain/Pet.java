@@ -1,7 +1,7 @@
 package ru.urvanov.virtualpets.server.dao.domain;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.OffsetDateTime;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -19,7 +19,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapKey;
 import jakarta.persistence.MapKeyColumn;
 import jakarta.persistence.MapKeyEnumerated;
 import jakarta.persistence.NamedQueries;
@@ -59,10 +58,10 @@ public class Pet implements Serializable {
     private String sessionKey;
 
     @Column(name = "created_date")
-    private Date createdDate;
+    private OffsetDateTime createdDate;
 
     @Column(name = "login_date")
-    private Date loginDate;
+    private OffsetDateTime loginDate;
 
     @Column(name = "satiety")
     private int satiety;
@@ -185,19 +184,19 @@ public class Pet implements Serializable {
         this.sessionKey = sessionKey;
     }
 
-    public Date getCreatedDate() {
+    public OffsetDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(OffsetDateTime createdDate) {
         this.createdDate = createdDate;
     }
 
-    public Date getLoginDate() {
+    public OffsetDateTime getLoginDate() {
         return loginDate;
     }
 
-    public void setLoginDate(Date loginDate) {
+    public void setLoginDate(OffsetDateTime loginDate) {
         this.loginDate = loginDate;
     }
 

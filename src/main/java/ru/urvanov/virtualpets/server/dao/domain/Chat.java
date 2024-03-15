@@ -1,7 +1,7 @@
 package ru.urvanov.virtualpets.server.dao.domain;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.OffsetDateTime;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -41,7 +41,7 @@ public class Chat implements Serializable{
     private User sender;
     
     @Column(name="send_time")
-    private Date sendTime;
+    private OffsetDateTime sendTime;
     
     @Column
     @Size(max=250)
@@ -71,11 +71,11 @@ public class Chat implements Serializable{
         this.sender = sender;
     }
 
-    public Date getSendTime() {
+    public OffsetDateTime getSendTime() {
         return sendTime;
     }
 
-    public void setSendTime(Date sendTime) {
+    public void setSendTime(OffsetDateTime sendTime) {
         this.sendTime = sendTime;
     }
 

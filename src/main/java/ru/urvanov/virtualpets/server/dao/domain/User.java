@@ -1,8 +1,9 @@
 package ru.urvanov.virtualpets.server.dao.domain;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -68,20 +69,20 @@ public class User implements UserDetails, Serializable{
     
 
     @Column(name = "registration_date")
-    private Date registrationDate;
+    private OffsetDateTime registrationDate;
 
     @Column(name = "login_date")
-    private Date loginDate;
+    private OffsetDateTime loginDate;
 
     @Column(name = "active_date")
-    private Date activeDate;
+    private OffsetDateTime activeDate;
 
     @Column(name = "sex")
     @Enumerated(EnumType.STRING)
     private Sex sex;
 
     @Column(name = "birthdate")
-    private Date birthdate;
+    private LocalDate birthdate;
 
     @Column(name = "comment")
     @Size(max = 50)
@@ -108,7 +109,7 @@ public class User implements UserDetails, Serializable{
     private String recoverPasswordKey;
     
     @Column(name="recover_password_valid")
-    private Date recoverPasswordValid;
+    private OffsetDateTime recoverPasswordValid;
     
     /**
      * Уникальный идентификатор. Используется для восстановления подключения
@@ -155,27 +156,27 @@ public class User implements UserDetails, Serializable{
         this.password = password;
     }
 
-    public Date getRegistrationDate() {
+    public OffsetDateTime getRegistrationDate() {
         return registrationDate;
     }
 
-    public void setRegistrationDate(Date registrationDate) {
+    public void setRegistrationDate(OffsetDateTime registrationDate) {
         this.registrationDate = registrationDate;
     }
 
-    public Date getLoginDate() {
+    public OffsetDateTime getLoginDate() {
         return loginDate;
     }
 
-    public void setLoginDate(Date loginDate) {
+    public void setLoginDate(OffsetDateTime loginDate) {
         this.loginDate = loginDate;
     }
 
-    public Date getActiveDate() {
+    public OffsetDateTime getActiveDate() {
         return activeDate;
     }
 
-    public void setActiveDate(Date activeDate) {
+    public void setActiveDate(OffsetDateTime activeDate) {
         this.activeDate = activeDate;
     }
 
@@ -187,11 +188,11 @@ public class User implements UserDetails, Serializable{
         this.sex = sex;
     }
 
-    public Date getBirthdate() {
+    public LocalDate getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(Date birthdate) {
+    public void setBirthdate(LocalDate birthdate) {
         this.birthdate = birthdate;
     }
 
@@ -251,11 +252,11 @@ public class User implements UserDetails, Serializable{
         this.recoverPasswordKey = recoverPasswordKey;
     }
 
-    public Date getRecoverPasswordValid() {
+    public OffsetDateTime getRecoverPasswordValid() {
         return recoverPasswordValid;
     }
 
-    public void setRecoverPasswordValid(Date recoverPasswordValid) {
+    public void setRecoverPasswordValid(OffsetDateTime recoverPasswordValid) {
         this.recoverPasswordValid = recoverPasswordValid;
     }
 
