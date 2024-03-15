@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.service;
 
 import java.text.SimpleDateFormat;
@@ -36,10 +33,6 @@ import ru.urvanov.virtualpets.shared.exception.DaoException;
 import ru.urvanov.virtualpets.shared.exception.IncompatibleVersionException;
 import ru.urvanov.virtualpets.shared.exception.ServiceException;
 
-/**
- * @author fedya
- * 
- */
 @Service("userService")
 public class UserServiceImpl implements UserService, ru.urvanov.virtualpets.shared.service.UserService, UserDetailsService  {
 
