@@ -64,7 +64,7 @@ public class PetFoodDaoImplTest extends AbstractDaoImplTest {
     @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/PetFoodServiceImplTest.xls")
     @Test
     public void testSave() {
-        Food foodCarrot = foodDao.findByCode(FoodType.CARROT);
+        Food foodCarrot = foodDao.findById(FoodType.CARROT);
         PetFood petFood = new PetFood();
         Pet pet = petDao.getReference(1);
         petFood.setFood(foodCarrot);

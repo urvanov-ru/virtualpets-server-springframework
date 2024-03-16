@@ -36,7 +36,7 @@ public class FoodDaoImpl implements FoodDao {
      * ru.urvanov.virtualpets.server.dao.FoodDao#findById(java.lang.Integer)
      */
     @Override
-    public Food findById(Integer id) {
+    public Food findById(FoodType id) {
         return em.find(Food.class, id);
     }
 

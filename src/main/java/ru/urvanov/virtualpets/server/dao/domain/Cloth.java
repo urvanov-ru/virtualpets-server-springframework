@@ -38,7 +38,7 @@ public class Cloth implements Serializable {
     private int wardrobeOrder;
     
     @Column(name = "hidden_objects_game_drop_rate")
-    private double hiddenObjectsGameDropRate;
+    private float hiddenObjectsGameDropRate;
     
     public String getId() {
         return id;
@@ -64,11 +64,11 @@ public class Cloth implements Serializable {
         this.wardrobeOrder = wardrobeOrder;
     }
 
-    public double getHiddenObjectsGameDropRate() {
+    public float getHiddenObjectsGameDropRate() {
         return hiddenObjectsGameDropRate;
     }
 
-    public void setHiddenObjectsGameDropRate(double hiddenObjectsGameDropRate) {
+    public void setHiddenObjectsGameDropRate(float hiddenObjectsGameDropRate) {
         this.hiddenObjectsGameDropRate = hiddenObjectsGameDropRate;
     }
 

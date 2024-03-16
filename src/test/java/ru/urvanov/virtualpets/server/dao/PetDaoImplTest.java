@@ -72,11 +72,12 @@ public class PetDaoImplTest extends AbstractDaoImplTest {
     public void testAddJournalEntry() {
         Pet pet = petDao.findById(1);
         PetJournalEntry petJournalEntry = new PetJournalEntry();
+        petJournalEntry.setCreatedAt(OffsetDateTime.now(clock));
         petJournalEntry.setJournalEntry(JournalEntryType.WELCOME);
+        petJournalEntry.setPet(pet);
         petJournalEntry.setReaded(true);
         
         pet.getJournalEntries().put(JournalEntryType.WELCOME, petJournalEntry);
-        //petJournalEntry.setPet(pet);
         petDao.save(pet);
         
         pet = petDao.findFullById(1);

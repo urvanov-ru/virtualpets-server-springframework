@@ -35,7 +35,7 @@ public class Food implements Serializable {
     private int refrigeratorOrder;
     
     @Column(name = "hidden_objects_game_drop_rate")
-    private double hiddenObjectsGameDropRate;
+    private float hiddenObjectsGameDropRate;
 
     public FoodType getId() {
         return id;
@@ -61,11 +61,11 @@ public class Food implements Serializable {
         this.refrigeratorOrder = refrigeratorOrder;
     }
 
-    public double getHiddenObjectsGameDropRate() {
+    public float getHiddenObjectsGameDropRate() {
         return hiddenObjectsGameDropRate;
     }
 
-    public void setHiddenObjectsGameDropRate(double hiddenObjectsGameDropRate) {
+    public void setHiddenObjectsGameDropRate(float hiddenObjectsGameDropRate) {
         this.hiddenObjectsGameDropRate = hiddenObjectsGameDropRate;
     }
 
