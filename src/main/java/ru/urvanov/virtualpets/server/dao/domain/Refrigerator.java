@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.FetchType;
@@ -33,13 +32,6 @@ public class Refrigerator implements Serializable {
     private Integer id;
     
     /**
-     * Максимальный индекс еды из перечисления {@link FoodType},
-     * который может храниться в этом холодильнике.
-     */
-    @Column(name = "max_food_type")
-    private int maxFoodType;
-    
-    /**
      * Количество ресурсов, необходимое для строительства / улучшения
      * холодильника.
      */
@@ -55,14 +47,6 @@ public class Refrigerator implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public int getMaxFoodType() {
-        return maxFoodType;
-    }
-
-    public void setMaxFoodType(int maxFoodType) {
-        this.maxFoodType = maxFoodType;
     }
 
     public Map<BuildingMaterialType, RefrigeratorCost> getRefrigeratorCost() {
@@ -93,7 +77,7 @@ public class Refrigerator implements Serializable {
 
     @Override
     public String toString() {
-        return "Refrigerator [id=" + id + ", maxFoodType=" + maxFoodType + "]";
+        return "Refrigerator [id=" + id + "]";
     }
 
 }
