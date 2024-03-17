@@ -34,7 +34,8 @@ public class MachineWithDrinks implements Serializable {
     /**
      * Необходимое количество материалов для постройки / улучшения.
      */
-    @OneToMany(mappedBy = "machineWithDrinks", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "machineWithDrinks", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL, orphanRemoval = true)
     @MapKeyEnumerated(EnumType.STRING)
     @MapKeyColumn(name = "building_material_id")
     private Map<BuildingMaterialType, MachineWithDrinksCost> machineWithDrinksCost;
