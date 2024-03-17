@@ -25,9 +25,9 @@ public class Refrigerator implements Serializable {
     private static final long serialVersionUID = -6335332962524762996L;
 
     /**
-     * Первичный ключ. Новые записи в справочник холодильников добавляются
-     * только скриптами liqubiase, поэтому первичный ключ не генерируется
-     * ни в БД, ни в Java-коде.
+     * Первичный ключ. Новые записи в справочник холодильников
+     * добавляются только скриптами liqubiase, поэтому первичный ключ
+     * не генерируется ни в БД, ни в Java-коде.
      */
     @Id
     private Integer id;
@@ -43,7 +43,8 @@ public class Refrigerator implements Serializable {
      * Количество ресурсов, необходимое для строительства / улучшения
      * холодильника.
      */
-    @OneToMany(mappedBy = "refrigerator", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "refrigerator", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL, orphanRemoval = true)
     @MapKeyEnumerated(EnumType.STRING)
     @MapKeyColumn(name = "building_material_id")
     private Map<BuildingMaterialType, RefrigeratorCost> refrigeratorCost;
