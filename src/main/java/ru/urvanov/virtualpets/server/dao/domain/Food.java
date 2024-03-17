@@ -20,9 +20,9 @@ public class Food implements Serializable {
     private static final long serialVersionUID = 8791181701061581183L;
 
     /**
-     * Первичный ключ. Новые записи в справочник еды добавляются только
-     * скриптами liquibase, поэтому первичный ключ не генерируется ни в БД,
-     * ни в Java-коде.
+     * Первичный ключ. Новые записи в справочник еды добавляются
+     * только скриптами liquibase, поэтому первичный ключ
+     * не генерируется ни в БД, ни в Java-коде.
      */
     @Id
     @Enumerated(EnumType.STRING)
