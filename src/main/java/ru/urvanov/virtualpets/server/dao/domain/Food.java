@@ -88,9 +88,11 @@ public class Food implements Serializable {
 
     @Override
     public String toString() {
-        return "Food [id=" + id + ", refrigeratorLevel=" + refrigeratorLevel
+        return "Food [id=" + id
+                + ", refrigeratorLevel=" + refrigeratorLevel
                 + ", refrigeratorOrder=" + refrigeratorOrder
-                + ", hiddenObjectsGameDropRate=" + hiddenObjectsGameDropRate
+                + ", hiddenObjectsGameDropRate="
+                + hiddenObjectsGameDropRate
                 + "]";
     }
 
