@@ -26,7 +26,7 @@ public class Drink implements Serializable {
      */
     @Id
     @Enumerated(EnumType.STRING)
-    private DrinkType id;
+    private DrinkId id;
 
     @Column(name = "machine_with_drinks_id")
     private int machineWithDrinksLevel;
@@ -37,7 +37,7 @@ public class Drink implements Serializable {
     @Column(name = "hidden_objects_game_drop_rate")
     private float hiddenObjectsGameDropRate;
 
-    public DrinkType getId() {
+    public DrinkId getId() {
         return id;
     }
 
@@ -65,7 +65,7 @@ public class Drink implements Serializable {
         this.hiddenObjectsGameDropRate = hiddenObjectsGameDropRate;
     }
 
-    public void setId(DrinkType id) {
+    public void setId(DrinkId id) {
         this.id = id;
     }
 

@@ -17,7 +17,7 @@ import ru.urvanov.virtualpets.server.dao.FoodDao;
 import ru.urvanov.virtualpets.server.dao.PetDao;
 import ru.urvanov.virtualpets.server.dao.PetFoodDao;
 import ru.urvanov.virtualpets.server.dao.domain.Food;
-import ru.urvanov.virtualpets.server.dao.domain.FoodType;
+import ru.urvanov.virtualpets.server.dao.domain.FoodId;
 import ru.urvanov.virtualpets.server.dao.domain.Pet;
 import ru.urvanov.virtualpets.server.dao.domain.PetFood;
 import ru.urvanov.virtualpets.server.test.annotation.DataSets;
@@ -64,7 +64,7 @@ public class PetFoodDaoImplTest extends AbstractDaoImplTest {
     @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/PetFoodServiceImplTest.xls")
     @Test
     public void testSave() {
-        Food foodCarrot = foodDao.findById(FoodType.CARROT);
+        Food foodCarrot = foodDao.findById(FoodId.CARROT);
         PetFood petFood = new PetFood();
         Pet pet = petDao.getReference(1);
         petFood.setFood(foodCarrot);
@@ -77,14 +77,14 @@ public class PetFoodDaoImplTest extends AbstractDaoImplTest {
     @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/PetFoodServiceImplTest.xls")
     @Test
     public void testFindByPetIdAndFoodType() {
-        PetFood food = petFoodDao.findByPetIdAndFoodType(1, FoodType.DRY_FOOD);
+        PetFood food = petFoodDao.findByPetIdAndFoodType(1, FoodId.DRY_FOOD);
         assertNotNull(food);
     }
     
     @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/PetFoodServiceImplTest.xls")
     @Test
     public void testFindByPetIdAndFoodType2() {
-        PetFood food = petFoodDao.findByPetIdAndFoodType(13463456, FoodType.CHOCOLATE);
+        PetFood food = petFoodDao.findByPetIdAndFoodType(13463456, FoodId.CHOCOLATE);
         assertNull(food);
     }
 }

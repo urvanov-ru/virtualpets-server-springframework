@@ -11,7 +11,7 @@ import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
-import ru.urvanov.virtualpets.server.dao.domain.JournalEntryType;
+import ru.urvanov.virtualpets.server.dao.domain.JournalEntryId;
 import ru.urvanov.virtualpets.server.dao.domain.PetJournalEntry;
 import ru.urvanov.virtualpets.server.dao.domain.PetJournalEntry_;
 import ru.urvanov.virtualpets.server.dao.domain.Pet_;
@@ -43,7 +43,7 @@ public class PetJournalEntryDaoImpl implements PetJournalEntryDao {
     @Transactional(readOnly=true)
     @Override
     public PetJournalEntry findByPetIdAndJournalEntryCode(Integer petId,
-            JournalEntryType code) {
+            JournalEntryId code) {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
         CriteriaQuery<PetJournalEntry> criteriaQuery = criteriaBuilder
                 .createQuery(PetJournalEntry.class);

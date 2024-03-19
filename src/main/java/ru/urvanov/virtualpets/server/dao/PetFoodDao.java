@@ -5,7 +5,7 @@ package ru.urvanov.virtualpets.server.dao;
 
 import java.util.List;
 
-import ru.urvanov.virtualpets.server.dao.domain.FoodType;
+import ru.urvanov.virtualpets.server.dao.domain.FoodId;
 import ru.urvanov.virtualpets.server.dao.domain.Pet;
 import ru.urvanov.virtualpets.server.dao.domain.PetFood;
 
@@ -18,5 +18,5 @@ public interface PetFoodDao {
     public List<PetFood> findByPetId(Integer petId);
     public List<PetFood> findByPet(Pet pet);
     public void save(PetFood food);
-    public PetFood findByPetIdAndFoodType(Integer petId, FoodType foodType);
+    public PetFood findByPetIdAndFoodType(Integer petId, FoodId foodType);
 }

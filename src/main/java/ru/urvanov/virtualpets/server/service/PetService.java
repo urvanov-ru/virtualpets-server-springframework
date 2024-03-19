@@ -2,7 +2,7 @@ package ru.urvanov.virtualpets.server.service;
 
 import java.util.List;
 
-import ru.urvanov.virtualpets.server.dao.domain.AchievementCode;
+import ru.urvanov.virtualpets.server.dao.domain.AchievementId;
 import ru.urvanov.virtualpets.server.dao.domain.Bookcase;
 import ru.urvanov.virtualpets.server.dao.domain.MachineWithDrinks;
 import ru.urvanov.virtualpets.server.dao.domain.Pet;
@@ -27,11 +27,11 @@ public interface PetService {
 
     void addExperience(Pet pet, Integer exp);
 
-    public List<AchievementCode> calculateAchievements(Pet pet);
+    public List<AchievementId> calculateAchievements(Pet pet);
 
     List<Pet> findLastCreatedPets(int start, int limit);
 
-    void addAchievementIfNot(Pet pet, AchievementCode achievement);
+    void addAchievementIfNot(Pet pet, AchievementId achievement);
 
     public PetDetails petInformationPage(Integer id);
 }

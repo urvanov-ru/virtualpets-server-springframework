@@ -6,11 +6,11 @@ import ru.urvanov.virtualpets.shared.domain.AchievementCode;
 
 public class AchievementCodeServerToSharedConverter
         implements
-        Converter<ru.urvanov.virtualpets.server.dao.domain.AchievementCode, ru.urvanov.virtualpets.shared.domain.AchievementCode> {
+        Converter<ru.urvanov.virtualpets.server.dao.domain.AchievementId, ru.urvanov.virtualpets.shared.domain.AchievementCode> {
 
     @Override
     public AchievementCode convert(
-            ru.urvanov.virtualpets.server.dao.domain.AchievementCode source) {
+            ru.urvanov.virtualpets.server.dao.domain.AchievementId source) {
         return source == null ? null
                 : ru.urvanov.virtualpets.shared.domain.AchievementCode
                         .values()[source.ordinal()];

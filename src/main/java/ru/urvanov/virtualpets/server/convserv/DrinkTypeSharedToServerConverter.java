@@ -5,18 +5,18 @@ package ru.urvanov.virtualpets.server.convserv;
 
 import org.springframework.core.convert.converter.Converter;
 
-import ru.urvanov.virtualpets.server.dao.domain.DrinkType;
+import ru.urvanov.virtualpets.server.dao.domain.DrinkId;
 
 /**
  * @author fedya
  *
  */
-public class DrinkTypeSharedToServerConverter implements Converter<ru.urvanov.virtualpets.shared.domain.DrinkType, ru.urvanov.virtualpets.server.dao.domain.DrinkType> {
+public class DrinkTypeSharedToServerConverter implements Converter<ru.urvanov.virtualpets.shared.domain.DrinkType, ru.urvanov.virtualpets.server.dao.domain.DrinkId> {
 
     @Override
-    public DrinkType convert(
+    public DrinkId convert(
             ru.urvanov.virtualpets.shared.domain.DrinkType source) {
-        return ru.urvanov.virtualpets.server.dao.domain.DrinkType.valueOf(source.name());
+        return ru.urvanov.virtualpets.server.dao.domain.DrinkId.valueOf(source.name());
     }
 
 }

@@ -16,7 +16,7 @@ import jakarta.persistence.criteria.Root;
 import org.springframework.stereotype.Repository;
 
 import ru.urvanov.virtualpets.server.dao.domain.BuildingMaterial;
-import ru.urvanov.virtualpets.server.dao.domain.BuildingMaterialType;
+import ru.urvanov.virtualpets.server.dao.domain.BuildingMaterialId;
 import ru.urvanov.virtualpets.server.dao.domain.BuildingMaterial_;
 import ru.urvanov.virtualpets.server.dao.domain.Cloth;
 
@@ -34,7 +34,7 @@ public class BuildingMaterialDaoImpl implements BuildingMaterialDao {
      * @see ru.urvanov.virtualpets.server.dao.BuildingMaterialDao#findById(java.lang.Integer)
      */
     @Override
-    public BuildingMaterial findById(BuildingMaterialType id) {
+    public BuildingMaterial findById(BuildingMaterialId id) {
         return em.find(BuildingMaterial.class, id);
     }
 
@@ -53,7 +53,7 @@ public class BuildingMaterialDaoImpl implements BuildingMaterialDao {
     }
 
     @Override
-    public BuildingMaterial findByCode(BuildingMaterialType code) {
+    public BuildingMaterial findByCode(BuildingMaterialId code) {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
         CriteriaQuery<BuildingMaterial> criteriaQuery = criteriaBuilder.createQuery(BuildingMaterial.class);
         Root<BuildingMaterial> rootBuildingMaterial = criteriaQuery.from(BuildingMaterial.class);
@@ -71,7 +71,7 @@ public class BuildingMaterialDaoImpl implements BuildingMaterialDao {
 
     @Override
     public BuildingMaterial getReference(
-            BuildingMaterialType id) {
+            BuildingMaterialId id) {
         return em.getReference(BuildingMaterial.class, id);
     }
 

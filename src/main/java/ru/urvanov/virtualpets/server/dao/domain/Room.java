@@ -1,6 +1,7 @@
 package ru.urvanov.virtualpets.server.dao.domain;
 
 import java.io.Serializable;
+import java.time.OffsetDateTime;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -55,24 +56,30 @@ public class Room implements Serializable {
     @JoinColumn(name="machine_with_drinks_id")
     private MachineWithDrinks machineWithDrinks;
     
-    @Column(name="machine_with_drinks_x")
+    @Column(name = "machine_with_drinks_x")
     private Integer machineWithDrinksX;
     
     @Column(name="machine_with_drinks_y")
     private Integer machineWithDrinksY;
     
     @Column(name = "box_newbie1")
-    private Boolean boxNewbie1 = false;
+    private boolean boxNewbie1 = false;
     
-    @Column(name="box_newbie2")
-    private Boolean boxNewbie2 = false;
+    @Column(name = "box_newbie2")
+    private boolean boxNewbie2 = false;
     
-    @Column(name="box_newbie3")
-    private Boolean boxNewbie3 = false;
+    @Column(name = "box_newbie3")
+    private boolean boxNewbie3 = false;
     
-    @Column(name="journal_on_floor")
-    private Boolean journalOnFloor = true;
+    @Column(name = "journal_on_floor")
+    private boolean journalOnFloor = true;
     
+    @Column(name = "every_day_box_last")
+    private OffsetDateTime everyDayBoxLast;
+    
+    @Column(name = "every_day_box")
+    private boolean everyDayBox = false;
+
     public Integer getPetId() {
         return petId;
     }
@@ -103,10 +110,6 @@ public class Room implements Serializable {
 
     public void setRefrigeratorY(Integer refrigeratorY) {
         this.refrigeratorY = refrigeratorY;
-    }
-
-    public Integer getVersion() {
-        return version;
     }
 
     public Bookcase getBookcase() {
@@ -157,36 +160,56 @@ public class Room implements Serializable {
         this.machineWithDrinksY = machineWithDrinksY;
     }
 
-    public Boolean getBoxNewbie1() {
+    public boolean isBoxNewbie1() {
         return boxNewbie1;
     }
 
-    public void setBoxNewbie1(Boolean boxNewbie1) {
+    public void setBoxNewbie1(boolean boxNewbie1) {
         this.boxNewbie1 = boxNewbie1;
     }
 
-    public Boolean getBoxNewbie2() {
+    public boolean isBoxNewbie2() {
         return boxNewbie2;
     }
 
-    public void setBoxNewbie2(Boolean boxNewbie2) {
+    public void setBoxNewbie2(boolean boxNewbie2) {
         this.boxNewbie2 = boxNewbie2;
     }
 
-    public Boolean getBoxNewbie3() {
+    public boolean isBoxNewbie3() {
         return boxNewbie3;
     }
 
-    public void setBoxNewbie3(Boolean boxNewbie3) {
+    public void setBoxNewbie3(boolean boxNewbie3) {
         this.boxNewbie3 = boxNewbie3;
     }
 
-    public Boolean getJournalOnFloor() {
+    public boolean isJournalOnFloor() {
         return journalOnFloor;
     }
 
-    public void setJournalOnFloor(Boolean journalOnFloor) {
+    public void setJournalOnFloor(boolean journalOnFloor) {
         this.journalOnFloor = journalOnFloor;
+    }
+
+    public OffsetDateTime getEveryDayBoxLast() {
+        return everyDayBoxLast;
+    }
+
+    public void setEveryDayBoxLast(OffsetDateTime everyDayBoxLast) {
+        this.everyDayBoxLast = everyDayBoxLast;
+    }
+
+    public boolean isEveryDayBox() {
+        return everyDayBox;
+    }
+
+    public void setEveryDayBox(boolean everyDayBox) {
+        this.everyDayBox = everyDayBox;
+    }
+
+    public Integer getVersion() {
+        return version;
     }
 
     @Override
@@ -210,9 +233,9 @@ public class Room implements Serializable {
     public String toString() {
         return "Room [petId=" + petId + ", boxNewbie1=" + boxNewbie1
                 + ", boxNewbie2=" + boxNewbie2 + ", boxNewbie3=" + boxNewbie3
-                + ", journalOnFloor=" + journalOnFloor + "]";
+                + ", journalOnFloor=" + journalOnFloor + ", everyDayBoxLast="
+                + everyDayBoxLast + ", everyDayBox=" + everyDayBox + "]";
     }
-
-
+    
     
 }

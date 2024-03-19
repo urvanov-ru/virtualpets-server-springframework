@@ -3,20 +3,20 @@ package ru.urvanov.virtualpets.server.dao.domain;
 import ru.urvanov.virtualpets.shared.domain.LevelInfo;
 
 public class HiddenObjectsReward {
-    private FoodType food;
+    private FoodId food;
     private String clothId;
     private LevelInfo levelInfo;
     private int experience;
-    private BuildingMaterialType buildingMaterialType;
+    private BuildingMaterialId buildingMaterialType;
     private String bookId;
-    private DrinkType drinkType;
-    private AchievementCode[] achievements;
+    private DrinkId drinkType;
+    private AchievementId[] achievements;
 
-    public FoodType getFood() {
+    public FoodId getFood() {
         return food;
     }
 
-    public void setFood(FoodType food) {
+    public void setFood(FoodId food) {
         this.food = food;
     }
 
@@ -45,19 +45,19 @@ public class HiddenObjectsReward {
         this.levelInfo = levelInfo;
     }
 
-    public BuildingMaterialType getBuildingMaterialType() {
+    public BuildingMaterialId getBuildingMaterialType() {
         return buildingMaterialType;
     }
 
-    public void setBuildingMaterialType(BuildingMaterialType buildingMaterialType) {
+    public void setBuildingMaterialType(BuildingMaterialId buildingMaterialType) {
         this.buildingMaterialType = buildingMaterialType;
     }
 
-    public AchievementCode[] getAchievements() {
+    public AchievementId[] getAchievements() {
         return achievements;
     }
 
-    public void setAchievements(AchievementCode[] achievements) {
+    public void setAchievements(AchievementId[] achievements) {
         this.achievements = achievements;
     }
 
@@ -69,11 +69,11 @@ public class HiddenObjectsReward {
         this.bookId = bookId;
     }
 
-    public DrinkType getDrinkType() {
+    public DrinkId getDrinkType() {
         return drinkType;
     }
 
-    public void setDrinkType(DrinkType drinkType) {
+    public void setDrinkType(DrinkId drinkType) {
         this.drinkType = drinkType;
     }
 

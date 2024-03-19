@@ -4,6 +4,7 @@
 package ru.urvanov.virtualpets.server.dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -62,7 +63,7 @@ public class RoomDaoImplTest extends AbstractDaoImplTest {
         room.setBoxNewbie1(false);
         roomDao.save(room);
         room = roomDao.findByPetId(1);
-        assertEquals(room.getBoxNewbie1(), false);
+        assertFalse(room.isBoxNewbie1());
     }
 
 }

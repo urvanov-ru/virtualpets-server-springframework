@@ -3,7 +3,7 @@ package ru.urvanov.virtualpets.server.dao.domain;
 /**
  * Код еды.
  */
-public enum FoodType {
+public enum FoodId {
     CARROT,
     DRY_FOOD,
     FISH,

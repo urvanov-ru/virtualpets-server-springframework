@@ -11,11 +11,11 @@ import ru.urvanov.virtualpets.shared.domain.FoodType;
  * @author fedya
  *
  */
-public class FoodTypeServerToSharedConverter implements Converter<ru.urvanov.virtualpets.server.dao.domain.FoodType, ru.urvanov.virtualpets.shared.domain.FoodType> {
+public class FoodTypeServerToSharedConverter implements Converter<ru.urvanov.virtualpets.server.dao.domain.FoodId, ru.urvanov.virtualpets.shared.domain.FoodType> {
 
     @Override
     public FoodType convert(
-            ru.urvanov.virtualpets.server.dao.domain.FoodType source) {
+            ru.urvanov.virtualpets.server.dao.domain.FoodId source) {
         return ru.urvanov.virtualpets.shared.domain.FoodType.valueOf(source.name());
     }
 

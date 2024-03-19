@@ -40,7 +40,7 @@ public class PetJournalEntry implements Serializable {
     
     @Column(name = "journal_entry_id")
     @Enumerated(EnumType.STRING)
-    private JournalEntryType journalEntry;
+    private JournalEntryId journalEntry;
     
     @ManyToOne
     @JoinColumn(name="pet_id")
@@ -72,11 +72,11 @@ public class PetJournalEntry implements Serializable {
         this.createdAt = createdAt;
     }
 
-    public JournalEntryType getJournalEntry() {
+    public JournalEntryId getJournalEntry() {
         return journalEntry;
     }
 
-    public void setJournalEntry(JournalEntryType journalEntry) {
+    public void setJournalEntry(JournalEntryId journalEntry) {
         this.journalEntry = journalEntry;
     }
 

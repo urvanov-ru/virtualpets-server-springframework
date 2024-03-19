@@ -3,10 +3,10 @@ package ru.urvanov.virtualpets.server.dao;
 import java.util.List;
 
 import ru.urvanov.virtualpets.server.dao.domain.Drink;
-import ru.urvanov.virtualpets.server.dao.domain.DrinkType;
+import ru.urvanov.virtualpets.server.dao.domain.DrinkId;
 
 public interface DrinkDao {
-    Drink findById(DrinkType id);
-    Drink getReference(DrinkType id);
+    Drink findById(DrinkId id);
+    Drink getReference(DrinkId id);
     List<Drink> findAllOrderByMachineWithDrinksLevelAndMachineWithDrinksOrder();
 }

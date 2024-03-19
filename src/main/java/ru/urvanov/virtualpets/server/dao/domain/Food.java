@@ -26,7 +26,7 @@ public class Food implements Serializable {
      */
     @Id
     @Enumerated(EnumType.STRING)
-    private FoodType id;
+    private FoodId id;
     
     @Column(name = "refrigerator_id")
     private int refrigeratorLevel;
@@ -37,11 +37,11 @@ public class Food implements Serializable {
     @Column(name = "hidden_objects_game_drop_rate")
     private float hiddenObjectsGameDropRate;
 
-    public FoodType getId() {
+    public FoodId getId() {
         return id;
     }
 
-    public void setId(FoodType id) {
+    public void setId(FoodId id) {
         this.id = id;
     }
 

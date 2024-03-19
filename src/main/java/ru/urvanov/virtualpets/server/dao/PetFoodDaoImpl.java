@@ -15,7 +15,7 @@ import jakarta.persistence.criteria.Root;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import ru.urvanov.virtualpets.server.dao.domain.FoodType;
+import ru.urvanov.virtualpets.server.dao.domain.FoodId;
 import ru.urvanov.virtualpets.server.dao.domain.Pet;
 import ru.urvanov.virtualpets.server.dao.domain.PetFood;
 import ru.urvanov.virtualpets.server.dao.domain.Food_;
@@ -111,7 +111,7 @@ public class PetFoodDaoImpl implements PetFoodDao {
     }
 
     @Override
-    public PetFood findByPetIdAndFoodType(Integer petId, FoodType foodType) {
+    public PetFood findByPetIdAndFoodType(Integer petId, FoodId foodType) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<PetFood> criteriaQuery = cb.createQuery(PetFood.class);
         Root<PetFood> petFoodRoot = criteriaQuery.from(PetFood.class);

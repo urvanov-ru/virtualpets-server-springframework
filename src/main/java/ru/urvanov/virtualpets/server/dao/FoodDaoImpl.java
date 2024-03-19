@@ -15,7 +15,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import ru.urvanov.virtualpets.server.dao.domain.Food;
-import ru.urvanov.virtualpets.server.dao.domain.FoodType;
+import ru.urvanov.virtualpets.server.dao.domain.FoodId;
 import ru.urvanov.virtualpets.server.dao.domain.Food_;
 
 /**
@@ -36,7 +36,7 @@ public class FoodDaoImpl implements FoodDao {
      * ru.urvanov.virtualpets.server.dao.FoodDao#findById(java.lang.Integer)
      */
     @Override
-    public Food findById(FoodType id) {
+    public Food findById(FoodId id) {
         return em.find(Food.class, id);
     }
 
@@ -50,7 +50,7 @@ public class FoodDaoImpl implements FoodDao {
 
 
     @Override
-    public Food getReference(FoodType id) {
+    public Food getReference(FoodId id) {
         return em.getReference(Food.class, id);
     }
 

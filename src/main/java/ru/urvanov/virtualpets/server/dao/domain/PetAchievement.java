@@ -36,7 +36,7 @@ public class PetAchievement implements Serializable {
     
     @Column(name = "achievement_id")
     @Enumerated(EnumType.STRING)
-    private AchievementCode achievement;
+    private AchievementId achievement;
     
     @ManyToOne
     @JoinColumn(name = "pet_id")
@@ -62,11 +62,11 @@ public class PetAchievement implements Serializable {
         this.id = id;
     }
 
-    public AchievementCode getAchievement() {
+    public AchievementId getAchievement() {
         return achievement;
     }
 
-    public void setAchievement(AchievementCode achievement) {
+    public void setAchievement(AchievementId achievement) {
         this.achievement = achievement;
     }
 

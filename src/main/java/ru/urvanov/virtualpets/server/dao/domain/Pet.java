@@ -103,22 +103,28 @@ public class Pet implements Serializable {
     private Level level;
     
     @Column(name="experience")
-    private Integer experience = 0;
+    private int experience = 0;
     
     @Column(name = "eat_count")
-    private Integer eatCount = 0;
+    private int eatCount = 0;
     
     @Column(name = "drink_count")
-    private Integer drinkCount = 0;
+    private int drinkCount = 0;
     
     @Column(name = "teach_count")
-    private Integer teachCount = 0;
+    private int teachCount = 0;
     
     @Column(name = "build_count")
-    private Integer buildCount = 0;
+    private int buildCount = 0;
     
     @Column(name = "hidden_objects_game_count")
-    private Integer hiddenObjectsGameCount = 0;
+    private int hiddenObjectsGameCount;
+    
+    @Column(name = "every_day_login_last")
+    private OffsetDateTime everyDayLoginLast;
+    
+    @Column(name = "every_day_login_count")
+    private int everyDayLoginCount;
     
     @Version
     private Integer version;
@@ -126,7 +132,7 @@ public class Pet implements Serializable {
     @OneToMany(mappedBy = "pet", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @MapKeyEnumerated(EnumType.STRING)
     @MapKeyColumn(name="food_id")
-    private Map<FoodType, PetFood> foods;
+    private Map<FoodId, PetFood> foods;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "pet_cloth", joinColumns = @JoinColumn(name = "pet_id"), inverseJoinColumns = @JoinColumn(name = "cloth_id"))
@@ -135,7 +141,7 @@ public class Pet implements Serializable {
     @OneToMany(mappedBy = "pet", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @MapKeyEnumerated(EnumType.STRING)
     @MapKeyColumn(name = "building_material_id")
-    private Map<BuildingMaterialType, PetBuildingMaterial> buildingMaterials;
+    private Map<BuildingMaterialId, PetBuildingMaterial> buildingMaterials;
     
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name="pet_book", joinColumns = @JoinColumn(name="pet_id"), inverseJoinColumns = @JoinColumn(name="book_id"))
@@ -144,20 +150,17 @@ public class Pet implements Serializable {
     @OneToMany(mappedBy= "pet", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @MapKeyEnumerated(EnumType.STRING)
     @MapKeyColumn(name = "drink_id")
-    private Map<DrinkType, PetDrink> drinks;
+    private Map<DrinkId, PetDrink> drinks;
     
     @OneToMany(mappedBy="pet", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @MapKeyEnumerated(EnumType.STRING)
     @MapKeyColumn(name = "journal_entry_id")
-    private Map<JournalEntryType, PetJournalEntry> journalEntries;
+    private Map<JournalEntryId, PetJournalEntry> journalEntries;
     
     @OneToMany(mappedBy="pet", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @MapKeyEnumerated(EnumType.STRING)
     @MapKeyColumn(name = "achievement_id")
-    private Map<AchievementCode, PetAchievement> achievements;
-
-    public Pet() {
-    }
+    private Map<AchievementId, PetAchievement> achievements;
 
     public Integer getId() {
         return id;
@@ -255,26 +258,6 @@ public class Pet implements Serializable {
         this.petType = petType;
     }
 
-    public Integer getVersion() {
-        return version;
-    }
-
-    public Map<FoodType, PetFood> getFoods() {
-        return foods;
-    }
-
-    public void setFoods(Map<FoodType, PetFood> foods) {
-        this.foods = foods;
-    }
-
-    public Set<Cloth> getCloths() {
-        return cloths;
-    }
-
-    public void setCloths(Set<Cloth> cloths) {
-        this.cloths = cloths;
-    }
-
     public Cloth getHat() {
         return hat;
     }
@@ -299,12 +282,100 @@ public class Pet implements Serializable {
         this.bow = bow;
     }
 
-    public Map<BuildingMaterialType, PetBuildingMaterial> getBuildingMaterials() {
+    public Level getLevel() {
+        return level;
+    }
+
+    public void setLevel(Level level) {
+        this.level = level;
+    }
+
+    public int getExperience() {
+        return experience;
+    }
+
+    public void setExperience(int experience) {
+        this.experience = experience;
+    }
+
+    public int getEatCount() {
+        return eatCount;
+    }
+
+    public void setEatCount(int eatCount) {
+        this.eatCount = eatCount;
+    }
+
+    public int getDrinkCount() {
+        return drinkCount;
+    }
+
+    public void setDrinkCount(int drinkCount) {
+        this.drinkCount = drinkCount;
+    }
+
+    public int getTeachCount() {
+        return teachCount;
+    }
+
+    public void setTeachCount(int teachCount) {
+        this.teachCount = teachCount;
+    }
+
+    public int getBuildCount() {
+        return buildCount;
+    }
+
+    public void setBuildCount(int buildCount) {
+        this.buildCount = buildCount;
+    }
+
+    public int getHiddenObjectsGameCount() {
+        return hiddenObjectsGameCount;
+    }
+
+    public void setHiddenObjectsGameCount(int hiddenObjectsGameCount) {
+        this.hiddenObjectsGameCount = hiddenObjectsGameCount;
+    }
+
+    public OffsetDateTime getEveryDayLoginLast() {
+        return everyDayLoginLast;
+    }
+
+    public void setEveryDayLoginLast(OffsetDateTime everyDayLoginLast) {
+        this.everyDayLoginLast = everyDayLoginLast;
+    }
+
+    public int getEveryDayLoginCount() {
+        return everyDayLoginCount;
+    }
+
+    public void setEveryDayLoginCount(int everyDayLoginCount) {
+        this.everyDayLoginCount = everyDayLoginCount;
+    }
+
+    public Map<FoodId, PetFood> getFoods() {
+        return foods;
+    }
+
+    public void setFoods(Map<FoodId, PetFood> foods) {
+        this.foods = foods;
+    }
+
+    public Set<Cloth> getCloths() {
+        return cloths;
+    }
+
+    public void setCloths(Set<Cloth> cloths) {
+        this.cloths = cloths;
+    }
+
+    public Map<BuildingMaterialId, PetBuildingMaterial> getBuildingMaterials() {
         return buildingMaterials;
     }
 
     public void setBuildingMaterials(
-            Map<BuildingMaterialType, PetBuildingMaterial> buildingMaterials) {
+            Map<BuildingMaterialId, PetBuildingMaterial> buildingMaterials) {
         this.buildingMaterials = buildingMaterials;
     }
 
@@ -316,84 +387,33 @@ public class Pet implements Serializable {
         this.books = books;
     }
 
-    public Map<DrinkType, PetDrink> getDrinks() {
+    public Map<DrinkId, PetDrink> getDrinks() {
         return drinks;
     }
 
-    public void setDrinks(Map<DrinkType, PetDrink> drinks) {
+    public void setDrinks(Map<DrinkId, PetDrink> drinks) {
         this.drinks = drinks;
     }
 
-    public Map<JournalEntryType, PetJournalEntry> getJournalEntries() {
+    public Map<JournalEntryId, PetJournalEntry> getJournalEntries() {
         return journalEntries;
     }
 
-    public void setJournalEntries(Map<JournalEntryType, PetJournalEntry> journalEntries) {
+    public void setJournalEntries(
+            Map<JournalEntryId, PetJournalEntry> journalEntries) {
         this.journalEntries = journalEntries;
     }
 
-    public Level getLevel() {
-        return level;
-    }
-
-    public void setLevel(Level level) {
-        this.level = level;
-    }
-
-    public Integer getExperience() {
-        return experience;
-    }
-
-    public void setExperience(Integer experience) {
-        this.experience = experience;
-    }
-
-    public Map<AchievementCode, PetAchievement> getAchievements() {
+    public Map<AchievementId, PetAchievement> getAchievements() {
         return achievements;
     }
 
-    public void setAchievements(Map<AchievementCode, PetAchievement> achievements) {
+    public void setAchievements(Map<AchievementId, PetAchievement> achievements) {
         this.achievements = achievements;
     }
 
-    public Integer getEatCount() {
-        return eatCount;
-    }
-
-    public void setEatCount(Integer eatCount) {
-        this.eatCount = eatCount;
-    }
-
-    public Integer getDrinkCount() {
-        return drinkCount;
-    }
-
-    public void setDrinkCount(Integer drinkCount) {
-        this.drinkCount = drinkCount;
-    }
-
-    public Integer getTeachCount() {
-        return teachCount;
-    }
-
-    public void setTeachCount(Integer teachCount) {
-        this.teachCount = teachCount;
-    }
-
-    public Integer getBuildCount() {
-        return buildCount;
-    }
-
-    public void setBuildCount(Integer buildCount) {
-        this.buildCount = buildCount;
-    }
-
-    public Integer getHiddenObjectsGameCount() {
-        return hiddenObjectsGameCount;
-    }
-
-    public void setHiddenObjectsGameCount(Integer hiddenObjectsGameCount) {
-        this.hiddenObjectsGameCount = hiddenObjectsGameCount;
+    public Integer getVersion() {
+        return version;
     }
 
     @Override
@@ -422,6 +442,4 @@ public class Pet implements Serializable {
                 + ", user.id=" + user.getId()
                 + ", petType=" + petType + "]";
     }
-
-    
 }

@@ -26,7 +26,7 @@ public class BuildingMaterial implements Serializable {
      */
     @Id
     @Enumerated(EnumType.STRING)
-    private BuildingMaterialType id;
+    private BuildingMaterialId id;
 
     @Column(name = "rucksack_order")
     private int rucksackOrder;
@@ -43,11 +43,11 @@ public class BuildingMaterial implements Serializable {
     @Column(name = "hidden_objects_game_drop_rate")
     private float hiddenObjectsGameDropRate;
 
-    public BuildingMaterialType getId() {
+    public BuildingMaterialId getId() {
         return id;
     }
 
-    public void setId(BuildingMaterialType id) {
+    public void setId(BuildingMaterialId id) {
         this.id = id;
     }
 

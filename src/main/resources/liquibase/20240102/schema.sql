@@ -40,11 +40,13 @@ CREATE TABLE pet (
                      bow_id varchar(50) DEFAULT NULL,
                      experience INT NOT NULL DEFAULT 0,
                      level_id INT NOT NULL DEFAULT 1,
-                     eat_count INT default 0,
-                     drink_count INT default 0,
-                     teach_count INT default 0,
-                     build_count INT default 0,
+                     eat_count INT NOT NULL default 0,
+                     drink_count INT NOT NULL default 0,
+                     teach_count INT NOT NULL default 0,
+                     build_count INT NOT NULL default 0,
                      hidden_objects_game_count INT default 0,
+                     every_day_login_last timestamp with time zone NULL,
+                     every_day_login_count INT NOT NULL DEFAULT 0,
                      version INT NOT NULL DEFAULT 0,
                      PRIMARY KEY (id)
 );
@@ -187,17 +189,16 @@ alter table pet_cloth add constraint fk_pet_cloth_cloth_id
 
 create table refrigerator(
                              id INT NOT NULL,
-                             max_food_type INT NOT NULL,
-                             version INT NOT NULL DEFAULT 0,
+                             experience INT NOT NULL,
                              PRIMARY KEY (id)
 );
 
-insert into refrigerator(id, max_food_type) values(1, 2);
-insert into refrigerator(id, max_food_type) values(2, 5);
-insert into refrigerator(id, max_food_type) values(3, 8);
-insert into refrigerator(id, max_food_type) values(4, 11);
-insert into refrigerator(id, max_food_type) values(5, 14);
-insert into refrigerator(id, max_food_type) values(6, 17);
+insert into refrigerator(id, experience) values(1, 1);
+insert into refrigerator(id, experience) values(2, 3);
+insert into refrigerator(id, experience) values(3, 8);
+insert into refrigerator(id, experience) values(4, 11);
+insert into refrigerator(id, experience) values(5, 14);
+insert into refrigerator(id, experience) values(6, 17);
 
 -- 2014-01-18
 create table building_material(
@@ -286,17 +287,16 @@ alter table pet_food add constraint fk_pet_food_food_id
 
 create table bookcase(
                          id INT NOT NULL,
-                         max_book_type INT NOT NULL,
-                         version INT NOT NULL default 0,
+                         experience INT NOT NULL,
                          PRIMARY KEY(id)
 );
 
-insert into bookcase(id, max_book_type) values(1, 2);
-insert into bookcase(id, max_book_type) values(2, 5);
-insert into bookcase(id, max_book_type) values(3, 8);
-insert into bookcase(id, max_book_type) values(4, 11);
-insert into bookcase(id, max_book_type) values(5, 14);
-insert into bookcase(id, max_book_type) values(6, 17);
+insert into bookcase(id, experience) values(1, 1);
+insert into bookcase(id, experience) values(2, 3);
+insert into bookcase(id, experience) values(3, 7);
+insert into bookcase(id, experience) values(4, 13);
+insert into bookcase(id, experience) values(5, 17);
+insert into bookcase(id, experience) values(6, 21);
 
 create table drink(
                       id varchar(50) NOT NULL,
@@ -309,8 +309,7 @@ create table drink(
 
 create table machine_with_drinks(
                                     id INT NOT NULL,
-                                    max_drink_type INT NOT NULL,
-                                    version INT NOT NULL default 0,
+                                    experience INT NOT NULL,
                                     PRIMARY KEY(id)
 );
 
@@ -331,12 +330,12 @@ alter table machine_with_drinks_cost add constraint fk_machine_with_drinks_cost_
     foreign key(building_material_id) references building_material(id)
         on update no action on delete no action;
 
-insert into machine_with_drinks(id, max_drink_type) values(1, 1);
-insert into machine_with_drinks(id, max_drink_type) values(2, 2);
-insert into machine_with_drinks(id, max_drink_type) values(3, 3);
-insert into machine_with_drinks(id, max_drink_type) values(4, 4);
-insert into machine_with_drinks(id, max_drink_type) values(5, 5);
-insert into machine_with_drinks(id, max_drink_type) values(6, 6);
+insert into machine_with_drinks(id, experience) values(1, 1);
+insert into machine_with_drinks(id, experience) values(2, 3);
+insert into machine_with_drinks(id, experience) values(3, 7);
+insert into machine_with_drinks(id, experience) values(4, 11);
+insert into machine_with_drinks(id, experience) values(5, 12);
+insert into machine_with_drinks(id, experience) values(6, 16);
 
 
 
@@ -379,6 +378,8 @@ create table room(
                      machine_with_drinks_x INT,
                      machine_with_drinks_y INT,
                      journal_on_floor boolean not null default true,
+                     every_day_box_last timestamp with time zone,
+                     every_day_box boolean NOT NULL default false,
                      version INT NOT NULL DEFAULT 0,
                      PRIMARY KEY(pet_id)
 );
@@ -570,6 +571,8 @@ create table level(
 insert into level(id, experience) values(1, 0);
 insert into level(id, experience) values(2, 10);
 insert into level(id, experience) values(3, 30);
+insert into level(id, experience) values(4, 60);
+insert into level(id, experience) values(5, 180);
 
 
 create table pet_achievement(

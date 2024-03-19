@@ -24,7 +24,7 @@ import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.MapJoin;
 import jakarta.persistence.criteria.Order;
 import jakarta.persistence.criteria.Root;
-import ru.urvanov.virtualpets.server.dao.domain.JournalEntryType;
+import ru.urvanov.virtualpets.server.dao.domain.JournalEntryId;
 import ru.urvanov.virtualpets.server.dao.domain.Pet;
 import ru.urvanov.virtualpets.server.dao.domain.PetJournalEntry;
 import ru.urvanov.virtualpets.server.dao.domain.PetJournalEntry_;
@@ -128,7 +128,7 @@ public class PetDaoImpl implements PetDao {
         CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
         Root<Pet> rootPet = criteriaQuery.from(Pet.class);
         //Fetch<Pet, PetJournalEntry> fetchPetJournalEntries = rootPet.fetch(Pet_.journalEntries);
-        MapJoin<Pet, JournalEntryType, PetJournalEntry> joinPetJournalEntries = rootPet.join(Pet_.journalEntries, JoinType.LEFT);
+        MapJoin<Pet, JournalEntryId, PetJournalEntry> joinPetJournalEntries = rootPet.join(Pet_.journalEntries, JoinType.LEFT);
         criteriaQuery.where(criteriaBuilder.and(criteriaBuilder.equal(joinPetJournalEntries.get(PetJournalEntry_.readed), false)),
                 criteriaBuilder.equal(rootPet.get(Pet_.id), petId));
         

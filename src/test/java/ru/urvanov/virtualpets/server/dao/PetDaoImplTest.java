@@ -17,8 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import ru.urvanov.virtualpets.server.dao.domain.Food;
-import ru.urvanov.virtualpets.server.dao.domain.FoodType;
-import ru.urvanov.virtualpets.server.dao.domain.JournalEntryType;
+import ru.urvanov.virtualpets.server.dao.domain.FoodId;
+import ru.urvanov.virtualpets.server.dao.domain.JournalEntryId;
 import ru.urvanov.virtualpets.server.dao.domain.Pet;
 import ru.urvanov.virtualpets.server.dao.domain.PetFood;
 import ru.urvanov.virtualpets.server.dao.domain.PetJournalEntry;
@@ -73,15 +73,15 @@ public class PetDaoImplTest extends AbstractDaoImplTest {
         Pet pet = petDao.findById(1);
         PetJournalEntry petJournalEntry = new PetJournalEntry();
         petJournalEntry.setCreatedAt(OffsetDateTime.now(clock));
-        petJournalEntry.setJournalEntry(JournalEntryType.WELCOME);
+        petJournalEntry.setJournalEntry(JournalEntryId.WELCOME);
         petJournalEntry.setPet(pet);
         petJournalEntry.setReaded(true);
         
-        pet.getJournalEntries().put(JournalEntryType.WELCOME, petJournalEntry);
+        pet.getJournalEntries().put(JournalEntryId.WELCOME, petJournalEntry);
         petDao.save(pet);
         
         pet = petDao.findFullById(1);
-        assertTrue(pet.getJournalEntries().get(JournalEntryType.WELCOME).getReaded());
+        assertTrue(pet.getJournalEntries().get(JournalEntryId.WELCOME).getReaded());
     }
     
     
@@ -90,16 +90,16 @@ public class PetDaoImplTest extends AbstractDaoImplTest {
     @Transactional
     public void testAddFood() {
         Pet pet = petDao.findById(1);
-        Food food = foodDao.getReference(FoodType.CARROT);
+        Food food = foodDao.getReference(FoodId.CARROT);
         PetFood petFood = new PetFood();
         petFood.setPet(pet);
         petFood.setFood(food);
         petFood.setFoodCount(10);
-        pet.getFoods().put(FoodType.CARROT,  petFood);
+        pet.getFoods().put(FoodId.CARROT,  petFood);
         petDao.save(pet);
         
         pet = petDao.findFullById(1);
-        assertEquals(10, pet.getFoods().get(FoodType.CARROT).getFoodCount());
+        assertEquals(10, pet.getFoods().get(FoodId.CARROT).getFoodCount());
     }
 
 }

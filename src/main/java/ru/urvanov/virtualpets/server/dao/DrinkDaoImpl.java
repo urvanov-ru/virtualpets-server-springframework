@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ru.urvanov.virtualpets.server.dao.domain.Cloth;
 import ru.urvanov.virtualpets.server.dao.domain.Drink;
-import ru.urvanov.virtualpets.server.dao.domain.DrinkType;
+import ru.urvanov.virtualpets.server.dao.domain.DrinkId;
 import ru.urvanov.virtualpets.server.dao.domain.Drink_;
 
 @Repository(value="drinkDao")
@@ -25,12 +25,12 @@ public class DrinkDaoImpl implements DrinkDao {
     
     @Transactional(readOnly=true)
     @Override
-    public Drink findById(DrinkType id) {
+    public Drink findById(DrinkId id) {
         return em.find(Drink.class, id);
     }
 
     @Override
-    public Drink getReference(DrinkType id) {
+    public Drink getReference(DrinkId id) {
         return em.getReference(Drink.class, id);
     }
 

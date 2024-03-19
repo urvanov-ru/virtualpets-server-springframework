@@ -3,7 +3,7 @@ package ru.urvanov.virtualpets.server.dao.domain;
 /**
  * Коды для записей в справочник дневника питомца.
  */
-public enum JournalEntryType {
+public enum JournalEntryId {
     WELCOME,
     OPEN_NEWBIE_BOXES,
     BUILD_MACHINE_WITH_DRINKS,

@@ -13,8 +13,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import ru.urvanov.virtualpets.server.dao.LevelDao;
 import ru.urvanov.virtualpets.server.dao.PetDao;
-import ru.urvanov.virtualpets.server.dao.domain.AchievementCode;
-import ru.urvanov.virtualpets.server.dao.domain.JournalEntryType;
+import ru.urvanov.virtualpets.server.dao.domain.AchievementId;
+import ru.urvanov.virtualpets.server.dao.domain.JournalEntryId;
 import ru.urvanov.virtualpets.server.dao.domain.Level;
 import ru.urvanov.virtualpets.server.dao.domain.Pet;
 import ru.urvanov.virtualpets.server.dao.domain.PetJournalEntry;
@@ -51,17 +51,17 @@ public class TownServiceImpl implements ru.urvanov.virtualpets.shared.service.To
                 ServletRequestAttributes.SCOPE_SESSION);
         Pet pet = petDao.findFullById(selectedPet.getId());
 
-        Map<JournalEntryType, PetJournalEntry> mapJournalEntries = pet
+        Map<JournalEntryId, PetJournalEntry> mapJournalEntries = pet
                 .getJournalEntries();
-        if (!mapJournalEntries.containsKey(JournalEntryType.PLAY_HIDDEN_OBJECT_GAMES)) {
+        if (!mapJournalEntries.containsKey(JournalEntryId.PLAY_HIDDEN_OBJECT_GAMES)) {
             PetJournalEntry petJournalEntry = new PetJournalEntry();
             petJournalEntry.setCreatedAt(OffsetDateTime.now(clock));
             petJournalEntry.setPet(pet);
-            petJournalEntry.setJournalEntry(JournalEntryType.PLAY_HIDDEN_OBJECT_GAMES);
-            mapJournalEntries.put(JournalEntryType.PLAY_HIDDEN_OBJECT_GAMES, petJournalEntry);
+            petJournalEntry.setJournalEntry(JournalEntryId.PLAY_HIDDEN_OBJECT_GAMES);
+            mapJournalEntries.put(JournalEntryId.PLAY_HIDDEN_OBJECT_GAMES, petJournalEntry);
         }
 
-        petService.addAchievementIfNot(pet, AchievementCode.LEAVE_ROOM);
+        petService.addAchievementIfNot(pet, AchievementId.LEAVE_ROOM);
         
         petService.addExperience(petDao.findFullById(pet.getId()), 1);
         
@@ -77,12 +77,12 @@ public class TownServiceImpl implements ru.urvanov.virtualpets.shared.service.To
                 : nextLevelLeague.getExperience());
         levelInfo.setMinExperience(pet.getLevel().getExperience());
 
-        List<AchievementCode> listServerAchievements = petService
+        List<AchievementId> listServerAchievements = petService
                 .calculateAchievements(pet);
         ru.urvanov.virtualpets.shared.domain.AchievementCode[] listSharedAchievements = new ru.urvanov.virtualpets.shared.domain.AchievementCode[listServerAchievements
                 .size()];
         int n = 0;
-        for (AchievementCode ac : listServerAchievements) {
+        for (AchievementId ac : listServerAchievements) {
             listSharedAchievements[n] = conversionService
                     .convert(
                             ac,

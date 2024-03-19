@@ -10,7 +10,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
-import jakarta.persistence.MapKey;
 import jakarta.persistence.MapKeyColumn;
 import jakarta.persistence.MapKeyEnumerated;
 import jakarta.persistence.OneToMany;
@@ -33,10 +32,16 @@ public class Bookcase implements Serializable {
     @Id
     private Integer id;
 
+    /**
+     * Количество получаемого при постройке/ улучшении опыта
+     */
+    @Column
+    private int experience;
+    
     @OneToMany(mappedBy = "bookcase", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @MapKeyEnumerated(EnumType.STRING)
     @MapKeyColumn(name = "building_material_id")
-    private Map<BuildingMaterialType, BookcaseCost> bookcaseCost;
+    private Map<BuildingMaterialId, BookcaseCost> bookcaseCost;
 
     public Integer getId() {
         return id;
@@ -46,11 +51,19 @@ public class Bookcase implements Serializable {
         this.id = id;
     }
 
-    public Map<BuildingMaterialType, BookcaseCost> getBookcaseCost() {
+    public int getExperience() {
+        return experience;
+    }
+
+    public void setExperience(int experience) {
+        this.experience = experience;
+    }
+
+    public Map<BuildingMaterialId, BookcaseCost> getBookcaseCost() {
         return bookcaseCost;
     }
 
-    public void setBookcaseCost(Map<BuildingMaterialType, BookcaseCost> bookcaseCost) {
+    public void setBookcaseCost(Map<BuildingMaterialId, BookcaseCost> bookcaseCost) {
         this.bookcaseCost = bookcaseCost;
     }
 

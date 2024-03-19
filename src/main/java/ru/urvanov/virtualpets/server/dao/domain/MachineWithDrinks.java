@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.FetchType;
@@ -32,13 +33,19 @@ public class MachineWithDrinks implements Serializable {
     private Integer id;
     
     /**
+     * Количество получаемого при постройке/ улучшении опыта
+     */
+    @Column
+    private int experience;
+    
+    /**
      * Необходимое количество материалов для постройки / улучшения.
      */
     @OneToMany(mappedBy = "machineWithDrinks", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL, orphanRemoval = true)
     @MapKeyEnumerated(EnumType.STRING)
     @MapKeyColumn(name = "building_material_id")
-    private Map<BuildingMaterialType, MachineWithDrinksCost> machineWithDrinksCost;
+    private Map<BuildingMaterialId, MachineWithDrinksCost> machineWithDrinksCost;
 
     public Integer getId() {
         return id;
@@ -48,12 +55,20 @@ public class MachineWithDrinks implements Serializable {
         this.id = id;
     }
 
-    public Map<BuildingMaterialType, MachineWithDrinksCost> getMachineWithDrinksCost() {
+    public int getExperience() {
+        return experience;
+    }
+
+    public void setExperience(int experience) {
+        this.experience = experience;
+    }
+
+    public Map<BuildingMaterialId, MachineWithDrinksCost> getMachineWithDrinksCost() {
         return machineWithDrinksCost;
     }
 
     public void setMachineWithDrinksCost(
-            Map<BuildingMaterialType, MachineWithDrinksCost> machineWithDrinksCost) {
+            Map<BuildingMaterialId, MachineWithDrinksCost> machineWithDrinksCost) {
         this.machineWithDrinksCost = machineWithDrinksCost;
     }
 

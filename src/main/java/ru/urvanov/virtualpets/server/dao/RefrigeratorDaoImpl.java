@@ -18,7 +18,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
-import ru.urvanov.virtualpets.server.dao.domain.BuildingMaterialType;
+import ru.urvanov.virtualpets.server.dao.domain.BuildingMaterialId;
 import ru.urvanov.virtualpets.server.dao.domain.Refrigerator;
 import ru.urvanov.virtualpets.server.dao.domain.RefrigeratorCost;
 import ru.urvanov.virtualpets.server.dao.domain.Refrigerator_;
@@ -61,7 +61,7 @@ public class RefrigeratorDaoImpl implements RefrigeratorDao {
         List<Refrigerator> result = query.getResultList();
         if (result.size() >= 1) {
             Refrigerator refrigerator = result.get(0);
-            Map<BuildingMaterialType, RefrigeratorCost> refrigeratorCost = refrigerator.getRefrigeratorCost();
+            Map<BuildingMaterialId, RefrigeratorCost> refrigeratorCost = refrigerator.getRefrigeratorCost();
             log.debug("refrigeratorCost size = %n", refrigeratorCost.size());
             return refrigerator;
         } else {
