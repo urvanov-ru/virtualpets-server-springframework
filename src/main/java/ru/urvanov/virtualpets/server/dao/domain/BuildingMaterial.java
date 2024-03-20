@@ -3,7 +3,6 @@ package ru.urvanov.virtualpets.server.dao.domain;
 import java.io.Serializable;
 import java.util.Objects;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -28,67 +27,38 @@ public class BuildingMaterial implements Serializable {
     @Enumerated(EnumType.STRING)
     private BuildingMaterialId id;
 
-    @Column(name = "rucksack_order")
     private int rucksackOrder;
     
-    @Column(name = "newbie_box_drop_min")
     private int newbieBoxDropMin;
     
-    @Column(name = "newbie_box_drop_max")
     private int newbieBoxDropMax;
     
-    @Column(name = "newbie_box_drop_rate")
     private float newbieBoxDropRate;
     
-    @Column(name = "hidden_objects_game_drop_rate")
     private float hiddenObjectsGameDropRate;
 
     public BuildingMaterialId getId() {
         return id;
     }
 
-    public void setId(BuildingMaterialId id) {
-        this.id = id;
-    }
-
     public int getRucksackOrder() {
         return rucksackOrder;
-    }
-
-    public void setRucksackOrder(int rucksackOrder) {
-        this.rucksackOrder = rucksackOrder;
     }
 
     public int getNewbieBoxDropMin() {
         return newbieBoxDropMin;
     }
 
-    public void setNewbieBoxDropMin(int newbieBoxDropMin) {
-        this.newbieBoxDropMin = newbieBoxDropMin;
-    }
-
     public int getNewbieBoxDropMax() {
         return newbieBoxDropMax;
-    }
-
-    public void setNewbieBoxDropMax(int newbieBoxDropMax) {
-        this.newbieBoxDropMax = newbieBoxDropMax;
     }
 
     public float getNewbieBoxDropRate() {
         return newbieBoxDropRate;
     }
 
-    public void setNewbieBoxDropRate(float newbieBoxDropRate) {
-        this.newbieBoxDropRate = newbieBoxDropRate;
-    }
-
     public float getHiddenObjectsGameDropRate() {
         return hiddenObjectsGameDropRate;
-    }
-
-    public void setHiddenObjectsGameDropRate(float hiddenObjectsGameDropRate) {
-        this.hiddenObjectsGameDropRate = hiddenObjectsGameDropRate;
     }
 
     @Override

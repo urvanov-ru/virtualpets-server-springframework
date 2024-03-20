@@ -464,7 +464,6 @@ create table bookcase_cost(
                               bookcase_id INT NOT NULL,
                               building_material_id varchar(50) NOT NULL,
                               cost INT NOT NULL,
-                              version INT NOT NULL default 0,
                               PRIMARY KEY (id)
 );
 

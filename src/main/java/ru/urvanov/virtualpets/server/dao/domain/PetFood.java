@@ -45,7 +45,7 @@ public class PetFood implements Serializable {
      * Для оптимистичной блокировки.
      */
     @Version
-    private Integer version;
+    private int version;
 
     public Integer getId() {
         return id;
@@ -77,10 +77,6 @@ public class PetFood implements Serializable {
 
     public void setFoodCount(int foodCount) {
         this.foodCount = foodCount;
-    }
-
-    public Integer getVersion() {
-        return version;
     }
 
     @Override

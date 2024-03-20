@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.FetchType;
@@ -30,12 +29,11 @@ public class Bookcase implements Serializable {
      * ни в БД, ни в Java-коде.
      */
     @Id
-    private Integer id;
+    private int id;
 
     /**
      * Количество получаемого при постройке/ улучшении опыта
      */
-    @Column
     private int experience;
     
     @OneToMany(mappedBy = "bookcase", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -43,28 +41,16 @@ public class Bookcase implements Serializable {
     @MapKeyColumn(name = "building_material_id")
     private Map<BuildingMaterialId, BookcaseCost> bookcaseCost;
 
-    public Integer getId() {
+    public int getId() {
         return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public int getExperience() {
         return experience;
     }
 
-    public void setExperience(int experience) {
-        this.experience = experience;
-    }
-
     public Map<BuildingMaterialId, BookcaseCost> getBookcaseCost() {
         return bookcaseCost;
-    }
-
-    public void setBookcaseCost(Map<BuildingMaterialId, BookcaseCost> bookcaseCost) {
-        this.bookcaseCost = bookcaseCost;
     }
 
     @Override

@@ -31,42 +31,24 @@ public class Food implements Serializable {
     @Column(name = "refrigerator_id")
     private int refrigeratorLevel;
     
-    @Column(name = "refrigerator_order")
     private int refrigeratorOrder;
     
-    @Column(name = "hidden_objects_game_drop_rate")
     private float hiddenObjectsGameDropRate;
 
     public FoodId getId() {
         return id;
     }
 
-    public void setId(FoodId id) {
-        this.id = id;
-    }
-
     public int getRefrigeratorLevel() {
         return refrigeratorLevel;
-    }
-
-    public void setRefrigeratorLevel(int refrigeratorLevel) {
-        this.refrigeratorLevel = refrigeratorLevel;
     }
 
     public int getRefrigeratorOrder() {
         return refrigeratorOrder;
     }
 
-    public void setRefrigeratorOrder(int refrigeratorOrder) {
-        this.refrigeratorOrder = refrigeratorOrder;
-    }
-
     public float getHiddenObjectsGameDropRate() {
         return hiddenObjectsGameDropRate;
-    }
-
-    public void setHiddenObjectsGameDropRate(float hiddenObjectsGameDropRate) {
-        this.hiddenObjectsGameDropRate = hiddenObjectsGameDropRate;
     }
 
     @Override

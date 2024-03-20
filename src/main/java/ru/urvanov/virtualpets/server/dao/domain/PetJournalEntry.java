@@ -47,14 +47,13 @@ public class PetJournalEntry implements Serializable {
     private Pet pet;
     
 
-    @Column
-    private Boolean readed = false;
+    private boolean readed = false;
     
     /**
      * Для оптимистичной блокировки.
      */
     @Version
-    private Integer version;
+    private int version;
 
     public Integer getId() {
         return id;
@@ -88,16 +87,12 @@ public class PetJournalEntry implements Serializable {
         this.pet = pet;
     }
 
-    public Boolean getReaded() {
+    public boolean isReaded() {
         return readed;
     }
 
-    public void setReaded(Boolean readed) {
+    public void setReaded(boolean readed) {
         this.readed = readed;
-    }
-
-    public Integer getVersion() {
-        return version;
     }
 
     @Override

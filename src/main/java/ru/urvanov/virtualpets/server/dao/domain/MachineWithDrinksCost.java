@@ -21,7 +21,7 @@ public class MachineWithDrinksCost {
      * Первичный ключ.
      */
     @Id
-    private Integer id;
+    private int id;
     
     /**
      * Машина с напитками.
@@ -42,43 +42,27 @@ public class MachineWithDrinksCost {
      * строительства / улучшения {@link #machineWithDrinks}.
      */
     @Column(name="cost")
-    private Integer cost;
+    private int cost;
 
-    public Integer getId() {
+    public int getId() {
         return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public MachineWithDrinks getMachineWithDrinks() {
         return machineWithDrinks;
     }
 
-    public void setMachineWithDrinks(MachineWithDrinks machineWithDrinks) {
-        this.machineWithDrinks = machineWithDrinks;
-    }
-
     public BuildingMaterial getBuildingMaterial() {
         return buildingMaterial;
     }
 
-    public void setBuildingMaterial(BuildingMaterial buildingMaterial) {
-        this.buildingMaterial = buildingMaterial;
-    }
-
-    public Integer getCost() {
+    public int getCost() {
         return cost;
-    }
-
-    public void setCost(Integer cost) {
-        this.cost = cost;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(buildingMaterial, cost, id, machineWithDrinks);
+        return Objects.hash(id);
     }
 
     @Override
@@ -90,10 +74,7 @@ public class MachineWithDrinksCost {
         if (getClass() != obj.getClass())
             return false;
         MachineWithDrinksCost other = (MachineWithDrinksCost) obj;
-        return Objects.equals(buildingMaterial.getId(), other.buildingMaterial.getId())
-                && Objects.equals(cost, other.cost)
-                && Objects.equals(id, other.id)
-                && Objects.equals(machineWithDrinks.getId(), other.machineWithDrinks.getId());
+        return id == other.id;
     }
 
     @Override

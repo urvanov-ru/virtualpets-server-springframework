@@ -3,7 +3,6 @@ package ru.urvanov.virtualpets.server.dao.domain;
 import java.io.Serializable;
 import java.util.Objects;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -40,15 +39,13 @@ public class PetDrink implements Serializable {
     @JoinColumn(name = "drink_id")
     private Drink drink;
 
-    @Column(name = "drink_count")
     private int drinkCount;
 
     /**
      * Для оптимистичной блокировки.
      */
     @Version
-    @Column(name = "version")
-    private Integer version;
+    private int version;
 
     public Integer getId() {
         return id;
@@ -80,10 +77,6 @@ public class PetDrink implements Serializable {
 
     public void setDrinkCount(int drinkCount) {
         this.drinkCount = drinkCount;
-    }
-
-    public Integer getVersion() {
-        return version;
     }
 
     @Override

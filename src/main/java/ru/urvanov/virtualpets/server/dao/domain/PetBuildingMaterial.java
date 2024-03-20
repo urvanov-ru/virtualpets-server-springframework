@@ -3,7 +3,6 @@ package ru.urvanov.virtualpets.server.dao.domain;
 import java.io.Serializable;
 import java.util.Objects;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -40,11 +39,10 @@ public class PetBuildingMaterial implements Serializable {
     @JoinColumn(name = "building_material_id")
     private BuildingMaterial buildingMaterial;
     
-    @Column(name = "building_material_count")
     private int buildingMaterialCount;
     
     @Version
-    private Integer version;
+    private int version;
 
     public Integer getId() {
         return id;
@@ -76,10 +74,6 @@ public class PetBuildingMaterial implements Serializable {
 
     public void setBuildingMaterialCount(int buildingMaterialCount) {
         this.buildingMaterialCount = buildingMaterialCount;
-    }
-
-    public Integer getVersion() {
-        return version;
     }
 
     @Override

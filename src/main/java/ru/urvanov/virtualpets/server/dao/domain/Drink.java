@@ -31,10 +31,8 @@ public class Drink implements Serializable {
     @Column(name = "machine_with_drinks_id")
     private int machineWithDrinksLevel;
     
-    @Column(name = "machine_with_drinks_order")
     private int machineWithDrinksOrder;
     
-    @Column(name = "hidden_objects_game_drop_rate")
     private float hiddenObjectsGameDropRate;
 
     public DrinkId getId() {
@@ -45,28 +43,12 @@ public class Drink implements Serializable {
         return machineWithDrinksLevel;
     }
 
-    public void setMachineWithDrinksLevel(int machineWithDrinksLevel) {
-        this.machineWithDrinksLevel = machineWithDrinksLevel;
-    }
-
     public int getMachineWithDrinksOrder() {
         return machineWithDrinksOrder;
     }
 
-    public void setMachineWithDrinksOrder(int machineWithDrinksOrder) {
-        this.machineWithDrinksOrder = machineWithDrinksOrder;
-    }
-
     public float getHiddenObjectsGameDropRate() {
         return hiddenObjectsGameDropRate;
-    }
-
-    public void setHiddenObjectsGameDropRate(float hiddenObjectsGameDropRate) {
-        this.hiddenObjectsGameDropRate = hiddenObjectsGameDropRate;
-    }
-
-    public void setId(DrinkId id) {
-        this.id = id;
     }
 
     @Override

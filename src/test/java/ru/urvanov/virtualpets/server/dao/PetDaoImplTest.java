@@ -81,7 +81,7 @@ public class PetDaoImplTest extends AbstractDaoImplTest {
         petDao.save(pet);
         
         pet = petDao.findFullById(1);
-        assertTrue(pet.getJournalEntries().get(JournalEntryId.WELCOME).getReaded());
+        assertTrue(pet.getJournalEntries().get(JournalEntryId.WELCOME).isReaded());
     }
     
     

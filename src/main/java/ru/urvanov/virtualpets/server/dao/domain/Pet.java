@@ -7,7 +7,6 @@ import java.util.Objects;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -49,32 +48,23 @@ public class Pet implements Serializable {
         sequenceName="pet_id_seq", allocationSize=1)
     private Integer id;
 
-    @Column
     @Size(max = 50)
     private String name;
 
-    @Column(name = "session_key")
     private String sessionKey;
 
-    @Column(name = "created_date")
     private OffsetDateTime createdDate;
 
-    @Column(name = "login_date")
     private OffsetDateTime loginDate;
 
-    @Column(name = "satiety")
     private int satiety;
 
-    @Column(name = "mood")
     private int mood;
 
-    @Column(name = "education")
     private int education;
 
-    @Column(name = "drink")
     private int drink;
 
-    @Column(name = "comment")
     @Size(max = 50)
     private String comment;
 
@@ -83,7 +73,6 @@ public class Pet implements Serializable {
     private User user;
 
     @Enumerated
-    @Column(name = "pet_type")
     private PetType petType;
     
     @ManyToOne
@@ -102,32 +91,24 @@ public class Pet implements Serializable {
     @JoinColumn(name = "level_id")
     private Level level;
     
-    @Column(name="experience")
     private int experience = 0;
     
-    @Column(name = "eat_count")
     private int eatCount = 0;
     
-    @Column(name = "drink_count")
     private int drinkCount = 0;
     
-    @Column(name = "teach_count")
     private int teachCount = 0;
     
-    @Column(name = "build_count")
     private int buildCount = 0;
     
-    @Column(name = "hidden_objects_game_count")
     private int hiddenObjectsGameCount;
     
-    @Column(name = "every_day_login_last")
     private OffsetDateTime everyDayLoginLast;
     
-    @Column(name = "every_day_login_count")
     private int everyDayLoginCount;
     
     @Version
-    private Integer version;
+    private int version;
 
     @OneToMany(mappedBy = "pet", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @MapKeyEnumerated(EnumType.STRING)
@@ -410,10 +391,6 @@ public class Pet implements Serializable {
 
     public void setAchievements(Map<AchievementId, PetAchievement> achievements) {
         this.achievements = achievements;
-    }
-
-    public Integer getVersion() {
-        return version;
     }
 
     @Override

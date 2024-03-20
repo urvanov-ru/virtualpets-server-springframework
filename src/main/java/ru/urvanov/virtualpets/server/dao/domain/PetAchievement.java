@@ -45,14 +45,13 @@ public class PetAchievement implements Serializable {
     /**
      * Отображалось ли игроку сообщение о получении достижения.
      */
-    @Column(name = "was_shown")
     private Boolean wasShown = false;
     
     /**
      * Для оптимистичной блокировки.
      */
     @Version
-    private Integer version;
+    private int version;
 
     public Integer getId() {
         return id;
@@ -84,14 +83,6 @@ public class PetAchievement implements Serializable {
 
     public void setWasShown(Boolean wasShown) {
         this.wasShown = wasShown;
-    }
-
-    public static long getSerialversionuid() {
-        return serialVersionUID;
-    }
-
-    public Integer getVersion() {
-        return version;
     }
 
     @Override

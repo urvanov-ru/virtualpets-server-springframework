@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.FetchType;
@@ -30,12 +29,11 @@ public class Refrigerator implements Serializable {
      * не генерируется ни в БД, ни в Java-коде.
      */
     @Id
-    private Integer id;
+    private int id;
     
     /**
      * Количество получаемого при постройке/ улучшении опыта
      */
-    @Column
     private int experience;
     
     /**
@@ -48,29 +46,16 @@ public class Refrigerator implements Serializable {
     @MapKeyColumn(name = "building_material_id")
     private Map<BuildingMaterialId, RefrigeratorCost> refrigeratorCost;
 
-    public Integer getId() {
+    public int getId() {
         return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Map<BuildingMaterialId, RefrigeratorCost> getRefrigeratorCost() {
-        return refrigeratorCost;
-    }
-
-    public void setRefrigeratorCost(
-            Map<BuildingMaterialId, RefrigeratorCost> refrigeratorCost) {
-        this.refrigeratorCost = refrigeratorCost;
     }
 
     public int getExperience() {
         return experience;
     }
 
-    public void setExperience(int experience) {
-        this.experience = experience;
+    public Map<BuildingMaterialId, RefrigeratorCost> getRefrigeratorCost() {
+        return refrigeratorCost;
     }
 
     @Override

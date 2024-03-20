@@ -24,7 +24,7 @@ public class RefrigeratorCost implements Serializable {
      * Первичный ключ.
      */
     @Id
-    private Integer id;
+    private int id;
     
     @ManyToOne
     @JoinColumn(name="refrigerator_id")
@@ -35,44 +35,28 @@ public class RefrigeratorCost implements Serializable {
     private BuildingMaterial buildingMaterial;
     
     @Column(name="cost")
-    private Integer cost;
+    private int cost;
     
-    public Integer getId() {
+    
+    public int getId() {
         return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public Refrigerator getRefrigerator() {
         return refrigerator;
     }
 
-    public void setRefrigerator(Refrigerator refrigerator) {
-        this.refrigerator = refrigerator;
-    }
-
     public BuildingMaterial getBuildingMaterial() {
         return buildingMaterial;
     }
 
-    public void setBuildingMaterial(BuildingMaterial buildingMaterial) {
-        this.buildingMaterial = buildingMaterial;
-    }
-
-    public Integer getCost() {
+    public int getCost() {
         return cost;
-    }
-
-    public void setCost(Integer cost) {
-        this.cost = cost;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(buildingMaterial.getId(), cost,
-                refrigerator.getId());
+        return Objects.hash(id);
     }
 
     @Override
@@ -84,19 +68,16 @@ public class RefrigeratorCost implements Serializable {
         if (getClass() != obj.getClass())
             return false;
         RefrigeratorCost other = (RefrigeratorCost) obj;
-        return Objects.equals(buildingMaterial.getId(),
-                other.buildingMaterial.getId())
-                && Objects.equals(cost, other.cost)
-                && Objects.equals(refrigerator, other.refrigerator);
+        return id == other.id;
     }
 
     @Override
     public String toString() {
         return "RefrigeratorCost [id=" + id
-                + ", refrigerator.id=" + refrigerator.getId()
-                + ", buildingMaterial.id=" + buildingMaterial.getId()
-                + ", cost=" + cost + "]";
+                + ", refrigerator=" + refrigerator
+                + ", buildingMaterial=" + buildingMaterial
+                + ", cost=" + cost
+                + "]";
     }
 
-    
 }

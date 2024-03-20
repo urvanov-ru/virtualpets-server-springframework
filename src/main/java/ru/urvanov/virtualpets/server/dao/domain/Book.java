@@ -29,42 +29,28 @@ public class Book implements Serializable {
     @Column(name = "bookcase_id")
     private int bookcaseLevel;
     
-    @Column(name = "bookcase_order")
     private int bookcaseOrder;
     
-    @Column(name = "hidden_objects_game_drop_rate")
     private float hiddenObjectsGameDropRate;
 
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public static long getSerialversionuid() {
+        return serialVersionUID;
     }
 
     public int getBookcaseLevel() {
         return bookcaseLevel;
     }
 
-    public void setBookcaseLevel(int bookcaseLevel) {
-        this.bookcaseLevel = bookcaseLevel;
-    }
-
     public int getBookcaseOrder() {
         return bookcaseOrder;
     }
 
-    public void setBookcaseOrder(int bookcaseOrder) {
-        this.bookcaseOrder = bookcaseOrder;
-    }
-
     public float getHiddenObjectsGameDropRate() {
         return hiddenObjectsGameDropRate;
-    }
-
-    public void setHiddenObjectsGameDropRate(float hiddenObjectsGameDropRate) {
-        this.hiddenObjectsGameDropRate = hiddenObjectsGameDropRate;
     }
 
     @Override
