@@ -11,11 +11,23 @@ import org.hibernate.boot.model.naming.Identifier;
 import org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl;
 import org.hibernate.engine.jdbc.env.spi.JdbcEnvironment;
 
-public class UrvanovPhysicalNamingStrategy extends PhysicalNamingStrategyStandardImpl {
+public class UrvanovPhysicalNamingStrategy
+extends PhysicalNamingStrategyStandardImpl {
     private static final long serialVersionUID = 1510016202928080147L;
 
     @Override
-    public Identifier toPhysicalTableName(Identifier logicalName, JdbcEnvironment jdbcEnvironment) {
+    public Identifier toPhysicalTableName(Identifier logicalName,
+            JdbcEnvironment jdbcEnvironment) {
+        final List<String> parts = splitAndReplace(logicalName.getText());
+        return jdbcEnvironment.getIdentifierHelper().toIdentifier(
+                String.join("_", parts),
+                logicalName.isQuoted()
+        );
+    }
+
+    @Override
+    public Identifier toPhysicalSequenceName(Identifier logicalName,
+            JdbcEnvironment jdbcEnvironment) {
         final List<String> parts = splitAndReplace( logicalName.getText());
         return jdbcEnvironment.getIdentifierHelper().toIdentifier(
                 String.join("_", parts),
@@ -24,17 +36,9 @@ public class UrvanovPhysicalNamingStrategy extends PhysicalNamingStrategyStandar
     }
 
     @Override
-    public Identifier toPhysicalSequenceName(Identifier logicalName, JdbcEnvironment jdbcEnvironment) {
-        final List<String> parts = splitAndReplace( logicalName.getText());
-        return jdbcEnvironment.getIdentifierHelper().toIdentifier(
-                String.join("_", parts),
-                logicalName.isQuoted()
-        );
-    }
-
-    @Override
-    public Identifier toPhysicalColumnName(Identifier logicalName, JdbcEnvironment jdbcEnvironment) {
-        final List<String> parts = splitAndReplace( logicalName.getText());
+    public Identifier toPhysicalColumnName(Identifier logicalName,
+            JdbcEnvironment jdbcEnvironment) {
+        final List<String> parts = splitAndReplace(logicalName.getText());
         return jdbcEnvironment.getIdentifierHelper().toIdentifier(
                 String.join("_", parts),
                 logicalName.isQuoted()
