@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -31,8 +32,10 @@ public class Room implements Serializable {
     @JoinColumn(name = "refrigerator_id")
     private Refrigerator refrigerator;
 
+    @Column(name = "refrigerator_x")
     private Integer refrigeratorX;
 
+    @Column(name = "refrigerator_y")
     private Integer refrigeratorY;
 
     @Version
@@ -42,16 +45,20 @@ public class Room implements Serializable {
     @JoinColumn(name = "bookcase_id")
     private Bookcase bookcase;
     
+    @Column(name = "bookcase_x")
     private Integer bookcaseX;
     
+    @Column(name = "bookcase_y")
     private Integer bookcaseY;
     
     @ManyToOne
     @JoinColumn(name="machine_with_drinks_id")
     private MachineWithDrinks machineWithDrinks;
     
+    @Column(name = "machine_with_drinks_x")
     private Integer machineWithDrinksX;
     
+    @Column(name = "machine_with_drinks_y")
     private Integer machineWithDrinksY;
     
     private boolean boxNewbie1 = false;
