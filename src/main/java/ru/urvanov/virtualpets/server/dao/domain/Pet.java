@@ -69,26 +69,21 @@ public class Pet implements Serializable {
     private String comment;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
     private User user;
 
     @Enumerated
     private PetType petType;
     
     @ManyToOne
-    @JoinColumn(name="hat_id")
     private Cloth hat;
     
     @ManyToOne
-    @JoinColumn(name="cloth_id")
     private Cloth cloth;
     
     @ManyToOne
-    @JoinColumn(name="bow_id")
     private Cloth bow;
 
     @ManyToOne
-    @JoinColumn(name = "level_id")
     private Level level;
     
     private int experience = 0;

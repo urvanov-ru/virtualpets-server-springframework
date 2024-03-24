@@ -7,7 +7,6 @@ import java.util.Objects;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
@@ -29,7 +28,6 @@ public class Room implements Serializable {
     private Integer petId;
 
     @ManyToOne
-    @JoinColumn(name = "refrigerator_id")
     private Refrigerator refrigerator;
 
     @Column(name = "refrigerator_x")
@@ -42,7 +40,6 @@ public class Room implements Serializable {
     private Integer version; 
     
     @ManyToOne
-    @JoinColumn(name = "bookcase_id")
     private Bookcase bookcase;
     
     @Column(name = "bookcase_x")
@@ -52,7 +49,6 @@ public class Room implements Serializable {
     private Integer bookcaseY;
     
     @ManyToOne
-    @JoinColumn(name="machine_with_drinks_id")
     private MachineWithDrinks machineWithDrinks;
     
     @Column(name = "machine_with_drinks_x")

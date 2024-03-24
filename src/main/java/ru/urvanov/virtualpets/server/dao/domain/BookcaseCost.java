@@ -5,7 +5,6 @@ import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -26,11 +25,9 @@ public class BookcaseCost implements Serializable {
     private int id;
     
     @ManyToOne
-    @JoinColumn(name="bookcase_id")
     private Bookcase bookcase;
 
     @ManyToOne
-    @JoinColumn(name="building_material_id")
     private BuildingMaterial buildingMaterial;
     
     private int cost;
