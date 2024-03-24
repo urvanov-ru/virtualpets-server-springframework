@@ -41,16 +41,25 @@
             value="ru.urvanov.virtualpets.server.dao.domain" />
         <property name="jpaProperties">
             <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect
+                <prop key="hibernate.dialect">
+                    org.hibernate.dialect.PostgreSQLDialect
                 </prop>
-                <prop key="hibernate.globally_quoted_identifiers">true</prop>
-                <prop key="hibernate.default_schema">virtualpets_springframework</prop>
+                <prop key="hibernate.globally_quoted_identifiers">
+                    true
+                </prop>
+                <prop key="hibernate.default_schema">
+                    virtualpets_springframework
+                </prop>
                 <prop key="hibernate.show_sql">true</prop>
                 <prop key="hibernate.max_fetch_depth">3</prop>
                 <prop key="hibernate.jdbc.fetch_size">50</prop>
                 <prop key="hibernate.jdbc.batch_size">10</prop>
-                <prop key="hibernate.use_nationalized_character_data">true</prop>
-                <prop key="hibernate.physical_naming_strategy">org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy</prop>
+                <prop key="hibernate.use_nationalized_character_data">
+                    true
+                </prop>
+                <prop key="hibernate.physical_naming_strategy">
+                    org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+                </prop>
             </props>
         </property>
     </bean>
