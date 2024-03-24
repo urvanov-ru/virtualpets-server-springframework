@@ -19,9 +19,9 @@ public class BuildingMaterial implements Serializable {
     private static final long serialVersionUID = -6611026384958159106L;
 
     /**
-     * Первичный ключ. Новые записи в справочник материалов для строительства
-     * добавляются скриптами liquibase, первичный ключ не генерируется ни в БД,
-     * ни в Java-коде.
+     * Первичный ключ. Новые записи в справочник материалов
+     * для строительства добавляются скриптами liquibase,
+     * первичный ключ не генерируется ни в БД, ни в Java-коде.
      */
     @Id
     @Enumerated(EnumType.STRING)
@@ -80,11 +80,13 @@ public class BuildingMaterial implements Serializable {
 
     @Override
     public String toString() {
-        return "BuildingMaterial [id=" + id + ", rucksackOrder=" + rucksackOrder
+        return "BuildingMaterial [id=" + id
+                + ", rucksackOrder=" + rucksackOrder
                 + ", newbieBoxDropMin=" + newbieBoxDropMin
                 + ", newbieBoxDropMax=" + newbieBoxDropMax
                 + ", newbieBoxDropRate=" + newbieBoxDropRate
-                + ", hiddenObjectsGameDropRate=" + hiddenObjectsGameDropRate
+                + ", hiddenObjectsGameDropRate="
+                + hiddenObjectsGameDropRate
                 + "]";
     }
 
