@@ -3,7 +3,6 @@ package ru.urvanov.virtualpets.server.dao.domain;
 import java.io.Serializable;
 import java.util.Objects;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -35,7 +34,6 @@ public class PetFood implements Serializable {
     @ManyToOne
     private Food food;
 
-    @Column(name = "food_count")
     private int foodCount;
 
     /**

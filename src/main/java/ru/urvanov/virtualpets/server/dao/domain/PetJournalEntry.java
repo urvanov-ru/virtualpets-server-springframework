@@ -34,7 +34,6 @@ public class PetJournalEntry implements Serializable {
         sequenceName="pet_journal_entry_id_seq", allocationSize=1)
     private Integer id;
     
-    @Column(name = "created_at")
     private OffsetDateTime createdAt;
     
     @Column(name = "journal_entry_id")
