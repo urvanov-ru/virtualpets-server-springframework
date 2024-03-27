@@ -7,7 +7,6 @@ import java.util.Objects;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MapKeyColumn;
 import jakarta.persistence.MapKeyEnumerated;
@@ -39,7 +38,7 @@ public class MachineWithDrinks implements Serializable {
     /**
      * Необходимое количество материалов для постройки / улучшения.
      */
-    @OneToMany(mappedBy = "machineWithDrinks", fetch = FetchType.LAZY,
+    @OneToMany(mappedBy = "machineWithDrinks",
             cascade = CascadeType.ALL, orphanRemoval = true)
     @MapKeyEnumerated(EnumType.STRING)
     @MapKeyColumn(name = "building_material_id")

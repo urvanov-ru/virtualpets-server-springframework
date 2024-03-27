@@ -27,7 +27,6 @@ import ru.urvanov.virtualpets.server.dao.DrinkDao;
 import ru.urvanov.virtualpets.server.dao.FoodDao;
 import ru.urvanov.virtualpets.server.dao.LevelDao;
 import ru.urvanov.virtualpets.server.dao.PetDao;
-import ru.urvanov.virtualpets.server.dao.PetFoodDao;
 import ru.urvanov.virtualpets.server.dao.RoomDao;
 import ru.urvanov.virtualpets.server.dao.UserDao;
 import ru.urvanov.virtualpets.server.dao.domain.AchievementId;
@@ -92,8 +91,6 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsService {
     @Autowired
     private ConversionService conversionService;
 
-    @Autowired
-    private PetFoodDao petFoodDao;
 
     @Autowired
     private FoodDao foodDao;
@@ -760,14 +757,6 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsService {
             rate += cloth.getHiddenObjectsGameDropRate();
         }
         clothMaxDropRate = rate;
-    }
-
-    public PetFoodDao getPetFoodDao() {
-        return petFoodDao;
-    }
-
-    public void setPetFoodDao(PetFoodDao petFoodDao) {
-        this.petFoodDao = petFoodDao;
     }
 
     public FoodDao getFoodDao() {

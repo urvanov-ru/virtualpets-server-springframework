@@ -35,7 +35,22 @@ import jakarta.validation.constraints.Size;
 @Table(name = "pet")
 @NamedQueries({
         @NamedQuery(name = "findByUserId", query = "from Pet p where p.user.id = :userId"),
-        @NamedQuery(name = "findFullById", query = " from Pet p left outer join fetch p.cloths c left outer join fetch p.books b left outer join fetch p.foods f left outer join fetch p.buildingMaterials bm left outer join fetch bm.buildingMaterial left outer join fetch p.drinks d left outer join fetch p.journalEntries je left outer join fetch p.achievements ach where p.id = :id") 
+        @NamedQuery(name = "findFullById", query = """
+                from Pet p
+                left outer join fetch p.level l
+                left outer join fetch p.hat h1
+                left outer join fetch p.cloth c1
+                left outer join fetch p.bow b1
+                left outer join fetch p.user u
+                left outer join fetch p.cloths c
+                left outer join fetch p.books b
+                left outer join fetch p.foods f
+                left outer join fetch p.buildingMaterials bm
+                left outer join fetch bm.buildingMaterial
+                left outer join fetch p.drinks d
+                left outer join fetch p.journalEntries je
+                left outer join fetch p.achievements ach
+                where p.id = :id""") 
         }
         )
 public class Pet implements Serializable {
@@ -68,22 +83,22 @@ public class Pet implements Serializable {
     @Size(max = 50)
     private String comment;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
     @Enumerated
     private PetType petType;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Cloth hat;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Cloth cloth;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Cloth bow;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Level level;
     
     private int experience = 0;
@@ -105,35 +120,41 @@ public class Pet implements Serializable {
     @Version
     private int version;
 
-    @OneToMany(mappedBy = "pet", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL,
+            orphanRemoval = true)
     @MapKeyEnumerated(EnumType.STRING)
     @MapKeyColumn(name="food_id")
     private Map<FoodId, PetFood> foods;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(name = "pet_cloth", joinColumns = @JoinColumn(name = "pet_id"), inverseJoinColumns = @JoinColumn(name = "cloth_id"))
     private Set<Cloth> cloths;
     
-    @OneToMany(mappedBy = "pet", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL,
+            orphanRemoval = true)
     @MapKeyEnumerated(EnumType.STRING)
     @MapKeyColumn(name = "building_material_id")
     private Map<BuildingMaterialId, PetBuildingMaterial> buildingMaterials;
     
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name="pet_book", joinColumns = @JoinColumn(name="pet_id"), inverseJoinColumns = @JoinColumn(name="book_id"))
+    @ManyToMany
+    @JoinTable(name="pet_book", joinColumns = @JoinColumn(name="pet_id"),
+            inverseJoinColumns = @JoinColumn(name="book_id"))
     private Set<Book> books;
     
-    @OneToMany(mappedBy= "pet", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy= "pet", cascade = CascadeType.ALL,
+            orphanRemoval = true)
     @MapKeyEnumerated(EnumType.STRING)
     @MapKeyColumn(name = "drink_id")
     private Map<DrinkId, PetDrink> drinks;
     
-    @OneToMany(mappedBy="pet", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy="pet", cascade = CascadeType.ALL,
+            orphanRemoval = true)
     @MapKeyEnumerated(EnumType.STRING)
     @MapKeyColumn(name = "journal_entry_id")
     private Map<JournalEntryId, PetJournalEntry> journalEntries;
     
-    @OneToMany(mappedBy="pet", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy="pet", cascade = CascadeType.ALL,
+            orphanRemoval = true)
     @MapKeyEnumerated(EnumType.STRING)
     @MapKeyColumn(name = "achievement_id")
     private Map<AchievementId, PetAchievement> achievements;

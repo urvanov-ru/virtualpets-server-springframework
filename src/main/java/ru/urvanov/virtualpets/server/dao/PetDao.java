@@ -1,16 +1,9 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.dao;
 
 import java.util.List;
 
 import ru.urvanov.virtualpets.server.dao.domain.Pet;
 
-/**
- * @author fedya
- *
- */
 public interface PetDao {
     
     public Pet findById(Integer id);
@@ -23,4 +16,5 @@ public interface PetDao {
     public void updatePetsTask();
     public Long getPetNewJournalEntriesCount(Integer petId);
     public List<Pet> findLastCreatedPets(int start, int limit);
+    public Pet findByIdWithBuildingMaterials(Integer id);
 }

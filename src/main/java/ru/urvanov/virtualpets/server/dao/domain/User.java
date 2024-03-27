@@ -16,7 +16,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -118,7 +117,7 @@ public class User implements UserDetails, Serializable{
     @Column(name="unid")
     private String unid;
     
-    @OneToMany(fetch = FetchType.LAZY, mappedBy="user")
+    @OneToMany(mappedBy="user")
     private Set<Pet> pets;
     
     @Version

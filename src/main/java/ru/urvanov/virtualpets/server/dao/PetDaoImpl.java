@@ -150,4 +150,14 @@ public class PetDaoImpl implements PetDao {
         typedQuery.setMaxResults(limit);
         return typedQuery.getResultList();
     }
+
+    @Override
+    public Pet findByIdWithBuildingMaterials(Integer id) {
+        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+        CriteriaQuery<Pet> criteriaQuery = criteriaBuilder.createQuery(Pet.class);
+        Root<Pet> rootPet = criteriaQuery.from(Pet.class);
+        rootPet.fetch(Pet_.buildingMaterials);
+        TypedQuery<Pet> typedQuery = em.createQuery(criteriaQuery);
+        return typedQuery.getSingleResult();
+    }
 }

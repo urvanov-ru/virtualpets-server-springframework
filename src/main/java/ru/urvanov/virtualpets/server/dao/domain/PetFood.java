@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,10 +29,10 @@ public class PetFood implements Serializable {
         sequenceName="pet_food_id_seq", allocationSize=1)
     private Integer id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Pet pet;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Food food;
 
     private int foodCount;

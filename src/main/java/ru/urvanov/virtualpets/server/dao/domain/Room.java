@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -27,7 +28,7 @@ public class Room implements Serializable {
     @Id
     private Integer petId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Refrigerator refrigerator;
 
     @Column(name = "refrigerator_x")
@@ -39,7 +40,7 @@ public class Room implements Serializable {
     @Version
     private Integer version; 
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Bookcase bookcase;
     
     @Column(name = "bookcase_x")
@@ -48,7 +49,7 @@ public class Room implements Serializable {
     @Column(name = "bookcase_y")
     private Integer bookcaseY;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private MachineWithDrinks machineWithDrinks;
     
     @Column(name = "machine_with_drinks_x")

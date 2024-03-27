@@ -16,6 +16,7 @@ import ru.urvanov.virtualpets.server.dao.domain.PetFood;
 public interface PetFoodDao {
     public PetFood findById(Integer id);
     public List<PetFood> findByPetId(Integer petId);
+    public List<PetFood> findFullByPetId(Integer petId);
     public List<PetFood> findByPet(Pet pet);
     public void save(PetFood food);
     public PetFood findByPetIdAndFoodType(Integer petId, FoodId foodType);

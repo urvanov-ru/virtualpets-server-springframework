@@ -553,7 +553,7 @@ public class RoomServiceImpl implements RoomService {
             newPetJournalEntry.setReaded(false);
             pet.getJournalEntries().put(newPetJournalEntry.getJournalEntry(),
                     newPetJournalEntry);
-            petService.addExperience(petDao.findById(pet.getId()), 1);
+            petService.addExperience(pet, 1);
             petService.addAchievementIfNot(pet, AchievementId.BUILD_1);
             
         }

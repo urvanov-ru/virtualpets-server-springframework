@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -31,10 +32,10 @@ public class Chat implements Serializable{
         sequenceName="chat_id_seq", allocationSize=1)
     private Integer id;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User addressee;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User sender;
     
     @Column(name="send_time")
