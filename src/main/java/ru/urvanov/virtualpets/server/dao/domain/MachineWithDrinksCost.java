@@ -2,7 +2,6 @@ package ru.urvanov.virtualpets.server.dao.domain;
 
 import java.util.Objects;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
@@ -39,7 +38,6 @@ public class MachineWithDrinksCost {
      * Необходимое количество материала {@link #buildingMaterial} для
      * строительства / улучшения {@link #machineWithDrinks}.
      */
-    @Column(name="cost")
     private int cost;
 
     public int getId() {

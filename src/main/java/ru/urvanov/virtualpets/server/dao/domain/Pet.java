@@ -34,7 +34,8 @@ import jakarta.validation.constraints.Size;
 @Entity
 @Table(name = "pet")
 @NamedQueries({
-        @NamedQuery(name = "findByUserId", query = "from Pet p where p.user.id = :userId"),
+        @NamedQuery(name = "findByUserId",
+                query = "from Pet p where p.user.id = :userId"),
         @NamedQuery(name = "findFullById", query = """
                 from Pet p
                 left outer join fetch p.level l
@@ -58,9 +59,10 @@ public class Pet implements Serializable {
     private static final long serialVersionUID = 2699175148933987413L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="pet_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator="pet_seq")
     @SequenceGenerator(name="pet_seq",
-        sequenceName="pet_id_seq", allocationSize=1)
+            sequenceName="pet_id_seq", allocationSize=1)
     private Integer id;
 
     @Size(max = 50)
@@ -127,7 +129,9 @@ public class Pet implements Serializable {
     private Map<FoodId, PetFood> foods;
 
     @ManyToMany
-    @JoinTable(name = "pet_cloth", joinColumns = @JoinColumn(name = "pet_id"), inverseJoinColumns = @JoinColumn(name = "cloth_id"))
+    @JoinTable(name = "pet_cloth",
+            joinColumns = @JoinColumn(name = "pet_id"),
+            inverseJoinColumns = @JoinColumn(name = "cloth_id"))
     private Set<Cloth> cloths;
     
     @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL,
@@ -137,7 +141,7 @@ public class Pet implements Serializable {
     private Map<BuildingMaterialId, PetBuildingMaterial> buildingMaterials;
     
     @ManyToMany
-    @JoinTable(name="pet_book", joinColumns = @JoinColumn(name="pet_id"),
+    @JoinTable(
             inverseJoinColumns = @JoinColumn(name="book_id"))
     private Set<Book> books;
     

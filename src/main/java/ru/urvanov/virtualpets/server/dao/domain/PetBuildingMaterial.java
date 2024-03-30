@@ -28,7 +28,7 @@ public class PetBuildingMaterial implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="pet_building_material_seq")
     @SequenceGenerator(name="pet_building_material_seq",
-        sequenceName="pet_building_material_id_seq", allocationSize=1)
+        sequenceName="pet_building_material_id_seq")
     private Integer id;
     
     @ManyToOne(fetch = FetchType.LAZY)

@@ -31,7 +31,7 @@ public class PetAchievement implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="pet_achievement_seq")
     @SequenceGenerator(name="pet_achievement_seq",
-        sequenceName="pet_achievement_id_seq", allocationSize=1)
+        sequenceName="pet_achievement_id_seq")
     private Integer id;
     
     @Column(name = "achievement_id")
