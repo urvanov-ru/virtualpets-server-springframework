@@ -29,7 +29,7 @@ public class Chat implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="chat_seq")
     @SequenceGenerator(name="chat_seq",
-        sequenceName="chat_id_seq")
+        sequenceName="chat_id_seq", allocationSize = 1)
     private Integer id;
     
     @ManyToOne(fetch = FetchType.LAZY)
