@@ -19,7 +19,7 @@
             class="liquibase.integration.spring.SpringLiquibase">
         <property name="dataSource" ref="dataSource" />
         <property name="changeLog" value="classpath:liquibase/db-changelog.xml" />
-        <property name="defaultSchema" value="virtualpets_springframework" />
+        <property name="defaultSchema" value="virtualpets_server_springframework" />
     </bean>
 
     <bean id="transactionManager"
@@ -48,7 +48,7 @@
                     true
                 </prop>
                 <prop key="hibernate.default_schema">
-                    virtualpets_springframework
+                    virtualpets_server_springframework
                 </prop>
                 <prop key="hibernate.show_sql">true</prop>
                 <prop key="hibernate.max_fetch_depth">3</prop>
