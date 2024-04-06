@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.dao;
 
 import java.util.List;
@@ -19,18 +16,14 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.urvanov.virtualpets.server.dao.domain.Room;
 import ru.urvanov.virtualpets.server.dao.domain.Room_;
 
-/**
- * @author fedya
- *
- */
 @Repository(value="roomDao")
-@Transactional
 public class RoomDaoImpl implements RoomDao {
 
     @PersistenceContext
     private EntityManager em;
 
     @Override
+    @Transactional(readOnly = true)
     public Room findByPetId(Integer petId) {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
         CriteriaQuery<Room> criteriaQuery = criteriaBuilder.createQuery(Room.class);
@@ -48,6 +41,7 @@ public class RoomDaoImpl implements RoomDao {
     }
 
     @Override
+    @Transactional
     public void save(Room room) {
         Room existRoom = findByPetId(room.getPetId());
         if (existRoom == null) {
@@ -57,16 +51,10 @@ public class RoomDaoImpl implements RoomDao {
         }
     }
 
-    /**
-     * @return the em
-     */
     public EntityManager getEm() {
         return em;
     }
 
-    /**
-     * @param em the em to set
-     */
     public void setEm(EntityManager em) {
         this.em = em;
     }

@@ -2,17 +2,15 @@ package ru.urvanov.virtualpets.server.dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
-
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
-import ru.urvanov.virtualpets.server.dao.domain.Cloth;
 import ru.urvanov.virtualpets.server.dao.domain.Drink;
 import ru.urvanov.virtualpets.server.dao.domain.DrinkId;
 import ru.urvanov.virtualpets.server.dao.domain.Drink_;
@@ -35,6 +33,7 @@ public class DrinkDaoImpl implements DrinkDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Drink> findAllOrderByMachineWithDrinksLevelAndMachineWithDrinksOrder() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Drink> criteriaQuery = cb.createQuery(Drink.class);

@@ -27,6 +27,7 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Book> findAllOrderByBookcaseLevelAndBookcaseOrder() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Book> criteriaQuery = cb.createQuery(Book.class);

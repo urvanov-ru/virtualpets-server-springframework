@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.dao;
 
 import java.util.List;
@@ -30,12 +27,7 @@ import ru.urvanov.virtualpets.server.dao.domain.PetJournalEntry;
 import ru.urvanov.virtualpets.server.dao.domain.PetJournalEntry_;
 import ru.urvanov.virtualpets.server.dao.domain.Pet_;
 
-/**
- * @author fedya
- * 
- */
 @Repository(value = "petDao")
-@Transactional
 public class PetDaoImpl implements PetDao {
 
     private Logger logger = LoggerFactory.getLogger(PetDaoImpl.class);
@@ -44,11 +36,13 @@ public class PetDaoImpl implements PetDao {
     private EntityManager em;
 
     @Override
+    @Transactional(readOnly = true)
     public Pet findById(Integer id) {
         return em.find(Pet.class, id);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Pet findFullById(Integer id) {
         TypedQuery<Pet> query = em.createNamedQuery("findFullById", Pet.class);
         query.setParameter("id", id);
@@ -56,6 +50,7 @@ public class PetDaoImpl implements PetDao {
     }
 
     @Override
+    @Transactional
     public void save(Pet pet) {
         if (pet.getId() == null) {
             em.persist(pet);
@@ -65,12 +60,14 @@ public class PetDaoImpl implements PetDao {
     }
 
     @Override
+    @Transactional
     public void delete(Integer id) {
         Pet pet = em.find(Pet.class, id);
         em.remove(pet);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Pet> findByUserId(Integer userId) {
         TypedQuery<Pet> query = em.createNamedQuery("findByUserId", Pet.class);
         query.setParameter("userId", userId);
@@ -123,6 +120,7 @@ public class PetDaoImpl implements PetDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Long getPetNewJournalEntriesCount(Integer petId) {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
         CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
@@ -139,6 +137,7 @@ public class PetDaoImpl implements PetDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Pet> findLastCreatedPets(int start, int limit) {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
         CriteriaQuery<Pet> criteriaQuery = criteriaBuilder.createQuery(Pet.class);
@@ -152,6 +151,7 @@ public class PetDaoImpl implements PetDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Pet findByIdWithBuildingMaterials(Integer id) {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
         CriteriaQuery<Pet> criteriaQuery = criteriaBuilder.createQuery(Pet.class);

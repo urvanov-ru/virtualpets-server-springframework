@@ -5,6 +5,9 @@ package ru.urvanov.virtualpets.server.dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
@@ -12,47 +15,32 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
-
-import org.springframework.stereotype.Repository;
-
 import ru.urvanov.virtualpets.server.dao.domain.BuildingMaterial;
 import ru.urvanov.virtualpets.server.dao.domain.BuildingMaterialId;
 import ru.urvanov.virtualpets.server.dao.domain.BuildingMaterial_;
-import ru.urvanov.virtualpets.server.dao.domain.Cloth;
 
-/**
- * @author fedya
- *
- */
 @Repository(value="buildingMaterialDao")
 public class BuildingMaterialDaoImpl implements BuildingMaterialDao {
 
     @PersistenceContext
     private EntityManager em;
     
-    /* (non-Javadoc)
-     * @see ru.urvanov.virtualpets.server.dao.BuildingMaterialDao#findById(java.lang.Integer)
-     */
     @Override
+    @Transactional(readOnly = true)
     public BuildingMaterial findById(BuildingMaterialId id) {
         return em.find(BuildingMaterial.class, id);
     }
 
-    /**
-     * @return the em
-     */
     public EntityManager getEm() {
         return em;
     }
 
-    /**
-     * @param em the em to set
-     */
     public void setEm(EntityManager em) {
         this.em = em;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public BuildingMaterial findByCode(BuildingMaterialId code) {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
         CriteriaQuery<BuildingMaterial> criteriaQuery = criteriaBuilder.createQuery(BuildingMaterial.class);
@@ -76,6 +64,7 @@ public class BuildingMaterialDaoImpl implements BuildingMaterialDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<BuildingMaterial> findAll() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<BuildingMaterial> criteriaQuery = cb.createQuery(BuildingMaterial.class);

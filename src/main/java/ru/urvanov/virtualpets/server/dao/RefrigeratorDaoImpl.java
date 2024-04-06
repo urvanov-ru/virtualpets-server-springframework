@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.dao;
 
 import java.util.List;
@@ -23,10 +20,6 @@ import ru.urvanov.virtualpets.server.dao.domain.Refrigerator;
 import ru.urvanov.virtualpets.server.dao.domain.RefrigeratorCost;
 import ru.urvanov.virtualpets.server.dao.domain.Refrigerator_;
 
-/**
- * @author fedya
- * 
- */
 @Repository(value = "refrigeratorDao")
 @Transactional
 public class RefrigeratorDaoImpl implements RefrigeratorDao {
@@ -36,9 +29,6 @@ public class RefrigeratorDaoImpl implements RefrigeratorDao {
     @PersistenceContext
     private EntityManager em;
 
-    /**
-     * 
-     */
     public RefrigeratorDaoImpl() {
         // TODO Auto-generated constructor stub
     }
@@ -69,19 +59,17 @@ public class RefrigeratorDaoImpl implements RefrigeratorDao {
         }
     }
 
-    /**
-     * @return the em
-     */
     public EntityManager getEm() {
         return em;
     }
 
-    /**
-     * @param em
-     *            the em to set
-     */
     public void setEm(EntityManager em) {
         this.em = em;
+    }
+
+    @Override
+    public Refrigerator getReference(Integer id) {
+        return em.getReference(Refrigerator.class, id);
     }
 
 }

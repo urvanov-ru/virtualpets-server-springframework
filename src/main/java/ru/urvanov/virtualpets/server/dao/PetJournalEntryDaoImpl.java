@@ -23,6 +23,7 @@ public class PetJournalEntryDaoImpl implements PetJournalEntryDao {
     private EntityManager em;
 
     @Override
+    @Transactional(readOnly = true)
     public List<PetJournalEntry> findLastByPetId(Integer petId, Integer count) {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
         CriteriaQuery<PetJournalEntry> criteriaQuery = criteriaBuilder
@@ -40,8 +41,8 @@ public class PetJournalEntryDaoImpl implements PetJournalEntryDao {
         return result;
     }
 
-    @Transactional(readOnly=true)
     @Override
+    @Transactional(readOnly = true)
     public PetJournalEntry findByPetIdAndJournalEntryCode(Integer petId,
             JournalEntryId code) {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();

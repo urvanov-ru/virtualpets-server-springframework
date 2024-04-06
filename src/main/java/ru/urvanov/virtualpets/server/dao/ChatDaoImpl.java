@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.dao;
 
 import java.util.ArrayList;
@@ -14,36 +11,18 @@ import ru.urvanov.virtualpets.server.dao.domain.Chat;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * @author fedya
- * 
- */
 @Repository(value = "chatDao")
-@Transactional
 public class ChatDaoImpl implements ChatDao {
 
     @PersistenceContext
     private EntityManager em;
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * ru.urvanov.virtualpets.server.dao.ChatDao#findById(java.lang.Integer)
-     */
     @Override
     @Transactional(readOnly = true)
     public Chat findById(Integer id) {
         return em.find(Chat.class, id);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * ru.urvanov.virtualpets.server.dao.ChatDao#findLast(java.lang.Integer,
-     * java.lang.Integer)
-     */
     @Override
     @Transactional(readOnly = true)
     public List<Chat> findLast(Integer count, Integer userId) {
@@ -61,14 +40,8 @@ public class ChatDaoImpl implements ChatDao {
         return result;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * ru.urvanov.virtualpets.server.dao.ChatDao#save(ru.urvanov.virtualpets
-     * .server.domain.Chat)
-     */
     @Override
+    @Transactional
     public void save(Chat chat) {
         if (chat.getId() == null) {
             em.persist(chat);
@@ -77,23 +50,17 @@ public class ChatDaoImpl implements ChatDao {
         }
     }
 
-    /**
-     * @return the em
-     */
     public EntityManager getEm() {
         return em;
     }
 
-    /**
-     * @param em
-     *            the em to set
-     */
     public void setEm(EntityManager em) {
         this.em = em;
     }
 
     @SuppressWarnings("unchecked")
     @Override
+    @Transactional(readOnly = true)
     public List<Chat> findFromId(Integer fromId, Integer userId) {
         Query query = em.createNamedQuery("findFromId");
         query.setParameter("fromId", fromId);

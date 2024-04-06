@@ -1,61 +1,36 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.dao;
 
 import java.util.List;
+
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
-import jakarta.persistence.criteria.Selection;
-
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
-import ru.urvanov.virtualpets.server.dao.domain.Food;
 import ru.urvanov.virtualpets.server.dao.domain.FoodId;
+import ru.urvanov.virtualpets.server.dao.domain.Food_;
 import ru.urvanov.virtualpets.server.dao.domain.Pet;
 import ru.urvanov.virtualpets.server.dao.domain.PetFood;
-import ru.urvanov.virtualpets.server.dao.domain.Food_;
 import ru.urvanov.virtualpets.server.dao.domain.PetFood_;
 import ru.urvanov.virtualpets.server.dao.domain.Pet_;
 
-/**
- * @author fedya
- * 
- */
 @Repository(value = "petFoodDao")
-@Transactional
 public class PetFoodDaoImpl implements PetFoodDao {
 
     @PersistenceContext
     private EntityManager em;
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * ru.urvanov.virtualpets.server.dao.FoodDao#findById(java.lang.Integer)
-     */
     @Override
     @Transactional(readOnly=true)
     public PetFood findById(Integer id) {
         return em.find(PetFood.class, id);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * ru.urvanov.virtualpets.server.dao.FoodDao#findByPetId(java.lang.Integer
-     * )
-     */
     @Override
     @Transactional(readOnly=true)
     public List<PetFood> findByPetId(Integer petId) {
@@ -82,26 +57,12 @@ public class PetFoodDaoImpl implements PetFoodDao {
         return em.createQuery(criteriaQuery).getResultList();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * ru.urvanov.virtualpets.server.dao.FoodDao#findByPet(ru.urvanov
-     * .virtualpets.server.domain.Pet)
-     */
     @Override
     @Transactional(readOnly=true)
     public List<PetFood> findByPet(Pet pet) {
         return findByPetId(pet.getId());
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * ru.urvanov.virtualpets.server.dao.FoodDao#save(ru.urvanov.virtualpets
-     * .server.domain.Food)
-     */
     @Override
     @Transactional
     public void save(PetFood food) {
@@ -112,22 +73,16 @@ public class PetFoodDaoImpl implements PetFoodDao {
         }
     }
 
-    /**
-     * @return the em
-     */
     public EntityManager getEm() {
         return em;
     }
 
-    /**
-     * @param em
-     *            the em to set
-     */
     public void setEm(EntityManager em) {
         this.em = em;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public PetFood findByPetIdAndFoodType(Integer petId, FoodId foodType) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<PetFood> criteriaQuery = cb.createQuery(PetFood.class);

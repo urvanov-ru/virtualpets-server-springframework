@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.dao;
 
 import java.util.List;
@@ -21,12 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.urvanov.virtualpets.server.dao.domain.MachineWithDrinks;
 import ru.urvanov.virtualpets.server.dao.domain.MachineWithDrinks_;
 
-/**
- * @author fedya
- *
- */
 @Repository(value="machineWithDrinksDao")
-@Transactional
 public class MachineWithDrinksDaoImpl implements MachineWithDrinksDao {
     
     private static final Logger log = LoggerFactory.getLogger(MachineWithDrinksDaoImpl.class);
@@ -34,18 +26,14 @@ public class MachineWithDrinksDaoImpl implements MachineWithDrinksDao {
     @PersistenceContext
     private EntityManager em;
 
-    /* (non-Javadoc)
-     * @see ru.urvanov.virtualpets.server.dao.DrinkDao#findById(java.lang.Integer)
-     */
     @Override
+    @Transactional(readOnly = true)
     public MachineWithDrinks findById(Integer id) {
         return em.find(MachineWithDrinks.class,  id);
     }
 
-    /* (non-Javadoc)
-     * @see ru.urvanov.virtualpets.server.dao.DrinkDao#findFullById(java.lang.Integer)
-     */
     @Override
+    @Transactional(readOnly = true)
     public MachineWithDrinks findFullById(Integer id) {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
         CriteriaQuery<MachineWithDrinks> criteriaQuery = criteriaBuilder.createQuery(MachineWithDrinks.class);
@@ -64,18 +52,17 @@ public class MachineWithDrinksDaoImpl implements MachineWithDrinksDao {
         }
     }
 
-    /**
-     * @return the em
-     */
     public EntityManager getEm() {
         return em;
     }
 
-    /**
-     * @param em the em to set
-     */
     public void setEm(EntityManager em) {
         this.em = em;
+    }
+
+    @Override
+    public MachineWithDrinks getReference(Integer id) {
+        return em.getReference(MachineWithDrinks.class, id);
     }
 
 }

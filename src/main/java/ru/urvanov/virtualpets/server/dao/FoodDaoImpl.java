@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.dao;
 
 import java.util.List;
@@ -18,24 +15,14 @@ import ru.urvanov.virtualpets.server.dao.domain.Food;
 import ru.urvanov.virtualpets.server.dao.domain.FoodId;
 import ru.urvanov.virtualpets.server.dao.domain.Food_;
 
-/**
- * @author fedya
- * 
- */
 @Repository(value = "foodDao")
-@Transactional
 public class FoodDaoImpl implements FoodDao {
 
     @PersistenceContext
     private EntityManager em;
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * ru.urvanov.virtualpets.server.dao.FoodDao#findById(java.lang.Integer)
-     */
     @Override
+    @Transactional(readOnly = true)
     public Food findById(FoodId id) {
         return em.find(Food.class, id);
     }
@@ -55,6 +42,7 @@ public class FoodDaoImpl implements FoodDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Food> findAllOrderByRefrigeratorLevelAndRefrigeratorOrder() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Food> criteriaQuery = cb.createQuery(Food.class);

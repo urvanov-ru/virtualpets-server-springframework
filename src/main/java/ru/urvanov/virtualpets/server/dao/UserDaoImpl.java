@@ -4,6 +4,10 @@ import java.time.Clock;
 import java.time.OffsetDateTime;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
@@ -13,16 +17,10 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Order;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
 import ru.urvanov.virtualpets.server.dao.domain.User;
 import ru.urvanov.virtualpets.server.dao.domain.User_;
 
 @Repository(value="userDao")
-@Transactional
 public class UserDaoImpl implements UserDao {
     
     @Autowired
@@ -31,6 +29,7 @@ public class UserDaoImpl implements UserDao {
     @PersistenceContext
     private EntityManager em;
 
+    @Transactional
     public void save(User user) {
         if (user.getId() == null) {
             em.persist(user);
@@ -39,21 +38,16 @@ public class UserDaoImpl implements UserDao {
         }
     }
     
-    /**
-     * @return the em
-     */
     public EntityManager getEm() {
         return em;
     }
 
-    /**
-     * @param em the em to set
-     */
     public void setEm(EntityManager em) {
         this.em = em;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User findByLogin(String login) {
         Query query = em.createNamedQuery("findByLogin");
         query.setParameter("login", login);
@@ -74,6 +68,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User findByLoginAndPassword(String login, String password) {
         Query query = em.createNamedQuery("findByLoginAndPassword");
         query.setParameter("login", login);
@@ -82,12 +77,14 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User findById(Integer id) {
         return em.find(User.class, id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
+    @Transactional(readOnly = true)
     public List<User> findOnline() {
         Query query = em.createNamedQuery("findOnline");
         OffsetDateTime offsetDateTime = OffsetDateTime.now(clock);
@@ -97,6 +94,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User findByLoginAndEmail(String login, String email) {
         Query query = em.createNamedQuery("findByLoginAndEmail");
         query.setParameter("login", login);
@@ -105,6 +103,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User findByUnid(String unid) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<User> criteriaQuery = cb.createQuery(User.class);
@@ -121,6 +120,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User findByRecoverPasswordKey(String recoverKey) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<User> criteriaQuery = cb.createQuery(User.class);
@@ -139,6 +139,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<User> findLastRegisteredUsers(int start, int limit) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<User> criteriaQuery = cb.createQuery(User.class);
