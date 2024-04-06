@@ -18,9 +18,12 @@ import ru.urvanov.virtualpets.server.dao.domain.Food_;
 @Repository(value = "foodDao")
 public class FoodDaoImpl implements FoodDao {
 
-    @PersistenceContext
     private EntityManager em;
 
+    @PersistenceContext
+    public void setEntityManager(EntityManager em) {
+        this.em = em;
+    }
     @Override
     @Transactional(readOnly = true)
     public Food findById(FoodId id) {
@@ -44,5 +47,7 @@ public class FoodDaoImpl implements FoodDao {
         TypedQuery<Food> query = em.createQuery(criteriaQuery);
         return query.getResultList();
     }
+    
+    
 
 }
