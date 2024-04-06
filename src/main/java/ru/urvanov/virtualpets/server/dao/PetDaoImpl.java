@@ -80,6 +80,7 @@ public class PetDaoImpl implements PetDao {
     }
 
     @Override
+    @Transactional
     public void updatePetsTask() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Object> cq = cb.createQuery();
