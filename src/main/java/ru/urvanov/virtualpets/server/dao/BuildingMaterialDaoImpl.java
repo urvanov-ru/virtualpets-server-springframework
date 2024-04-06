@@ -31,14 +31,6 @@ public class BuildingMaterialDaoImpl implements BuildingMaterialDao {
         return em.find(BuildingMaterial.class, id);
     }
 
-    public EntityManager getEm() {
-        return em;
-    }
-
-    public void setEm(EntityManager em) {
-        this.em = em;
-    }
-
     @Override
     @Transactional(readOnly = true)
     public BuildingMaterial findByCode(BuildingMaterialId code) {

@@ -27,15 +27,6 @@ public class FoodDaoImpl implements FoodDao {
         return em.find(Food.class, id);
     }
 
-    public EntityManager getEm() {
-        return em;
-    }
-
-    public void setEm(EntityManager em) {
-        this.em = em;
-    }
-
-
     @Override
     public Food getReference(FoodId id) {
         return em.getReference(Food.class, id);

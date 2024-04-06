@@ -50,13 +50,4 @@ public class RoomDaoImpl implements RoomDao {
             em.merge(room);
         }
     }
-
-    public EntityManager getEm() {
-        return em;
-    }
-
-    public void setEm(EntityManager em) {
-        this.em = em;
-    }
-
 }

@@ -44,14 +44,6 @@ public class BookcaseDaoImpl implements BookcaseDao {
          }
     }
 
-    public EntityManager getEm() {
-        return em;
-    }
-
-    public void setEm(EntityManager em) {
-        this.em = em;
-    }
-
     @Override
     @Transactional(readOnly = true)
     public Bookcase findById(Integer id) {

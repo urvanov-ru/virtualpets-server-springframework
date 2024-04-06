@@ -37,14 +37,6 @@ public class UserDaoImpl implements UserDao {
             em.merge(user);
         }
     }
-    
-    public EntityManager getEm() {
-        return em;
-    }
-
-    public void setEm(EntityManager em) {
-        this.em = em;
-    }
 
     @Override
     @Transactional(readOnly = true)

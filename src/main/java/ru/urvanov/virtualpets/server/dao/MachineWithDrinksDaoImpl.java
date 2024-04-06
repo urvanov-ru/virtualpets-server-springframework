@@ -52,14 +52,6 @@ public class MachineWithDrinksDaoImpl implements MachineWithDrinksDao {
         }
     }
 
-    public EntityManager getEm() {
-        return em;
-    }
-
-    public void setEm(EntityManager em) {
-        this.em = em;
-    }
-
     @Override
     public MachineWithDrinks getReference(Integer id) {
         return em.getReference(MachineWithDrinks.class, id);

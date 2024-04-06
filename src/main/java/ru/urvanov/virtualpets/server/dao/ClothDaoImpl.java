@@ -32,14 +32,6 @@ public class ClothDaoImpl implements ClothDao {
         return em.getReference(Cloth.class, id);
     }
 
-    public EntityManager getEm() {
-        return em;
-    }
-
-    public void setEm(EntityManager em) {
-        this.em = em;
-    }
-
     @Override
     @Transactional(readOnly = true)
     public Integer getCount() {

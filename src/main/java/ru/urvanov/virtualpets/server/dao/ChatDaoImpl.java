@@ -50,14 +50,6 @@ public class ChatDaoImpl implements ChatDao {
         }
     }
 
-    public EntityManager getEm() {
-        return em;
-    }
-
-    public void setEm(EntityManager em) {
-        this.em = em;
-    }
-
     @SuppressWarnings("unchecked")
     @Override
     @Transactional(readOnly = true)

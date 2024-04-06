@@ -73,14 +73,6 @@ public class PetFoodDaoImpl implements PetFoodDao {
         }
     }
 
-    public EntityManager getEm() {
-        return em;
-    }
-
-    public void setEm(EntityManager em) {
-        this.em = em;
-    }
-
     @Override
     @Transactional(readOnly = true)
     public PetFood findByPetIdAndFoodType(Integer petId, FoodId foodType) {

@@ -29,10 +29,6 @@ public class RefrigeratorDaoImpl implements RefrigeratorDao {
     @PersistenceContext
     private EntityManager em;
 
-    public RefrigeratorDaoImpl() {
-        // TODO Auto-generated constructor stub
-    }
-
     @Override
     public Refrigerator findById(Integer id) {
         return em.find(Refrigerator.class, id);
@@ -57,14 +53,6 @@ public class RefrigeratorDaoImpl implements RefrigeratorDao {
         } else {
             return null;
         }
-    }
-
-    public EntityManager getEm() {
-        return em;
-    }
-
-    public void setEm(EntityManager em) {
-        this.em = em;
     }
 
     @Override
