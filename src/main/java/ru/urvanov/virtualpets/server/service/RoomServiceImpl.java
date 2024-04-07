@@ -130,7 +130,7 @@ public class RoomServiceImpl implements RoomService {
             room.setBoxNewbie1(false);
             room.setBoxNewbie2(false);
             room.setBoxNewbie3(false);
-            roomDao.save(room);
+            // roomDao.save(room);
         }
         return room;
         
@@ -138,6 +138,7 @@ public class RoomServiceImpl implements RoomService {
 
 
     @Override
+    @Transactional(rollbackFor = {DaoException.class, ServiceException.class})
     public GetRoomInfoResult getRoomInfo() throws DaoException,
             ServiceException {
         logger.info("getRoomInfo started.");
@@ -219,7 +220,7 @@ public class RoomServiceImpl implements RoomService {
                 .map(ac -> conversionService.convert(ac, ru.urvanov.virtualpets.shared.domain.AchievementCode.class))
                 .collect(Collectors.toList());
         result.setAchievements(listSharedAchievements);
-        petDao.save(pet);
+        // petDao.save(pet);
         logger.info("getRoomInfo finished.");
         return result;
     }
@@ -292,7 +293,7 @@ public class RoomServiceImpl implements RoomService {
                 room.setBoxNewbie3(false);
                 break;
             }
-            roomDao.save(room);
+            // roomDao.save(room);
             petService.addExperience(pet, 1);
             
             if (!room.isBoxNewbie1() && !room.isBoxNewbie2()
@@ -307,7 +308,7 @@ public class RoomServiceImpl implements RoomService {
                         newPetJournalEntry.getJournalEntry(),
                         newPetJournalEntry);
             }
-            petDao.save(pet);
+            // petDao.save(pet);
         } else {
             throw new ServiceException("This box already opened.");
         }
@@ -352,7 +353,7 @@ public class RoomServiceImpl implements RoomService {
         room.setRefrigerator(refrigerator);
         room.setRefrigeratorX(arg.getX());
         room.setRefrigeratorY(arg.getY());
-        roomDao.save(room);
+        // roomDao.save(room);
         if (!pet.getJournalEntries().containsKey(JournalEntryId.EAT_SOMETHING)) {
             PetJournalEntry newPetJournalEntry = new PetJournalEntry();
             newPetJournalEntry.setCreatedAt(OffsetDateTime.now(clock));
@@ -364,7 +365,7 @@ public class RoomServiceImpl implements RoomService {
             petService.addExperience(pet, 1);
 
         }
-        petDao.save(pet);
+        // petDao.save(pet);
     }
     
 
@@ -383,7 +384,7 @@ public class RoomServiceImpl implements RoomService {
         }
         room.setRefrigeratorX(arg.getX());
         room.setRefrigeratorY(arg.getY());
-        roomDao.save(room);
+        // roomDao.save(room);
     }
 
     @Override
@@ -410,9 +411,9 @@ public class RoomServiceImpl implements RoomService {
             throw new ServiceException(nepre.toString());
         }
         room.setRefrigerator(refrigerator);
-        roomDao.save(room);
+        // roomDao.save(room);
         petService.addExperience(pet, 1);
-        petDao.save(pet);
+        /// petDao.save(pet);
     }
 
     @Override
@@ -458,7 +459,7 @@ public class RoomServiceImpl implements RoomService {
             
             
         }
-        petDao.save(pet);
+        // petDao.save(pet);
     }
 
     @Override
@@ -484,9 +485,9 @@ public class RoomServiceImpl implements RoomService {
             throw new ServiceException(nepre.toString());
         }
         room.setBookcase(bookcase);
-        roomDao.save(room);
+        // roomDao.save(room);
         petService.addExperience(pet, 1);
-        petDao.save(pet);
+        // petDao.save(pet);
     }
 
     @Override
@@ -502,7 +503,7 @@ public class RoomServiceImpl implements RoomService {
         }
         room.setBookcaseX(arg.getX());
         room.setBookcaseY(arg.getY());
-        roomDao.save(room);
+        // roomDao.save(room);
     }
 
     @Override
@@ -544,7 +545,7 @@ public class RoomServiceImpl implements RoomService {
         room.setMachineWithDrinks(machineWithDrinks);
         room.setMachineWithDrinksX(arg.getX());
         room.setMachineWithDrinksY(arg.getY());
-        roomDao.save(room);
+        // roomDao.save(room);
         if (!pet.getJournalEntries().containsKey(JournalEntryId.DRINK_SOMETHING)) {
             PetJournalEntry newPetJournalEntry = new PetJournalEntry();
             newPetJournalEntry.setCreatedAt(OffsetDateTime.now(clock));
@@ -557,7 +558,7 @@ public class RoomServiceImpl implements RoomService {
             petService.addAchievementIfNot(pet, AchievementId.BUILD_1);
             
         }
-        petDao.save(pet);
+        // petDao.save(pet);
     }
 
     @Override
@@ -574,7 +575,7 @@ public class RoomServiceImpl implements RoomService {
         }
         room.setMachineWithDrinksX(arg.getX());
         room.setMachineWithDrinksY(arg.getY());
-        roomDao.save(room);
+        // roomDao.save(room);
     }
 
     @Override
@@ -662,9 +663,9 @@ public class RoomServiceImpl implements RoomService {
             throw new ServiceException(nepre.toString());
         }
         room.setMachineWithDrinks(machineWithDrinks);
-        roomDao.save(room);
+        // roomDao.save(room);
         petService.addExperience(pet, 1);
-        petDao.save(pet);
+        // petDao.save(pet);
     }
 
     @Override
@@ -678,7 +679,7 @@ public class RoomServiceImpl implements RoomService {
         if (room.isJournalOnFloor() == false)
             throw new ServiceException("There isn't any journal in your room.");
         room.setJournalOnFloor(false);
-        roomDao.save(room);
+        // roomDao.save(room);
         Pet pet = petDao.findById(selectedPet.getId());
         Map<JournalEntryId, PetJournalEntry> petJournalEntries = pet
                 .getJournalEntries();
@@ -692,7 +693,7 @@ public class RoomServiceImpl implements RoomService {
             
         }
         petService.addExperience(pet, 1);
-        petDao.save(pet);
+        // petDao.save(pet);
     }
 
     @Override
@@ -715,14 +716,14 @@ public class RoomServiceImpl implements RoomService {
             fullPet.getJournalEntries().put(
                     newPetJournalEntry.getJournalEntry(), newPetJournalEntry);
             petService.addExperience(fullPet, 1);
-            petDao.save(fullPet);
+            // petDao.save(fullPet);
             
             Room room = roomDao.findByPetId(fullPet.getId());
             room.setBoxNewbie1(true);
             room.setBoxNewbie2(true);
             room.setBoxNewbie3(true);
             
-            roomDao.save(room);
+            // roomDao.save(room);
             
         }
         
