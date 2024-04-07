@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -43,6 +44,7 @@ public class TownServiceImpl implements ru.urvanov.virtualpets.shared.service.To
     private Clock clock;
 
     @Override
+    @Transactional(rollbackFor = {DaoException.class, ServiceException.class})
     public GetTownInfoResult getTownInfo() throws DaoException,
             ServiceException {
         ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder
@@ -93,7 +95,6 @@ public class TownServiceImpl implements ru.urvanov.virtualpets.shared.service.To
 
         result.setNewJournalEntriesCount(petService
                 .getPetNewJournalEntriesCount(pet.getId()));
-        petDao.save(pet);
         return result;
     }
 

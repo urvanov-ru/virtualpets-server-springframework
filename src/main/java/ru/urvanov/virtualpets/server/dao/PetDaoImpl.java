@@ -1,6 +1,7 @@
 package ru.urvanov.virtualpets.server.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.CacheMode;
 import org.hibernate.ScrollMode;
@@ -160,5 +161,23 @@ public class PetDaoImpl implements PetDao {
         rootPet.fetch(Pet_.buildingMaterials);
         TypedQuery<Pet> typedQuery = em.createQuery(criteriaQuery);
         return typedQuery.getSingleResult();
+    }
+
+    @Override
+    public Pet findByIdWithFullFoods(Integer id) {
+        return em.find(Pet.class, id,
+                Map.of(
+                        "jakarta.persistence.fetchgraph",
+                        em.getEntityGraph("pet.foods"))
+                );
+    }
+
+    @Override
+    public Pet findByIdWithFullDrinks(Integer id) {
+        return em.find(Pet.class, id,
+                Map.of(
+                        "jakarta.persistence.fetchgraph",
+                        em.getEntityGraph("pet.drinks"))
+                );
     }
 }

@@ -17,4 +17,6 @@ public interface PetDao {
     public Long getPetNewJournalEntriesCount(Integer petId);
     public List<Pet> findLastCreatedPets(int start, int limit);
     public Pet findByIdWithBuildingMaterials(Integer id);
+    public Pet findByIdWithFullFoods(Integer id);
+    public Pet findByIdWithFullDrinks(Integer id);
 }

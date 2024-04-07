@@ -20,8 +20,11 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapKeyColumn;
 import jakarta.persistence.MapKeyEnumerated;
+import jakarta.persistence.NamedAttributeNode;
+import jakarta.persistence.NamedEntityGraph;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
+import jakarta.persistence.NamedSubgraph;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
@@ -54,6 +57,26 @@ import jakarta.validation.constraints.Size;
                 where p.id = :id""") 
         }
         )
+@NamedEntityGraph(name = "pet.foods",
+        attributeNodes = @NamedAttributeNode(
+                value = "foods",
+                subgraph = "pet.foods.food"
+        ),
+        subgraphs = @NamedSubgraph(
+                name = "pet.foods.food",
+                attributeNodes = @NamedAttributeNode("food")
+        )
+)
+@NamedEntityGraph(name = "pet.drinks",
+        attributeNodes = @NamedAttributeNode(
+                value = "drinks",
+                subgraph = "pet.drinks.drink"
+),
+        subgraphs = @NamedSubgraph(
+                name = "pet.drinks.drink",
+                attributeNodes = @NamedAttributeNode("drink")
+)
+)
 public class Pet implements Serializable {
 
     private static final long serialVersionUID = 2699175148933987413L;

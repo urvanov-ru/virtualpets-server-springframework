@@ -58,6 +58,7 @@ public class UserServiceImpl implements UserService, ru.urvanov.virtualpets.shar
     private Clock clock;
     
     @Override
+    @Transactional(rollbackFor = {DaoException.class, ServiceException.class})
     public LoginResult login(LoginArg arg) throws ServiceException, DaoException {
         String clientVersion = arg.getVersion();
         if (!version.equals(clientVersion)) {
@@ -77,7 +78,6 @@ public class UserServiceImpl implements UserService, ru.urvanov.virtualpets.shar
         uniqueIdentifier = uniqueIdentifier
                 + unidDateTimeFormatter.format(OffsetDateTime.now(clock));
         user.setUnid(uniqueIdentifier);
-        userDao.save(user);
         
         LoginResult loginResult = new LoginResult();
         loginResult.setUnid(uniqueIdentifier);
@@ -105,7 +105,6 @@ public class UserServiceImpl implements UserService, ru.urvanov.virtualpets.shar
     }
 
     @Override
-    @Transactional
     public UserInformation getUserInformation(UserInformationArg argument) {
         Integer userId = argument.getUserId();
         User user = userDao.findById(userId);
@@ -125,13 +124,13 @@ public class UserServiceImpl implements UserService, ru.urvanov.virtualpets.shar
 
 
     @Override
+    @Transactional(rollbackFor = {DaoException.class, ServiceException.class})
     public void closeSession() throws DaoException, ServiceException {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
         User user = (User)authentication.getPrincipal();
         user = userDao.findById(user.getId());
         user.setUnid(null);
-        userDao.save(user);
     }
 
     /**
