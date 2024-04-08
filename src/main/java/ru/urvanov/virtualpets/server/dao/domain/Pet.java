@@ -22,7 +22,6 @@ import jakarta.persistence.MapKeyColumn;
 import jakarta.persistence.MapKeyEnumerated;
 import jakarta.persistence.NamedAttributeNode;
 import jakarta.persistence.NamedEntityGraph;
-import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.NamedSubgraph;
 import jakarta.persistence.OneToMany;
@@ -36,47 +35,46 @@ import jakarta.validation.constraints.Size;
  */
 @Entity
 @Table(name = "pet")
-@NamedQueries({
-        @NamedQuery(name = "findByUserId",
-                query = "from Pet p where p.user.id = :userId"),
-        @NamedQuery(name = "findFullById", query = """
-                from Pet p
-                left outer join fetch p.level l
-                left outer join fetch p.hat h1
-                left outer join fetch p.cloth c1
-                left outer join fetch p.bow b1
-                left outer join fetch p.user u
-                left outer join fetch p.cloths c
-                left outer join fetch p.books b
-                left outer join fetch p.foods f
-                left outer join fetch p.buildingMaterials bm
-                left outer join fetch bm.buildingMaterial
-                left outer join fetch p.drinks d
-                left outer join fetch p.journalEntries je
-                left outer join fetch p.achievements ach
-                where p.id = :id""") 
-        }
-        )
+@NamedQuery(name = "findByUserId",
+        query = "from Pet p where p.user.id = :userId")
+@NamedQuery(name = "findFullById", query = """
+        from Pet p
+        left outer join fetch p.level l
+        left outer join fetch p.hat h1
+        left outer join fetch p.cloth c1
+        left outer join fetch p.bow b1
+        left outer join fetch p.user u
+        left outer join fetch p.cloths c
+        left outer join fetch p.books b
+        left outer join fetch p.foods f
+        left outer join fetch p.buildingMaterials bm
+        left outer join fetch bm.buildingMaterial
+        left outer join fetch p.drinks d
+        left outer join fetch p.journalEntries je
+        left outer join fetch p.achievements ach
+        where p.id = :id""") 
+
+
 @NamedEntityGraph(name = "pet.foods",
         attributeNodes = @NamedAttributeNode(
                 value = "foods",
-                subgraph = "pet.foods.food"
-        ),
+                subgraph = "pet.foods.food"),
         subgraphs = @NamedSubgraph(
                 name = "pet.foods.food",
-                attributeNodes = @NamedAttributeNode("food")
-        )
+                attributeNodes = @NamedAttributeNode("food"))
 )
 @NamedEntityGraph(name = "pet.drinks",
         attributeNodes = @NamedAttributeNode(
                 value = "drinks",
                 subgraph = "pet.drinks.drink"
-),
+        ),
         subgraphs = @NamedSubgraph(
                 name = "pet.drinks.drink",
                 attributeNodes = @NamedAttributeNode("drink")
+        )
 )
-)
+@NamedEntityGraph(name = "pet.cloths",
+        attributeNodes = @NamedAttributeNode("cloths"))
 public class Pet implements Serializable {
 
     private static final long serialVersionUID = 2699175148933987413L;

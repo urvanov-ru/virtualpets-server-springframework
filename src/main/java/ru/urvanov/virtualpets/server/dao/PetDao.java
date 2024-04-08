@@ -19,4 +19,5 @@ public interface PetDao {
     public Pet findByIdWithBuildingMaterials(Integer id);
     public Pet findByIdWithFullFoods(Integer id);
     public Pet findByIdWithFullDrinks(Integer id);
+    public Pet findByIdWithFullCloths(Integer id);
 }

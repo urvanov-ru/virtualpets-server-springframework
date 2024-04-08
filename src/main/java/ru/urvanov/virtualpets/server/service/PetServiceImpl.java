@@ -260,7 +260,7 @@ public class PetServiceImpl implements PetService, ru.urvanov.virtualpets.shared
     public GetPetClothsResult getPetCloths() {
         ServletRequestAttributes sra = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
         SelectedPet selectedPet = (SelectedPet) sra.getAttribute("pet", ServletRequestAttributes.SCOPE_SESSION);
-        Pet pet = petDao.findFullById(selectedPet.getId());
+        Pet pet = petDao.findByIdWithFullCloths(selectedPet.getId());
         Set<Cloth> cloths = pet.getCloths();
         
         List<ru.urvanov.virtualpets.shared.domain.Cloth> resultCloths = cloths.stream()

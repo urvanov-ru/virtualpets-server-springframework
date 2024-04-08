@@ -180,4 +180,13 @@ public class PetDaoImpl implements PetDao {
                         em.getEntityGraph("pet.drinks"))
                 );
     }
+
+    @Override
+    public Pet findByIdWithFullCloths(Integer id) {
+        return em.find(Pet.class, id,
+                Map.of(
+                        "jakarta.persistence.fetchgraph",
+                        em.getEntityGraph("pet.cloths"))
+                );
+    }
 }
