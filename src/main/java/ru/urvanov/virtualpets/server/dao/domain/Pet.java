@@ -53,8 +53,6 @@ import jakarta.validation.constraints.Size;
         left outer join fetch p.journalEntries je
         left outer join fetch p.achievements ach
         where p.id = :id""") 
-
-
 @NamedEntityGraph(name = "pet.foods",
         attributeNodes = @NamedAttributeNode(
                 value = "foods",
@@ -73,8 +71,22 @@ import jakarta.validation.constraints.Size;
                 attributeNodes = @NamedAttributeNode("drink")
         )
 )
+@NamedEntityGraph(name = "pet.buildingMaterials",
+        attributeNodes = @NamedAttributeNode(
+                value = "buildingMaterials",
+                subgraph = "pet.buildingMaterials.buildingMaterial"
+       ),
+        subgraphs = @NamedSubgraph(
+                name = "pet.buildingMaterials.buildingMaterial",
+                attributeNodes = @NamedAttributeNode("buildingMaterial")
+        )
+)
 @NamedEntityGraph(name = "pet.cloths",
-        attributeNodes = @NamedAttributeNode("cloths"))
+        attributeNodes = @NamedAttributeNode("cloths")
+)
+@NamedEntityGraph(name = "pet.books",
+        attributeNodes = @NamedAttributeNode("books")
+)
 public class Pet implements Serializable {
 
     private static final long serialVersionUID = 2699175148933987413L;

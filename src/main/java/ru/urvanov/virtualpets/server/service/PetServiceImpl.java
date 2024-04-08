@@ -243,7 +243,7 @@ public class PetServiceImpl implements PetService, ru.urvanov.virtualpets.shared
             ServiceException {
         ServletRequestAttributes sra = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
         SelectedPet selectedPet = (SelectedPet) sra.getAttribute("pet", ServletRequestAttributes.SCOPE_SESSION);
-        Pet pet = petDao.findFullById(selectedPet.getId());
+        Pet pet = petDao.findByIdWithFullBooks(selectedPet.getId());
         Set<Book> books = pet.getBooks();
         
         List<ru.urvanov.virtualpets.shared.domain.Book> resultBooks = books.stream()
@@ -601,7 +601,7 @@ public class PetServiceImpl implements PetService, ru.urvanov.virtualpets.shared
             throws DaoException, ServiceException {
         ServletRequestAttributes sra = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
         SelectedPet selectedPet = (SelectedPet) sra.getAttribute("pet", ServletRequestAttributes.SCOPE_SESSION);
-        Pet pet = petDao.findByIdWithBuildingMaterials(selectedPet.getId());
+        Pet pet = petDao.findByIdWithFullBuildingMaterials(selectedPet.getId());
         Map<BuildingMaterialId, PetBuildingMaterial> buildingMaterials = pet.getBuildingMaterials();
         
         Map<ru.urvanov.virtualpets.shared.domain.BuildingMaterialType, Integer> buildingMaterialCounts = buildingMaterials.entrySet().stream()

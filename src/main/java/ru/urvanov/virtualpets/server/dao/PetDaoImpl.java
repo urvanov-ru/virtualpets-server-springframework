@@ -24,6 +24,7 @@ import jakarta.persistence.criteria.Order;
 import jakarta.persistence.criteria.Root;
 import ru.urvanov.virtualpets.server.dao.domain.JournalEntryId;
 import ru.urvanov.virtualpets.server.dao.domain.Pet;
+import ru.urvanov.virtualpets.server.dao.domain.PetBuildingMaterial_;
 import ru.urvanov.virtualpets.server.dao.domain.PetJournalEntry;
 import ru.urvanov.virtualpets.server.dao.domain.PetJournalEntry_;
 import ru.urvanov.virtualpets.server.dao.domain.Pet_;
@@ -162,8 +163,20 @@ public class PetDaoImpl implements PetDao {
         TypedQuery<Pet> typedQuery = em.createQuery(criteriaQuery);
         return typedQuery.getSingleResult();
     }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public Pet findByIdWithFullBuildingMaterials(Integer id) {
+        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+        CriteriaQuery<Pet> criteriaQuery = criteriaBuilder.createQuery(Pet.class);
+        Root<Pet> rootPet = criteriaQuery.from(Pet.class);
+        rootPet.fetch(Pet_.buildingMaterials).fetch(PetBuildingMaterial_.buildingMaterial);
+        TypedQuery<Pet> typedQuery = em.createQuery(criteriaQuery);
+        return typedQuery.getSingleResult();
+    }
 
     @Override
+    @Transactional(readOnly = true)
     public Pet findByIdWithFullFoods(Integer id) {
         return em.find(Pet.class, id,
                 Map.of(
@@ -173,6 +186,7 @@ public class PetDaoImpl implements PetDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Pet findByIdWithFullDrinks(Integer id) {
         return em.find(Pet.class, id,
                 Map.of(
@@ -182,11 +196,21 @@ public class PetDaoImpl implements PetDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Pet findByIdWithFullCloths(Integer id) {
         return em.find(Pet.class, id,
                 Map.of(
                         "jakarta.persistence.fetchgraph",
                         em.getEntityGraph("pet.cloths"))
+                );
+    }
+
+    @Override
+    public Pet findByIdWithFullBooks(Integer id) {
+        return em.find(Pet.class, id,
+                Map.of(
+                        "jakarta.persistence.fetchgraph",
+                        em.getEntityGraph("pet.books"))
                 );
     }
 }
