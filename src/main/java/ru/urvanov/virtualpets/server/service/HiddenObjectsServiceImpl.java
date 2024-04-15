@@ -516,7 +516,7 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsService {
                 }
                 if (bookId != null && !bookFound) {
                     Set<Book> books = fullPet.getBooks();
-                    books.add(bookDao.getReference(bookId));
+                    books.add(bookDao.findById(bookId));
                     reward.setBookId(bookId);
                 }
 
