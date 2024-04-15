@@ -24,6 +24,7 @@ import ru.urvanov.virtualpets.server.dao.LevelDao;
 import ru.urvanov.virtualpets.server.dao.PetDao;
 import ru.urvanov.virtualpets.server.dao.PetFoodDao;
 import ru.urvanov.virtualpets.server.dao.PetJournalEntryDao;
+import ru.urvanov.virtualpets.server.dao.RoomDao;
 import ru.urvanov.virtualpets.server.dao.UserDao;
 import ru.urvanov.virtualpets.server.dao.domain.AchievementId;
 import ru.urvanov.virtualpets.server.dao.domain.Book;
@@ -45,6 +46,7 @@ import ru.urvanov.virtualpets.server.dao.domain.PetFood;
 import ru.urvanov.virtualpets.server.dao.domain.PetJournalEntry;
 import ru.urvanov.virtualpets.server.dao.domain.Refrigerator;
 import ru.urvanov.virtualpets.server.dao.domain.RefrigeratorCost;
+import ru.urvanov.virtualpets.server.dao.domain.Room;
 import ru.urvanov.virtualpets.server.dao.domain.SelectedPet;
 import ru.urvanov.virtualpets.server.dao.domain.User;
 import ru.urvanov.virtualpets.server.service.domain.PetDetails;
@@ -71,6 +73,9 @@ import ru.urvanov.virtualpets.shared.exception.ServiceException;
 @Service("petService")
 public class PetServiceImpl implements PetService, ru.urvanov.virtualpets.shared.service.PetService {
 
+    @Autowired
+    private RoomDao roomDao;
+    
     @Autowired
     private PetDao petDao;
     
@@ -634,7 +639,12 @@ public class PetServiceImpl implements PetService, ru.urvanov.virtualpets.shared
     }
 
     @Override
+    @Transactional(rollbackFor = {DaoException.class, ServiceException.class})
     public void delete(Integer petId) {
+        Room room = roomDao.findByPetId(petId);
+        if (room != null) {
+            roomDao.delete(room);
+        }
         petDao.delete(petId);
     }
 

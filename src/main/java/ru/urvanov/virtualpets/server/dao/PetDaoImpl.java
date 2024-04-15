@@ -221,7 +221,8 @@ public class PetDaoImpl implements PetDao {
         return em.find(Pet.class, id,
                 Map.of(
                         "jakarta.persistence.fetchgraph",
-                        em.getEntityGraph("pet.journalEntriesAndAchievements"))
+                        em.getEntityGraph(
+                                "pet.journalEntriesAndAchievements"))
                 );
     }
 }

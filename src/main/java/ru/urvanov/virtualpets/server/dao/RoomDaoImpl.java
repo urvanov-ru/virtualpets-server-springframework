@@ -50,4 +50,10 @@ public class RoomDaoImpl implements RoomDao {
             em.merge(room);
         }
     }
+
+    @Override
+    @Transactional
+    public void delete(Room room) {
+        em.remove(room);
+    }
 }

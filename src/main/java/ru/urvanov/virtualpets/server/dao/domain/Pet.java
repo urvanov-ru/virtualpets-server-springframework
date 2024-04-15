@@ -36,8 +36,8 @@ import jakarta.validation.constraints.Size;
 @Entity
 @Table(name = "pet")
 @NamedQuery(name = "Pet.findByUserId",
-        query = "Pet.from Pet p where p.user.id = :userId")
-@NamedQuery(name = "findFullById", query = """
+        query = "from Pet p where p.user.id = :userId")
+@NamedQuery(name = "Pet.findFullById", query = """
         from Pet p
         left outer join fetch p.level l
         left outer join fetch p.hat h1

@@ -46,5 +46,5 @@ public interface PetService {
     
     public GetPetRucksackInnerResult getPetRucksackInner() throws DaoException, ServiceException;
     
-    public void delete(Integer petId);
+    public void delete(Integer petId) throws DaoException, ServiceException;;
 }
