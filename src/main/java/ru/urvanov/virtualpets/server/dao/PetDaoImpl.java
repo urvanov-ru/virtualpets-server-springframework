@@ -47,7 +47,7 @@ public class PetDaoImpl implements PetDao {
     @Transactional(readOnly = true)
     public Pet findFullById(Integer id) {
         TypedQuery<Pet> query = em.createNamedQuery(
-                "findFullById", Pet.class);
+                "Pet.findFullById", Pet.class);
         query.setParameter("id", id);
         return query.getSingleResult();
     }
@@ -73,7 +73,7 @@ public class PetDaoImpl implements PetDao {
     @Transactional(readOnly = true)
     public List<Pet> findByUserId(Integer userId) {
         TypedQuery<Pet> query = em.createNamedQuery(
-                "findByUserId", Pet.class);
+                "Pet.findByUserId", Pet.class);
         query.setParameter("userId", userId);
         return query.getResultList();
     }
