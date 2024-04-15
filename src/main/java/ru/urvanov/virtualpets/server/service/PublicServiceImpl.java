@@ -76,7 +76,7 @@ public class PublicServiceImpl implements PublicService {
         }
         ServerInfo[] serverInfos = new ServerInfo[1];
         serverInfos[0] = new ServerInfo();
-        serverInfos[0].address = "http://localhost:8081/site";
+        serverInfos[0].address = "http://virtualpets.urvanov.ru/virtualpets-server-springframework/site";
         serverInfos[0].locale = "ru";
         serverInfos[0].name = "Русскоязычный основной";
         return serverInfos;

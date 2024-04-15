@@ -156,7 +156,7 @@ input[type=button]:active,input[type=submit]:active,select option:active
 	color: gray;
 	padding-left:50px;
 	font-size: 1em;
-	background-image: url('/virtualpets-server/resources/images/achievement_background_gray.png');
+	background-image: url('/virtualpets-server-springframework/resources/images/achievement_background_gray.png');
 	background-repeat : no-repeat;
 	background-position: left top;
 	height : 100px;
@@ -166,7 +166,7 @@ input[type=button]:active,input[type=submit]:active,select option:active
 .achievementUnlocked {
 	padding-left:50px;
 	font-size: 1em;
-	background-image: url('/virtualpets-server/resources/images/achievement_background.png');
+	background-image: url('/virtualpets-server-springframework/resources/images/achievement_background.png');
 	background-repeat : no-repeat;
 	background-position: left top;
 	height : 100px;

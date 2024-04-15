@@ -633,4 +633,9 @@ public class PetServiceImpl implements PetService, ru.urvanov.virtualpets.shared
         return result;
     }
 
+    @Override
+    public void delete(Integer petId) {
+        petDao.delete(petId);
+    }
+
 }

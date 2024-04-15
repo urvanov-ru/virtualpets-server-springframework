@@ -15,11 +15,10 @@
     
     <spring:url value="/site/download" var="download_url" />
     <spring:url value="/site/home" var="home_url" />
-    <spring:url value="/site/play" var="play_url" />
     <spring:url value="/site/information" var="information_url" />
     <ul>
     <li><a href="${home_url}">${home_var}</a></li>
-    <li><a href="${play_url}">${play_var}</a></li>
+    <li><a href="http://virtualpets.urvanov.ru/virtualpets-client-js/">${play_var}</a></li>
     <li><a href="${information_url}">${information_var}</a></li>
     </ul>
 </div>

@@ -51,7 +51,7 @@ public class TownServiceImpl implements ru.urvanov.virtualpets.shared.service.To
                 .getRequestAttributes();
         SelectedPet selectedPet = (SelectedPet) sra.getAttribute("pet",
                 ServletRequestAttributes.SCOPE_SESSION);
-        Pet pet = petDao.findFullById(selectedPet.getId());
+        Pet pet = petDao.findByIdWithJournalEntriesAndAchievements(selectedPet.getId());
 
         Map<JournalEntryId, PetJournalEntry> mapJournalEntries = pet
                 .getJournalEntries();
@@ -65,7 +65,7 @@ public class TownServiceImpl implements ru.urvanov.virtualpets.shared.service.To
 
         petService.addAchievementIfNot(pet, AchievementId.LEAVE_ROOM);
         
-        petService.addExperience(petDao.findFullById(pet.getId()), 1);
+        petService.addExperience(pet, 1);
         
         GetTownInfoResult result = new GetTownInfoResult();
 

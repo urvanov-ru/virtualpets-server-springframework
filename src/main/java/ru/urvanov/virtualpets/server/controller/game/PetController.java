@@ -2,7 +2,9 @@ package ru.urvanov.virtualpets.server.controller.game;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import ru.urvanov.virtualpets.server.dao.domain.User;
 import ru.urvanov.virtualpets.shared.domain.CreatePetArg;
 import ru.urvanov.virtualpets.shared.domain.CreatePetResult;
 import ru.urvanov.virtualpets.shared.domain.DrinkArg;
@@ -52,6 +55,13 @@ public class PetController {
     public SelectPetResult select(@RequestBody SelectPetArg selectPetArg) throws DaoException,
             ServiceException {
         return petService.select(selectPetArg);
+    }
+    
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @RequestMapping(value = "delete/{petId}", method = RequestMethod.DELETE)
+    public void delete(@PathVariable Integer petId) throws DaoException,
+            ServiceException {
+        petService.delete(petId);
     }
     
     @ResponseStatus(HttpStatus.NO_CONTENT)

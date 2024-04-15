@@ -9,7 +9,7 @@ public interface PetDao {
     public Pet findById(Integer id);
     public Pet findFullById(Integer id);
     public void save(Pet pet);
-    public void delete(Integer id);
+    public void delete(Integer petId);
     
     public List<Pet> findByUserId(Integer userId);
     public Pet getReference(Integer id);
@@ -22,4 +22,5 @@ public interface PetDao {
     public Pet findByIdWithFullDrinks(Integer id);
     public Pet findByIdWithFullCloths(Integer id);
     public Pet findByIdWithFullBooks(Integer id);
+    public Pet findByIdWithJournalEntriesAndAchievements(Integer id);
 }

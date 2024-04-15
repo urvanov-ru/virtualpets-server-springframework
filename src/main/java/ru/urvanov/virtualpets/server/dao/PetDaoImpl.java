@@ -63,9 +63,9 @@ public class PetDaoImpl implements PetDao {
 
     @Override
     @Transactional
-    public void delete(Integer id) {
-        Pet pet = em.find(Pet.class, id);
-        em.remove(pet);
+    public void delete(Integer petId) {
+        Pet fullPet = this.findFullById(petId);
+        em.remove(fullPet);
     }
 
     @Override
@@ -211,6 +211,15 @@ public class PetDaoImpl implements PetDao {
                 Map.of(
                         "jakarta.persistence.fetchgraph",
                         em.getEntityGraph("pet.books"))
+                );
+    }
+
+    @Override
+    public Pet findByIdWithJournalEntriesAndAchievements(Integer id) {
+        return em.find(Pet.class, id,
+                Map.of(
+                        "jakarta.persistence.fetchgraph",
+                        em.getEntityGraph("pet.journalEntriesAndAchievements"))
                 );
     }
 }

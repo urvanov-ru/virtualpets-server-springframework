@@ -87,6 +87,12 @@ import jakarta.validation.constraints.Size;
 @NamedEntityGraph(name = "pet.books",
         attributeNodes = @NamedAttributeNode("books")
 )
+@NamedEntityGraph(name = "pet.journalEntriesAndAchievements",
+        attributeNodes = {
+                @NamedAttributeNode("journalEntries"),
+                @NamedAttributeNode("achievements")
+        }
+)
 public class Pet implements Serializable {
 
     private static final long serialVersionUID = 2699175148933987413L;

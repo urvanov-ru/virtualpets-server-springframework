@@ -31,7 +31,7 @@
         <security:intercept-url pattern="/rest/**"
             access="hasRole('ROLE_USER')" />
         <!-- Default to Spring MVC's CORS configuration -->
-        <security:cors /> 
+        <security:cors  /> 
         <security:csrf disabled="true"/>
         
     </security:http>
