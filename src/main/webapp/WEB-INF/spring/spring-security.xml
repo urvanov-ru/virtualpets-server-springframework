@@ -50,6 +50,7 @@
     
     
     <bean id="customSecurityFilter" class = "ru.urvanov.virtualpets.server.auth.CustomAuthenticationProcessingFilter">
+        <constructor-arg name="authenticationManager" ref = "authenticationManager" />
         <property name="securityContextRepository" ref="securityContextRepository" />
     </bean>
     

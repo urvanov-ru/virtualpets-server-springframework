@@ -7,10 +7,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import jakarta.persistence.NoResultException;
 import ru.urvanov.virtualpets.server.dao.PetDao;
 import ru.urvanov.virtualpets.server.dao.RoomDao;
 import ru.urvanov.virtualpets.server.dao.domain.Pet;
@@ -40,8 +42,7 @@ public class RoomDaoImplTest extends AbstractDaoImplTest {
     @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/RoomServiceImplTest.xls")
     @Test
     public void testFind2() {
-        Room room = roomDao.findByPetId(-1);
-        assertNull(room);
+        assertThrows(NoResultException.class, () -> roomDao.findByPetId(-1));
     }
     
     @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/RoomServiceImplTest.xls")
@@ -54,6 +55,8 @@ public class RoomDaoImplTest extends AbstractDaoImplTest {
         room.setBoxNewbie2(true);
         room.setBoxNewbie3(true);
         roomDao.save(room);
+        Room actual = roomDao.findByPetId(2);
+        assertNotNull(actual);
     }
     
     @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/RoomServiceImplTest.xls")

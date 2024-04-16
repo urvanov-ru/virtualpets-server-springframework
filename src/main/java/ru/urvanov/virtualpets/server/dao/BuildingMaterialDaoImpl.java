@@ -35,18 +35,17 @@ public class BuildingMaterialDaoImpl implements BuildingMaterialDao {
     @Transactional(readOnly = true)
     public BuildingMaterial findByCode(BuildingMaterialId code) {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-        CriteriaQuery<BuildingMaterial> criteriaQuery = criteriaBuilder.createQuery(BuildingMaterial.class);
-        Root<BuildingMaterial> rootBuildingMaterial = criteriaQuery.from(BuildingMaterial.class);
+        CriteriaQuery<BuildingMaterial> criteriaQuery
+                = criteriaBuilder.createQuery(BuildingMaterial.class);
+        Root<BuildingMaterial> rootBuildingMaterial = criteriaQuery
+                .from(BuildingMaterial.class);
         criteriaQuery.select(rootBuildingMaterial);
-        Predicate predicate = criteriaBuilder.equal(rootBuildingMaterial.get(BuildingMaterial_.id), code);
+        Predicate predicate = criteriaBuilder.equal(
+                rootBuildingMaterial.get(BuildingMaterial_.id), code);
         criteriaQuery.where(predicate);
-        TypedQuery<BuildingMaterial> query = em.createQuery(criteriaQuery);
-        List<BuildingMaterial> lst = query.getResultList();
-        if (lst.size() >= 1) {
-            return lst.get(0);
-        } else {
-            return null;
-        }
+        TypedQuery<BuildingMaterial> query
+                = em.createQuery(criteriaQuery);
+        return query.getSingleResult();
     }
 
     @Override
@@ -59,11 +58,13 @@ public class BuildingMaterialDaoImpl implements BuildingMaterialDao {
     @Transactional(readOnly = true)
     public List<BuildingMaterial> findAll() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<BuildingMaterial> criteriaQuery = cb.createQuery(BuildingMaterial.class);
-        
-        Root<BuildingMaterial> rootBuildingMaterial = criteriaQuery.from(BuildingMaterial.class);
+        CriteriaQuery<BuildingMaterial> criteriaQuery
+                = cb.createQuery(BuildingMaterial.class);
+        Root<BuildingMaterial> rootBuildingMaterial
+                = criteriaQuery.from(BuildingMaterial.class);
         criteriaQuery.select(rootBuildingMaterial);
-        TypedQuery<BuildingMaterial> query = em.createQuery(criteriaQuery);
+        TypedQuery<BuildingMaterial> query
+                = em.createQuery(criteriaQuery);
         return query.getResultList();
     }
 

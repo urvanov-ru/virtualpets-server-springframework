@@ -123,7 +123,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     private Room findOrCreateByPet(Pet pet) {
-        Room room = roomDao.findByPetId(pet.getId());
+        Room room = roomDao.findByPetIdOrNull(pet.getId());
         if (room == null) {
             room = new Room();
             room.setPetId(pet.getId());

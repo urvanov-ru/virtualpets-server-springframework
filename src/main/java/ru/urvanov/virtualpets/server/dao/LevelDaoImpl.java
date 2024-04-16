@@ -28,7 +28,8 @@ public class LevelDaoImpl implements LevelDao {
     @Override
     public List<Level> findAll() {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-        CriteriaQuery<Level> criteriaQuery = criteriaBuilder.createQuery(Level.class);
+        CriteriaQuery<Level> criteriaQuery
+                = criteriaBuilder.createQuery(Level.class);
         criteriaQuery.from(Level.class);
         TypedQuery<Level> typedQuery = em.createQuery(criteriaQuery);
         return typedQuery.getResultList();

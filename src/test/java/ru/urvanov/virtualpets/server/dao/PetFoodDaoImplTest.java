@@ -7,12 +7,14 @@ package ru.urvanov.virtualpets.server.dao;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import jakarta.persistence.NoResultException;
 import ru.urvanov.virtualpets.server.dao.FoodDao;
 import ru.urvanov.virtualpets.server.dao.PetDao;
 import ru.urvanov.virtualpets.server.dao.PetFoodDao;
@@ -84,7 +86,6 @@ public class PetFoodDaoImplTest extends AbstractDaoImplTest {
     @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/PetFoodServiceImplTest.xls")
     @Test
     public void testFindByPetIdAndFoodType2() {
-        PetFood food = petFoodDao.findByPetIdAndFoodType(13463456, FoodId.CHOCOLATE);
-        assertNull(food);
+        assertThrows(NoResultException.class, () -> petFoodDao.findByPetIdAndFoodType(13463456, FoodId.CHOCOLATE));
     }
 }

@@ -5,10 +5,12 @@ package ru.urvanov.virtualpets.server.dao;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import jakarta.persistence.NoResultException;
 import ru.urvanov.virtualpets.server.dao.RefrigeratorDao;
 import ru.urvanov.virtualpets.server.dao.domain.Refrigerator;
 import ru.urvanov.virtualpets.server.test.annotation.DataSets;
@@ -47,7 +49,6 @@ public class RefrigeratorDaoImplTest extends AbstractDaoImplTest {
     @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/RefrigeratorServiceImplTest.xls")
     @Test
     public void testFind4() {
-        Refrigerator refrigerator = refrigeratorDao.findFullById(-1);
-        assertNull(refrigerator);
+        assertThrows(NoResultException.class, () -> refrigeratorDao.findFullById(-1));
     }
 }

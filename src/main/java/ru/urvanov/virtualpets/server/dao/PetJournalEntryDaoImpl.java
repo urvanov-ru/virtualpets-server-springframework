@@ -10,6 +10,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import ru.urvanov.virtualpets.server.dao.domain.JournalEntryId;
 import ru.urvanov.virtualpets.server.dao.domain.PetJournalEntry;
@@ -50,17 +51,21 @@ public class PetJournalEntryDaoImpl implements PetJournalEntryDao {
                 .createQuery(PetJournalEntry.class);
         Root<PetJournalEntry> rootPetJournalEntry = criteriaQuery
                 .from(PetJournalEntry.class);
-        criteriaQuery.where(criteriaBuilder.and(criteriaBuilder.equal(
-                rootPetJournalEntry.get(PetJournalEntry_.journalEntry), code), criteriaBuilder.equal(
-                rootPetJournalEntry.get(PetJournalEntry_.pet).get(Pet_.id),
-                petId)));
+        Predicate journalEntryCodeEqual = criteriaBuilder.equal(
+                rootPetJournalEntry.get(PetJournalEntry_.journalEntry),
+                code);
+        Predicate petIdEqual = criteriaBuilder.equal(
+                rootPetJournalEntry.get(PetJournalEntry_.pet)
+                        .get(Pet_.id),
+                petId);
+        Predicate andWhere = criteriaBuilder.and(
+                journalEntryCodeEqual,
+                petIdEqual);
+        criteriaQuery.where(andWhere);
         criteriaQuery.select(rootPetJournalEntry);
-        TypedQuery<PetJournalEntry> typedQuery = em.createQuery(criteriaQuery);
-        List<PetJournalEntry> result = typedQuery.getResultList();
-        if (result.size() > 0)
-            return result.get(0);
-        else
-            return null;
+        TypedQuery<PetJournalEntry> typedQuery
+                = em.createQuery(criteriaQuery);
+        return typedQuery.getSingleResult();
     }
     
     @Transactional

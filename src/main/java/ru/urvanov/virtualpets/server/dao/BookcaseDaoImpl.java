@@ -1,7 +1,5 @@
 package ru.urvanov.virtualpets.server.dao;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -28,20 +26,16 @@ public class BookcaseDaoImpl implements BookcaseDao {
     @Transactional(readOnly = true)
     public Bookcase findFullById(Integer id) {
          CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-         CriteriaQuery<Bookcase> criteriaQuery =  criteriaBuilder.createQuery(Bookcase.class);
+         CriteriaQuery<Bookcase> criteriaQuery = criteriaBuilder
+                 .createQuery(Bookcase.class);
          Root<Bookcase> root = criteriaQuery.from(Bookcase.class);
          criteriaQuery.select(root);
-         Predicate predicate = criteriaBuilder.equal(root.get(Bookcase_.id), id);
+         Predicate predicate = criteriaBuilder.equal(
+                 root.get(Bookcase_.id), id);
          criteriaQuery.where(predicate);
-         TypedQuery<Bookcase> typedQuery = em.createQuery(criteriaQuery);
-         List<Bookcase> result = typedQuery.getResultList();
-         if (result.size() > 0) {
-             Bookcase bookcase = result.get(0);
-             log.debug("bookcaseCost size %n", bookcase.getBookcaseCost().size());
-             return bookcase;
-         } else {
-             return null;
-         }
+         TypedQuery<Bookcase> typedQuery = em.createQuery(
+                 criteriaQuery);
+         return typedQuery.getSingleResult();
     }
 
     @Override

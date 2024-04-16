@@ -1,6 +1,5 @@
 package ru.urvanov.virtualpets.server.dao;
 
-import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -40,19 +39,16 @@ public class RefrigeratorDaoImpl implements RefrigeratorDao {
         CriteriaQuery<Refrigerator> criteriaQuery = criteriaBuilder
                 .createQuery(Refrigerator.class);
         Root<Refrigerator> root = criteriaQuery.from(Refrigerator.class);
-        Predicate predicate = criteriaBuilder.equal(root.get(Refrigerator_.id),
+        Predicate predicate = criteriaBuilder.equal(
+                root.get(Refrigerator_.id),
                 id);
         criteriaQuery.where(predicate);
         TypedQuery<Refrigerator> query = em.createQuery(criteriaQuery);
-        List<Refrigerator> result = query.getResultList();
-        if (result.size() >= 1) {
-            Refrigerator refrigerator = result.get(0);
-            Map<BuildingMaterialId, RefrigeratorCost> refrigeratorCost = refrigerator.getRefrigeratorCost();
-            log.debug("refrigeratorCost size = %n", refrigeratorCost.size());
-            return refrigerator;
-        } else {
-            return null;
-        }
+        Refrigerator refrigerator = query.getSingleResult();
+        Map<BuildingMaterialId, RefrigeratorCost> refrigeratorCost
+                = refrigerator.getRefrigeratorCost();
+        log.debug("refrigeratorCost size = %n", refrigeratorCost.size());
+        return refrigerator;
     }
 
     @Override

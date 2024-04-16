@@ -91,11 +91,13 @@ public class PetDaoImpl implements PetDao {
         Root<Pet> rootPet = cq.from(Pet.class);
         cq.select(rootPet);
         Query query = em.createQuery(cq);
-        org.hibernate.query.Query hibernateQuery = ((org.hibernate.query.Query) query
+        org.hibernate.query.Query hibernateQuery
+                = ((org.hibernate.query.Query) query
                 .unwrap(org.hibernate.query.Query.class));
         hibernateQuery.setCacheMode(CacheMode.IGNORE);
         @SuppressWarnings("unchecked")
-        ScrollableResults<Pet> sr = hibernateQuery.scroll(ScrollMode.FORWARD_ONLY);
+        ScrollableResults<Pet> sr = hibernateQuery.scroll(
+                ScrollMode.FORWARD_ONLY);
         try {
             while (sr.next()) {
                 try {
@@ -128,14 +130,17 @@ public class PetDaoImpl implements PetDao {
     @Transactional(readOnly = true)
     public Long getPetNewJournalEntriesCount(Integer petId) {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-        CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
+        CriteriaQuery<Long> criteriaQuery
+                = criteriaBuilder.createQuery(Long.class);
         Root<Pet> rootPet = criteriaQuery.from(Pet.class);
-        //Fetch<Pet, PetJournalEntry> fetchPetJournalEntries = rootPet.fetch(Pet_.journalEntries);
-        MapJoin<Pet, JournalEntryId, PetJournalEntry> joinPetJournalEntries = rootPet.join(Pet_.journalEntries, JoinType.LEFT);
-        criteriaQuery.where(criteriaBuilder.and(criteriaBuilder.equal(joinPetJournalEntries.get(PetJournalEntry_.readed), false)),
+        MapJoin<Pet, JournalEntryId, PetJournalEntry> joinPetJournalEntries
+                = rootPet.join(Pet_.journalEntries, JoinType.LEFT);
+        criteriaQuery.where(criteriaBuilder.and(criteriaBuilder.equal(
+                joinPetJournalEntries.get(PetJournalEntry_.readed),
+                        false)),
                 criteriaBuilder.equal(rootPet.get(Pet_.id), petId));
-        
-        criteriaQuery.select(criteriaBuilder.count(joinPetJournalEntries.get(PetJournalEntry_.id)));
+        criteriaQuery.select(criteriaBuilder.count(
+                joinPetJournalEntries.get(PetJournalEntry_.id)));
         TypedQuery<Long> typedQuery = em.createQuery(criteriaQuery);
         Long count = typedQuery.getSingleResult();
         return count;
@@ -145,9 +150,11 @@ public class PetDaoImpl implements PetDao {
     @Transactional(readOnly = true)
     public List<Pet> findLastCreatedPets(int start, int limit) {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-        CriteriaQuery<Pet> criteriaQuery = criteriaBuilder.createQuery(Pet.class);
+        CriteriaQuery<Pet> criteriaQuery
+                = criteriaBuilder.createQuery(Pet.class);
         Root<Pet> rootPet = criteriaQuery.from(Pet.class);
-        Order orderCreatedDate = criteriaBuilder.desc(rootPet.get(Pet_.createdDate));
+        Order orderCreatedDate = criteriaBuilder.desc(
+                rootPet.get(Pet_.createdDate));
         criteriaQuery.orderBy(orderCreatedDate);
         TypedQuery<Pet> typedQuery = em.createQuery(criteriaQuery);
         typedQuery.setFirstResult(start);
@@ -159,7 +166,8 @@ public class PetDaoImpl implements PetDao {
     @Transactional(readOnly = true)
     public Pet findByIdWithBuildingMaterials(Integer id) {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-        CriteriaQuery<Pet> criteriaQuery = criteriaBuilder.createQuery(Pet.class);
+        CriteriaQuery<Pet> criteriaQuery
+                = criteriaBuilder.createQuery(Pet.class);
         Root<Pet> rootPet = criteriaQuery.from(Pet.class);
         rootPet.fetch(Pet_.buildingMaterials);
         TypedQuery<Pet> typedQuery = em.createQuery(criteriaQuery);
@@ -170,9 +178,11 @@ public class PetDaoImpl implements PetDao {
     @Transactional(readOnly = true)
     public Pet findByIdWithFullBuildingMaterials(Integer id) {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-        CriteriaQuery<Pet> criteriaQuery = criteriaBuilder.createQuery(Pet.class);
+        CriteriaQuery<Pet> criteriaQuery
+                = criteriaBuilder.createQuery(Pet.class);
         Root<Pet> rootPet = criteriaQuery.from(Pet.class);
-        rootPet.fetch(Pet_.buildingMaterials).fetch(PetBuildingMaterial_.buildingMaterial);
+        rootPet.fetch(Pet_.buildingMaterials)
+                .fetch(PetBuildingMaterial_.buildingMaterial);
         TypedQuery<Pet> typedQuery = em.createQuery(criteriaQuery);
         return typedQuery.getSingleResult();
     }

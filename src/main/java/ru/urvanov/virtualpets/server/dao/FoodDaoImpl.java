@@ -43,7 +43,9 @@ public class FoodDaoImpl implements FoodDao {
         
         Root<Food> rootFood = criteriaQuery.from(Food.class);
         criteriaQuery.select(rootFood);
-        criteriaQuery.orderBy(cb.asc(rootFood.get(Food_.refrigeratorLevel)), cb.asc(rootFood.get(Food_.refrigeratorOrder)));
+        criteriaQuery.orderBy(
+                cb.asc(rootFood.get(Food_.refrigeratorLevel)),
+                cb.asc(rootFood.get(Food_.refrigeratorOrder)));
         TypedQuery<Food> query = em.createQuery(criteriaQuery);
         return query.getResultList();
     }

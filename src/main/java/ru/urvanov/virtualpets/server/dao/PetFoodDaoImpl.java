@@ -6,6 +6,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.NonUniqueResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -35,10 +37,12 @@ public class PetFoodDaoImpl implements PetFoodDao {
     @Transactional(readOnly=true)
     public List<PetFood> findByPetId(Integer petId) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<PetFood> criteriaQuery = cb.createQuery(PetFood.class);
+        CriteriaQuery<PetFood> criteriaQuery
+                = cb.createQuery(PetFood.class);
         Root<PetFood> petFoodRoot = criteriaQuery.from(PetFood.class);
         criteriaQuery.select(petFoodRoot).distinct(true);
-        Predicate predicate = cb.equal(petFoodRoot.get(PetFood_.pet).get(Pet_.id),
+        Predicate predicate = cb.equal(
+                petFoodRoot.get(PetFood_.pet).get(Pet_.id),
                 petId);
         criteriaQuery.where(predicate);
         return em.createQuery(criteriaQuery).getResultList();
@@ -48,10 +52,12 @@ public class PetFoodDaoImpl implements PetFoodDao {
     @Transactional(readOnly=true)
     public List<PetFood> findFullByPetId(Integer petId) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<PetFood> criteriaQuery = cb.createQuery(PetFood.class);
+        CriteriaQuery<PetFood> criteriaQuery
+                = cb.createQuery(PetFood.class);
         Root<PetFood> petFoodRoot = criteriaQuery.from(PetFood.class);
         petFoodRoot.fetch(PetFood_.food, JoinType.LEFT);
-        Predicate predicate = cb.equal(petFoodRoot.get(PetFood_.pet).get(Pet_.id),
+        Predicate predicate = cb.equal(
+                petFoodRoot.get(PetFood_.pet).get(Pet_.id),
                 petId);
         criteriaQuery.where(predicate);
         return em.createQuery(criteriaQuery).getResultList();
@@ -77,21 +83,18 @@ public class PetFoodDaoImpl implements PetFoodDao {
     @Transactional(readOnly = true)
     public PetFood findByPetIdAndFoodType(Integer petId, FoodId foodType) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<PetFood> criteriaQuery = cb.createQuery(PetFood.class);
+        CriteriaQuery<PetFood> criteriaQuery
+                = cb.createQuery(PetFood.class);
         Root<PetFood> petFoodRoot = criteriaQuery.from(PetFood.class);
         criteriaQuery.select(petFoodRoot).distinct(true);
         
-        Predicate predicatePetId = cb.equal(petFoodRoot.get(PetFood_.pet).get(Pet_.id), petId);
-        Predicate predicateFoodType = cb.equal(petFoodRoot.get(PetFood_.food).get(Food_.id), foodType);
+        Predicate predicatePetId = cb.equal(
+                petFoodRoot.get(PetFood_.pet).get(Pet_.id), petId);
+        Predicate predicateFoodType = cb.equal(
+                petFoodRoot.get(PetFood_.food).get(Food_.id), foodType);
         Predicate predicate = cb.and(predicatePetId, predicateFoodType);
         criteriaQuery.where(predicate);
-        List<PetFood> foods = em.createQuery(criteriaQuery).getResultList();
-        if (foods.size() >= 1) {
-            return foods.get(0);
-        } else {
-            return null;
-        }
-        
+        return em.createQuery(criteriaQuery).getSingleResult();
     }
 
 }

@@ -40,7 +40,9 @@ public class DrinkDaoImpl implements DrinkDao {
         
         Root<Drink> rootDrink = criteriaQuery.from(Drink.class);
         criteriaQuery.select(rootDrink);
-        criteriaQuery.orderBy(cb.asc(rootDrink.get(Drink_.machineWithDrinksLevel)), cb.asc(rootDrink.get(Drink_.machineWithDrinksOrder)));
+        criteriaQuery.orderBy(
+                cb.asc(rootDrink.get(Drink_.machineWithDrinksLevel)),
+                cb.asc(rootDrink.get(Drink_.machineWithDrinksOrder)));
         TypedQuery<Drink> query = em.createQuery(criteriaQuery);
         return query.getResultList();
     }

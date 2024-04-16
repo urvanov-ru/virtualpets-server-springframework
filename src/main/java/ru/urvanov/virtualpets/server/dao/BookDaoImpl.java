@@ -31,10 +31,11 @@ public class BookDaoImpl implements BookDao {
     public List<Book> findAllOrderByBookcaseLevelAndBookcaseOrder() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Book> criteriaQuery = cb.createQuery(Book.class);
-        
         Root<Book> rootBook = criteriaQuery.from(Book.class);
         criteriaQuery.select(rootBook);
-        criteriaQuery.orderBy(cb.asc(rootBook.get(Book_.bookcaseLevel)), cb.asc(rootBook.get(Book_.bookcaseOrder)));
+        criteriaQuery.orderBy(
+                cb.asc(rootBook.get(Book_.bookcaseLevel)),
+                cb.asc(rootBook.get(Book_.bookcaseOrder)));
         TypedQuery<Book> query = em.createQuery(criteriaQuery);
         return query.getResultList();
     }

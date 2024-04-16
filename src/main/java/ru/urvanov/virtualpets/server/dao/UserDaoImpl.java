@@ -41,15 +41,11 @@ public class UserDaoImpl implements UserDao {
     @Override
     @Transactional(readOnly = true)
     public User findByLogin(String login) {
-        Query query = em.createNamedQuery("findByLogin");
+        TypedQuery<User> query = em.createNamedQuery(
+                "findByLogin",
+                User.class);
         query.setParameter("login", login);
-        @SuppressWarnings("unchecked")
-        List<User> lst = query.getResultList();
-        if (lst.size() == 0) {
-            return null;
-        } else {
-            return lst.get(0);
-        }
+        return query.getSingleResult();
     }
     
     @SuppressWarnings("unchecked")
@@ -103,12 +99,7 @@ public class UserDaoImpl implements UserDao {
         criteriaQuery.select(root);
         Predicate predicate = cb.equal(root.get(User_.unid), unid);
         criteriaQuery.where(predicate);
-        List<User> lst = em.createQuery(criteriaQuery).getResultList();
-        if (lst.size() == 0) {
-            return null;
-        } else {
-            return lst.get(0);
-        }
+        return em.createQuery(criteriaQuery).getSingleResult();
     }
 
     @Override
@@ -118,16 +109,15 @@ public class UserDaoImpl implements UserDao {
         CriteriaQuery<User> criteriaQuery = cb.createQuery(User.class);
         Root<User> root = criteriaQuery.from(User.class);
         criteriaQuery.select(root);
-        Predicate predicate1 = cb.equal(root.get(User_.recoverPasswordKey), recoverKey);
-        Predicate predicate2 = cb.lessThan(root.get(User_.recoverPasswordValid), OffsetDateTime.now(clock));
+        Predicate predicate1 = cb.equal(
+                root.get(User_.recoverPasswordKey),
+                recoverKey);
+        Predicate predicate2 = cb.lessThan(
+                root.get(User_.recoverPasswordValid),
+                OffsetDateTime.now(clock));
         Predicate predicate = cb.and(predicate1, predicate2);
         criteriaQuery.where(predicate);
-        List<User> lst = em.createQuery(criteriaQuery).getResultList();
-        if (lst.size() == 0) {
-            return null;
-        } else {
-            return lst.get(0);
-        }
+        return em.createQuery(criteriaQuery).getSingleResult();
     }
 
     @Override

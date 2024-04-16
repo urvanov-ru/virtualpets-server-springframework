@@ -3,6 +3,8 @@ package ru.urvanov.virtualpets.server.dao;
 import java.util.List;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.NonUniqueResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -36,20 +38,17 @@ public class MachineWithDrinksDaoImpl implements MachineWithDrinksDao {
     @Transactional(readOnly = true)
     public MachineWithDrinks findFullById(Integer id) {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-        CriteriaQuery<MachineWithDrinks> criteriaQuery = criteriaBuilder.createQuery(MachineWithDrinks.class);
-        Root<MachineWithDrinks> root = criteriaQuery.from(MachineWithDrinks.class);
+        CriteriaQuery<MachineWithDrinks> criteriaQuery
+                = criteriaBuilder.createQuery(MachineWithDrinks.class);
+        Root<MachineWithDrinks> root
+                = criteriaQuery.from(MachineWithDrinks.class);
         criteriaQuery.select(root);
-        Predicate predicate = criteriaBuilder.equal(root.get(MachineWithDrinks_.id), id);
+        Predicate predicate = criteriaBuilder.equal(
+                root.get(MachineWithDrinks_.id), id);
         criteriaQuery.where(predicate);
-        TypedQuery<MachineWithDrinks> typedQuery = em.createQuery(criteriaQuery);
-        List<MachineWithDrinks> result = typedQuery.getResultList();
-        if (result.size() > 0) {
-            MachineWithDrinks machineWithDrinks = result.get(0);
-            log.debug("drinkCost.size = %n", machineWithDrinks.getMachineWithDrinksCost().size());
-            return machineWithDrinks;
-        } else {
-            return null;
-        }
+        TypedQuery<MachineWithDrinks> typedQuery
+                = em.createQuery(criteriaQuery);
+        return typedQuery.getSingleResult();
     }
 
     @Override
