@@ -28,17 +28,17 @@ public class RoomDaoImpl implements RoomDao {
     @Override
     @Transactional(readOnly = true)
     public Room findByPetId(Integer petId) {
-        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder(); // (1)
         CriteriaQuery<Room> criteriaQuery
-                = criteriaBuilder.createQuery(Room.class);
-        Root<Room> rootRoom = criteriaQuery.from(Room.class);
-        criteriaQuery.select(rootRoom);
+                = criteriaBuilder.createQuery(Room.class); // (2)
+        Root<Room> rootRoom = criteriaQuery.from(Room.class); // (3)
+        criteriaQuery.select(rootRoom); // (4)
         Predicate predicate = criteriaBuilder.equal(
                 rootRoom.get(Room_.petId),
-                petId);
-        criteriaQuery.where(predicate);
-        TypedQuery<Room> query = em.createQuery(criteriaQuery);
-        return query.getSingleResult();
+                petId); // (5)
+        criteriaQuery.where(predicate); // (6)
+        TypedQuery<Room> query = em.createQuery(criteriaQuery); // (7)
+        return query.getSingleResult(); // (8)
     }
     
     @Override
