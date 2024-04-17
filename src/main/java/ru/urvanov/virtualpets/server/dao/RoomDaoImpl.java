@@ -67,18 +67,19 @@ public class RoomDaoImpl implements RoomDao {
     @Override
     @Transactional(readOnly = true)
     public long existsByPetId(Integer petId) {
-        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder(); // (1)
         CriteriaQuery<Long> criteriaQuery
-                = criteriaBuilder.createQuery(Long.class);
-        Root<Room> rootRoom = criteriaQuery.from(Room.class);
-        Expression<Long> count = criteriaBuilder.count(rootRoom.get(Room_.petId));
-        criteriaQuery.select(count);
+                = criteriaBuilder.createQuery(Long.class);  // (2)
+        Root<Room> rootRoom = criteriaQuery.from(Room.class);  // (3)
+        Expression<Long> count = criteriaBuilder
+                .count(rootRoom.get(Room_.petId));  // (4)
+        criteriaQuery.select(count);  // (5)
         Predicate predicate = criteriaBuilder.equal(
                 rootRoom.get(Room_.petId),
-                petId);
-        criteriaQuery.where(predicate);
-        TypedQuery<Long> query = em.createQuery(criteriaQuery);
-        return query.getSingleResult();
+                petId);  // (6)
+        criteriaQuery.where(predicate); // (7)
+        TypedQuery<Long> query = em.createQuery(criteriaQuery); // (8)
+        return query.getSingleResult(); // (9)
     }
 
     @Override
