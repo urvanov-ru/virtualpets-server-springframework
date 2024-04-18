@@ -8,12 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Root;
 import ru.urvanov.virtualpets.server.dao.domain.Drink;
 import ru.urvanov.virtualpets.server.dao.domain.DrinkId;
-import ru.urvanov.virtualpets.server.dao.domain.Drink_;
 
 @Repository(value="drinkDao")
 public class DrinkDaoImpl implements DrinkDao {
@@ -35,16 +31,10 @@ public class DrinkDaoImpl implements DrinkDao {
     @Override
     @Transactional(readOnly = true)
     public List<Drink> findAllOrderByMachineWithDrinksLevelAndMachineWithDrinksOrder() {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Drink> criteriaQuery = cb.createQuery(Drink.class);
-        
-        Root<Drink> rootDrink = criteriaQuery.from(Drink.class);
-        criteriaQuery.select(rootDrink);
-        criteriaQuery.orderBy(
-                cb.asc(rootDrink.get(Drink_.machineWithDrinksLevel)),
-                cb.asc(rootDrink.get(Drink_.machineWithDrinksOrder)));
-        TypedQuery<Drink> query = em.createQuery(criteriaQuery);
-        return query.getResultList();
+        TypedQuery<Drink> namedQuery = em.createNamedQuery(
+                "Drink.findAllOrderByMachineWithDrinksLevelAndMachineWithDrinksOrder",
+                Drink.class);
+        return namedQuery.getResultList();
     }
 
 }

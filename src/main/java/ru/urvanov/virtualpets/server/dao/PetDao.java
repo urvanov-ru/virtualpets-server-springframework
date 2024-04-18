@@ -6,21 +6,26 @@ import ru.urvanov.virtualpets.server.dao.domain.Pet;
 
 public interface PetDao {
     
-    public Pet findById(Integer id);
-    public Pet findFullById(Integer id);
-    public void save(Pet pet);
-    public void delete(Integer petId);
+    Pet findById(Integer id);
+    Pet findFullById(Integer id);
+    void save(Pet pet);
+    void delete(Integer petId);
     
-    public List<Pet> findByUserId(Integer userId);
-    public Pet getReference(Integer id);
-    public void updatePetsTask();
-    public Long getPetNewJournalEntriesCount(Integer petId);
-    public List<Pet> findLastCreatedPets(int start, int limit);
-    public Pet findByIdWithBuildingMaterials(Integer id);
-    public Pet findByIdWithFullBuildingMaterials(Integer id);
-    public Pet findByIdWithFullFoods(Integer id);
-    public Pet findByIdWithFullDrinks(Integer id);
-    public Pet findByIdWithFullCloths(Integer id);
-    public Pet findByIdWithFullBooks(Integer id);
-    public Pet findByIdWithJournalEntriesAndAchievements(Integer id);
+    List<Pet> findByUserId(Integer userId);
+    Pet getReference(Integer id);
+    void updatePetsTask();
+    Long getPetNewJournalEntriesCount(Integer petId);
+    List<Pet> findLastCreatedPets(int start, int limit);
+    Pet findByIdWithBuildingMaterials(Integer id);
+    Pet findByIdWithFullBuildingMaterials(Integer id);
+    Pet findByIdWithFullFoods(Integer id);
+    Pet findByIdWithFullDrinks(Integer id);
+    Pet findByIdWithFullCloths(Integer id);
+    Pet findByIdWithFullBooks(Integer id);
+    Pet findByIdWithJournalEntriesAndAchievements(Integer id);
+    
+    Pet findByIdWithBooksAndJournalEntriesAndBuildingMaterials(Integer id);
+    Pet findByIdWithFoodsAndJournalEntriesAndBuildingMaterials(Integer id);
+    Pet findByIdWithDrinksAndJournalEntriesAndBuildingMaterialsAndAchievements(
+            Integer id);
 }

@@ -5,9 +5,13 @@ import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityResult;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FieldResult;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedNativeQuery;
+import jakarta.persistence.SqlResultSetMapping;
 import jakarta.persistence.Table;
 
 /**
@@ -15,6 +19,33 @@ import jakarta.persistence.Table;
  */
 @Entity
 @Table(name = "drink")
+@SqlResultSetMapping(
+        name = "Drink.defaultMapping",
+        entities = {
+                @EntityResult(entityClass = Drink.class,
+                        fields = {
+                                @FieldResult(name = "id", column = "id"),
+                                @FieldResult(name = "machineWithDrinksLevel", column = "machine_with_drinks_id"),
+                                @FieldResult(name = "machineWithDrinksOrder", column = "machine_with_drinks_order"),
+                                @FieldResult(name = "hiddenObjectsGameDropRate", column = "hidden_objects_game_drop_rate")
+                        })
+        }
+)
+@NamedNativeQuery(
+        name = "Drink.findAllOrderByMachineWithDrinksLevelAndMachineWithDrinksOrder",
+        query = """
+                SELECT
+                    d.id,
+                    d.machine_with_drinks_id,
+                    d.machine_with_drinks_order,
+                    d.hidden_objects_game_drop_rate
+                FROM drink d
+                ORDER BY d.machine_with_drinks_id,
+                    d.machine_with_drinks_order
+        """,
+        resultSetMapping = "Drink.defaultMapping"
+        
+        )
 public class Drink implements Serializable {
 
     private static final long serialVersionUID = -5407671889327194327L;

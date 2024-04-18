@@ -60,7 +60,7 @@ public class RoomDaoImpl implements RoomDao {
         } else if (rooms.size() > 1) {
             throw new NonUniqueResultException();
         } else {
-            throw new NoResultException();
+            return null;
         }
     }
     

@@ -87,6 +87,28 @@ import jakarta.validation.constraints.Size;
 @NamedEntityGraph(name = "pet.books",
         attributeNodes = @NamedAttributeNode("books")
 )
+@NamedEntityGraph(name = "pet.booksAndJournalEntriesAndBuildingMaterials",
+        attributeNodes = {
+                @NamedAttributeNode("books"),
+                @NamedAttributeNode("journalEntries"),
+                @NamedAttributeNode("buildingMaterials")
+        }
+)
+@NamedEntityGraph(name = "pet.foodsAndJournalEntriesAndBuildingMaterials",
+        attributeNodes = {
+                @NamedAttributeNode("foods"),
+                @NamedAttributeNode("journalEntries"),
+                @NamedAttributeNode("buildingMaterials")
+        }
+)
+@NamedEntityGraph(name = "pet.drinksAndJournalEntriesAndBuildingMaterialsAndAchievements",
+        attributeNodes = {
+                @NamedAttributeNode("drinks"),
+                @NamedAttributeNode("journalEntries"),
+                @NamedAttributeNode("buildingMaterials"),
+                @NamedAttributeNode("achievements")
+        }
+)
 @NamedEntityGraph(name = "pet.journalEntriesAndAchievements",
         attributeNodes = {
                 @NamedAttributeNode("journalEntries"),

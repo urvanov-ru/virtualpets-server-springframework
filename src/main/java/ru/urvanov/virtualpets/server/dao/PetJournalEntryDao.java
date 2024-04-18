@@ -8,7 +8,7 @@ import ru.urvanov.virtualpets.server.dao.domain.PetJournalEntry;
 public interface PetJournalEntryDao {
     List<PetJournalEntry> findLastByPetId(Integer petId, Integer count);
 
-    PetJournalEntry findByPetIdAndJournalEntryCode(Integer petId,
+    long countByPetIdAndJournalEntryCode(Integer petId,
             JournalEntryId code);
 
     void save(PetJournalEntry petJournalEntry);

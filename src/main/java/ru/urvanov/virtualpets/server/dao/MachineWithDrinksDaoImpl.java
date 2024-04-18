@@ -9,6 +9,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
@@ -42,6 +43,8 @@ public class MachineWithDrinksDaoImpl implements MachineWithDrinksDao {
                 = criteriaBuilder.createQuery(MachineWithDrinks.class);
         Root<MachineWithDrinks> root
                 = criteriaQuery.from(MachineWithDrinks.class);
+        root.fetch(MachineWithDrinks_.machineWithDrinksCost,
+                JoinType.LEFT);
         criteriaQuery.select(root);
         Predicate predicate = criteriaBuilder.equal(
                 root.get(MachineWithDrinks_.id), id);
@@ -54,6 +57,21 @@ public class MachineWithDrinksDaoImpl implements MachineWithDrinksDao {
     @Override
     public MachineWithDrinks getReference(Integer id) {
         return em.getReference(MachineWithDrinks.class, id);
+    }
+
+    @Override
+    public List<MachineWithDrinks> findAllFull() {
+        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+        CriteriaQuery<MachineWithDrinks> criteriaQuery
+                = criteriaBuilder.createQuery(MachineWithDrinks.class);
+        Root<MachineWithDrinks> root
+                = criteriaQuery.from(MachineWithDrinks.class);
+        root.fetch(MachineWithDrinks_.machineWithDrinksCost,
+                JoinType.LEFT);
+        criteriaQuery.select(root);
+        TypedQuery<MachineWithDrinks> typedQuery
+                = em.createQuery(criteriaQuery);
+        return typedQuery.getResultList();
     }
 
 }

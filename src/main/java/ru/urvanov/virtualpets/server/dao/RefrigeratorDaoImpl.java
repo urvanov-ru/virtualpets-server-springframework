@@ -1,6 +1,6 @@
 package ru.urvanov.virtualpets.server.dao;
 
-import java.util.Map;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,11 +12,10 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
-import ru.urvanov.virtualpets.server.dao.domain.BuildingMaterialId;
 import ru.urvanov.virtualpets.server.dao.domain.Refrigerator;
-import ru.urvanov.virtualpets.server.dao.domain.RefrigeratorCost;
 import ru.urvanov.virtualpets.server.dao.domain.Refrigerator_;
 
 @Repository(value = "refrigeratorDao")
@@ -39,21 +38,30 @@ public class RefrigeratorDaoImpl implements RefrigeratorDao {
         CriteriaQuery<Refrigerator> criteriaQuery = criteriaBuilder
                 .createQuery(Refrigerator.class);
         Root<Refrigerator> root = criteriaQuery.from(Refrigerator.class);
+        root.fetch(Refrigerator_.refrigeratorCost);
         Predicate predicate = criteriaBuilder.equal(
                 root.get(Refrigerator_.id),
                 id);
         criteriaQuery.where(predicate);
         TypedQuery<Refrigerator> query = em.createQuery(criteriaQuery);
         Refrigerator refrigerator = query.getSingleResult();
-        Map<BuildingMaterialId, RefrigeratorCost> refrigeratorCost
-                = refrigerator.getRefrigeratorCost();
-        log.debug("refrigeratorCost size = %n", refrigeratorCost.size());
         return refrigerator;
     }
 
     @Override
     public Refrigerator getReference(Integer id) {
         return em.getReference(Refrigerator.class, id);
+    }
+
+    @Override
+    public List<Refrigerator> findAllFull() {
+        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+        CriteriaQuery<Refrigerator> criteriaQuery = criteriaBuilder
+                .createQuery(Refrigerator.class);
+        Root<Refrigerator> root = criteriaQuery.from(Refrigerator.class);
+        root.fetch(Refrigerator_.refrigeratorCost, JoinType.LEFT);
+        TypedQuery<Refrigerator> query = em.createQuery(criteriaQuery);
+        return query.getResultList();
     }
 
 }

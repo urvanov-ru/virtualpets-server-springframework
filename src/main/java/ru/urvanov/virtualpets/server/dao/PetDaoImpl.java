@@ -21,6 +21,7 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.MapJoin;
 import jakarta.persistence.criteria.Order;
+import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import ru.urvanov.virtualpets.server.dao.domain.JournalEntryId;
 import ru.urvanov.virtualpets.server.dao.domain.Pet;
@@ -169,7 +170,11 @@ public class PetDaoImpl implements PetDao {
         CriteriaQuery<Pet> criteriaQuery
                 = criteriaBuilder.createQuery(Pet.class);
         Root<Pet> rootPet = criteriaQuery.from(Pet.class);
-        rootPet.fetch(Pet_.buildingMaterials);
+        rootPet.fetch(Pet_.buildingMaterials, JoinType.LEFT);
+        criteriaQuery.select(rootPet);
+        Predicate predicate = criteriaBuilder
+                .equal(rootPet.get(Pet_.id), id);
+        criteriaQuery.where(predicate);
         TypedQuery<Pet> typedQuery = em.createQuery(criteriaQuery);
         return typedQuery.getSingleResult();
     }
@@ -181,8 +186,13 @@ public class PetDaoImpl implements PetDao {
         CriteriaQuery<Pet> criteriaQuery
                 = criteriaBuilder.createQuery(Pet.class);
         Root<Pet> rootPet = criteriaQuery.from(Pet.class);
-        rootPet.fetch(Pet_.buildingMaterials)
-                .fetch(PetBuildingMaterial_.buildingMaterial);
+        rootPet.fetch(Pet_.buildingMaterials, JoinType.LEFT)
+                .fetch(PetBuildingMaterial_.buildingMaterial,
+                        JoinType.LEFT);
+        criteriaQuery.select(rootPet);
+        Predicate predicate = criteriaBuilder
+                .equal(rootPet.get(Pet_.id), id);
+        criteriaQuery.where(predicate);
         TypedQuery<Pet> typedQuery = em.createQuery(criteriaQuery);
         return typedQuery.getSingleResult();
     }
@@ -235,4 +245,35 @@ public class PetDaoImpl implements PetDao {
                                 "pet.journalEntriesAndAchievements"))
                 );
     }
+
+    @Override
+    public Pet findByIdWithBooksAndJournalEntriesAndBuildingMaterials(
+            Integer id) {
+        return em.find(Pet.class, id,
+                Map.of(
+                        "jakarta.persistence.fetchgraph",
+                        em.getEntityGraph("pet.booksAndJournalEntriesAndBuildingMaterials"))
+                );
+    }
+
+    @Override
+    public Pet findByIdWithFoodsAndJournalEntriesAndBuildingMaterials(
+            Integer id) {
+        return em.find(Pet.class, id,
+                Map.of(
+                        "jakarta.persistence.fetchgraph",
+                        em.getEntityGraph("pet.foodsAndJournalEntriesAndBuildingMaterials"))
+                );
+    }
+
+    @Override
+    public Pet findByIdWithDrinksAndJournalEntriesAndBuildingMaterialsAndAchievements(
+            Integer id) {
+        return em.find(Pet.class, id,
+                Map.of(
+                        "jakarta.persistence.fetchgraph",
+                        em.getEntityGraph("pet.drinksAndJournalEntriesAndBuildingMaterialsAndAchievements"))
+                );
+    }
+
 }

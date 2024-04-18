@@ -322,7 +322,7 @@ public class RoomServiceImpl implements RoomService {
                 .getRequestAttributes();
         SelectedPet selectedPet = (SelectedPet) sra.getAttribute("pet",
                 ServletRequestAttributes.SCOPE_SESSION);
-        Pet pet = petDao.findFullById(selectedPet.getId());
+        Pet pet = petDao.findByIdWithFoodsAndJournalEntriesAndBuildingMaterials(selectedPet.getId());
         Room room = roomDao.findByPetId(pet.getId());
         if (!pet.getJournalEntries().containsKey(JournalEntryId.BUILD_REFRIGERATOR)) {
             throw new ServiceException("No now.");
@@ -415,7 +415,7 @@ public class RoomServiceImpl implements RoomService {
                 .getRequestAttributes();
         SelectedPet selectedPet = (SelectedPet) sra.getAttribute("pet",
                 ServletRequestAttributes.SCOPE_SESSION);
-        Pet pet = petDao.findFullById(selectedPet.getId());
+        Pet pet = petDao.findByIdWithBooksAndJournalEntriesAndBuildingMaterials(selectedPet.getId());
         Room room = roomDao.findByPetId(pet.getId());
         if (!pet.getJournalEntries()
                 .containsKey(JournalEntryId.BUILD_BOOKCASE)) {
@@ -501,7 +501,7 @@ public class RoomServiceImpl implements RoomService {
                 .getRequestAttributes();
         SelectedPet selectedPet = (SelectedPet) sra.getAttribute("pet",
                 ServletRequestAttributes.SCOPE_SESSION);
-        Pet pet = petDao.findFullById(selectedPet.getId());
+        Pet pet = petDao.findByIdWithDrinksAndJournalEntriesAndBuildingMaterialsAndAchievements(selectedPet.getId());
         Room room = roomDao.findByPetId(pet.getId());
         if (!pet.getJournalEntries()
                 .containsKey(JournalEntryId.BUILD_MACHINE_WITH_DRINKS)) {
@@ -567,10 +567,8 @@ public class RoomServiceImpl implements RoomService {
             ServiceException {
         RoomBuildMenuCosts roomBuildMenuCosts = new RoomBuildMenuCosts();
         List<Map<ru.urvanov.virtualpets.shared.domain.BuildingMaterialType, Integer>> refrigeratorCosts = new ArrayList<Map<ru.urvanov.virtualpets.shared.domain.BuildingMaterialType, Integer>>();
-        Refrigerator refrigerator = null;
-        int index = 1;
-        while ((refrigerator = refrigeratorDao.findFullById(index)) != null) {
-            index++;
+        List<Refrigerator> refrigerators = refrigeratorDao.findAllFull();
+        for (Refrigerator refrigerator : refrigerators) {
             Map<ru.urvanov.virtualpets.shared.domain.BuildingMaterialType, Integer> map = new HashMap<ru.urvanov.virtualpets.shared.domain.BuildingMaterialType, Integer>();
             for (Entry<BuildingMaterialId, RefrigeratorCost> entry : refrigerator
                     .getRefrigeratorCost().entrySet()) {
@@ -585,10 +583,8 @@ public class RoomServiceImpl implements RoomService {
         roomBuildMenuCosts.setRefrigeratorCosts(refrigeratorCosts);
 
         List<Map<ru.urvanov.virtualpets.shared.domain.BuildingMaterialType, Integer>> bookcaseCosts = new ArrayList<Map<ru.urvanov.virtualpets.shared.domain.BuildingMaterialType, Integer>>();
-        Bookcase bookcase = null;
-        index = 1;
-        while ((bookcase = bookcaseDao.findFullById(index)) != null) {
-            index++;
+        List<Bookcase> bookcases = bookcaseDao.findAllFullById();
+        for (Bookcase bookcase : bookcases) {
             Map<ru.urvanov.virtualpets.shared.domain.BuildingMaterialType, Integer> map = new HashMap<ru.urvanov.virtualpets.shared.domain.BuildingMaterialType, Integer>();
             for (Entry<BuildingMaterialId, BookcaseCost> entry : bookcase
                     .getBookcaseCost().entrySet()) {
@@ -603,12 +599,10 @@ public class RoomServiceImpl implements RoomService {
         roomBuildMenuCosts.setBookcaseCosts(bookcaseCosts);
 
         List<Map<ru.urvanov.virtualpets.shared.domain.BuildingMaterialType, Integer>> drinkCosts = new ArrayList<Map<ru.urvanov.virtualpets.shared.domain.BuildingMaterialType, Integer>>();
-        MachineWithDrinks drink = null;
-        index = 1;
-        while ((drink = machineWithDrinksDao.findFullById(index)) != null) {
-            index++;
+        List<MachineWithDrinks> machineWithDrinksList = machineWithDrinksDao.findAllFull();
+        for (MachineWithDrinks machineWithDrinks : machineWithDrinksList) {
             Map<ru.urvanov.virtualpets.shared.domain.BuildingMaterialType, Integer> map = new HashMap<ru.urvanov.virtualpets.shared.domain.BuildingMaterialType, Integer>();
-            for (Entry<BuildingMaterialId, MachineWithDrinksCost> entry : drink
+            for (Entry<BuildingMaterialId, MachineWithDrinksCost> entry : machineWithDrinks
                     .getMachineWithDrinksCost().entrySet()) {
                 map.put(conversionService
                         .convert(
@@ -683,10 +677,10 @@ public class RoomServiceImpl implements RoomService {
                 .getRequestAttributes();
         SelectedPet pet = (SelectedPet) sra.getAttribute("pet",
                 ServletRequestAttributes.SCOPE_SESSION);
-        PetJournalEntry petJournalEntry = petJournalEntryDao
-                .findByPetIdAndJournalEntryCode(pet.getId(),
+        long count =  petJournalEntryDao
+                .countByPetIdAndJournalEntryCode(pet.getId(),
                         JournalEntryId.OPEN_NEWBIE_BOXES);
-        if (petJournalEntry == null) {
+        if (count == 0) {
             Pet fullPet = petDao.findFullById(pet.getId());
             PetJournalEntry newPetJournalEntry = new PetJournalEntry();
             newPetJournalEntry.setCreatedAt(OffsetDateTime.now(clock));

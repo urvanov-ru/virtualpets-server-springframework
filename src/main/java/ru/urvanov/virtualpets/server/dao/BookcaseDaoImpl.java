@@ -1,5 +1,7 @@
 package ru.urvanov.virtualpets.server.dao;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -10,6 +12,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import ru.urvanov.virtualpets.server.dao.domain.Bookcase;
@@ -29,6 +32,7 @@ public class BookcaseDaoImpl implements BookcaseDao {
          CriteriaQuery<Bookcase> criteriaQuery = criteriaBuilder
                  .createQuery(Bookcase.class);
          Root<Bookcase> root = criteriaQuery.from(Bookcase.class);
+         root.fetch(Bookcase_.bookcaseCost, JoinType.LEFT);
          criteriaQuery.select(root);
          Predicate predicate = criteriaBuilder.equal(
                  root.get(Bookcase_.id), id);
@@ -42,6 +46,19 @@ public class BookcaseDaoImpl implements BookcaseDao {
     @Transactional(readOnly = true)
     public Bookcase findById(Integer id) {
         return em.find(Bookcase.class, id);
+    }
+
+    @Override
+    public List<Bookcase> findAllFullById() {
+        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+        CriteriaQuery<Bookcase> criteriaQuery = criteriaBuilder
+                .createQuery(Bookcase.class);
+        Root<Bookcase> root = criteriaQuery.from(Bookcase.class);
+        root.fetch(Bookcase_.bookcaseCost, JoinType.LEFT);
+        criteriaQuery.select(root);
+        TypedQuery<Bookcase> typedQuery = em.createQuery(
+                criteriaQuery);
+        return typedQuery.getResultList();
     }
 
 

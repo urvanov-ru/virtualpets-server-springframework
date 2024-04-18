@@ -10,6 +10,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import ru.urvanov.virtualpets.server.dao.domain.JournalEntryId;
@@ -44,11 +45,11 @@ public class PetJournalEntryDaoImpl implements PetJournalEntryDao {
 
     @Override
     @Transactional(readOnly = true)
-    public PetJournalEntry findByPetIdAndJournalEntryCode(Integer petId,
+    public long countByPetIdAndJournalEntryCode(Integer petId,
             JournalEntryId code) {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-        CriteriaQuery<PetJournalEntry> criteriaQuery = criteriaBuilder
-                .createQuery(PetJournalEntry.class);
+        CriteriaQuery<Long> criteriaQuery = criteriaBuilder
+                .createQuery(Long.class);
         Root<PetJournalEntry> rootPetJournalEntry = criteriaQuery
                 .from(PetJournalEntry.class);
         Predicate journalEntryCodeEqual = criteriaBuilder.equal(
@@ -62,8 +63,9 @@ public class PetJournalEntryDaoImpl implements PetJournalEntryDao {
                 journalEntryCodeEqual,
                 petIdEqual);
         criteriaQuery.where(andWhere);
-        criteriaQuery.select(rootPetJournalEntry);
-        TypedQuery<PetJournalEntry> typedQuery
+        Expression<Long> count = criteriaBuilder.count(rootPetJournalEntry);
+        criteriaQuery.select(count);
+        TypedQuery<Long> typedQuery
                 = em.createQuery(criteriaQuery);
         return typedQuery.getSingleResult();
     }
