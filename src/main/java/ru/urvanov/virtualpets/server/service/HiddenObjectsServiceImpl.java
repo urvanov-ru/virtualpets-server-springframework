@@ -413,7 +413,7 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsService {
         for (HiddenObjectsPlayer player : players) {
             if (player != null) {
                 int score = player.getScore();
-                FoodId foodType = FoodId.DRY_FOOD;
+                FoodId foodId = FoodId.DRY_FOOD;
                 String clothId = null;
                 BuildingMaterialId buildingMaterialType = null;
                 String bookId = null;
@@ -429,7 +429,7 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsService {
                                 .getMachineWithDrinks();
                         Bookcase bookcase = room.getBookcase();
                         if (refrigerator != null) {
-                            foodType = calculateFoodDrop(random, refrigerator.getId()).getId();
+                            foodId = calculateFoodDrop(random, refrigerator.getId()).getId();
                         }
                         if (random.nextInt(100) < 100) {
                             clothId = calculateClothDrop(random).getId();
@@ -447,7 +447,7 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsService {
                 }
                 HiddenObjectsReward reward = new HiddenObjectsReward();
 
-                reward.setFood(foodType);
+                reward.setFood(foodId);
 
                 reward.setBuildingMaterialType(buildingMaterialType);
                 reward.setDrinkType(drinkType);
@@ -455,14 +455,14 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsService {
                 player.setReward(reward);
 
                 Pet fullPet = petDao.findFullById(player.getPetId());
-                if (!fullPet.getFoods().containsKey(foodType)) {
+                if (!fullPet.getFoods().containsKey(foodId)) {
                     PetFood food = new PetFood();
                     food.setPet(fullPet);
-                    food.setFood(foodDao.getReference(foodType));
+                    food.setFood(foodDao.getReference(foodId));
                     food.setFoodCount(1);
-                    fullPet.getFoods().put(foodType, food);
+                    fullPet.getFoods().put(foodId, food);
                 } else {
-                    PetFood food = fullPet.getFoods().get(foodType);
+                    PetFood food = fullPet.getFoods().get(foodId);
                     food.setFoodCount(food.getFoodCount() + 1);
                 }
                 
