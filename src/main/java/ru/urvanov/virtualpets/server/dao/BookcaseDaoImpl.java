@@ -49,7 +49,7 @@ public class BookcaseDaoImpl implements BookcaseDao {
     }
 
     @Override
-    public List<Bookcase> findAllFullById() {
+    public List<Bookcase> findAllFull() {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
         CriteriaQuery<Bookcase> criteriaQuery = criteriaBuilder
                 .createQuery(Bookcase.class);

@@ -583,7 +583,7 @@ public class RoomServiceImpl implements RoomService {
         roomBuildMenuCosts.setRefrigeratorCosts(refrigeratorCosts);
 
         List<Map<ru.urvanov.virtualpets.shared.domain.BuildingMaterialType, Integer>> bookcaseCosts = new ArrayList<Map<ru.urvanov.virtualpets.shared.domain.BuildingMaterialType, Integer>>();
-        List<Bookcase> bookcases = bookcaseDao.findAllFullById();
+        List<Bookcase> bookcases = bookcaseDao.findAllFull();
         for (Bookcase bookcase : bookcases) {
             Map<ru.urvanov.virtualpets.shared.domain.BuildingMaterialType, Integer> map = new HashMap<ru.urvanov.virtualpets.shared.domain.BuildingMaterialType, Integer>();
             for (Entry<BuildingMaterialId, BookcaseCost> entry : bookcase
