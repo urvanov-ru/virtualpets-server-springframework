@@ -28,4 +28,7 @@ public interface PetDao {
     Pet findByIdWithFoodsAndJournalEntriesAndBuildingMaterials(Integer id);
     Pet findByIdWithDrinksAndJournalEntriesAndBuildingMaterialsAndAchievements(
             Integer id);
+    
+    Pet findByIdWithDrinksAndJournalEntriesAndAchievements(Integer id);
+    Pet findByIdWithFoodsJournalEntriesAndAchievements(Integer id);
 }

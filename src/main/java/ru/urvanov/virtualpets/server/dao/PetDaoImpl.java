@@ -276,4 +276,22 @@ public class PetDaoImpl implements PetDao {
                 );
     }
 
+    @Override
+    public Pet findByIdWithDrinksAndJournalEntriesAndAchievements(Integer id) {
+        return em.find(Pet.class, id,
+                Map.of(
+                        "jakarta.persistence.fetchgraph",
+                        em.getEntityGraph("pet.drinksAndJournalEntriesAndAchievements"))
+                );
+    }
+
+    @Override
+    public Pet findByIdWithFoodsJournalEntriesAndAchievements(Integer id) {
+        return em.find(Pet.class, id,
+                Map.of(
+                        "jakarta.persistence.fetchgraph",
+                        em.getEntityGraph("pet.FoodsAndJournalEntriesAndAchievements"))
+                );
+    }
+
 }
