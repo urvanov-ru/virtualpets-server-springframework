@@ -15,20 +15,9 @@
     http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
 
 
-    <beans profile="production">
-
-        <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
-            <property name="jndiName"
-                value="java:/comp/env/jdbc/virtualpetsDB" />
-        </bean>
-    </beans>
-
-
-    <beans profile="test-basic">
-        <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
-            <property name="jndiName"
-                value="java:/comp/env/jdbc/virtualpetsDB" />
-        </bean>
-    </beans>
+    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName"
+            value="java:/comp/env/jdbc/virtualpetsDB" />
+    </bean>
 
 </beans>

@@ -17,9 +17,7 @@
     <!-- Root Context: defines shared resources visible to all other web 
         components -->
 
-    <context:property-placeholder location="classpath:application.properties"
-        ignore-unresolvable="true" />
-
+    <import resource="properties.xml" />
     <import resource="servlet-jee.xml" />
     <import resource="servlet-tx.xml" />
 
@@ -151,8 +149,7 @@
             init-method = "initMethodFromXmlConfiguration"
             destroy-method = "destroyMethodFromXmlConfiguration" />
 
-    <context:property-placeholder location="classpath:mail.properties"
-        ignore-unresolvable="true" />
+    
 
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
         <property name="javaMailProperties">
@@ -182,5 +179,4 @@
         <task:scheduled ref="petService" method="updatePetsTask"
             fixed-delay="3600000" />
     </task:scheduled-tasks>
-
 </beans>

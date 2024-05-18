@@ -26,6 +26,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import jakarta.annotation.PostConstruct;
 import ru.urvanov.virtualpets.server.dao.UserDao;
 import ru.urvanov.virtualpets.server.dao.domain.User;
 import ru.urvanov.virtualpets.shared.domain.GetServersArg;
@@ -58,9 +59,17 @@ public class PublicServiceImpl implements PublicService {
     @Autowired
     private String version;
 
-    @Value("${application.url}")
-    private String applicationUrl;
+    @Value("${virtualpets-server-springframework.servers.url}")
+    private String serversUrl;
+    
+    @Value("${virtualpets-server-springframework.servers.name}")
+    private String serversName;
+    
+    @Value("${virtualpets-server-springframework.servers.locale}")
+    private String serversLocale;
 
+    private ServerInfo[] servers;
+    
     @Autowired
     private BCryptPasswordEncoder bcryptEncoder;
     
@@ -74,12 +83,7 @@ public class PublicServiceImpl implements PublicService {
         if (!version.equals(clientVersion)) {
             throw new IncompatibleVersionException("", version, clientVersion);
         }
-        ServerInfo[] serverInfos = new ServerInfo[1];
-        serverInfos[0] = new ServerInfo();
-        serverInfos[0].address = "http://virtualpets.urvanov.ru/virtualpets-server-springframework/site";
-        serverInfos[0].locale = "ru";
-        serverInfos[0].name = "Русскоязычный основной";
-        return serverInfos;
+        return servers;
     }
 
     @Override
@@ -148,7 +152,7 @@ public class PublicServiceImpl implements PublicService {
         SimpleMailMessage msg = new SimpleMailMessage(this.templateMessage);
         msg.setTo(email);
         msg.setText("Dear " + user.getName()
-                + ", follow this link to recover password " + applicationUrl
+                + ", follow this link to recover password " + argument.getHost()
                 + "/site/recoverPassword?recoverPasswordKey=" + key + " ");
         try {
             this.mailSender.send(msg);
@@ -212,36 +216,6 @@ public class PublicServiceImpl implements PublicService {
         return loginResult;
     }
 
-    /**
-     * @return the version
-     */
-    public String getVersion() {
-        return version;
-    }
-
-    /**
-     * @param version
-     *            the version to set
-     */
-    public void setVersion(String version) {
-        this.version = version;
-    }
-
-    /**
-     * @return the applicationUrl
-     */
-    public String getApplicationUrl() {
-        return applicationUrl;
-    }
-
-    /**
-     * @param applicationUrl
-     *            the applicationUrl to set
-     */
-    public void setApplicationUrl(String applicationUrl) {
-        this.applicationUrl = applicationUrl;
-    }
-
     @Override
     public ServerTechnicalInfo getServerTechnicalInfo()
             throws ServiceException, DaoException {
@@ -259,13 +233,24 @@ public class PublicServiceImpl implements PublicService {
             throw new ServiceException(ex);
         }
     }
-
-    public UserDao getUserDao() {
-        return userDao;
-    }
-
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
+    
+    @PostConstruct
+    public void init() {
+        String[] serversUrlArray = serversUrl.split("\\|");
+        String[] serversNameArray = serversName.split("\\|");
+        String[] serversLocaleArray = serversLocale.split("\\|");
+        
+        if ((serversUrlArray.length != serversNameArray.length)
+                || (serversNameArray.length != serversLocaleArray.length)) {
+            throw new IllegalStateException("application.servers.url, application.servers.name, application.servers.locale should have the same count of elements. Elements are splitted by '|'.");
+        }
+        servers = new ServerInfo[serversUrlArray.length];
+        for (int n = 0; n < serversUrlArray.length; n++) {
+            servers[n] = new ServerInfo();
+            servers[n].address = serversUrlArray[n];
+            servers[n].name = serversNameArray[n];
+            servers[n].locale = serversLocaleArray[n];
+        }
     }
 
 }
