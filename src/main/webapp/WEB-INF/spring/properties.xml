@@ -1,33 +1,33 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:context="http://www.springframework.org/schema/context"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="
+<?xml version = "1.0" encoding = "UTF-8"?>
+<beans xmlns = "http://www.springframework.org/schema/beans"
+    xmlns:context = "http://www.springframework.org/schema/context"
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation = "
     http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <beans profile="development">
+    <beans profile = "development">
         <context:property-placeholder
-            location="classpath:application_dev.properties"
-            file-encoding="utf-8"
-            ignore-unresolvable="true" />
+            location = "classpath:application_dev.properties"
+            file-encoding = "utf-8"
+            ignore-unresolvable = "true" />
         <context:property-placeholder
-            location="classpath:mail_dev.properties"
-            file-encoding="utf-8"
-            ignore-unresolvable="true" />
+            location = "classpath:mail_dev.properties"
+            file-encoding = "utf-8"
+            ignore-unresolvable = "true" />
     </beans>
 
-    <beans profile="production">
+    <beans profile = "production">
         <context:property-placeholder
-            location="classpath:application_prod.properties"
-            file-encoding="utf-8"
-            ignore-unresolvable="true" />
+            location = "classpath:application_prod.properties"
+            file-encoding = "utf-8"
+            ignore-unresolvable = "true" />
         <context:property-placeholder
-            location="classpath:mail_prod.properties"
-            file-encoding="utf-8"
-            ignore-unresolvable="true" />
+            location = "classpath:mail_prod.properties"
+            file-encoding = "utf-8"
+            ignore-unresolvable = "true" />
     </beans>
 
 </beans>
