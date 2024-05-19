@@ -57,15 +57,6 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     @Transactional(readOnly = true)
-    public User findByLoginAndPassword(String login, String password) {
-        Query query = em.createNamedQuery("findByLoginAndPassword");
-        query.setParameter("login", login);
-        query.setParameter("password", password);
-        return (User) query.getSingleResult();
-    }
-
-    @Override
-    @Transactional(readOnly = true)
     public User findById(Integer id) {
         return em.find(User.class, id);
     }
