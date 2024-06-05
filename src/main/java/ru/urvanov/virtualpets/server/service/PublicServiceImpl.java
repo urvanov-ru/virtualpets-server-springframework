@@ -60,13 +60,13 @@ public class PublicServiceImpl implements PublicService {
     private String version;
 
     @Value("${virtualpets-server-springframework.servers.url}")
-    private String serversUrl;
+    private String[] serversUrl;
     
     @Value("${virtualpets-server-springframework.servers.name}")
-    private String serversName;
+    private String[] serversName;
     
     @Value("${virtualpets-server-springframework.servers.locale}")
-    private String serversLocale;
+    private String[] serversLocale;
 
     private ServerInfo[] servers;
     
@@ -236,20 +236,17 @@ public class PublicServiceImpl implements PublicService {
     
     @PostConstruct
     public void init() {
-        String[] serversUrlArray = serversUrl.split("\\|");
-        String[] serversNameArray = serversName.split("\\|");
-        String[] serversLocaleArray = serversLocale.split("\\|");
-        
-        if ((serversUrlArray.length != serversNameArray.length)
-                || (serversNameArray.length != serversLocaleArray.length)) {
+
+        if ((serversUrl.length != serversName.length)
+                || (serversName.length != serversLocale.length)) {
             throw new IllegalStateException("application.servers.url, application.servers.name, application.servers.locale should have the same count of elements. Elements are splitted by '|'.");
         }
-        servers = new ServerInfo[serversUrlArray.length];
-        for (int n = 0; n < serversUrlArray.length; n++) {
+        servers = new ServerInfo[serversUrl.length];
+        for (int n = 0; n < serversUrl.length; n++) {
             servers[n] = new ServerInfo();
-            servers[n].address = serversUrlArray[n];
-            servers[n].name = serversNameArray[n];
-            servers[n].locale = serversLocaleArray[n];
+            servers[n].setUrl(serversUrl[n]);
+            servers[n].setName(serversName[n]);
+            servers[n].setLocale(serversLocale[n]);
         }
     }
 
