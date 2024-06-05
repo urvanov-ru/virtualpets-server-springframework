@@ -157,10 +157,14 @@
                 <prop key="mail.smtp.auth">true</prop>
             </props>
         </property>
-        <property name="host" value="${mail.host}" />
-        <property name="port" value="${mail.port}" />
-        <property name="username" value="${mail.username}" />
-        <property name="password" value="${mail.password}" />
+        <property name="host"
+            value="${virtualpets-server-springframework.mail.host}" />
+        <property name="port"
+            value="${virtualpets-server-springframework.mail.port}" />
+        <property name="username"
+           value="${virtualpets-server-springframework.mail.username}"/>
+        <property name="password"
+           value="${virtualpets-server-springframework.mail.password}"/>
     </bean>
     <!-- this is a template message that we can pre-load with default state -->
     <bean id="templateMessage" class="org.springframework.mail.SimpleMailMessage">
