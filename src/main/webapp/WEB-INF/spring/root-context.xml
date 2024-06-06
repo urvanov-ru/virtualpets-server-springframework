@@ -169,14 +169,14 @@
     </bean>
     <!-- this is a template message that we can pre-load with default state -->
     <bean id="templateMessage"
-            class="org.springframework.mail.SimpleMailMessage">
-        <property name="from"
-        value="${virtualpets-server-springframework.mail.from}" />
-        <property name="subject" value="Recover password" />
+            class = "org.springframework.mail.SimpleMailMessage">
+        <property name = "from"
+        value = "${virtualpets-server-springframework.mail.from}" />
+        <property name = "subject" value = "Recover password" />
     </bean>
 
     <context:component-scan
-            base-package="ru.urvanov.virtualpets.server.dao,
+            base-package = "ru.urvanov.virtualpets.server.dao,
                           ru.urvanov.virtualpets.server.service
             " />
 
