@@ -27,59 +27,59 @@
     <Manager pathname="SESSIONS.ser" />
     -->
     <Resource
-        auth="Container"
-        driverClassName="org.postgresql.Driver"
-        maxIdle="10"
-        maxTotal="20"
-        maxWaitMillis="-1"
-        name="jdbc/virtualpetsDB"
-        password="postgres"
-        type="javax.sql.DataSource"
-        url="jdbc:postgresql://localhost:5432/postgres"
-        username="postgres"/>
+        auth = "Container"
+        driverClassName = "org.postgresql.Driver"
+        maxIdle = "10"
+        maxTotal = "20"
+        maxWaitMillis = "-1"
+        name = "jdbc/virtualpetsDB"
+        password = "postgres"
+        type = "javax.sql.DataSource"
+        url = "jdbc:postgresql://localhost:5432/postgres"
+        username = "postgres"/>
     
     <Environment
-        name="virtualpets-server-springframework.servers.url"
-        value="http://virtualpets.urvanov.ru/virtualpets-server-springframework/site"
-        type="java.lang.String"
+        name = "virtualpets-server-springframework.servers.url"
+        value = "http://virtualpets.urvanov.ru/virtualpets-server-springframework/site"
+        type = "java.lang.String"
         override = "false" />
     <Environment
-        name="virtualpets-server-springframework.servers.name"
-        value="Русскоязычный основной"
-        type="java.lang.String"
+        name = "virtualpets-server-springframework.servers.name"
+        value = "Русскоязычный основной"
+        type = "java.lang.String"
         override = "false" />
     <Environment
-        name="virtualpets-server-springframework.servers.locale"
-        value="ru"
-        type="java.lang.String"
+        name = "virtualpets-server-springframework.servers.locale"
+        value = "ru"
+        type = "java.lang.String"
         override = "false" />
         
     <Environment
-        name="virtualpets-server-springframework.mail.server"
-        value="localhost"
-        type="java.lang.String"
+        name = "virtualpets-server-springframework.mail.server"
+        value = "localhost"
+        type = "java.lang.String"
         override = "false" />
     <Environment
-        name="virtualpets-server-springframework.mail.port"
-        value="8888"
-        type="java.lang.Integer"
+        name = "virtualpets-server-springframework.mail.port"
+        value = "8888"
+        type = "java.lang.Integer"
         override = "false" />
     <Environment
-        name="virtualpets-server-springframework.mail.username"
-        value="dddd"
-        type="java.lang.String"
+        name = "virtualpets-server-springframework.mail.username"
+        value = "dddd"
+        type = "java.lang.String"
         override = "false" />
     <Environment
-        name="virtualpets-server-springframework.mail.password"
-        value="ddddd"
-        type="java.lang.String"
+        name = "virtualpets-server-springframework.mail.password"
+        value = "ddddd"
+        type = "java.lang.String"
         override = "false" />
     
     
     <Parameter
-        name="spring.profiles.active"
-        value="production"
-        override="false"/>
+        name = "spring.profiles.active"
+        value = "production"
+        override = "false"/>
     
     
 </Context>
