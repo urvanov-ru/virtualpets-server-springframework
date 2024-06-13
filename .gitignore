@@ -12,3 +12,4 @@ dependency-reduced-pom.xml
 /.springBeans
 /.factoryPath
 /bin
+./virtualpets_server_springframework*.log
