@@ -10,11 +10,11 @@
 
   <appender name="FILE"
     class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <file>virtualpets.log</file>
+    <file>virtualpets_server_springframework.log</file>
     <rollingPolicy
         class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
         <!-- daily rollover -->
-        <fileNamePattern>virtualpets.%d{yyyy-MM-dd}.log</fileNamePattern>
+        <fileNamePattern>virtualpets_server_springframework.%d{yyyy-MM-dd}.log</fileNamePattern>
 
         <!-- Храним файлы логов 10 дней -->
         <maxHistory>10</maxHistory>
