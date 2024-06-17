@@ -11,7 +11,7 @@
 
     <div>
         <spring:message
-            code = "ru.urvanov.virtualpets.site.sign_in_with_facebook"
+            code = "virtualpets-server-springframework.site.sign_in_with_facebook"
             var = "sign_in_with_facebook_var" />
         <c:if test="${type == 'facebook'}">
             <spring:url value="/site/signin/facebook"
@@ -25,7 +25,7 @@
     </div>
     <div>
         <spring:message
-            code = "ru.urvanov.virtualpets.site.sign_in_with_vkontakte"
+            code = "virtualpets-server-springframework.site.sign_in_with_vkontakte"
             var = "sign_in_with_vkontakte_var" />
         <c:if test="${type == 'vkontakte'}">
             <spring:url value="/site/signin/vkontakte"
@@ -37,7 +37,7 @@
     </div>
     <div>
         <spring:message
-            code="ru.urvanov.virtualpets.site.sign_in_with_twitter"
+            code="virtualpets-server-springframework.site.sign_in_with_twitter"
             var="sign_in_with_twitter_var" />
         <c:if test="${type == 'twitter'}">
             <spring:url value="/site/signin/twitter"

@@ -10,83 +10,83 @@
     <jsp:directive.page session = "false" />
     <jsp:output omit-xml-declaration = "yes" />
     <spring:message
-        code = "ru.urvanov.virtualpets.site.information_brief"
+        code = "virtualpets-server-springframework.site.information_brief"
         var = "information_brief_var" />
     <spring:message
-        code = "ru.urvanov.virtualpets.site.food_list"
+        code = "virtualpets-server-springframework.site.food_list"
         var = "food_list_var" />
     <spring:message
-        code = "ru.urvanov.virtualpets.site.carrot"
+        code = "virtualpets-server-springframework.site.carrot"
         var = "carrot_var" />
     <spring:message
-        code = "ru.urvanov.virtualpets.site.dry_food"
+        code = "virtualpets-server-springframework.site.dry_food"
         var = "dry_food_var" />
     <spring:message
-        code = "ru.urvanov.virtualpets.site.fish"
+        code = "virtualpets-server-springframework.site.fish"
         var = "fish_var" />
     <spring:message
-        code = "ru.urvanov.virtualpets.site.ice_cream"
+        code = "virtualpets-server-springframework.site.ice_cream"
         var = "ice_cream_var" />
     <spring:message
-        code = "ru.urvanov.virtualpets.site.apple"
+        code = "virtualpets-server-springframework.site.apple"
         var = "apple_var" />
     <spring:message
-        code = "ru.urvanov.virtualpets.site.cabbage"
+        code = "virtualpets-server-springframework.site.cabbage"
         var = "cabbage_var" />
     <spring:message
-        code = "ru.urvanov.virtualpets.site.chocolate"
+        code = "virtualpets-server-springframework.site.chocolate"
         var = "chocolate_var" />
     <spring:message
-        code = "ru.urvanov.virtualpets.site.french_fries"
+        code = "virtualpets-server-springframework.site.french_fries"
         var = "french_fries_var" />
     <spring:message
-        code = "ru.urvanov.virtualpets.site.japanese_rolls"
+        code = "virtualpets-server-springframework.site.japanese_rolls"
         var = "japanese_rolls_var" />
     <spring:message
-        code = "ru.urvanov.virtualpets.site.pie"
+        code = "virtualpets-server-springframework.site.pie"
         var = "pie_var" />
     <spring:message
-        code = "ru.urvanov.virtualpets.site.potatoes"
+        code = "virtualpets-server-springframework.site.potatoes"
         var = "potatoes_var" />
     <spring:message
-        code = "ru.urvanov.virtualpets.site.sandwich"
+        code = "virtualpets-server-springframework.site.sandwich"
         var = "sandwich_var" />
     <spring:message
-        code = "ru.urvanov.virtualpets.site.banana"
+        code = "virtualpets-server-springframework.site.banana"
         var = "banana_var" />
     <spring:message
-        code = "ru.urvanov.virtualpets.site.watermelon"
+        code = "virtualpets-server-springframework.site.watermelon"
         var = "watermelon_var" />
     
     <spring:message
-        code = "ru.urvanov.virtualpets.site.building_materials_list"
+        code = "virtualpets-server-springframework.site.building_materials_list"
         var = "building_materials_list_var" />
     <spring:message
-        code = "ru.urvanov.virtualpets.site.timber"
+        code = "virtualpets-server-springframework.site.timber"
         var = "timber_var" />
     <spring:message
-        code = "ru.urvanov.virtualpets.site.board"
+        code = "virtualpets-server-springframework.site.board"
         var = "board_var" />
     <spring:message
-        code = "ru.urvanov.virtualpets.site.stone"
+        code = "virtualpets-server-springframework.site.stone"
         var = "stone_var" />
     <spring:message
-        code = "ru.urvanov.virtualpets.site.chip"
+        code = "virtualpets-server-springframework.site.chip"
         var = "chip_var" />
     <spring:message
-        code = "ru.urvanov.virtualpets.site.wire"
+        code = "virtualpets-server-springframework.site.wire"
         var = "wire_var" />
     <spring:message
-        code = "ru.urvanov.virtualpets.site.iron"
+        code = "virtualpets-server-springframework.site.iron"
         var = "iron_var" />
     <spring:message
-        code = "ru.urvanov.virtualpets.site.oil"
+        code = "virtualpets-server-springframework.site.oil"
         var = "oil_var" />
     <spring:message
-        code = "ru.urvanov.virtualpets.site.blue_crystal"
+        code = "virtualpets-server-springframework.site.blue_crystal"
         var = "blue_crystal_var" />
     <spring:message
-        code = "ru.urvanov.virtualpets.site.rubber"
+        code = "virtualpets-server-springframework.site.rubber"
         var = "rubber_var" />
     
     

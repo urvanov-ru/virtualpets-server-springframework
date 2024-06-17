@@ -10,11 +10,11 @@
         <spring:url value="/site/signout" var="signout_url" />
         <li><a href="${signout_url}">Sign Out</a></li>
     </ul>
-    <spring:message code = "ru.urvanov.virtualpets.site.name"
+    <spring:message code = "virtualpets-server-springframework.site.name"
         var = "name_label_var" />
-    <spring:message code = "ru.urvanov.virtualpets.site.email"
+    <spring:message code = "virtualpets-server-springframework.site.email"
         var = "email_label_var" />
-    <spring:message code = "ru.urvanov.virtualpets.site.birthdate"
+    <spring:message code = "virtualpets-server-springframework.site.birthdate"
         var = "birthdate_label_var" />
     <table>
         <tr>

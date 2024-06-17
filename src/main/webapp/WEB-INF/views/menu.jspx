@@ -9,21 +9,21 @@
     <jsp:directive.page session = "false" />
     <jsp:output omit-xml-declaration = "yes" />
     
-    <spring:message code = "ru.urvanov.virtualpets.site.home"
+    <spring:message code = "virtualpets-server-springframework.site.home"
         var = "home_var" />
-    <spring:message code = "ru.urvanov.virtualpets.site.play"
+    <spring:message code = "virtualpets-server-springframework.site.play"
         var = "play_var" />
-    <spring:message code = "ru.urvanov.virtualpets.site.information"
+    <spring:message code = "virtualpets-server-springframework.site.information"
         var = "information_var" />
     
     
     <spring:url value = "/site/download" var = "download_url" />
     <spring:url value = "/site/home" var = "home_url" />
     <spring:url value = "/site/information" var = "information_url" />
+    
     <ul>
     <li><a href = "${home_url}">${home_var}</a></li>
-    <li><a href = "http://virtualpets.urvanov.ru/virtualpets-client-js/">
-        ${play_var}</a></li>
+    <li><a href = "${menu_play_url}">${play_var}</a></li>
     <li><a href = "${information_url}">${information_var}</a></li>
     </ul>
 </div>

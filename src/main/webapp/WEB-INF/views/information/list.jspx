@@ -9,13 +9,13 @@
         pageEncoding = "UTF-8" />
     <jsp:directive.page session = "false" />
     <jsp:output omit-xml-declaration = "yes" />
-    <spring:message code = "ru.urvanov.virtualpets.site.game_help"
+    <spring:message code = "virtualpets-server-springframework.site.game_help"
         var = "game_help_var" />
-    <spring:message code = "ru.urvanov.virtualpets.site.server_info"
+    <spring:message code = "virtualpets-server-springframework.site.server_info"
         var = "server_info_var" />
-    <spring:message code = "ru.urvanov.virtualpets.site.information"
+    <spring:message code = "virtualpets-server-springframework.site.information"
         var = "information_var" />
-    <spring:message code = "ru.urvanov.virtualpets.site.statistics"
+    <spring:message code = "virtualpets-server-springframework.site.statistics"
         var = "statistics_var" />
     <H1>${information}</H1>
     <p>
