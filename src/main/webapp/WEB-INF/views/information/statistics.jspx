@@ -13,16 +13,16 @@
     <jsp:directive.page session="false" />
     <jsp:output omit-xml-declaration="yes" />
 
-    <spring:message code="records_in_page" var="records_in_page_var" />
-    <spring:message code="statistics_type" var="statistics_type_var" />
-    <spring:message code="show_statistics" var="show_statistics_var" />
-    <spring:message code="statistics" var="statistics_var" />
-    <spring:message code="last_registered_users"
+    <spring:message code="ru.urvanov.virtualpets.site.records_in_page" var="records_in_page_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.statistics_type" var="statistics_type_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.show_statistics" var="show_statistics_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.statistics" var="statistics_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.last_registered_users"
         var="last_registered_users_var" />
-    <spring:message code="last_created_pets" var="last_created_pets_var" />
-    <spring:message code="registration_date" var="registration_date_var" />
-    <spring:message code="name" var="name_var" />
-    <spring:message code="pets_count" var="pets_count_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.last_created_pets" var="last_created_pets_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.registration_date" var="registration_date_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.name" var="name_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.pets_count" var="pets_count_var" />
 
 
     <H1>${statistics_var}</H1>

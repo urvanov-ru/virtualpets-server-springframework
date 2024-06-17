@@ -9,20 +9,20 @@
 <jsp:directive.page session="false" />
 <jsp:output omit-xml-declaration="yes" />
 
-    <spring:message code="welcome_message1" var="welcome_message1_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.welcome_message1" var="welcome_message1_var" />
     ${welcome_message1_var}
     
-    <spring:message code="welcome_message2" var="welcome_message2_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.welcome_message2" var="welcome_message2_var" />
     ${welcome_message2_var}
     <spring:url value="/resources/images/screenshot001.jpg" var="screenshot001_url" />
     <img alt="screenshot001" src="${screenshot001_url}" width="457" height="351" />
     
-    <spring:message code="welcome_message3" var="welcome_message3_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.welcome_message3" var="welcome_message3_var" />
     ${welcome_message3_var}
     <spring:url value="/resources/images/screenshot002.jpg" var="screenshot002_url" />
     <img alt="screenshot002" src="${screenshot002_url}" width="457" height="351" />
     
-    <spring:message code="welcome_message4" var="welcome_message4_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.welcome_message4" var="welcome_message4_var" />
     ${welcome_message4_var}
     <spring:url value="/resources/images/screenshot003.jpg" var="screenshot003_url" />
     <img alt="screenshot003" src="${screenshot003_url}" width="457" height="351" />

@@ -8,33 +8,33 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" />
     <jsp:directive.page session="false" />
     <jsp:output omit-xml-declaration="yes" />
-    <spring:message code="information_brief" var="information_brief_var" />
-    <spring:message code="food_list" var="food_list_var" />
-    <spring:message code="carrot" var="carrot_var" />
-    <spring:message code="dry_food" var="dry_food_var" />
-    <spring:message code="fish" var="fish_var" />
-    <spring:message code="ice_cream" var="ice_cream_var" />
-    <spring:message code="apple" var="apple_var" />
-    <spring:message code="cabbage" var="cabbage_var" />
-    <spring:message code="chocolate" var="chocolate_var" />
-    <spring:message code="french_fries" var="french_fries_var" />
-    <spring:message code="japanese_rolls" var="japanese_rolls_var" />
-    <spring:message code="pie" var="pie_var" />
-    <spring:message code="potatoes" var="potatoes_var" />
-    <spring:message code="sandwich" var="sandwich_var" />
-    <spring:message code="banana" var="banana_var" />
-    <spring:message code="watermelon" var="watermelon_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.information_brief" var="information_brief_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.food_list" var="food_list_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.carrot" var="carrot_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.dry_food" var="dry_food_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.fish" var="fish_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.ice_cream" var="ice_cream_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.apple" var="apple_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.cabbage" var="cabbage_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.chocolate" var="chocolate_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.french_fries" var="french_fries_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.japanese_rolls" var="japanese_rolls_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.pie" var="pie_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.potatoes" var="potatoes_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.sandwich" var="sandwich_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.banana" var="banana_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.watermelon" var="watermelon_var" />
     
-    <spring:message code="building_materials_list" var="building_materials_list_var" />
-    <spring:message code="timber" var="timber_var" />
-    <spring:message code="board" var="board_var" />
-    <spring:message code="stone" var="stone_var" />
-    <spring:message code="chip" var="chip_var" />
-    <spring:message code="wire" var="wire_var" />
-    <spring:message code="iron" var="iron_var" />
-    <spring:message code="oil" var="oil_var" />
-    <spring:message code="blue_crystal" var="blue_crystal_var" />
-    <spring:message code="rubber" var="rubber_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.building_materials_list" var="building_materials_list_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.timber" var="timber_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.board" var="board_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.stone" var="stone_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.chip" var="chip_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.wire" var="wire_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.iron" var="iron_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.oil" var="oil_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.blue_crystal" var="blue_crystal_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.rubber" var="rubber_var" />
     
     
     <p>${information_brief_var}</p>

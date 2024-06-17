@@ -11,11 +11,11 @@
     <jsp:output omit-xml-declaration="yes" />
     <p>
     <div>
-        <spring:message code="pet_info" var="pet_info_var" />
-        <spring:message code="pet_name" var="pet_name_var" />
-        <spring:message code="pet_level" var="pet_level_var" />
-        <spring:message code="pet_experience" var="pet_experience_var" />
-        <spring:message code="achievements" var="achievements_var" />
+        <spring:message code="ru.urvanov.virtualpets.site.pet_info" var="pet_info_var" />
+        <spring:message code="ru.urvanov.virtualpets.site.pet_name" var="pet_name_var" />
+        <spring:message code="ru.urvanov.virtualpets.site.pet_level" var="pet_level_var" />
+        <spring:message code="ru.urvanov.virtualpets.site.pet_experience" var="pet_experience_var" />
+        <spring:message code="ru.urvanov.virtualpets.site.achievements" var="achievements_var" />
         <H1><c:out value="${pet_info_var}" /></H1>
         <p><c:out value="${pet_name_var}" /> : <c:out value="${pet.name}" /></p>
         <p><c:out value="${pet_level_var}" /> : <c:out value="${pet.level}" /></p>
@@ -25,13 +25,13 @@
             <c:if test="${info.unlocked}">
                 <div class="achievementUnlocked">
                     <p><spring:message
-                        code="ru.urvanov.virtualpets.client.localization.achievement.${info.code}"
+                        code="ru.urvanov.virtualpets.achievement.${info.code}"
                         var="achievementName" />
                     <c:out value="${achievementName}" />
                     </p>
                     <p>
                     <spring:message
-                        code="ru.urvanov.virtualpets.client.localization.achievement.${info.code}_DESCRIPTION"
+                        code="ru.urvanov.virtualpets.achievement.${info.code}_DESCRIPTION"
                         var="achievementNameDescription" />
                     <c:out value="${achievementNameDescription}" />
                     </p>
@@ -41,13 +41,13 @@
                 <div class="achievementLocked">
                     <p>
                     <spring:message
-                        code="ru.urvanov.virtualpets.client.localization.achievement.${info.code}"
+                        code="ru.urvanov.virtualpets.achievement.${info.code}"
                         var="achievementName" />
                     <c:out value="${achievementName}" /><p></p>
                     </p>
                     <p>
                     <spring:message
-                        code="ru.urvanov.virtualpets.client.localization.achievement.${info.code}_DESCRIPTION"
+                        code="ru.urvanov.virtualpets.achievement.${info.code}_DESCRIPTION"
                         var="achievementNameDescription" />
                     <c:out value="${achievementNameDescription}" />
                     </p>

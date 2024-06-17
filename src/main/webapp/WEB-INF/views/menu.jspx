@@ -8,9 +8,9 @@
     <jsp:directive.page session="false" />
     <jsp:output omit-xml-declaration="yes" />
     
-    <spring:message code="home" var="home_var" />
-    <spring:message code="play" var = "play_var" />
-    <spring:message code="information" var="information_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.home" var="home_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.play" var = "play_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.information" var="information_var" />
     
     
     <spring:url value="/site/download" var="download_url" />

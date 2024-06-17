@@ -6,7 +6,7 @@
         pageEncoding="UTF-8" />
     <jsp:directive.page session="false" />
     <jsp:output omit-xml-declaration="yes" />
-    <spring:message code="app_name" var="app_name_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.app_name" var="app_name_var" />
     <spring:url value="/resources/images/logo.jpg" var="logo_url" />
     <img alt="virtualpets logo" src="${logo_url}" width="500" height="100" />
     <H1>${app_name_var}</H1>

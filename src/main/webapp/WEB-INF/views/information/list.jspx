@@ -8,10 +8,10 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" />
     <jsp:directive.page session="false" />
     <jsp:output omit-xml-declaration="yes" />
-    <spring:message code="game_help" var="game_help_var" />
-    <spring:message code="server_info" var="server_info_var" />
-    <spring:message code="information" var="information_var" />
-    <spring:message code="statistics" var="statistics_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.game_help" var="game_help_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.server_info" var="server_info_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.information" var="information_var" />
+    <spring:message code="ru.urvanov.virtualpets.site.statistics" var="statistics_var" />
     <H1>${information}</H1>
     <p>
         <spring:url value="/site/information/gameHelp" var="game_help_url" />
