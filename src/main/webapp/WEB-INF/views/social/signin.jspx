@@ -10,7 +10,9 @@
     <jsp:directive.page pageEncoding="UTF-8" />
 
     <div>
-        <spring:message code="ru.urvanov.virtualpets.site.sign_in_with_facebook" var="sign_in_with_facebook_var" />
+        <spring:message
+            code = "ru.urvanov.virtualpets.site.sign_in_with_facebook"
+            var = "sign_in_with_facebook_var" />
         <c:if test="${type == 'facebook'}">
             <spring:url value="/site/signin/facebook"
                 var="facebook_signin_url" />
@@ -22,7 +24,9 @@
         </c:if>
     </div>
     <div>
-        <spring:message code="ru.urvanov.virtualpets.site.sign_in_with_vkontakte" var="sign_in_with_vkontakte_var" />
+        <spring:message
+            code = "ru.urvanov.virtualpets.site.sign_in_with_vkontakte"
+            var = "sign_in_with_vkontakte_var" />
         <c:if test="${type == 'vkontakte'}">
             <spring:url value="/site/signin/vkontakte"
                 var="vkontakte_signin_url" />
@@ -32,7 +36,9 @@
         </c:if>
     </div>
     <div>
-        <spring:message code="ru.urvanov.virtualpets.site.sign_in_with_twitter" var="sign_in_with_twitter_var" />
+        <spring:message
+            code="ru.urvanov.virtualpets.site.sign_in_with_twitter"
+            var="sign_in_with_twitter_var" />
         <c:if test="${type == 'twitter'}">
             <spring:url value="/site/signin/twitter"
                 var="twitter_signin_url" />
