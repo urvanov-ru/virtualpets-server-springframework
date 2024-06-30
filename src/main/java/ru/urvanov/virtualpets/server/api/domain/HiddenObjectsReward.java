@@ -2,24 +2,28 @@ package ru.urvanov.virtualpets.server.api.domain;
 
 import java.io.Serializable;
 
+import ru.urvanov.virtualpets.server.dao.domain.AchievementId;
+import ru.urvanov.virtualpets.server.dao.domain.BuildingMaterialId;
+import ru.urvanov.virtualpets.server.dao.domain.DrinkId;
+import ru.urvanov.virtualpets.server.dao.domain.FoodId;
+
 public class HiddenObjectsReward implements Serializable {
 
-    private static final long serialVersionUID = 7176544599291504383L;
-    private FoodType food;
+    private FoodId foodId;
     private String clothId;
     private LevelInfo levelInfo;
     private int experience;
-    private BuildingMaterialType buildingMaterialType;
-    private AchievementCode[] achievements;
+    private BuildingMaterialId buildingMaterialId;
+    private AchievementId[] achievements;
     private String bookId;
-    private DrinkType drinkType;
+    private DrinkId drinkId;
 
-    public FoodType getFood() {
-        return food;
+    public FoodId getFoodId() {
+        return foodId;
     }
 
-    public void setFood(FoodType food) {
-        this.food = food;
+    public void setFoodId(FoodId foodId) {
+        this.foodId = foodId;
     }
 
     public String getClothId() {
@@ -46,19 +50,20 @@ public class HiddenObjectsReward implements Serializable {
         this.experience = experience;
     }
 
-    public BuildingMaterialType getBuildingMaterialType() {
-        return buildingMaterialType;
+    public BuildingMaterialId getBuildingMaterialId() {
+        return buildingMaterialId;
     }
 
-    public void setBuildingMaterialType(BuildingMaterialType buildingMaterialType) {
-        this.buildingMaterialType = buildingMaterialType;
+    public void setBuildingMaterialId(
+            BuildingMaterialId buildingMaterialId) {
+        this.buildingMaterialId = buildingMaterialId;
     }
 
-    public AchievementCode[] getAchievements() {
+    public AchievementId[] getAchievements() {
         return achievements;
     }
 
-    public void setAchievements(AchievementCode[] achievements) {
+    public void setAchievements(AchievementId[] achievements) {
         this.achievements = achievements;
     }
 
@@ -70,13 +75,12 @@ public class HiddenObjectsReward implements Serializable {
         this.bookId = bookId;
     }
 
-    public DrinkType getDrinkType() {
-        return drinkType;
+    public DrinkId getDrinkId() {
+        return drinkId;
     }
 
-    public void setDrinkType(DrinkType drinkType) {
-        this.drinkType = drinkType;
+    public void setDrinkId(DrinkId drinkId) {
+        this.drinkId = drinkId;
     }
-    
 
 }

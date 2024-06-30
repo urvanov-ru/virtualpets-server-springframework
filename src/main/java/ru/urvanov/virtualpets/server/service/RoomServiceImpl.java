@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -106,20 +105,6 @@ public class RoomServiceImpl implements RoomApiService {
     
     @Autowired
     private Clock clock;
-    
-    /**
-     * @return the roomDao
-     */
-    public RoomDao getRoomDao() {
-        return roomDao;
-    }
-
-    /**
-     * @param roomDao the roomDao to set
-     */
-    public void setRoomDao(RoomDao roomDao) {
-        this.roomDao = roomDao;
-    }
 
     private Room findOrCreateByPet(Pet pet) {
         Room room = roomDao.findByPetIdOrNull(pet.getId());
@@ -166,14 +151,14 @@ public class RoomServiceImpl implements RoomApiService {
         if (bow != null) {
             result.setBowId(bow.getId());
         }
-        LevelInfo levelInfo = new LevelInfo();
-        result.setLevelInfo(levelInfo);
-        levelInfo.setLevel(pet.getLevel().getId());
-        levelInfo.setExperience(pet.getExperience());
-        Level nextLevelLeague = levelDao.findById(pet.getLevel().getId() + 1);
-        levelInfo.setMaxExperience(nextLevelLeague == null ? Integer.MAX_VALUE : nextLevelLeague.getExperience());
-        levelInfo.setMinExperience(pet.getLevel().getExperience());
         
+        Level nextLevelLeague = levelDao.findById(pet.getLevel().getId() + 1);
+        LevelInfo levelInfo = new LevelInfo(
+                pet.getLevel().getId(),
+                pet.getExperience(),
+                pet.getLevel().getExperience(),
+                nextLevelLeague == null ? Integer.MAX_VALUE : nextLevelLeague.getExperience());
+        result.setLevelInfo(levelInfo);
         
         result.setHaveJournal(pet.getJournalEntries().get(
                 JournalEntryId.WELCOME) != null);
@@ -213,12 +198,8 @@ public class RoomServiceImpl implements RoomApiService {
             result.setMachineWithDrinksY(room.getMachineWithDrinksY());
         }
         
-        List<AchievementId> listServerAchievements = petService.calculateAchievements(pet);
-        
-        List<ru.urvanov.virtualpets.server.api.domain.AchievementCode> listSharedAchievements = listServerAchievements.stream()
-                .map(ac -> conversionService.convert(ac, ru.urvanov.virtualpets.server.api.domain.AchievementCode.class))
-                .collect(Collectors.toList());
-        result.setAchievements(listSharedAchievements);
+        List<AchievementId> achievements = petService.calculateAchievements(pet);
+        result.setAchievements(achievements);
         logger.info("getRoomInfo finished.");
         return result;
     }
@@ -232,14 +213,13 @@ public class RoomServiceImpl implements RoomApiService {
                 .getRequestAttributes();
         SelectedPet selectedPet = (SelectedPet) sra.getAttribute("pet",
                 ServletRequestAttributes.SCOPE_SESSION);
-        OpenBoxNewbieResult result = new OpenBoxNewbieResult();
-        Map<ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType, Integer> map = new HashMap<ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType, Integer>();
+        
+        Map<BuildingMaterialId, Integer> map = new HashMap<BuildingMaterialId, Integer>();
         Random random = new Random();
-        map.put(ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType.TIMBER,
+        map.put(BuildingMaterialId.TIMBER,
                 1 + random.nextInt(2));
-        map.put(ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType.STONE,
+        map.put(BuildingMaterialId.STONE,
                 1 + random.nextInt(2));
-        result.setBuildingMaterials(map);
         Room room = roomDao.findByPetId(selectedPet.getId());
         boolean boxNewbie = false;
         switch (index) {
@@ -257,7 +237,7 @@ public class RoomServiceImpl implements RoomApiService {
             Pet pet = petDao.findFullById(selectedPet.getId());
             Map<BuildingMaterialId, PetBuildingMaterial> petBuildingMaterials = pet
                     .getBuildingMaterials();
-            for (Entry<ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType, Integer> entry : map
+            for (Entry<BuildingMaterialId, Integer> entry : map
                     .entrySet()) {
                 BuildingMaterialId buildingMaterialType = conversionService
                         .convert(entry.getKey(), BuildingMaterialId.class);
@@ -308,8 +288,7 @@ public class RoomServiceImpl implements RoomApiService {
         } else {
             throw new ServiceException("This box already opened.");
         }
-        result.setIndex(index);
-        return result;
+        return new OpenBoxNewbieResult(index, map);
     }
     
     @Override
@@ -347,8 +326,8 @@ public class RoomServiceImpl implements RoomApiService {
             throw new ServiceException(nepre.toString());
         }
         room.setRefrigerator(refrigerator);
-        room.setRefrigeratorX(arg.getX());
-        room.setRefrigeratorY(arg.getY());
+        room.setRefrigeratorX(arg.x());
+        room.setRefrigeratorY(arg.y());
         if (!pet.getJournalEntries().containsKey(JournalEntryId.EAT_SOMETHING)) {
             PetJournalEntry newPetJournalEntry = new PetJournalEntry();
             newPetJournalEntry.setCreatedAt(OffsetDateTime.now(clock));
@@ -376,8 +355,8 @@ public class RoomServiceImpl implements RoomApiService {
         if (room.getRefrigerator() == null) {
             throw new ServiceException("No refrigerator in your room.");
         }
-        room.setRefrigeratorX(arg.getX());
-        room.setRefrigeratorY(arg.getY());
+        room.setRefrigeratorX(arg.x());
+        room.setRefrigeratorY(arg.y());
     }
 
     @Override
@@ -435,8 +414,8 @@ public class RoomServiceImpl implements RoomApiService {
             throw new ServiceException(nepre);
         }
         room.setBookcase(bookcase);
-        room.setBookcaseX(arg.getX());
-        room.setBookcaseY(arg.getY());
+        room.setBookcaseX(arg.x());
+        room.setBookcaseY(arg.y());
         if (!pet.getJournalEntries().containsKey(JournalEntryId.READ_SOMETHING)) {
             PetJournalEntry newPetJournalEntry = new PetJournalEntry();
             newPetJournalEntry.setCreatedAt(OffsetDateTime.now(clock));
@@ -488,8 +467,8 @@ public class RoomServiceImpl implements RoomApiService {
         if (room.getBookcase() == null) {
             throw new ServiceException("No bookcase in your room.");
         }
-        room.setBookcaseX(arg.getX());
-        room.setBookcaseY(arg.getY());
+        room.setBookcaseX(arg.x());
+        room.setBookcaseY(arg.y());
     }
 
     @Override
@@ -529,8 +508,8 @@ public class RoomServiceImpl implements RoomApiService {
             throw new ServiceException(nepre);
         }
         room.setMachineWithDrinks(machineWithDrinks);
-        room.setMachineWithDrinksX(arg.getX());
-        room.setMachineWithDrinksY(arg.getY());
+        room.setMachineWithDrinksX(arg.x());
+        room.setMachineWithDrinksY(arg.y());
         if (!pet.getJournalEntries().containsKey(JournalEntryId.DRINK_SOMETHING)) {
             PetJournalEntry newPetJournalEntry = new PetJournalEntry();
             newPetJournalEntry.setCreatedAt(OffsetDateTime.now(clock));
@@ -557,56 +536,47 @@ public class RoomServiceImpl implements RoomApiService {
         if (room.getMachineWithDrinks() == null) {
             throw new ServiceException("No drink in your room.");
         }
-        room.setMachineWithDrinksX(arg.getX());
-        room.setMachineWithDrinksY(arg.getY());
+        room.setMachineWithDrinksX(arg.x());
+        room.setMachineWithDrinksY(arg.y());
     }
 
     @Override
     public RoomBuildMenuCosts getBuildMenuCosts() throws DaoException,
             ServiceException {
         RoomBuildMenuCosts roomBuildMenuCosts = new RoomBuildMenuCosts();
-        List<Map<ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType, Integer>> refrigeratorCosts = new ArrayList<Map<ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType, Integer>>();
+        List<Map<BuildingMaterialId, Integer>> refrigeratorCosts = new ArrayList<Map<BuildingMaterialId, Integer>>();
         List<Refrigerator> refrigerators = refrigeratorDao.findAllFull();
         for (Refrigerator refrigerator : refrigerators) {
-            Map<ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType, Integer> map = new HashMap<ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType, Integer>();
+            Map<BuildingMaterialId, Integer> map = new HashMap<BuildingMaterialId, Integer>();
             for (Entry<BuildingMaterialId, RefrigeratorCost> entry : refrigerator
                     .getRefrigeratorCost().entrySet()) {
-                map.put(conversionService
-                        .convert(
-                                entry.getKey(),
-                                ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType.class),
+                map.put(entry.getKey(),
                         entry.getValue().getCost());
             }
             refrigeratorCosts.add(map);
         }
         roomBuildMenuCosts.setRefrigeratorCosts(refrigeratorCosts);
 
-        List<Map<ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType, Integer>> bookcaseCosts = new ArrayList<Map<ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType, Integer>>();
+        List<Map<BuildingMaterialId, Integer>> bookcaseCosts = new ArrayList<Map<BuildingMaterialId, Integer>>();
         List<Bookcase> bookcases = bookcaseDao.findAllFull();
         for (Bookcase bookcase : bookcases) {
-            Map<ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType, Integer> map = new HashMap<ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType, Integer>();
+            Map<BuildingMaterialId, Integer> map = new HashMap<BuildingMaterialId, Integer>();
             for (Entry<BuildingMaterialId, BookcaseCost> entry : bookcase
                     .getBookcaseCost().entrySet()) {
-                map.put(conversionService
-                        .convert(
-                                entry.getKey(),
-                                ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType.class),
+                map.put(entry.getKey(),
                         entry.getValue().getCost());
             }
             bookcaseCosts.add(map);
         }
         roomBuildMenuCosts.setBookcaseCosts(bookcaseCosts);
 
-        List<Map<ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType, Integer>> drinkCosts = new ArrayList<Map<ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType, Integer>>();
+        List<Map<BuildingMaterialId, Integer>> drinkCosts = new ArrayList<Map<BuildingMaterialId, Integer>>();
         List<MachineWithDrinks> machineWithDrinksList = machineWithDrinksDao.findAllFull();
         for (MachineWithDrinks machineWithDrinks : machineWithDrinksList) {
-            Map<ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType, Integer> map = new HashMap<ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType, Integer>();
+            Map<BuildingMaterialId, Integer> map = new HashMap<BuildingMaterialId, Integer>();
             for (Entry<BuildingMaterialId, MachineWithDrinksCost> entry : machineWithDrinks
                     .getMachineWithDrinksCost().entrySet()) {
-                map.put(conversionService
-                        .convert(
-                                entry.getKey(),
-                                ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType.class),
+                map.put(entry.getKey(),
                         entry.getValue().getCost());
             }
             drinkCosts.add(map);
@@ -695,8 +665,6 @@ public class RoomServiceImpl implements RoomApiService {
             room.setBoxNewbie2(true);
             room.setBoxNewbie3(true);
         }
-        
-        
 
     }
 }

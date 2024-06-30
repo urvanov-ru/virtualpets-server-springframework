@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import ru.urvanov.virtualpets.server.dao.domain.AchievementId;
+
 public class GetRoomInfoResult implements Serializable {
 
     private static final long serialVersionUID = -9110703336298015250L;
@@ -33,7 +35,7 @@ public class GetRoomInfoResult implements Serializable {
     private boolean haveIndicators;
     private boolean haveToTownArrow;
     private LevelInfo levelInfo;
-    private List<AchievementCode> achievements = new ArrayList<>();
+    private List<AchievementId> achievements = new ArrayList<>();
     public int getMood() {
         return mood;
     }
@@ -184,10 +186,10 @@ public class GetRoomInfoResult implements Serializable {
     public void setLevelInfo(LevelInfo levelInfo) {
         this.levelInfo = levelInfo;
     }
-    public List<AchievementCode> getAchievements() {
+    public List<AchievementId> getAchievements() {
         return achievements;
     }
-    public void setAchievements(List<AchievementCode> achievements) {
+    public void setAchievements(List<AchievementId> achievements) {
         this.achievements = achievements;
     }
 

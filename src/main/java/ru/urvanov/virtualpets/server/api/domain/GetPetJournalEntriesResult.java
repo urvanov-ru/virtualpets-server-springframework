@@ -1,19 +1,6 @@
 package ru.urvanov.virtualpets.server.api.domain;
 
-import java.io.Serializable;
+import java.util.List;
 
-public class GetPetJournalEntriesResult implements Serializable {
-
-    private static final long serialVersionUID = -456191926816948470L;
-    
-    private PetJournalEntry[] entries;
-
-    public PetJournalEntry[] getEntries() {
-        return entries;
-    }
-
-    public void setEntries(PetJournalEntry[] entries) {
-        this.entries = entries;
-    }
-    
-}
+public record GetPetJournalEntriesResult(List<PetJournalEntry> entries) {
+};

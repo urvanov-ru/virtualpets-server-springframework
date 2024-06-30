@@ -1,7 +1,6 @@
 package ru.urvanov.virtualpets.server.service;
 
 import ru.urvanov.virtualpets.server.api.domain.CreatePetArg;
-import ru.urvanov.virtualpets.server.api.domain.CreatePetResult;
 import ru.urvanov.virtualpets.server.api.domain.DrinkArg;
 import ru.urvanov.virtualpets.server.api.domain.GetPetBooksResult;
 import ru.urvanov.virtualpets.server.api.domain.GetPetClothsResult;
@@ -13,17 +12,16 @@ import ru.urvanov.virtualpets.server.api.domain.PetListResult;
 import ru.urvanov.virtualpets.server.api.domain.SatietyArg;
 import ru.urvanov.virtualpets.server.api.domain.SavePetCloths;
 import ru.urvanov.virtualpets.server.api.domain.SelectPetArg;
-import ru.urvanov.virtualpets.server.api.domain.SelectPetResult;
 import ru.urvanov.virtualpets.server.dao.exception.DaoException;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 public interface PetApiService {
     PetListResult getUserPets() throws DaoException, ServiceException;
 
-    CreatePetResult create(CreatePetArg arg)
+    void create(CreatePetArg arg)
             throws DaoException, ServiceException;
 
-    SelectPetResult select(SelectPetArg arg)
+    void select(SelectPetArg arg)
             throws DaoException, ServiceException;
 
     void drink(DrinkArg arg) throws DaoException, ServiceException;

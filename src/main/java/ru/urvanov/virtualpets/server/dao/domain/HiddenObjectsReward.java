@@ -3,21 +3,21 @@ package ru.urvanov.virtualpets.server.dao.domain;
 import ru.urvanov.virtualpets.server.api.domain.LevelInfo;
 
 public class HiddenObjectsReward {
-    private FoodId food;
+    private FoodId foodId;
     private String clothId;
     private LevelInfo levelInfo;
     private int experience;
-    private BuildingMaterialId buildingMaterialType;
+    private BuildingMaterialId buildingMaterialId;
     private String bookId;
-    private DrinkId drinkType;
+    private DrinkId drinkId;
     private AchievementId[] achievements;
 
-    public FoodId getFood() {
-        return food;
+    public FoodId getFoodId() {
+        return foodId;
     }
 
-    public void setFood(FoodId food) {
-        this.food = food;
+    public void setFoodId(FoodId foodId) {
+        this.foodId = foodId;
     }
 
     public String getClothId() {
@@ -28,6 +28,13 @@ public class HiddenObjectsReward {
         this.clothId = clothId;
     }
 
+    public LevelInfo getLevelInfo() {
+        return levelInfo;
+    }
+
+    public void setLevelInfo(LevelInfo levelInfo) {
+        this.levelInfo = levelInfo;
+    }
 
     public int getExperience() {
         return experience;
@@ -37,28 +44,13 @@ public class HiddenObjectsReward {
         this.experience = experience;
     }
 
-    public LevelInfo getLevelInfo() {
-        return levelInfo;
+    public BuildingMaterialId getBuildingMaterialId() {
+        return buildingMaterialId;
     }
 
-    public void setLevelInfo(LevelInfo levelInfo) {
-        this.levelInfo = levelInfo;
-    }
-
-    public BuildingMaterialId getBuildingMaterialType() {
-        return buildingMaterialType;
-    }
-
-    public void setBuildingMaterialType(BuildingMaterialId buildingMaterialType) {
-        this.buildingMaterialType = buildingMaterialType;
-    }
-
-    public AchievementId[] getAchievements() {
-        return achievements;
-    }
-
-    public void setAchievements(AchievementId[] achievements) {
-        this.achievements = achievements;
+    public void setBuildingMaterialId(
+            BuildingMaterialId buildingMaterialId) {
+        this.buildingMaterialId = buildingMaterialId;
     }
 
     public String getBookId() {
@@ -69,12 +61,20 @@ public class HiddenObjectsReward {
         this.bookId = bookId;
     }
 
-    public DrinkId getDrinkType() {
-        return drinkType;
+    public DrinkId getDrinkId() {
+        return drinkId;
     }
 
-    public void setDrinkType(DrinkId drinkType) {
-        this.drinkType = drinkType;
+    public void setDrinkId(DrinkId drinkId) {
+        this.drinkId = drinkId;
+    }
+
+    public AchievementId[] getAchievements() {
+        return achievements;
+    }
+
+    public void setAchievements(AchievementId[] achievements) {
+        this.achievements = achievements;
     }
 
 }

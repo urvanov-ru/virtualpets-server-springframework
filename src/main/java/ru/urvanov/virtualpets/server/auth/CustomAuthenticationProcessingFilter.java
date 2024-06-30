@@ -50,8 +50,8 @@ public class CustomAuthenticationProcessingFilter extends AbstractAuthentication
         request.setAttribute("loginArg", creds);
         return getAuthenticationManager().authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        creds.getLogin(),
-                        creds.getPassword(),
+                        creds.login(),
+                        creds.password(),
                         Collections.emptyList()
                 ));
     }

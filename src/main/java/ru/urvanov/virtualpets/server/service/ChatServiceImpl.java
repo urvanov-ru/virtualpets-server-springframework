@@ -2,6 +2,7 @@ package ru.urvanov.virtualpets.server.service;
 
 import java.time.Clock;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,6 @@ import ru.urvanov.virtualpets.server.api.domain.ChatMessage;
 import ru.urvanov.virtualpets.server.api.domain.RefreshChatArg;
 import ru.urvanov.virtualpets.server.api.domain.RefreshChatResult;
 import ru.urvanov.virtualpets.server.api.domain.SendChatMessageArg;
-import ru.urvanov.virtualpets.server.api.domain.SendChatMessageResult;
 import ru.urvanov.virtualpets.server.dao.ChatDao;
 import ru.urvanov.virtualpets.server.dao.UserDao;
 import ru.urvanov.virtualpets.server.dao.domain.Chat;
@@ -52,7 +52,7 @@ public class ChatServiceImpl implements ChatApiService {
         userDao.save(user);
         
         
-        Integer id = arg.getLastChatMessageId();
+        Integer id = arg.lastChatMessageId();
         List<Chat> messages;
         if (id == null) {
             messages = chatDao.findLast(20, userId);
@@ -60,36 +60,34 @@ public class ChatServiceImpl implements ChatApiService {
             messages = chatDao.findFromId(id, userId);
         }
         
-        RefreshChatResult result = new RefreshChatResult();
-        result.setSuccess(true);
         
-        ChatMessage[] chatMessages = new ChatMessage[messages.size()];
-        int n = 0;
+        
+        List<ChatMessage> chatMessages = new ArrayList<>(messages.size());
         for(Chat c: messages) {
-            chatMessages[n] = new ChatMessage();
+            ChatMessage chatMessage = new ChatMessage();
             User addressee = c.getAddressee();
             if (addressee != null) {
-                chatMessages[n].setAddresseeId(addressee.getId());
-                chatMessages[n].setAddresseeName(addressee.getName());
+                chatMessage.setAddresseeId(addressee.getId());
+                chatMessage.setAddresseeName(addressee.getName());
             }
             User sender = c.getSender();
             if (sender != null) {
-                chatMessages[n].setSenderId(sender.getId());
-                chatMessages[n].setSenderName(sender.getName());
+                chatMessage.setSenderId(sender.getId());
+                chatMessage.setSenderName(sender.getName());
             }
-            chatMessages[n].setMessage(c.getMessage());
-            chatMessages[n].setSendTime(c.getSendTime());
-            chatMessages[n].setId(c.getId());
-            n++;
+            chatMessage.setMessage(c.getMessage());
+            chatMessage.setSendTime(c.getSendTime());
+            chatMessage.setId(c.getId());
+            chatMessages.add(chatMessage);
             }
         
-
-        if (chatMessages.length > 0) {
-            result.setLastChatMessageId(chatMessages[chatMessages.length-1].getId());
+        Integer lastChatMessageId;
+        if (!chatMessages.isEmpty()) {
+            lastChatMessageId = chatMessages.get(chatMessages.size() - 1).getId();
         } else {
-            result.setLastChatMessageId(arg.getLastChatMessageId());
+            lastChatMessageId = arg.lastChatMessageId();
         }
-        result.setChatMessages(chatMessages);
+        RefreshChatResult result = new RefreshChatResult(chatMessages, lastChatMessageId);
         return result;
     }
 
@@ -97,24 +95,20 @@ public class ChatServiceImpl implements ChatApiService {
      * @see ru.urvanov.virtualpets.shared.service.ChatService#sendMessage(ru.urvanov.virtualpets.shared.domain.SendChatMessageArg)
      */
     @Override
-    public SendChatMessageResult sendMessage(SendChatMessageArg arg)
+    public void sendMessage(SendChatMessageArg arg)
             throws DaoException, ServiceException {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
         User user = (User)authentication.getPrincipal();
         
         Chat chat = new Chat();
-        if (arg.getAddresseeId() != null) {
-            chat.setAddressee(userDao.getReference(arg.getAddresseeId()));
+        if (arg.addresseeId() != null) {
+            chat.setAddressee(userDao.getReference(arg.addresseeId()));
         }
-        chat.setMessage(arg.getMessage());
+        chat.setMessage(arg.message());
         chat.setSender(userDao.getReference(user.getId()));
         chat.setSendTime(OffsetDateTime.now(clock));
         chatDao.save(chat);
-        
-        SendChatMessageResult result = new SendChatMessageResult();
-        result.setSuccess(true);
-        return result;
     }
 
     public ChatDao getChatDao() {

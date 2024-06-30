@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -38,9 +37,6 @@ public class TownServiceImpl implements ru.urvanov.virtualpets.server.service.To
     private PetDao petDao;
 
     @Autowired
-    private ConversionService conversionService;
-    
-    @Autowired
     private Clock clock;
 
     @Override
@@ -67,35 +63,21 @@ public class TownServiceImpl implements ru.urvanov.virtualpets.server.service.To
         
         petService.addExperience(pet, 1);
         
-        GetTownInfoResult result = new GetTownInfoResult();
-
-        LevelInfo levelInfo = new LevelInfo();
-        result.setLevelInfo(levelInfo);
-        levelInfo.setLevel(pet.getLevel().getId());
-        levelInfo.setExperience(pet.getExperience());
+        int levelId = pet.getLevel().getId();
+        int experience = pet.getExperience();
         Level nextLevelLeague = levelDao
                 .findById(pet.getLevel().getId() + 1);
-        levelInfo.setMaxExperience(nextLevelLeague == null ? Integer.MAX_VALUE
-                : nextLevelLeague.getExperience());
-        levelInfo.setMinExperience(pet.getLevel().getExperience());
+        int maxExperience = nextLevelLeague == null ? Integer.MAX_VALUE
+                : nextLevelLeague.getExperience();
+        int minExperience = pet.getLevel().getExperience();
+        LevelInfo levelInfo = new LevelInfo(levelId, experience, minExperience, maxExperience);
 
-        List<AchievementId> listServerAchievements = petService
+        List<AchievementId> achievements = petService
                 .calculateAchievements(pet);
-        ru.urvanov.virtualpets.server.api.domain.AchievementCode[] listSharedAchievements = new ru.urvanov.virtualpets.server.api.domain.AchievementCode[listServerAchievements
-                .size()];
-        int n = 0;
-        for (AchievementId ac : listServerAchievements) {
-            listSharedAchievements[n] = conversionService
-                    .convert(
-                            ac,
-                            ru.urvanov.virtualpets.server.api.domain.AchievementCode.class);
-            n++;
-        }
-        result.setAchievements(listSharedAchievements);
 
-        result.setNewJournalEntriesCount(petService
-                .getPetNewJournalEntriesCount(pet.getId()));
-        return result;
+        long newJournalEntriesCount = petService
+                .getPetNewJournalEntriesCount(pet.getId());
+        return new GetTownInfoResult(newJournalEntriesCount, levelInfo, achievements);
     }
 
 }

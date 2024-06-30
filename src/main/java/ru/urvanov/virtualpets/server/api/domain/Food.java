@@ -1,7 +1,9 @@
 package ru.urvanov.virtualpets.server.api.domain;
 
+import ru.urvanov.virtualpets.server.dao.domain.FoodId;
+
 public record Food(
-        FoodType id,
+        FoodId id,
         int refrigeratorLevel,
         int refrigeratorOrder,
         int count) {}

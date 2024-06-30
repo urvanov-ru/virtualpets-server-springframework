@@ -2,7 +2,6 @@ package ru.urvanov.virtualpets.server.controller.game;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import ru.urvanov.virtualpets.server.api.domain.CreatePetArg;
-import ru.urvanov.virtualpets.server.api.domain.CreatePetResult;
 import ru.urvanov.virtualpets.server.api.domain.DrinkArg;
 import ru.urvanov.virtualpets.server.api.domain.GetPetBooksResult;
 import ru.urvanov.virtualpets.server.api.domain.GetPetClothsResult;
@@ -26,8 +24,6 @@ import ru.urvanov.virtualpets.server.api.domain.PetListResult;
 import ru.urvanov.virtualpets.server.api.domain.SatietyArg;
 import ru.urvanov.virtualpets.server.api.domain.SavePetCloths;
 import ru.urvanov.virtualpets.server.api.domain.SelectPetArg;
-import ru.urvanov.virtualpets.server.api.domain.SelectPetResult;
-import ru.urvanov.virtualpets.server.dao.domain.User;
 import ru.urvanov.virtualpets.server.dao.exception.DaoException;
 import ru.urvanov.virtualpets.server.service.PetApiService;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
@@ -45,16 +41,18 @@ public class PetController {
         return petService.getUserPets();
     }
     
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value = "create", method = RequestMethod.POST)
-    public CreatePetResult create(@RequestBody CreatePetArg createPetArg) throws DaoException,
+    public void create(@RequestBody CreatePetArg createPetArg) throws DaoException,
             ServiceException {
-        return petService.create(createPetArg);
+        petService.create(createPetArg);
     }
     
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value = "select", method = RequestMethod.POST)
-    public SelectPetResult select(@RequestBody SelectPetArg selectPetArg) throws DaoException,
+    public void select(@RequestBody SelectPetArg selectPetArg) throws DaoException,
             ServiceException {
-        return petService.select(selectPetArg);
+        petService.select(selectPetArg);
     }
     
     @ResponseStatus(HttpStatus.NO_CONTENT)

@@ -3,6 +3,8 @@ package ru.urvanov.virtualpets.server.api.domain;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import ru.urvanov.virtualpets.server.dao.domain.Sex;
+
 public class UserInformation implements Serializable {
 
     private static final long serialVersionUID = 7727325715161117786L;

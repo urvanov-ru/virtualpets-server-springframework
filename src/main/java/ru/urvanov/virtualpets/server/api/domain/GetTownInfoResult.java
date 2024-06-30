@@ -1,38 +1,9 @@
 package ru.urvanov.virtualpets.server.api.domain;
 
-import java.io.Serializable;
+import java.util.List;
 
-public class GetTownInfoResult implements Serializable {
+import ru.urvanov.virtualpets.server.dao.domain.AchievementId;
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = -4492068510344373230L;
-    
-    private long newJournalEntriesCount;
-    private LevelInfo levelInfo;
-    private AchievementCode[] achievements;
-    
-    
-    public long getNewJournalEntriesCount() {
-        return newJournalEntriesCount;
-    }
-    public void setNewJournalEntriesCount(long newJournalEntriesCount) {
-        this.newJournalEntriesCount = newJournalEntriesCount;
-    }
-    public LevelInfo getLevelInfo() {
-        return levelInfo;
-    }
-    public void setLevelInfo(LevelInfo levelInfo) {
-        this.levelInfo = levelInfo;
-    }
-    public AchievementCode[] getAchievements() {
-        return achievements;
-    }
-    public void setAchievements(AchievementCode[] achievements) {
-        this.achievements = achievements;
-    }
-    
-    
-
-}
+public record GetTownInfoResult(long newJournalEntriesCount,
+        LevelInfo levelInfo, List<AchievementId> achievements) {
+};
