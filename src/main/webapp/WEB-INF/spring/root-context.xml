@@ -34,7 +34,7 @@
         class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
         <property name="converters">
             <set>
-                <bean
+                <!--<bean
                     class="ru.urvanov.virtualpets.server.convserv.PetTypeServerToSharedConverter" />
                 <bean
                     class="ru.urvanov.virtualpets.server.convserv.PetTypeSharedToServerConverter" />
@@ -69,7 +69,7 @@
                 <bean
                     class="ru.urvanov.virtualpets.server.convserv.AchievementCodeServerToSharedConverter" />
                 <bean
-                    class="ru.urvanov.virtualpets.server.convserv.AchievementCodeSharedToServerConverter" />
+                    class="ru.urvanov.virtualpets.server.convserv.AchievementCodeSharedToServerConverter" />-->
             </set>
         </property>
     </bean>

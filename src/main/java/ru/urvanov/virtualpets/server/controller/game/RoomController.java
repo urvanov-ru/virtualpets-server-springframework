@@ -16,6 +16,7 @@ import ru.urvanov.virtualpets.server.api.domain.Point;
 import ru.urvanov.virtualpets.server.api.domain.RoomBuildMenuCosts;
 import ru.urvanov.virtualpets.server.dao.exception.DaoException;
 import ru.urvanov.virtualpets.server.service.RoomApiService;
+import ru.urvanov.virtualpets.server.service.domain.SelectedPet;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 @RestController
@@ -24,6 +25,9 @@ public class RoomController {
     
     @Autowired
     private RoomApiService roomService;
+    
+    @Autowired
+    private SelectedPet userPetDetails;
     
     @GetMapping(value = "getRoomInfo")
     public GetRoomInfoResult getRoomInfo() throws DaoException, ServiceException {

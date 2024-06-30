@@ -1,7 +1,6 @@
 package ru.urvanov.virtualpets.server.controller.game;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +14,7 @@ import ru.urvanov.virtualpets.server.api.domain.HiddenObjectsGame;
 import ru.urvanov.virtualpets.server.api.domain.JoinHiddenObjectsGameArg;
 import ru.urvanov.virtualpets.server.dao.exception.DaoException;
 import ru.urvanov.virtualpets.server.service.HiddenObjectsApiService;
+import ru.urvanov.virtualpets.server.service.domain.SelectedPet;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 @RestController
@@ -22,6 +22,9 @@ import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 public class HiddenObjectsController {
     @Autowired
     private HiddenObjectsApiService hiddenObjectsService;
+    
+    @Autowired
+    private SelectedPet userPetDetails;
     
     @PostMapping("joinGame")
     public HiddenObjectsGame joinGame(@RequestBody JoinHiddenObjectsGameArg joinHiddenObjectsGameArg) throws DaoException, ServiceException {

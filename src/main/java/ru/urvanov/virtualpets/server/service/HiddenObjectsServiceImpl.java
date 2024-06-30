@@ -16,12 +16,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import jakarta.annotation.PostConstruct;
 import ru.urvanov.virtualpets.server.api.domain.HiddenObjectsGameType;
 import ru.urvanov.virtualpets.server.api.domain.LevelInfo;
+import ru.urvanov.virtualpets.server.auth.UserDetailsImpl;
 import ru.urvanov.virtualpets.server.dao.BookDao;
 import ru.urvanov.virtualpets.server.dao.BuildingMaterialDao;
 import ru.urvanov.virtualpets.server.dao.ClothDao;
@@ -86,10 +85,6 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsApiService {
     
     private TreeMap<Float, Food> foodDrop = new TreeMap<>();
     private Map<Integer, Float> foodMaxDropRate = new HashMap<>();
-    
-    @Autowired
-    private ConversionService conversionService;
-
 
     @Autowired
     private FoodDao foodDao;
@@ -128,17 +123,14 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsApiService {
 
     @Override
     public synchronized ru.urvanov.virtualpets.server.api.domain.HiddenObjectsGame joinGame(
-            ru.urvanov.virtualpets.server.api.domain.JoinHiddenObjectsGameArg arg)
+            UserDetailsImpl userDetails, SelectedPet selectedPet, 
+            ru.urvanov.virtualpets.server.api.domain.JoinHiddenObjectsGameArg joinHiddenObjectsGameArg)
             throws DaoException, ServiceException {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = (Authentication) securityContext
                 .getAuthentication();
         User user = (User) authentication.getPrincipal();
         user = userDao.findById(user.getId());
-        ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder
-                .getRequestAttributes();
-        SelectedPet selectedPet = (SelectedPet) sra.getAttribute("pet",
-                ServletRequestAttributes.SCOPE_SESSION);
         
         Pet pet = petDao.findById(selectedPet.getId());
 
@@ -269,7 +261,7 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsApiService {
     }
 
     @Override
-    public synchronized ru.urvanov.virtualpets.server.api.domain.HiddenObjectsGame getGameInfo()
+    public synchronized ru.urvanov.virtualpets.server.api.domain.HiddenObjectsGame getGameInfo(UserDetailsImpl userDetails, SelectedPet selectedPet)
             throws DaoException, ServiceException {
         ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder
                 .getRequestAttributes();
@@ -334,6 +326,7 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsApiService {
 
     @Override
     public synchronized ru.urvanov.virtualpets.server.api.domain.HiddenObjectsGame collectObject(
+            UserDetailsImpl userDetails, SelectedPet selectedPet, 
             ru.urvanov.virtualpets.server.api.domain.CollectObjectArg arg)
             throws DaoException, ServiceException {
 
@@ -594,14 +587,6 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsApiService {
         games.remove(gameId);
     }
 
-    public ConversionService getConversionService() {
-        return conversionService;
-    }
-
-    public void setConversionService(ConversionService conversionService) {
-        this.conversionService = conversionService;
-    }
-
     @Override
     public synchronized ru.urvanov.virtualpets.server.api.domain.HiddenObjectsGame startGame()
             throws DaoException, ServiceException {
@@ -743,119 +728,5 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsApiService {
         }
         clothMaxDropRate = rate;
     }
-
-    public FoodDao getFoodDao() {
-        return foodDao;
-    }
-
-    public void setFoodDao(FoodDao foodDao) {
-        this.foodDao = foodDao;
-    }
-
-    public PetDao getPetDao() {
-        return petDao;
-    }
-
-    public void setPetDao(PetDao petDao) {
-        this.petDao = petDao;
-    }
-
-    public PetService getPetService() {
-        return petService;
-    }
-
-    public void setPetService(PetService petService) {
-        this.petService = petService;
-    }
-
-    public DrinkDao getDrinkDao() {
-        return drinkDao;
-    }
-
-    public void setDrinkDao(DrinkDao drinkDao) {
-        this.drinkDao = drinkDao;
-    }
-
-    public ClothDao getClothDao() {
-        return clothDao;
-    }
-
-    public void setClothDao(ClothDao clothDao) {
-        this.clothDao = clothDao;
-    }
-
-    public BookDao getBookDao() {
-        return bookDao;
-    }
-
-    public void setBookDao(BookDao bookDao) {
-        this.bookDao = bookDao;
-    }
-
-    public UserDao getUserDao() {
-        return userDao;
-    }
-
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
-
-    public RoomDao getRoomDao() {
-        return roomDao;
-    }
-
-    public void setRoomDao(RoomDao roomDao) {
-        this.roomDao = roomDao;
-    }
-
-    public LevelDao getLevelDao() {
-        return levelDao;
-    }
-
-    public void setLevelDao(LevelDao levelDao) {
-        this.levelDao = levelDao;
-    }
-
-    public BuildingMaterialDao getBuildingMaterialDao() {
-        return buildingMaterialDao;
-    }
-
-    public void setBuildingMaterialDao(BuildingMaterialDao buildingMaterialDao) {
-        this.buildingMaterialDao = buildingMaterialDao;
-    }
-
-    public Map<Integer, HiddenObjectsGame> getGames() {
-        return games;
-    }
-
-    public void setGames(Map<Integer, HiddenObjectsGame> games) {
-        this.games = games;
-    }
-
-    public Map<Integer, HiddenObjectsGame> getFinishedGames() {
-        return finishedGames;
-    }
-
-    public void setFinishedGames(Map<Integer, HiddenObjectsGame> finishedGames) {
-        this.finishedGames = finishedGames;
-    }
-
-    public Map<HiddenObjectsGameType, Map<Integer, HiddenObjectsGame>> getNotStartedGames() {
-        return notStartedGames;
-    }
-
-    public void setNotStartedGames(
-            Map<HiddenObjectsGameType, Map<Integer, HiddenObjectsGame>> notStartedGames) {
-        this.notStartedGames = notStartedGames;
-    }
-
-    public int getLastGameId() {
-        return lastGameId;
-    }
-
-    public void setLastGameId(int lastGameId) {
-        this.lastGameId = lastGameId;
-    }
-
 
 }

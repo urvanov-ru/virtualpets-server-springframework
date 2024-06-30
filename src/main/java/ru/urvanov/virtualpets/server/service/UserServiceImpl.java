@@ -26,6 +26,7 @@ import ru.urvanov.virtualpets.server.api.domain.RefreshUsersOnlineResult;
 import ru.urvanov.virtualpets.server.api.domain.UserInfo;
 import ru.urvanov.virtualpets.server.api.domain.UserInformation;
 import ru.urvanov.virtualpets.server.api.domain.UserInformationArg;
+import ru.urvanov.virtualpets.server.auth.UserDetailsImpl;
 import ru.urvanov.virtualpets.server.dao.UserDao;
 import ru.urvanov.virtualpets.server.dao.domain.User;
 import ru.urvanov.virtualpets.server.dao.exception.DaoException;
@@ -177,7 +178,12 @@ public class UserServiceImpl
     @Override
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
-        return userDao.findByLogin(username);
+        User user = userDao.findByLogin(username);
+        return new UserDetailsImpl(
+                user.getId(),
+                user.getLogin(),
+                user.getPassword(),
+                user.getAuthorities());
     }
 
 }

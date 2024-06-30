@@ -12,6 +12,7 @@ import ru.urvanov.virtualpets.server.api.domain.LoginArg;
 import ru.urvanov.virtualpets.server.api.domain.LoginResult;
 import ru.urvanov.virtualpets.server.dao.exception.DaoException;
 import ru.urvanov.virtualpets.server.service.UserApiService;
+import ru.urvanov.virtualpets.server.service.domain.SelectedPet;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 @RestController
@@ -20,10 +21,18 @@ public class UserController {
 
     @Autowired
     private UserApiService userService;
-    
+
+    @Autowired
+    private SelectedPet userPetDetails;
+
     @RequestMapping(method = RequestMethod.POST, value = "login")
-    public LoginResult login(@RequestAttribute LoginArg loginArg) throws ServiceException, DaoException {
-        return userService.login((LoginArg) RequestContextHolder.getRequestAttributes().getAttribute("loginArg", RequestAttributes.SCOPE_REQUEST));
-        
+    public LoginResult login(@RequestAttribute LoginArg loginArg)
+            throws ServiceException, DaoException {
+        LoginResult result = userService
+                .login((LoginArg) RequestContextHolder
+                        .getRequestAttributes().getAttribute("loginArg",
+                                RequestAttributes.SCOPE_REQUEST));
+        userPetDetails.setUserId(result.userId());
+        return result;
     }
 }
