@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import ru.urvanov.virtualpets.shared.domain.LoginResult;
+import ru.urvanov.virtualpets.server.api.domain.LoginResult;
 
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
 

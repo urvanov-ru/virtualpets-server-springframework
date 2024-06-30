@@ -10,18 +10,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import ru.urvanov.virtualpets.shared.domain.CollectObjectArg;
-import ru.urvanov.virtualpets.shared.domain.HiddenObjectsGame;
-import ru.urvanov.virtualpets.shared.domain.JoinHiddenObjectsGameArg;
-import ru.urvanov.virtualpets.shared.exception.DaoException;
-import ru.urvanov.virtualpets.shared.exception.ServiceException;
-import ru.urvanov.virtualpets.shared.service.HiddenObjectsService;
+import ru.urvanov.virtualpets.server.api.domain.CollectObjectArg;
+import ru.urvanov.virtualpets.server.api.domain.HiddenObjectsGame;
+import ru.urvanov.virtualpets.server.api.domain.JoinHiddenObjectsGameArg;
+import ru.urvanov.virtualpets.server.dao.exception.DaoException;
+import ru.urvanov.virtualpets.server.service.HiddenObjectsApiService;
+import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 @RestController
 @RequestMapping(value = "rest/v1/HiddenObjectsService")
 public class HiddenObjectsController {
     @Autowired
-    private HiddenObjectsService hiddenObjectsService;
+    private HiddenObjectsApiService hiddenObjectsService;
     
     @PostMapping("joinGame")
     public HiddenObjectsGame joinGame(@RequestBody JoinHiddenObjectsGameArg joinHiddenObjectsGameArg) throws DaoException, ServiceException {

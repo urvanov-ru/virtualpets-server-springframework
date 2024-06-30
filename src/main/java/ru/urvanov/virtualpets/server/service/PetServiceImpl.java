@@ -19,6 +19,21 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import ru.urvanov.virtualpets.server.api.domain.CreatePetArg;
+import ru.urvanov.virtualpets.server.api.domain.CreatePetResult;
+import ru.urvanov.virtualpets.server.api.domain.DrinkArg;
+import ru.urvanov.virtualpets.server.api.domain.GetPetBooksResult;
+import ru.urvanov.virtualpets.server.api.domain.GetPetClothsResult;
+import ru.urvanov.virtualpets.server.api.domain.GetPetDrinksResult;
+import ru.urvanov.virtualpets.server.api.domain.GetPetFoodsResult;
+import ru.urvanov.virtualpets.server.api.domain.GetPetJournalEntriesResult;
+import ru.urvanov.virtualpets.server.api.domain.GetPetRucksackInnerResult;
+import ru.urvanov.virtualpets.server.api.domain.PetInfo;
+import ru.urvanov.virtualpets.server.api.domain.PetListResult;
+import ru.urvanov.virtualpets.server.api.domain.SatietyArg;
+import ru.urvanov.virtualpets.server.api.domain.SavePetCloths;
+import ru.urvanov.virtualpets.server.api.domain.SelectPetArg;
+import ru.urvanov.virtualpets.server.api.domain.SelectPetResult;
 import ru.urvanov.virtualpets.server.dao.ClothDao;
 import ru.urvanov.virtualpets.server.dao.LevelDao;
 import ru.urvanov.virtualpets.server.dao.PetDao;
@@ -49,29 +64,14 @@ import ru.urvanov.virtualpets.server.dao.domain.RefrigeratorCost;
 import ru.urvanov.virtualpets.server.dao.domain.Room;
 import ru.urvanov.virtualpets.server.dao.domain.SelectedPet;
 import ru.urvanov.virtualpets.server.dao.domain.User;
+import ru.urvanov.virtualpets.server.dao.exception.DaoException;
 import ru.urvanov.virtualpets.server.service.domain.PetDetails;
 import ru.urvanov.virtualpets.server.service.domain.PetInformationPageAchievement;
 import ru.urvanov.virtualpets.server.service.exception.NotEnoughPetResourcesException;
-import ru.urvanov.virtualpets.shared.domain.CreatePetArg;
-import ru.urvanov.virtualpets.shared.domain.CreatePetResult;
-import ru.urvanov.virtualpets.shared.domain.DrinkArg;
-import ru.urvanov.virtualpets.shared.domain.GetPetBooksResult;
-import ru.urvanov.virtualpets.shared.domain.GetPetClothsResult;
-import ru.urvanov.virtualpets.shared.domain.GetPetDrinksResult;
-import ru.urvanov.virtualpets.shared.domain.GetPetFoodsResult;
-import ru.urvanov.virtualpets.shared.domain.GetPetJournalEntriesResult;
-import ru.urvanov.virtualpets.shared.domain.GetPetRucksackInnerResult;
-import ru.urvanov.virtualpets.shared.domain.PetInfo;
-import ru.urvanov.virtualpets.shared.domain.PetListResult;
-import ru.urvanov.virtualpets.shared.domain.SatietyArg;
-import ru.urvanov.virtualpets.shared.domain.SavePetCloths;
-import ru.urvanov.virtualpets.shared.domain.SelectPetArg;
-import ru.urvanov.virtualpets.shared.domain.SelectPetResult;
-import ru.urvanov.virtualpets.shared.exception.DaoException;
-import ru.urvanov.virtualpets.shared.exception.ServiceException;
+import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 @Service("petService")
-public class PetServiceImpl implements PetService, ru.urvanov.virtualpets.shared.service.PetService {
+public class PetServiceImpl implements PetService, PetApiService {
 
     @Autowired
     private RoomDao roomDao;
@@ -251,8 +251,8 @@ public class PetServiceImpl implements PetService, ru.urvanov.virtualpets.shared
         Pet pet = petDao.findByIdWithFullBooks(selectedPet.getId());
         Set<Book> books = pet.getBooks();
         
-        List<ru.urvanov.virtualpets.shared.domain.Book> resultBooks = books.stream()
-                .map(b -> new ru.urvanov.virtualpets.shared.domain.Book(b.getId(), b.getBookcaseLevel(), b.getBookcaseOrder()))
+        List<ru.urvanov.virtualpets.server.api.domain.Book> resultBooks = books.stream()
+                .map(b -> new ru.urvanov.virtualpets.server.api.domain.Book(b.getId(), b.getBookcaseLevel(), b.getBookcaseOrder()))
                 .collect(Collectors.toList());
         
         GetPetBooksResult result = new GetPetBooksResult();
@@ -268,15 +268,15 @@ public class PetServiceImpl implements PetService, ru.urvanov.virtualpets.shared
         Pet pet = petDao.findByIdWithFullCloths(selectedPet.getId());
         Set<Cloth> cloths = pet.getCloths();
         
-        List<ru.urvanov.virtualpets.shared.domain.Cloth> resultCloths = cloths.stream()
-                .map(c -> new ru.urvanov.virtualpets.shared.domain.Cloth(
+        List<ru.urvanov.virtualpets.server.api.domain.Cloth> resultCloths = cloths.stream()
+                .map(c -> new ru.urvanov.virtualpets.server.api.domain.Cloth(
                         c.getId(),
-                        conversionService.convert(c.getClothType(), ru.urvanov.virtualpets.shared.domain.ClothType.class),
+                        conversionService.convert(c.getClothType(), ru.urvanov.virtualpets.server.api.domain.ClothType.class),
                         c.getWardrobeOrder()
                         ))
                 .collect(Collectors.toList());
 
-        ru.urvanov.virtualpets.shared.domain.GetPetClothsResult result = new ru.urvanov.virtualpets.shared.domain.GetPetClothsResult();
+        ru.urvanov.virtualpets.server.api.domain.GetPetClothsResult result = new ru.urvanov.virtualpets.server.api.domain.GetPetClothsResult();
         result.setCloths(resultCloths);
         Cloth hat = pet.getHat();
         Cloth cloth = pet.getCloth();
@@ -328,17 +328,17 @@ public class PetServiceImpl implements PetService, ru.urvanov.virtualpets.shared
         SelectedPet selectedPet = (SelectedPet) sra.getAttribute("pet", ServletRequestAttributes.SCOPE_SESSION);
         Pet pet = petDao.findByIdWithFullDrinks(selectedPet.getId());
         Map<DrinkId, PetDrink> drinks = pet.getDrinks();
-        List<ru.urvanov.virtualpets.shared.domain.Drink> resultDrinks = drinks.values().stream()
-                .map(d -> new ru.urvanov.virtualpets.shared.domain.Drink(
+        List<ru.urvanov.virtualpets.server.api.domain.Drink> resultDrinks = drinks.values().stream()
+                .map(d -> new ru.urvanov.virtualpets.server.api.domain.Drink(
                         conversionService.convert(
                                 d.getDrink().getId(),
-                                ru.urvanov.virtualpets.shared.domain.DrinkType.class),
+                                ru.urvanov.virtualpets.server.api.domain.DrinkType.class),
                         d.getDrink().getMachineWithDrinksLevel(),
                         d.getDrink().getMachineWithDrinksOrder(),
                         d.getDrinkCount()))
                 .collect(Collectors.toList());
         
-        ru.urvanov.virtualpets.shared.domain.GetPetDrinksResult result = new ru.urvanov.virtualpets.shared.domain.GetPetDrinksResult();
+        ru.urvanov.virtualpets.server.api.domain.GetPetDrinksResult result = new ru.urvanov.virtualpets.server.api.domain.GetPetDrinksResult();
         result.setDrinks(resultDrinks);
         return result;
     }
@@ -348,17 +348,17 @@ public class PetServiceImpl implements PetService, ru.urvanov.virtualpets.shared
         ServletRequestAttributes sra = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
         SelectedPet selectedPet = (SelectedPet) sra.getAttribute("pet", ServletRequestAttributes.SCOPE_SESSION);
         Pet pet = petDao.findByIdWithFullFoods(selectedPet.getId());
-        List<ru.urvanov.virtualpets.shared.domain.Food> resultFoods = pet.getFoods().values().stream()
-                .map(f -> new ru.urvanov.virtualpets.shared.domain.Food(
+        List<ru.urvanov.virtualpets.server.api.domain.Food> resultFoods = pet.getFoods().values().stream()
+                .map(f -> new ru.urvanov.virtualpets.server.api.domain.Food(
                         conversionService.convert(
                                 f.getFood().getId(),
-                                ru.urvanov.virtualpets.shared.domain.FoodType.class),
+                                ru.urvanov.virtualpets.server.api.domain.FoodType.class),
                         f.getFood().getRefrigeratorLevel(),
                         f.getFood().getRefrigeratorOrder(),
                         f.getFoodCount()
                         ))
                 .collect(Collectors.toList());
-        ru.urvanov.virtualpets.shared.domain.GetPetFoodsResult result = new ru.urvanov.virtualpets.shared.domain.GetPetFoodsResult();
+        ru.urvanov.virtualpets.server.api.domain.GetPetFoodsResult result = new ru.urvanov.virtualpets.server.api.domain.GetPetFoodsResult();
         result.setFoods(resultFoods);
         return result;
     }
@@ -369,14 +369,14 @@ public class PetServiceImpl implements PetService, ru.urvanov.virtualpets.shared
         SelectedPet selectedPet = (SelectedPet) sra.getAttribute("pet", ServletRequestAttributes.SCOPE_SESSION);
         List<ru.urvanov.virtualpets.server.dao.domain.PetJournalEntry> serverPetJournalEntries = petJournalEntryDao.findLastByPetId(selectedPet.getId(), count);
         GetPetJournalEntriesResult result = new GetPetJournalEntriesResult();
-        ru.urvanov.virtualpets.shared.domain.PetJournalEntry[] sharedEntries = new ru.urvanov.virtualpets.shared.domain.PetJournalEntry[serverPetJournalEntries.size()];
+        ru.urvanov.virtualpets.server.api.domain.PetJournalEntry[] sharedEntries = new ru.urvanov.virtualpets.server.api.domain.PetJournalEntry[serverPetJournalEntries.size()];
         for (int n = 0; n < serverPetJournalEntries.size(); n++) {
             ru.urvanov.virtualpets.server.dao.domain.PetJournalEntry serverPetJournalEntry = serverPetJournalEntries.get(n);
             serverPetJournalEntry.setReaded(true);
             petJournalEntryDao.save(serverPetJournalEntry);
             int sharedIndex = serverPetJournalEntries.size() - 1 - n;
-            sharedEntries[sharedIndex] = new ru.urvanov.virtualpets.shared.domain.PetJournalEntry();
-            sharedEntries[sharedIndex].setCode(conversionService.convert(serverPetJournalEntry.getJournalEntry(), ru.urvanov.virtualpets.shared.domain.JournalEntryType.class));
+            sharedEntries[sharedIndex] = new ru.urvanov.virtualpets.server.api.domain.PetJournalEntry();
+            sharedEntries[sharedIndex].setCode(conversionService.convert(serverPetJournalEntry.getJournalEntry(), ru.urvanov.virtualpets.server.api.domain.JournalEntryType.class));
             sharedEntries[sharedIndex].setCreatedAt(serverPetJournalEntry.getCreatedAt());
         }
         
@@ -412,7 +412,7 @@ public class PetServiceImpl implements PetService, ru.urvanov.virtualpets.shared
                 petInfos[n]
                         .setPetType(conversionService.convert(
                                 p.getPetType(),
-                                ru.urvanov.virtualpets.shared.domain.PetType.class));
+                                ru.urvanov.virtualpets.server.api.domain.PetType.class));
                 n++;
             }
         } else {
@@ -615,13 +615,13 @@ public class PetServiceImpl implements PetService, ru.urvanov.virtualpets.shared
         Pet pet = petDao.findByIdWithFullBuildingMaterials(selectedPet.getId());
         Map<BuildingMaterialId, PetBuildingMaterial> buildingMaterials = pet.getBuildingMaterials();
         
-        Map<ru.urvanov.virtualpets.shared.domain.BuildingMaterialType, Integer> buildingMaterialCounts = buildingMaterials.entrySet().stream()
-                .<Entry<ru.urvanov.virtualpets.shared.domain.BuildingMaterialType, Integer>>map(e -> Map.entry(
-                        conversionService.convert(e.getKey(), ru.urvanov.virtualpets.shared.domain.BuildingMaterialType.class),
+        Map<ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType, Integer> buildingMaterialCounts = buildingMaterials.entrySet().stream()
+                .<Entry<ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType, Integer>>map(e -> Map.entry(
+                        conversionService.convert(e.getKey(), ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType.class),
                         e.getValue().getBuildingMaterialCount()))
                 .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
         
-        ru.urvanov.virtualpets.shared.domain.GetPetRucksackInnerResult result = new ru.urvanov.virtualpets.shared.domain.GetPetRucksackInnerResult();
+        ru.urvanov.virtualpets.server.api.domain.GetPetRucksackInnerResult result = new ru.urvanov.virtualpets.server.api.domain.GetPetRucksackInnerResult();
         result.setBuildingMaterialCounts(buildingMaterialCounts);
         return result;
     }

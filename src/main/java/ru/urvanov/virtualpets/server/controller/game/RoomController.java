@@ -10,20 +10,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import ru.urvanov.virtualpets.shared.domain.GetRoomInfoResult;
-import ru.urvanov.virtualpets.shared.domain.OpenBoxNewbieResult;
-import ru.urvanov.virtualpets.shared.domain.Point;
-import ru.urvanov.virtualpets.shared.domain.RoomBuildMenuCosts;
-import ru.urvanov.virtualpets.shared.exception.DaoException;
-import ru.urvanov.virtualpets.shared.exception.ServiceException;
-import ru.urvanov.virtualpets.shared.service.RoomService;
+import ru.urvanov.virtualpets.server.api.domain.GetRoomInfoResult;
+import ru.urvanov.virtualpets.server.api.domain.OpenBoxNewbieResult;
+import ru.urvanov.virtualpets.server.api.domain.Point;
+import ru.urvanov.virtualpets.server.api.domain.RoomBuildMenuCosts;
+import ru.urvanov.virtualpets.server.dao.exception.DaoException;
+import ru.urvanov.virtualpets.server.service.RoomApiService;
+import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 @RestController
 @RequestMapping(value = "rest/v1/RoomService")
 public class RoomController {
     
     @Autowired
-    private RoomService roomService;
+    private RoomApiService roomService;
     
     @GetMapping(value = "getRoomInfo")
     public GetRoomInfoResult getRoomInfo() throws DaoException, ServiceException {

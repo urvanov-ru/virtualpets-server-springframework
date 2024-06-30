@@ -21,22 +21,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import ru.urvanov.virtualpets.server.api.domain.LoginArg;
+import ru.urvanov.virtualpets.server.api.domain.LoginResult;
+import ru.urvanov.virtualpets.server.api.domain.RefreshUsersOnlineArg;
+import ru.urvanov.virtualpets.server.api.domain.RefreshUsersOnlineResult;
+import ru.urvanov.virtualpets.server.api.domain.UserInfo;
+import ru.urvanov.virtualpets.server.api.domain.UserInformation;
+import ru.urvanov.virtualpets.server.api.domain.UserInformationArg;
 import ru.urvanov.virtualpets.server.dao.UserDao;
 import ru.urvanov.virtualpets.server.dao.domain.User;
+import ru.urvanov.virtualpets.server.dao.exception.DaoException;
 import ru.urvanov.virtualpets.server.service.domain.UserProfile;
-import ru.urvanov.virtualpets.shared.domain.LoginArg;
-import ru.urvanov.virtualpets.shared.domain.LoginResult;
-import ru.urvanov.virtualpets.shared.domain.RefreshUsersOnlineArg;
-import ru.urvanov.virtualpets.shared.domain.RefreshUsersOnlineResult;
-import ru.urvanov.virtualpets.shared.domain.UserInfo;
-import ru.urvanov.virtualpets.shared.domain.UserInformation;
-import ru.urvanov.virtualpets.shared.domain.UserInformationArg;
-import ru.urvanov.virtualpets.shared.exception.DaoException;
-import ru.urvanov.virtualpets.shared.exception.IncompatibleVersionException;
-import ru.urvanov.virtualpets.shared.exception.ServiceException;
+import ru.urvanov.virtualpets.server.service.exception.IncompatibleVersionException;
+import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 @Service("userService")
-public class UserServiceImpl implements UserService, ru.urvanov.virtualpets.shared.service.UserService, UserDetailsService  {
+public class UserServiceImpl implements UserService, UserApiService, UserDetailsService  {
 
     private static final DateTimeFormatter unidDateTimeFormatter
             = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS", Locale.ROOT);
@@ -117,7 +117,7 @@ public class UserServiceImpl implements UserService, ru.urvanov.virtualpets.shar
         result.setComment(user.getComment());
         //result.setPhoto(user.getPhoto());
         if (user.getSex() != null) {
-            result.setSex(conversionService.convert(user.getSex(), ru.urvanov.virtualpets.shared.domain.Sex.class));
+            result.setSex(conversionService.convert(user.getSex(), ru.urvanov.virtualpets.server.api.domain.Sex.class));
         }
         return result;
     }

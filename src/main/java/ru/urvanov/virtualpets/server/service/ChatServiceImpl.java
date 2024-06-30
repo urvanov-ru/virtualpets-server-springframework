@@ -10,21 +10,20 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import ru.urvanov.virtualpets.server.api.domain.ChatMessage;
+import ru.urvanov.virtualpets.server.api.domain.RefreshChatArg;
+import ru.urvanov.virtualpets.server.api.domain.RefreshChatResult;
+import ru.urvanov.virtualpets.server.api.domain.SendChatMessageArg;
+import ru.urvanov.virtualpets.server.api.domain.SendChatMessageResult;
 import ru.urvanov.virtualpets.server.dao.ChatDao;
 import ru.urvanov.virtualpets.server.dao.UserDao;
 import ru.urvanov.virtualpets.server.dao.domain.Chat;
 import ru.urvanov.virtualpets.server.dao.domain.User;
-import ru.urvanov.virtualpets.shared.domain.ChatMessage;
-import ru.urvanov.virtualpets.shared.domain.RefreshChatArg;
-import ru.urvanov.virtualpets.shared.domain.RefreshChatResult;
-import ru.urvanov.virtualpets.shared.domain.SendChatMessageArg;
-import ru.urvanov.virtualpets.shared.domain.SendChatMessageResult;
-import ru.urvanov.virtualpets.shared.exception.DaoException;
-import ru.urvanov.virtualpets.shared.exception.ServiceException;
-import ru.urvanov.virtualpets.shared.service.ChatService;
+import ru.urvanov.virtualpets.server.dao.exception.DaoException;
+import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 @Service
-public class ChatServiceImpl implements ChatService {
+public class ChatServiceImpl implements ChatApiService {
 
     @Autowired
     private ChatDao chatDao;

@@ -8,18 +8,18 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
-import ru.urvanov.virtualpets.shared.domain.LoginArg;
-import ru.urvanov.virtualpets.shared.domain.LoginResult;
-import ru.urvanov.virtualpets.shared.exception.DaoException;
-import ru.urvanov.virtualpets.shared.exception.ServiceException;
-import ru.urvanov.virtualpets.shared.service.UserService;
+import ru.urvanov.virtualpets.server.api.domain.LoginArg;
+import ru.urvanov.virtualpets.server.api.domain.LoginResult;
+import ru.urvanov.virtualpets.server.dao.exception.DaoException;
+import ru.urvanov.virtualpets.server.service.UserApiService;
+import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 @RestController
 @RequestMapping(value = "rest/v1/UserService")
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    private UserApiService userService;
     
     @RequestMapping(method = RequestMethod.POST, value = "login")
     public LoginResult login(@RequestAttribute LoginArg loginArg) throws ServiceException, DaoException {

@@ -7,24 +7,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import ru.urvanov.virtualpets.shared.domain.GetServersArg;
-import ru.urvanov.virtualpets.shared.domain.LoginResult;
-import ru.urvanov.virtualpets.shared.domain.RecoverPasswordArg;
-import ru.urvanov.virtualpets.shared.domain.RecoverPasswordResult;
-import ru.urvanov.virtualpets.shared.domain.RecoverSessionArg;
-import ru.urvanov.virtualpets.shared.domain.RegisterArgument;
-import ru.urvanov.virtualpets.shared.domain.ServerInfo;
-import ru.urvanov.virtualpets.shared.domain.ServerTechnicalInfo;
-import ru.urvanov.virtualpets.shared.exception.DaoException;
-import ru.urvanov.virtualpets.shared.exception.ServiceException;
-import ru.urvanov.virtualpets.shared.service.PublicService;
+import ru.urvanov.virtualpets.server.api.domain.GetServersArg;
+import ru.urvanov.virtualpets.server.api.domain.LoginResult;
+import ru.urvanov.virtualpets.server.api.domain.RecoverPasswordArg;
+import ru.urvanov.virtualpets.server.api.domain.RecoverPasswordResult;
+import ru.urvanov.virtualpets.server.api.domain.RecoverSessionArg;
+import ru.urvanov.virtualpets.server.api.domain.RegisterArgument;
+import ru.urvanov.virtualpets.server.api.domain.ServerInfo;
+import ru.urvanov.virtualpets.server.api.domain.ServerTechnicalInfo;
+import ru.urvanov.virtualpets.server.dao.exception.DaoException;
+import ru.urvanov.virtualpets.server.service.PublicApiService;
+import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 @RestController
 @RequestMapping(value = "rest/v1/PublicService")
 public class PublicController {
 
     @Autowired
-    public PublicService publicService;
+    public PublicApiService publicService;
     
 
     @RequestMapping(method = RequestMethod.GET, value="servers")

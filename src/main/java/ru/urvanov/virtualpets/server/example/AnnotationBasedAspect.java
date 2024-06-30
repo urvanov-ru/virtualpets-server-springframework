@@ -11,7 +11,7 @@ import org.aspectj.lang.annotation.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ru.urvanov.virtualpets.shared.domain.HiddenObjectsGame;
+import ru.urvanov.virtualpets.server.api.domain.HiddenObjectsGame;
 
 @Aspect
 public class AnnotationBasedAspect {

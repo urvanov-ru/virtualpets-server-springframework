@@ -11,11 +11,11 @@ import ru.urvanov.virtualpets.server.dao.domain.DrinkId;
  * @author fedya
  *
  */
-public class DrinkTypeSharedToServerConverter implements Converter<ru.urvanov.virtualpets.shared.domain.DrinkType, ru.urvanov.virtualpets.server.dao.domain.DrinkId> {
+public class DrinkTypeSharedToServerConverter implements Converter<ru.urvanov.virtualpets.server.api.domain.DrinkType, ru.urvanov.virtualpets.server.dao.domain.DrinkId> {
 
     @Override
     public DrinkId convert(
-            ru.urvanov.virtualpets.shared.domain.DrinkType source) {
+            ru.urvanov.virtualpets.server.api.domain.DrinkType source) {
         return ru.urvanov.virtualpets.server.dao.domain.DrinkId.valueOf(source.name());
     }
 

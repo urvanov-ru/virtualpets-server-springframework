@@ -1,7 +1,5 @@
 package ru.urvanov.virtualpets.server.service.exception;
 
-import ru.urvanov.virtualpets.shared.exception.ServiceException;
-
 public class NotEnoughPetResourcesException extends ServiceException {
 
     private static final long serialVersionUID = 663373297355846631L;

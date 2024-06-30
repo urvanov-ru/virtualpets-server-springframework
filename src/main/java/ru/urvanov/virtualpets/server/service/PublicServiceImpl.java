@@ -27,25 +27,24 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.annotation.PostConstruct;
+import ru.urvanov.virtualpets.server.api.domain.GetServersArg;
+import ru.urvanov.virtualpets.server.api.domain.LoginResult;
+import ru.urvanov.virtualpets.server.api.domain.RecoverPasswordArg;
+import ru.urvanov.virtualpets.server.api.domain.RecoverPasswordResult;
+import ru.urvanov.virtualpets.server.api.domain.RecoverSessionArg;
+import ru.urvanov.virtualpets.server.api.domain.RegisterArgument;
+import ru.urvanov.virtualpets.server.api.domain.ServerInfo;
+import ru.urvanov.virtualpets.server.api.domain.ServerTechnicalInfo;
 import ru.urvanov.virtualpets.server.dao.UserDao;
 import ru.urvanov.virtualpets.server.dao.domain.User;
-import ru.urvanov.virtualpets.shared.domain.GetServersArg;
-import ru.urvanov.virtualpets.shared.domain.LoginResult;
-import ru.urvanov.virtualpets.shared.domain.RecoverPasswordArg;
-import ru.urvanov.virtualpets.shared.domain.RecoverPasswordResult;
-import ru.urvanov.virtualpets.shared.domain.RecoverSessionArg;
-import ru.urvanov.virtualpets.shared.domain.RegisterArgument;
-import ru.urvanov.virtualpets.shared.domain.ServerInfo;
-import ru.urvanov.virtualpets.shared.domain.ServerTechnicalInfo;
-import ru.urvanov.virtualpets.shared.exception.DaoException;
-import ru.urvanov.virtualpets.shared.exception.IncompatibleVersionException;
-import ru.urvanov.virtualpets.shared.exception.NameIsBusyException;
-import ru.urvanov.virtualpets.shared.exception.SendMailException;
-import ru.urvanov.virtualpets.shared.exception.ServiceException;
-import ru.urvanov.virtualpets.shared.service.PublicService;
+import ru.urvanov.virtualpets.server.dao.exception.DaoException;
+import ru.urvanov.virtualpets.server.service.exception.IncompatibleVersionException;
+import ru.urvanov.virtualpets.server.service.exception.NameIsBusyException;
+import ru.urvanov.virtualpets.server.service.exception.SendMailException;
+import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 @Service
-public class PublicServiceImpl implements PublicService {
+public class PublicServiceImpl implements PublicApiService {
 
     @Autowired
     private UserDao userDao;

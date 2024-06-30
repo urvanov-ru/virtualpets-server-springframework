@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import ru.urvanov.virtualpets.server.api.domain.GetTownInfoResult;
+import ru.urvanov.virtualpets.server.api.domain.LevelInfo;
 import ru.urvanov.virtualpets.server.dao.LevelDao;
 import ru.urvanov.virtualpets.server.dao.PetDao;
 import ru.urvanov.virtualpets.server.dao.domain.AchievementId;
@@ -20,13 +22,11 @@ import ru.urvanov.virtualpets.server.dao.domain.Level;
 import ru.urvanov.virtualpets.server.dao.domain.Pet;
 import ru.urvanov.virtualpets.server.dao.domain.PetJournalEntry;
 import ru.urvanov.virtualpets.server.dao.domain.SelectedPet;
-import ru.urvanov.virtualpets.shared.domain.GetTownInfoResult;
-import ru.urvanov.virtualpets.shared.domain.LevelInfo;
-import ru.urvanov.virtualpets.shared.exception.DaoException;
-import ru.urvanov.virtualpets.shared.exception.ServiceException;
+import ru.urvanov.virtualpets.server.dao.exception.DaoException;
+import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 @Service
-public class TownServiceImpl implements ru.urvanov.virtualpets.shared.service.TownService {
+public class TownServiceImpl implements ru.urvanov.virtualpets.server.service.TownApiService {
 
     @Autowired
     private ru.urvanov.virtualpets.server.service.PetService petService;
@@ -81,14 +81,14 @@ public class TownServiceImpl implements ru.urvanov.virtualpets.shared.service.To
 
         List<AchievementId> listServerAchievements = petService
                 .calculateAchievements(pet);
-        ru.urvanov.virtualpets.shared.domain.AchievementCode[] listSharedAchievements = new ru.urvanov.virtualpets.shared.domain.AchievementCode[listServerAchievements
+        ru.urvanov.virtualpets.server.api.domain.AchievementCode[] listSharedAchievements = new ru.urvanov.virtualpets.server.api.domain.AchievementCode[listServerAchievements
                 .size()];
         int n = 0;
         for (AchievementId ac : listServerAchievements) {
             listSharedAchievements[n] = conversionService
                     .convert(
                             ac,
-                            ru.urvanov.virtualpets.shared.domain.AchievementCode.class);
+                            ru.urvanov.virtualpets.server.api.domain.AchievementCode.class);
             n++;
         }
         result.setAchievements(listSharedAchievements);

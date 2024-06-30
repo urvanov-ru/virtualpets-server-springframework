@@ -13,31 +13,31 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import ru.urvanov.virtualpets.server.api.domain.CreatePetArg;
+import ru.urvanov.virtualpets.server.api.domain.CreatePetResult;
+import ru.urvanov.virtualpets.server.api.domain.DrinkArg;
+import ru.urvanov.virtualpets.server.api.domain.GetPetBooksResult;
+import ru.urvanov.virtualpets.server.api.domain.GetPetClothsResult;
+import ru.urvanov.virtualpets.server.api.domain.GetPetDrinksResult;
+import ru.urvanov.virtualpets.server.api.domain.GetPetFoodsResult;
+import ru.urvanov.virtualpets.server.api.domain.GetPetJournalEntriesResult;
+import ru.urvanov.virtualpets.server.api.domain.GetPetRucksackInnerResult;
+import ru.urvanov.virtualpets.server.api.domain.PetListResult;
+import ru.urvanov.virtualpets.server.api.domain.SatietyArg;
+import ru.urvanov.virtualpets.server.api.domain.SavePetCloths;
+import ru.urvanov.virtualpets.server.api.domain.SelectPetArg;
+import ru.urvanov.virtualpets.server.api.domain.SelectPetResult;
 import ru.urvanov.virtualpets.server.dao.domain.User;
-import ru.urvanov.virtualpets.shared.domain.CreatePetArg;
-import ru.urvanov.virtualpets.shared.domain.CreatePetResult;
-import ru.urvanov.virtualpets.shared.domain.DrinkArg;
-import ru.urvanov.virtualpets.shared.domain.GetPetBooksResult;
-import ru.urvanov.virtualpets.shared.domain.GetPetClothsResult;
-import ru.urvanov.virtualpets.shared.domain.GetPetDrinksResult;
-import ru.urvanov.virtualpets.shared.domain.GetPetFoodsResult;
-import ru.urvanov.virtualpets.shared.domain.GetPetJournalEntriesResult;
-import ru.urvanov.virtualpets.shared.domain.GetPetRucksackInnerResult;
-import ru.urvanov.virtualpets.shared.domain.PetListResult;
-import ru.urvanov.virtualpets.shared.domain.SatietyArg;
-import ru.urvanov.virtualpets.shared.domain.SavePetCloths;
-import ru.urvanov.virtualpets.shared.domain.SelectPetArg;
-import ru.urvanov.virtualpets.shared.domain.SelectPetResult;
-import ru.urvanov.virtualpets.shared.exception.DaoException;
-import ru.urvanov.virtualpets.shared.exception.ServiceException;
-import ru.urvanov.virtualpets.shared.service.PetService;
+import ru.urvanov.virtualpets.server.dao.exception.DaoException;
+import ru.urvanov.virtualpets.server.service.PetApiService;
+import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 @RestController("restPetController")
 @RequestMapping("rest/v1/PetService")
 public class PetController {
     
     @Autowired
-    private PetService petService;
+    private PetApiService petService;
     
     @RequestMapping(value = "getUserPets", method = RequestMethod.GET)
     public PetListResult getUserPets() throws DaoException,

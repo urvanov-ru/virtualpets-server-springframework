@@ -6,16 +6,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ru.urvanov.virtualpets.shared.domain.GetTownInfoResult;
-import ru.urvanov.virtualpets.shared.exception.DaoException;
-import ru.urvanov.virtualpets.shared.exception.ServiceException;
-import ru.urvanov.virtualpets.shared.service.TownService;
+import ru.urvanov.virtualpets.server.api.domain.GetTownInfoResult;
+import ru.urvanov.virtualpets.server.dao.exception.DaoException;
+import ru.urvanov.virtualpets.server.service.TownApiService;
+import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 @RestController
 @RequestMapping(value = "rest/v1/TownService")
 public class TownController {
     @Autowired
-    private TownService townService;
+    private TownApiService townService;
     
     @GetMapping(value = "getTownInfo")
     public GetTownInfoResult getTownInfo() throws DaoException, ServiceException {

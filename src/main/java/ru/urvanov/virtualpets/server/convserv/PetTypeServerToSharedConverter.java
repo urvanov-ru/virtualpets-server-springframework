@@ -2,14 +2,14 @@ package ru.urvanov.virtualpets.server.convserv;
 
 import org.springframework.core.convert.converter.Converter;
 
-public class PetTypeServerToSharedConverter implements Converter<ru.urvanov.virtualpets.server.dao.domain.PetType, ru.urvanov.virtualpets.shared.domain.PetType> {
+public class PetTypeServerToSharedConverter implements Converter<ru.urvanov.virtualpets.server.dao.domain.PetType, ru.urvanov.virtualpets.server.api.domain.PetType> {
 
     @Override
-    public ru.urvanov.virtualpets.shared.domain.PetType convert(
+    public ru.urvanov.virtualpets.server.api.domain.PetType convert(
             ru.urvanov.virtualpets.server.dao.domain.PetType arg0) {
         switch (arg0) {
         case CAT:
-            return ru.urvanov.virtualpets.shared.domain.PetType.CAT;
+            return ru.urvanov.virtualpets.server.api.domain.PetType.CAT;
         //case TUX:
         //    return ru.urvanov.virtualpets.shared.domain.PetType.TUX;
         //case KONQI:

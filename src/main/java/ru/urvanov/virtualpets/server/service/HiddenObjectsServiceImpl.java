@@ -20,6 +20,8 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import jakarta.annotation.PostConstruct;
+import ru.urvanov.virtualpets.server.api.domain.HiddenObjectsGameType;
+import ru.urvanov.virtualpets.server.api.domain.LevelInfo;
 import ru.urvanov.virtualpets.server.dao.BookDao;
 import ru.urvanov.virtualpets.server.dao.BuildingMaterialDao;
 import ru.urvanov.virtualpets.server.dao.ClothDao;
@@ -53,14 +55,11 @@ import ru.urvanov.virtualpets.server.dao.domain.Refrigerator;
 import ru.urvanov.virtualpets.server.dao.domain.Room;
 import ru.urvanov.virtualpets.server.dao.domain.SelectedPet;
 import ru.urvanov.virtualpets.server.dao.domain.User;
-import ru.urvanov.virtualpets.shared.domain.HiddenObjectsGameType;
-import ru.urvanov.virtualpets.shared.domain.LevelInfo;
-import ru.urvanov.virtualpets.shared.exception.DaoException;
-import ru.urvanov.virtualpets.shared.exception.ServiceException;
-import ru.urvanov.virtualpets.shared.service.HiddenObjectsService;
+import ru.urvanov.virtualpets.server.dao.exception.DaoException;
+import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 @Service
-public class HiddenObjectsServiceImpl implements HiddenObjectsService {
+public class HiddenObjectsServiceImpl implements HiddenObjectsApiService {
     private static final String HIDDEN_OBJECTS_GAME_ID = "hiddenObjectsGameId";
 
     private static final String HIDDEN_OBJECTS_GAME_STARTED = "hiddenObjectsGameStarted";
@@ -128,8 +127,8 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsService {
     private int lastGameId;
 
     @Override
-    public synchronized ru.urvanov.virtualpets.shared.domain.HiddenObjectsGame joinGame(
-            ru.urvanov.virtualpets.shared.domain.JoinHiddenObjectsGameArg arg)
+    public synchronized ru.urvanov.virtualpets.server.api.domain.HiddenObjectsGame joinGame(
+            ru.urvanov.virtualpets.server.api.domain.JoinHiddenObjectsGameArg arg)
             throws DaoException, ServiceException {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = (Authentication) securityContext
@@ -193,14 +192,14 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsService {
         return getResult(foundGame);
     }
 
-    private ru.urvanov.virtualpets.shared.domain.HiddenObjectsGame getResult(
+    private ru.urvanov.virtualpets.server.api.domain.HiddenObjectsGame getResult(
             HiddenObjectsGame foundGame) {
-        ru.urvanov.virtualpets.shared.domain.HiddenObjectsGame result = new ru.urvanov.virtualpets.shared.domain.HiddenObjectsGame();
+        ru.urvanov.virtualpets.server.api.domain.HiddenObjectsGame result = new ru.urvanov.virtualpets.server.api.domain.HiddenObjectsGame();
         result.setObjects(foundGame.getObjectsForSearch());
         HiddenObjectsPlayer[] players = foundGame.getDisplayablePlayers();
         for (int n = 0; n < players.length; n++) {
             if (players[n] != null) {
-                ru.urvanov.virtualpets.shared.domain.HiddenObjectsPlayer resultPlayer = new ru.urvanov.virtualpets.shared.domain.HiddenObjectsPlayer();
+                ru.urvanov.virtualpets.server.api.domain.HiddenObjectsPlayer resultPlayer = new ru.urvanov.virtualpets.server.api.domain.HiddenObjectsPlayer();
                 resultPlayer.setPetId(players[n].getPetId());
                 resultPlayer.setPetName(players[n].getPetName());
                 resultPlayer.setUserId(players[n].getUserId());
@@ -223,9 +222,9 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsService {
 
         HiddenObjectsCollected[] collectedObjects = foundGame
                 .getCollectedObjects();
-        ru.urvanov.virtualpets.shared.domain.HiddenObjectsCollected[] resultCollectedObjects = new ru.urvanov.virtualpets.shared.domain.HiddenObjectsCollected[collectedObjects.length];
+        ru.urvanov.virtualpets.server.api.domain.HiddenObjectsCollected[] resultCollectedObjects = new ru.urvanov.virtualpets.server.api.domain.HiddenObjectsCollected[collectedObjects.length];
         for (n = 0; n < collectedObjects.length; n++) {
-            ru.urvanov.virtualpets.shared.domain.HiddenObjectsCollected hoc = new ru.urvanov.virtualpets.shared.domain.HiddenObjectsCollected();
+            ru.urvanov.virtualpets.server.api.domain.HiddenObjectsCollected hoc = new ru.urvanov.virtualpets.server.api.domain.HiddenObjectsCollected();
             hoc.setObjectId(collectedObjects[n].getObjectId());
             hoc.setPlayer(result.getPlayer(collectedObjects[n].getPlayer()
                     .getUserId()));
@@ -242,30 +241,30 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsService {
             Pet pet = petDao.findById(selectedPet.getId());
             HiddenObjectsPlayer player = foundGame.getPlayer(pet.getUser()
                     .getId());
-            ru.urvanov.virtualpets.shared.domain.HiddenObjectsReward resultReward = new ru.urvanov.virtualpets.shared.domain.HiddenObjectsReward();
+            ru.urvanov.virtualpets.server.api.domain.HiddenObjectsReward resultReward = new ru.urvanov.virtualpets.server.api.domain.HiddenObjectsReward();
             HiddenObjectsReward playerReward = player.getReward();
             resultReward.setFood(conversionService.convert(
                     playerReward.getFood(),
-                    ru.urvanov.virtualpets.shared.domain.FoodType.class));
+                    ru.urvanov.virtualpets.server.api.domain.FoodType.class));
             resultReward.setClothId(playerReward.getClothId());
             resultReward.setBookId(playerReward.getBookId());
             resultReward.setDrinkType(conversionService.convert(
                     playerReward.getDrinkType(),
-                    ru.urvanov.virtualpets.shared.domain.DrinkType.class));
+                    ru.urvanov.virtualpets.server.api.domain.DrinkType.class));
             resultReward.setLevelInfo(playerReward.getLevelInfo());
             resultReward.setExperience(playerReward.getExperience());
             resultReward
                     .setBuildingMaterialType(conversionService.convert(
                             playerReward.getBuildingMaterialType(),
-                            ru.urvanov.virtualpets.shared.domain.BuildingMaterialType.class));
+                            ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType.class));
             ru.urvanov.virtualpets.server.dao.domain.AchievementId[] achievements = playerReward
                     .getAchievements();
-            ru.urvanov.virtualpets.shared.domain.AchievementCode[] sharedAchievements = new ru.urvanov.virtualpets.shared.domain.AchievementCode[achievements.length];
+            ru.urvanov.virtualpets.server.api.domain.AchievementCode[] sharedAchievements = new ru.urvanov.virtualpets.server.api.domain.AchievementCode[achievements.length];
             for (int m = 0; m < achievements.length; m++) {
                 sharedAchievements[m] = conversionService
                         .convert(
                                 achievements[m],
-                                ru.urvanov.virtualpets.shared.domain.AchievementCode.class);
+                                ru.urvanov.virtualpets.server.api.domain.AchievementCode.class);
             }
             resultReward.setAchievements(sharedAchievements);
             result.setReward(resultReward);
@@ -282,7 +281,7 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsService {
     }
 
     @Override
-    public synchronized ru.urvanov.virtualpets.shared.domain.HiddenObjectsGame getGameInfo()
+    public synchronized ru.urvanov.virtualpets.server.api.domain.HiddenObjectsGame getGameInfo()
             throws DaoException, ServiceException {
         ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder
                 .getRequestAttributes();
@@ -346,8 +345,8 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsService {
     }
 
     @Override
-    public synchronized ru.urvanov.virtualpets.shared.domain.HiddenObjectsGame collectObject(
-            ru.urvanov.virtualpets.shared.domain.CollectObjectArg arg)
+    public synchronized ru.urvanov.virtualpets.server.api.domain.HiddenObjectsGame collectObject(
+            ru.urvanov.virtualpets.server.api.domain.CollectObjectArg arg)
             throws DaoException, ServiceException {
 
         SecurityContext securityContext = SecurityContextHolder.getContext();
@@ -618,7 +617,7 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsService {
     }
 
     @Override
-    public synchronized ru.urvanov.virtualpets.shared.domain.HiddenObjectsGame startGame()
+    public synchronized ru.urvanov.virtualpets.server.api.domain.HiddenObjectsGame startGame()
             throws DaoException, ServiceException {
         ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder
                 .getRequestAttributes();

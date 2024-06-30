@@ -19,6 +19,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import ru.urvanov.virtualpets.server.api.domain.GetRoomInfoResult;
+import ru.urvanov.virtualpets.server.api.domain.LevelInfo;
+import ru.urvanov.virtualpets.server.api.domain.OpenBoxNewbieResult;
+import ru.urvanov.virtualpets.server.api.domain.Point;
+import ru.urvanov.virtualpets.server.api.domain.RoomBuildMenuCosts;
 import ru.urvanov.virtualpets.server.dao.BookDao;
 import ru.urvanov.virtualpets.server.dao.BookcaseDao;
 import ru.urvanov.virtualpets.server.dao.BuildingMaterialDao;
@@ -51,18 +56,12 @@ import ru.urvanov.virtualpets.server.dao.domain.Refrigerator;
 import ru.urvanov.virtualpets.server.dao.domain.RefrigeratorCost;
 import ru.urvanov.virtualpets.server.dao.domain.Room;
 import ru.urvanov.virtualpets.server.dao.domain.SelectedPet;
+import ru.urvanov.virtualpets.server.dao.exception.DaoException;
 import ru.urvanov.virtualpets.server.service.exception.NotEnoughPetResourcesException;
-import ru.urvanov.virtualpets.shared.domain.GetRoomInfoResult;
-import ru.urvanov.virtualpets.shared.domain.LevelInfo;
-import ru.urvanov.virtualpets.shared.domain.OpenBoxNewbieResult;
-import ru.urvanov.virtualpets.shared.domain.Point;
-import ru.urvanov.virtualpets.shared.domain.RoomBuildMenuCosts;
-import ru.urvanov.virtualpets.shared.exception.DaoException;
-import ru.urvanov.virtualpets.shared.exception.ServiceException;
-import ru.urvanov.virtualpets.shared.service.RoomService;
+import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 @Service
-public class RoomServiceImpl implements RoomService {
+public class RoomServiceImpl implements RoomApiService {
     
     private static final Logger logger = LoggerFactory.getLogger(RoomServiceImpl.class);
 
@@ -147,7 +146,7 @@ public class RoomServiceImpl implements RoomService {
         SelectedPet selectedPet = (SelectedPet) sra.getAttribute("pet",
                 ServletRequestAttributes.SCOPE_SESSION);
         Pet pet = petDao.findByIdWithJournalEntriesAndAchievements(selectedPet.getId());
-        ru.urvanov.virtualpets.shared.domain.GetRoomInfoResult result = new ru.urvanov.virtualpets.shared.domain.GetRoomInfoResult();
+        ru.urvanov.virtualpets.server.api.domain.GetRoomInfoResult result = new ru.urvanov.virtualpets.server.api.domain.GetRoomInfoResult();
         result.setMood(pet.getMood());
         result.setEducation(pet.getEducation());
         result.setSatiety(pet.getSatiety());
@@ -216,8 +215,8 @@ public class RoomServiceImpl implements RoomService {
         
         List<AchievementId> listServerAchievements = petService.calculateAchievements(pet);
         
-        List<ru.urvanov.virtualpets.shared.domain.AchievementCode> listSharedAchievements = listServerAchievements.stream()
-                .map(ac -> conversionService.convert(ac, ru.urvanov.virtualpets.shared.domain.AchievementCode.class))
+        List<ru.urvanov.virtualpets.server.api.domain.AchievementCode> listSharedAchievements = listServerAchievements.stream()
+                .map(ac -> conversionService.convert(ac, ru.urvanov.virtualpets.server.api.domain.AchievementCode.class))
                 .collect(Collectors.toList());
         result.setAchievements(listSharedAchievements);
         logger.info("getRoomInfo finished.");
@@ -234,11 +233,11 @@ public class RoomServiceImpl implements RoomService {
         SelectedPet selectedPet = (SelectedPet) sra.getAttribute("pet",
                 ServletRequestAttributes.SCOPE_SESSION);
         OpenBoxNewbieResult result = new OpenBoxNewbieResult();
-        Map<ru.urvanov.virtualpets.shared.domain.BuildingMaterialType, Integer> map = new HashMap<ru.urvanov.virtualpets.shared.domain.BuildingMaterialType, Integer>();
+        Map<ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType, Integer> map = new HashMap<ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType, Integer>();
         Random random = new Random();
-        map.put(ru.urvanov.virtualpets.shared.domain.BuildingMaterialType.TIMBER,
+        map.put(ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType.TIMBER,
                 1 + random.nextInt(2));
-        map.put(ru.urvanov.virtualpets.shared.domain.BuildingMaterialType.STONE,
+        map.put(ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType.STONE,
                 1 + random.nextInt(2));
         result.setBuildingMaterials(map);
         Room room = roomDao.findByPetId(selectedPet.getId());
@@ -258,7 +257,7 @@ public class RoomServiceImpl implements RoomService {
             Pet pet = petDao.findFullById(selectedPet.getId());
             Map<BuildingMaterialId, PetBuildingMaterial> petBuildingMaterials = pet
                     .getBuildingMaterials();
-            for (Entry<ru.urvanov.virtualpets.shared.domain.BuildingMaterialType, Integer> entry : map
+            for (Entry<ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType, Integer> entry : map
                     .entrySet()) {
                 BuildingMaterialId buildingMaterialType = conversionService
                         .convert(entry.getKey(), BuildingMaterialId.class);
@@ -316,7 +315,7 @@ public class RoomServiceImpl implements RoomService {
     @Override
     @Transactional(rollbackFor = {DaoException.class, ServiceException.class})
     public void buildRefrigerator(
-            ru.urvanov.virtualpets.shared.domain.Point arg)
+            ru.urvanov.virtualpets.server.api.domain.Point arg)
             throws DaoException, ServiceException {
         ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder
                 .getRequestAttributes();
@@ -566,48 +565,48 @@ public class RoomServiceImpl implements RoomService {
     public RoomBuildMenuCosts getBuildMenuCosts() throws DaoException,
             ServiceException {
         RoomBuildMenuCosts roomBuildMenuCosts = new RoomBuildMenuCosts();
-        List<Map<ru.urvanov.virtualpets.shared.domain.BuildingMaterialType, Integer>> refrigeratorCosts = new ArrayList<Map<ru.urvanov.virtualpets.shared.domain.BuildingMaterialType, Integer>>();
+        List<Map<ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType, Integer>> refrigeratorCosts = new ArrayList<Map<ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType, Integer>>();
         List<Refrigerator> refrigerators = refrigeratorDao.findAllFull();
         for (Refrigerator refrigerator : refrigerators) {
-            Map<ru.urvanov.virtualpets.shared.domain.BuildingMaterialType, Integer> map = new HashMap<ru.urvanov.virtualpets.shared.domain.BuildingMaterialType, Integer>();
+            Map<ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType, Integer> map = new HashMap<ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType, Integer>();
             for (Entry<BuildingMaterialId, RefrigeratorCost> entry : refrigerator
                     .getRefrigeratorCost().entrySet()) {
                 map.put(conversionService
                         .convert(
                                 entry.getKey(),
-                                ru.urvanov.virtualpets.shared.domain.BuildingMaterialType.class),
+                                ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType.class),
                         entry.getValue().getCost());
             }
             refrigeratorCosts.add(map);
         }
         roomBuildMenuCosts.setRefrigeratorCosts(refrigeratorCosts);
 
-        List<Map<ru.urvanov.virtualpets.shared.domain.BuildingMaterialType, Integer>> bookcaseCosts = new ArrayList<Map<ru.urvanov.virtualpets.shared.domain.BuildingMaterialType, Integer>>();
+        List<Map<ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType, Integer>> bookcaseCosts = new ArrayList<Map<ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType, Integer>>();
         List<Bookcase> bookcases = bookcaseDao.findAllFull();
         for (Bookcase bookcase : bookcases) {
-            Map<ru.urvanov.virtualpets.shared.domain.BuildingMaterialType, Integer> map = new HashMap<ru.urvanov.virtualpets.shared.domain.BuildingMaterialType, Integer>();
+            Map<ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType, Integer> map = new HashMap<ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType, Integer>();
             for (Entry<BuildingMaterialId, BookcaseCost> entry : bookcase
                     .getBookcaseCost().entrySet()) {
                 map.put(conversionService
                         .convert(
                                 entry.getKey(),
-                                ru.urvanov.virtualpets.shared.domain.BuildingMaterialType.class),
+                                ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType.class),
                         entry.getValue().getCost());
             }
             bookcaseCosts.add(map);
         }
         roomBuildMenuCosts.setBookcaseCosts(bookcaseCosts);
 
-        List<Map<ru.urvanov.virtualpets.shared.domain.BuildingMaterialType, Integer>> drinkCosts = new ArrayList<Map<ru.urvanov.virtualpets.shared.domain.BuildingMaterialType, Integer>>();
+        List<Map<ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType, Integer>> drinkCosts = new ArrayList<Map<ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType, Integer>>();
         List<MachineWithDrinks> machineWithDrinksList = machineWithDrinksDao.findAllFull();
         for (MachineWithDrinks machineWithDrinks : machineWithDrinksList) {
-            Map<ru.urvanov.virtualpets.shared.domain.BuildingMaterialType, Integer> map = new HashMap<ru.urvanov.virtualpets.shared.domain.BuildingMaterialType, Integer>();
+            Map<ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType, Integer> map = new HashMap<ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType, Integer>();
             for (Entry<BuildingMaterialId, MachineWithDrinksCost> entry : machineWithDrinks
                     .getMachineWithDrinksCost().entrySet()) {
                 map.put(conversionService
                         .convert(
                                 entry.getKey(),
-                                ru.urvanov.virtualpets.shared.domain.BuildingMaterialType.class),
+                                ru.urvanov.virtualpets.server.api.domain.BuildingMaterialType.class),
                         entry.getValue().getCost());
             }
             drinkCosts.add(map);

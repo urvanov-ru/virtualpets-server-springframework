@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
  * 
  */
 
-import ru.urvanov.virtualpets.shared.exception.ServiceException;
+import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 public class ThrowingAdvice {
     private static final Logger log = LoggerFactory.getLogger(ThrowingAdvice.class);

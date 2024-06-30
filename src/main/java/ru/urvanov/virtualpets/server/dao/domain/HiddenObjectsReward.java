@@ -1,6 +1,6 @@
 package ru.urvanov.virtualpets.server.dao.domain;
 
-import ru.urvanov.virtualpets.shared.domain.LevelInfo;
+import ru.urvanov.virtualpets.server.api.domain.LevelInfo;
 
 public class HiddenObjectsReward {
     private FoodId food;
