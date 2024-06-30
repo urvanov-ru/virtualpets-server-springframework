@@ -9,6 +9,7 @@ import ru.urvanov.virtualpets.server.api.domain.GetTownInfoResult;
 import ru.urvanov.virtualpets.server.dao.exception.DaoException;
 import ru.urvanov.virtualpets.server.service.TownApiService;
 import ru.urvanov.virtualpets.server.service.domain.SelectedPet;
+import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 @RestController
@@ -18,10 +19,10 @@ public class TownController {
     private TownApiService townService;
     
     @Autowired
-    private SelectedPet userPetDetails;
+    private UserPetDetails userPetDetails;
     
     @GetMapping(value = "getTownInfo")
     public GetTownInfoResult getTownInfo() throws DaoException, ServiceException {
-        return townService.getTownInfo();
+        return townService.getTownInfo(userPetDetails);
     }
 }

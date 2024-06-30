@@ -3,37 +3,45 @@ package ru.urvanov.virtualpets.server.service.domain;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
+import ru.urvanov.virtualpets.server.api.domain.HiddenObjectsGameType;
+
 @Component
 @SessionScope
 public class HiddenObjectsGameStatus {
-    private Integer gameId;
-    private boolean hiddenObjectsGameStarted;
-    private boolean hiddenObjectsGameOver;
-    private boolean hiddenObjectsGameType;
-    public Integer getGameId() {
-        return gameId;
+    private Integer Id;
+    private boolean started;
+    private boolean over;
+    private HiddenObjectsGameType type;
+
+    public Integer getId() {
+        return Id;
     }
-    public void setGameId(Integer gameId) {
-        this.gameId = gameId;
+
+    public void setId(Integer id) {
+        Id = id;
     }
-    public boolean isHiddenObjectsGameStarted() {
-        return hiddenObjectsGameStarted;
+
+    public boolean isStarted() {
+        return started;
     }
-    public void setHiddenObjectsGameStarted(
-            boolean hiddenObjectsGameStarted) {
-        this.hiddenObjectsGameStarted = hiddenObjectsGameStarted;
+
+    public void setStarted(boolean started) {
+        this.started = started;
     }
-    public boolean isHiddenObjectsGameOver() {
-        return hiddenObjectsGameOver;
+
+    public boolean isOver() {
+        return over;
     }
-    public void setHiddenObjectsGameOver(boolean hiddenObjectsGameOver) {
-        this.hiddenObjectsGameOver = hiddenObjectsGameOver;
+
+    public void setOver(boolean over) {
+        this.over = over;
     }
-    public boolean isHiddenObjectsGameType() {
-        return hiddenObjectsGameType;
+
+    public HiddenObjectsGameType getType() {
+        return type;
     }
-    public void setHiddenObjectsGameType(boolean hiddenObjectsGameType) {
-        this.hiddenObjectsGameType = hiddenObjectsGameType;
+
+    public void setType(HiddenObjectsGameType type) {
+        this.type = type;
     }
-    
 }

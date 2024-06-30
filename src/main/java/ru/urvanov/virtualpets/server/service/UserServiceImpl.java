@@ -10,15 +10,11 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import ru.urvanov.virtualpets.server.api.domain.LoginArg;
 import ru.urvanov.virtualpets.server.api.domain.LoginResult;
@@ -30,6 +26,7 @@ import ru.urvanov.virtualpets.server.auth.UserDetailsImpl;
 import ru.urvanov.virtualpets.server.dao.UserDao;
 import ru.urvanov.virtualpets.server.dao.domain.User;
 import ru.urvanov.virtualpets.server.dao.exception.DaoException;
+import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.domain.UserProfile;
 import ru.urvanov.virtualpets.server.service.exception.IncompatibleVersionException;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
@@ -53,23 +50,14 @@ public class UserServiceImpl
     @Override
     @Transactional(rollbackFor = { DaoException.class,
             ServiceException.class })
-    public LoginResult login(LoginArg arg)
+    public LoginResult login(UserPetDetails userPetDetails, LoginArg loginArg)
             throws ServiceException, DaoException {
-        String clientVersion = arg.version();
+        String clientVersion = loginArg.version();
         if (!version.equals(clientVersion)) {
             throw new IncompatibleVersionException("", version,
                     clientVersion);
         }
-        org.springframework.web.context.request.ServletRequestAttributes sra = (org.springframework.web.context.request.ServletRequestAttributes) org.springframework.web.context.request.RequestContextHolder
-                .getRequestAttributes();
-        sra.setAttribute("my1", "var1",
-                ServletRequestAttributes.SCOPE_SESSION);
-        SecurityContext securityContext = SecurityContextHolder
-                .getContext();
-        Authentication authentication = securityContext
-                .getAuthentication();
-        User user = (User) authentication.getPrincipal();
-        user = userDao.findById(user.getId());
+        User user = userDao.findById(userPetDetails.getUserId());
 
         byte[] b = new byte[256];
         Random r = new Random();
@@ -84,7 +72,8 @@ public class UserServiceImpl
     }
 
     @Override
-    public RefreshUsersOnlineResult getUsersOnline() {
+    public RefreshUsersOnlineResult getUsersOnline(
+            UserPetDetails userPetDetails) {
         List<User> users = userDao.findOnline();
         List<UserInfo> userInfos = users.stream()
                 .map(u -> new UserInfo(u.getId(), u.getName()))
@@ -94,8 +83,9 @@ public class UserServiceImpl
 
     @Override
     public UserInformation getUserInformation(
-            UserInformationArg argument) {
-        Integer userId = argument.getUserId();
+            UserPetDetails userPetDetails,
+            UserInformationArg userInformationArg) {
+        Integer userId = userInformationArg.getUserId();
         User user = userDao.findById(userId);
         UserInformation result = new UserInformation();
         result.setId(userId);
@@ -112,38 +102,32 @@ public class UserServiceImpl
     @Override
     @Transactional(rollbackFor = { DaoException.class,
             ServiceException.class })
-    public void closeSession() throws DaoException, ServiceException {
-        SecurityContext securityContext = SecurityContextHolder
-                .getContext();
-        Authentication authentication = securityContext
-                .getAuthentication();
-        User user = (User) authentication.getPrincipal();
-        user = userDao.findById(user.getId());
+    public void closeSession(UserPetDetails userPetDetails)
+            throws DaoException, ServiceException {
+        User user = userDao.findById(userPetDetails.getUserId());
         user.setUnid(null);
     }
 
     @Override
-    public void updateUserInformation(UserInformation arg)
+    public void updateUserInformation(
+            UserPetDetails userPetDetails,
+            UserInformation userInformation)
             throws ServiceException, DaoException {
-        byte[] photo = arg.getPhoto();
+        byte[] photo = userInformation.getPhoto();
         if (photo != null) {
             if (photo.length > 100000) {
                 throw new ServiceException("Too big file.");
             }
         }
-        SecurityContext context = SecurityContextHolder.getContext();
-        Authentication auth = context.getAuthentication();
-        User user = (User) auth.getPrincipal();
-        Integer id = user.getId();
-        if (id.equals(arg.getId())) {
-            user = userDao.findById(id);
-            user.setName(arg.getName());
-            user.setSex(arg.getSex());
-            user.setBirthdate(arg.getBirthdate());
-            user.setCountry(arg.getCountry());
-            user.setCity(arg.getCity());
-            user.setComment(arg.getComment());
-            // user.setPhoto(arg.getPhoto());
+        if (userPetDetails.getUserId().equals(userInformation.getId())) {
+            User user = userDao.findById(userPetDetails.getUserId());
+            user.setName(userInformation.getName());
+            user.setSex(userInformation.getSex());
+            user.setBirthdate(userInformation.getBirthdate());
+            user.setCountry(userInformation.getCountry());
+            user.setCity(userInformation.getCity());
+            user.setComment(userInformation.getComment());
+            // user.setPhoto(userInformation.getPhoto());
             userDao.save(user);
         } else {
             throw new ServiceException(
@@ -152,16 +136,11 @@ public class UserServiceImpl
     }
 
     @Override
-    public UserProfile getProfile() {
-        SecurityContext securityContext = SecurityContextHolder
-                .getContext();
-        Authentication authentication = securityContext
-                .getAuthentication();
-        User user = (User) authentication.getPrincipal();
+    public UserProfile getProfile(UserPetDetails userPetDetails) {
         UserProfile userProfile = new UserProfile();
-        userProfile.setBirthdate(user.getBirthdate());
-        userProfile.setName(user.getName());
-        userProfile.setEmail(user.getEmail());
+        userProfile.setBirthdate(userPetDetails.getUserBirthdate());
+        userProfile.setName(userPetDetails.getUserName());
+        userProfile.setEmail(userPetDetails.getUserEmail());
         return userProfile;
     }
 

@@ -8,8 +8,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import ru.urvanov.virtualpets.server.api.domain.GetTownInfoResult;
 import ru.urvanov.virtualpets.server.api.domain.LevelInfo;
@@ -20,8 +18,8 @@ import ru.urvanov.virtualpets.server.dao.domain.JournalEntryId;
 import ru.urvanov.virtualpets.server.dao.domain.Level;
 import ru.urvanov.virtualpets.server.dao.domain.Pet;
 import ru.urvanov.virtualpets.server.dao.domain.PetJournalEntry;
-import ru.urvanov.virtualpets.server.dao.domain.SelectedPet;
 import ru.urvanov.virtualpets.server.dao.exception.DaoException;
+import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 @Service
@@ -41,13 +39,9 @@ public class TownServiceImpl implements ru.urvanov.virtualpets.server.service.To
 
     @Override
     @Transactional(rollbackFor = {DaoException.class, ServiceException.class})
-    public GetTownInfoResult getTownInfo() throws DaoException,
+    public GetTownInfoResult getTownInfo(UserPetDetails userPetDetails) throws DaoException,
             ServiceException {
-        ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder
-                .getRequestAttributes();
-        SelectedPet selectedPet = (SelectedPet) sra.getAttribute("pet",
-                ServletRequestAttributes.SCOPE_SESSION);
-        Pet pet = petDao.findByIdWithJournalEntriesAndAchievements(selectedPet.getId());
+        Pet pet = petDao.findByIdWithJournalEntriesAndAchievements(userPetDetails.getPetId());
 
         Map<JournalEntryId, PetJournalEntry> mapJournalEntries = pet
                 .getJournalEntries();
