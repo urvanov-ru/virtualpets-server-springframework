@@ -50,14 +50,14 @@ public class UserServiceImpl
     @Override
     @Transactional(rollbackFor = { DaoException.class,
             ServiceException.class })
-    public LoginResult login(UserPetDetails userPetDetails, LoginArg loginArg)
+    public LoginResult login(LoginArg loginArg)
             throws ServiceException, DaoException {
         String clientVersion = loginArg.version();
         if (!version.equals(clientVersion)) {
             throw new IncompatibleVersionException("", version,
                     clientVersion);
         }
-        User user = userDao.findById(userPetDetails.getUserId());
+        User user = userDao.findByLogin(loginArg.login());
 
         byte[] b = new byte[256];
         Random r = new Random();

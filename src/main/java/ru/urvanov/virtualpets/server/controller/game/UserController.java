@@ -2,7 +2,6 @@ package ru.urvanov.virtualpets.server.controller.game;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,10 +32,7 @@ public class UserController {
             @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
             @RequestAttribute LoginArg loginArg)
             throws ServiceException, DaoException {
-//        UserDetailsImpl userDetailsImpl = (UserDetailsImpl) SecurityContextHolder
-//                .getContext().getAuthentication().getPrincipal();
-        userPetDetails.setUserId(userDetailsImpl.getUserId());
-        LoginResult result = userService.login(userPetDetails,
+        LoginResult result = userService.login(
                 (LoginArg) RequestContextHolder.getRequestAttributes()
                         .getAttribute("loginArg",
                                 RequestAttributes.SCOPE_REQUEST));

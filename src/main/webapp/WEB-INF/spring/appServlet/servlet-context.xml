@@ -16,7 +16,12 @@
         ">
 
     <!-- Поддержка @Controller-->
-    <annotation-driven />
+    <annotation-driven>
+        <argument-resolvers>
+            <!-- Поддержка @AuthenticationPrincipal --> 
+            <beans:bean class="org.springframework.security.web.method.annotation.AuthenticationPrincipalArgumentResolver" />
+        </argument-resolvers>
+    </annotation-driven>
 
     <interceptors><!-- <beans:bean class = "ru.urvanov.virtualpets.server.social.UserInterceptor"> 
             <beans:constructor-arg ref = "usersConnectionRepository" /> </beans:bean> -->

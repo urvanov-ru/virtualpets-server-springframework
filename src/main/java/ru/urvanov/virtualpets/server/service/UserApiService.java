@@ -11,7 +11,7 @@ import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 public interface UserApiService {
 
-    LoginResult login(UserPetDetails userPetDetails, LoginArg loginArg)
+    LoginResult login(LoginArg loginArg)
             throws ServiceException, DaoException;
 
     RefreshUsersOnlineResult getUsersOnline(

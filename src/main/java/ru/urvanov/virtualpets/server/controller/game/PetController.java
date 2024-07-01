@@ -28,7 +28,6 @@ import ru.urvanov.virtualpets.server.api.domain.SelectPetArg;
 import ru.urvanov.virtualpets.server.auth.UserDetailsImpl;
 import ru.urvanov.virtualpets.server.dao.exception.DaoException;
 import ru.urvanov.virtualpets.server.service.PetApiService;
-import ru.urvanov.virtualpets.server.service.domain.SelectedPet;
 import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
