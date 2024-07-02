@@ -349,6 +349,7 @@ public class PetServiceImpl implements PetService, PetApiService {
         if (!pet.getUser().getId().equals(userPetDetails.getUserId())) {
             throw new ServiceException();
         }
+        userPetDetails.setPetId(pet.getId());
     }
 
     @Override
