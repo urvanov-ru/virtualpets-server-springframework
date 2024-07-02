@@ -3,11 +3,13 @@ package ru.urvanov.virtualpets.server.service;
 import java.time.Clock;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -284,15 +286,14 @@ public class PetServiceImpl implements PetService, PetApiService {
     @Transactional(rollbackFor = {ServiceException.class, DaoException.class})
     public GetPetJournalEntriesResult getPetJournalEntries(UserPetDetails userPetDetails, int count) throws DaoException, ServiceException {
         List<ru.urvanov.virtualpets.server.dao.domain.PetJournalEntry> serverPetJournalEntries = petJournalEntryDao.findLastByPetId(userPetDetails.getPetId(), count);
-        List<ru.urvanov.virtualpets.server.api.domain.PetJournalEntry> apiEntries = new ArrayList<>(serverPetJournalEntries.size());
-        for (int n = 0; n < serverPetJournalEntries.size(); n++) {
-            ru.urvanov.virtualpets.server.dao.domain.PetJournalEntry serverPetJournalEntry = serverPetJournalEntries.get(n);
-            if (!serverPetJournalEntry.isReaded()) {
-                serverPetJournalEntry.setReaded(true);
-            }
-            ru.urvanov.virtualpets.server.api.domain.PetJournalEntry apiEntry = new ru.urvanov.virtualpets.server.api.domain.PetJournalEntry(serverPetJournalEntry.getCreatedAt(), serverPetJournalEntry.getJournalEntry());
-            apiEntries.add(apiEntry);
-        }
+        serverPetJournalEntries.stream()
+                .filter(Predicate.not(ru.urvanov.virtualpets.server.dao.domain.PetJournalEntry::isReaded))
+                .forEach(v -> v.setReaded(true));
+        
+        List<ru.urvanov.virtualpets.server.api.domain.PetJournalEntry> apiEntries = serverPetJournalEntries.stream()
+                .map(serverPetJournalEntry -> new ru.urvanov.virtualpets.server.api.domain.PetJournalEntry(serverPetJournalEntry.getCreatedAt(), serverPetJournalEntry.getJournalEntry()))
+                .sorted()
+                .toList();
         return new GetPetJournalEntriesResult(apiEntries);
     }
     
