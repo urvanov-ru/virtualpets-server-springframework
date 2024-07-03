@@ -23,7 +23,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ru.urvanov.virtualpets.server.api.domain.LoginArg;
-import ru.urvanov.virtualpets.server.api.domain.Result;
 
 public class CustomAuthenticationProcessingFilter
         extends AbstractAuthenticationProcessingFilter {
