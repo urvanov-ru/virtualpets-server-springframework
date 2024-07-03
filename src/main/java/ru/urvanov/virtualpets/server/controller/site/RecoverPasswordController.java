@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.controller.site;
 
 import java.util.Locale;
@@ -20,10 +17,6 @@ import ru.urvanov.virtualpets.server.controller.site.domain.RecoverPassword;
 import ru.urvanov.virtualpets.server.dao.domain.User;
 import ru.urvanov.virtualpets.server.service.UserService;
 
-/**
- * @author fedya
- * 
- */
 @Controller
 @RequestMapping("site")
 public class RecoverPasswordController extends ControllerBase {
