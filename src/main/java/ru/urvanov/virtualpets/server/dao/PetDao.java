@@ -48,7 +48,9 @@ public interface PetDao {
     Optional<Pet> findByIdWithDrinksAndJournalEntriesAndBuildingMaterialsAndAchievements(
             Integer id);
 
-    Optional<Pet> findByIdWithDrinksAndJournalEntriesAndAchievements(Integer id);
+    Optional<Pet> findByIdWithDrinksAndJournalEntriesAndAchievements(
+            Integer id);
 
-    Optional<Pet> findByIdWithFoodsJournalEntriesAndAchievements(Integer id);
+    Optional<Pet> findByIdWithFoodsJournalEntriesAndAchievements(
+            Integer id);
 }

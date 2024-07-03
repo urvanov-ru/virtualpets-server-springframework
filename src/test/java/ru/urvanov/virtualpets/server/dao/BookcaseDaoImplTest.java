@@ -4,6 +4,7 @@
 package ru.urvanov.virtualpets.server.dao;
 
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -27,14 +28,14 @@ public class BookcaseDaoImplTest extends AbstractDaoImplTest {
     @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/BookcaseServiceImplTest.xls")
     @Test
     void testFind1() {
-        Bookcase bookcase = bookcaseDao.findById(1);
+        Bookcase bookcase = bookcaseDao.findById(1).orElseThrow();
         assertNotNull(bookcase);
     }
     
     @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/BookcaseServiceImplTest.xls")
     @Test
     void testFind2() {
-        Bookcase bookcase = bookcaseDao.findFullById(1);
+        Bookcase bookcase = bookcaseDao.findFullById(1).orElseThrow();
         assertNotNull(bookcase);
         assertNotNull(bookcase.getBookcaseCost());
     }
@@ -42,13 +43,13 @@ public class BookcaseDaoImplTest extends AbstractDaoImplTest {
     @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/BookcaseServiceImplTest.xls")
     @Test
     void testFind3() {
-        Bookcase bookcase = bookcaseDao.findById(-1);
+        Bookcase bookcase = bookcaseDao.findById(-1).orElseThrow();
         assertNull(bookcase);
     }
     
     @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/BookcaseServiceImplTest.xls")
     @Test
     void testFind4() {
-        assertThrows(NoResultException.class, () -> bookcaseDao.findFullById(-1));
+        assertFalse(bookcaseDao.findFullById(-1).isPresent());
     }
 }

@@ -34,7 +34,7 @@ public class RoomDaoImplTest extends AbstractDaoImplTest {
     @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/RoomServiceImplTest.xls")
     @Test
     public void testFind1() {
-        Room room = roomDao.findByPetId(1);
+        Room room = roomDao.findByPetId(1).orElseThrow();
         assertNotNull(room);
         assertNotNull(room.getPetId());
     }
@@ -49,23 +49,23 @@ public class RoomDaoImplTest extends AbstractDaoImplTest {
     @Test
     public void testSaveNew() {
         Room room = new Room();
-        Pet pet = petDao.findById(2);
+        Pet pet = petDao.findById(2).orElseThrow();
         room.setPetId(pet.getId());
         room.setBoxNewbie1(true);
         room.setBoxNewbie2(true);
         room.setBoxNewbie3(true);
         roomDao.save(room);
-        Room actual = roomDao.findByPetId(2);
+        Room actual = roomDao.findByPetId(2).orElseThrow();
         assertNotNull(actual);
     }
     
     @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/RoomServiceImplTest.xls")
     @Test
     public void testSaveExist() {
-        Room room = roomDao.findByPetId(1);
+        Room room = roomDao.findByPetId(1).orElseThrow();
         room.setBoxNewbie1(false);
         roomDao.save(room);
-        room = roomDao.findByPetId(1);
+        room = roomDao.findByPetId(1).orElseThrow();
         assertFalse(room.isBoxNewbie1());
     }
 

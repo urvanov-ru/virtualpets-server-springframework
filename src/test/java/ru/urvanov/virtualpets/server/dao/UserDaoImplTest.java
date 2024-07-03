@@ -28,7 +28,7 @@ public class UserDaoImplTest extends AbstractDaoImplTest {
     @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/UserServiceImplTest.xls")
     @Test
     public void findByName() throws Exception {
-        User user = userDao.findByLogin("Clarence");
+        User user = userDao.findByLogin("Clarence").orElseThrow();
         assertNotNull(user);
     }
     

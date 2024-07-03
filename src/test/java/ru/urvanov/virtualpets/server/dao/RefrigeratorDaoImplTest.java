@@ -20,35 +20,39 @@ import ru.urvanov.virtualpets.server.test.annotation.DataSets;
  *
  */
 public class RefrigeratorDaoImplTest extends AbstractDaoImplTest {
-    
+
     @Autowired
     private RefrigeratorDao refrigeratorDao;
 
     @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/RefrigeratorServiceImplTest.xls")
     @Test
     public void testFind1() {
-        Refrigerator refrigerator = refrigeratorDao.findById(1);
+        Refrigerator refrigerator = refrigeratorDao.findById(1)
+                .orElseThrow();
         assertNotNull(refrigerator);
     }
-    
+
     @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/RefrigeratorServiceImplTest.xls")
     @Test
     public void testFind2() {
-        Refrigerator refrigerator = refrigeratorDao.findFullById(2);
+        Refrigerator refrigerator = refrigeratorDao.findFullById(2)
+                .orElseThrow();
         assertNotNull(refrigerator);
         assertNotNull(refrigerator.getRefrigeratorCost());
     }
-    
+
     @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/RefrigeratorServiceImplTest.xls")
     @Test
     public void testFind3() {
-        Refrigerator refrigerator = refrigeratorDao.findById(-1);
+        Refrigerator refrigerator = refrigeratorDao.findById(-1)
+                .orElseThrow();
         assertNull(refrigerator);
     }
-    
+
     @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/RefrigeratorServiceImplTest.xls")
     @Test
     public void testFind4() {
-        assertThrows(NoResultException.class, () -> refrigeratorDao.findFullById(-1));
+        assertThrows(NoResultException.class,
+                () -> refrigeratorDao.findFullById(-1));
     }
 }
