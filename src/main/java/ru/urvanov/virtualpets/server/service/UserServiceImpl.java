@@ -160,16 +160,14 @@ public class UserServiceImpl
     @Override
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
-        User user = userDao.findByLogin(username)
-                .orElseThrow();
-        if (user == null) {
-            throw new UsernameNotFoundException(username);
-        }
-        return new UserDetailsImpl(
-                user.getId(),
-                user.getLogin(),
-                user.getPassword(),
-                user.getAuthorities());
+        Optional<User> user = userDao.findByLogin(username);
+        return user.map(u -> new UserDetailsImpl(
+                u.getId(),
+                u.getLogin(),
+                u.getPassword(),
+                u.getAuthorities()))
+                .orElseThrow(() ->
+                        new UsernameNotFoundException(username));
     }
 
 }

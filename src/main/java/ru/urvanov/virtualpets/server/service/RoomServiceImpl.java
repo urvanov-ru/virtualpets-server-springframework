@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.Random;
 
 import org.slf4j.Logger;
@@ -101,17 +102,16 @@ public class RoomServiceImpl implements RoomApiService {
     private Clock clock;
 
     private Room findOrCreateByPet(Pet pet) {
-        Room room = roomDao.findByPetId(pet.getId()).orElseThrow();
-        if (room == null) {
-            room = new Room();
-            room.setPetId(pet.getId());
-            room.setBoxNewbie1(false);
-            room.setBoxNewbie2(false);
-            room.setBoxNewbie3(false);
-            roomDao.save(room);
-        }
-        return room;
-        
+        Optional<Room> room = roomDao.findByPetId(pet.getId());
+        return room.orElseGet(() -> {
+                Room r = new Room();
+                r.setPetId(pet.getId());
+                r.setBoxNewbie1(false);
+                r.setBoxNewbie2(false);
+                r.setBoxNewbie3(false);
+                roomDao.save(r);
+                return r;
+            });
     }
 
 

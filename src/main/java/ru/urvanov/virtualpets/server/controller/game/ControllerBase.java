@@ -4,6 +4,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -24,5 +25,7 @@ public class ControllerBase extends ResponseEntityExceptionHandler {
         return this.createResponseEntity(problemDetail, headers,
                 HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
+    
+
 
 }

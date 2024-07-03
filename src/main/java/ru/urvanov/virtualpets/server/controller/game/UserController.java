@@ -30,12 +30,9 @@ public class UserController extends ControllerBase {
     @RequestMapping(method = RequestMethod.POST, value = "login")
     public LoginResult login(
             @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
-            @RequestAttribute LoginArg loginArg)
+            @RequestAttribute("loginArg") LoginArg loginArg)
             throws ServiceException, DaoException {
-        LoginResult result = userService.login(
-                (LoginArg) RequestContextHolder.getRequestAttributes()
-                        .getAttribute("loginArg",
-                                RequestAttributes.SCOPE_REQUEST));
+        LoginResult result = userService.login(loginArg);
         userPetDetails.setUserId(result.userId());
         return result;
     }
