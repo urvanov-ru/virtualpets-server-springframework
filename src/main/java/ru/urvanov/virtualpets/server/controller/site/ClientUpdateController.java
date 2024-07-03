@@ -25,7 +25,8 @@ import ru.urvanov.virtualpets.fileinfo.FileListGenerator;
 
 @Controller
 @RequestMapping("site")
-public class ClientUpdateController implements ServletContextAware {
+public class ClientUpdateController extends ControllerBase
+        implements ServletContextAware {
 
     private static final Logger logger = LoggerFactory
             .getLogger(ClientUpdateController.class);
@@ -33,12 +34,14 @@ public class ClientUpdateController implements ServletContextAware {
 
     @ResponseBody
     @RequestMapping(value = "/update-info", method = RequestMethod.GET)
-    public String updateInfo(ModelMap model, HttpServletRequest request) {
+    public String updateInfo(ModelMap model,
+            HttpServletRequest request) {
         StringBuilder result = new StringBuilder();
         try {
             logger.info("updater-update-info started.");
             logger.info("servletContext={}", servletContext);
-            URL realPathUrl = servletContext.getResource("/resources/update");
+            URL realPathUrl = servletContext
+                    .getResource("/resources/update");
             logger.info("realPathUrl={}", realPathUrl);
             Path realPath = Paths.get(realPathUrl.toURI());
             logger.info("realPath={}", realPath);
@@ -46,7 +49,8 @@ public class ClientUpdateController implements ServletContextAware {
                     .generateFileList(realPath);
             for (Map.Entry<String, FileInfo> entry : map.entrySet()) {
                 String strPath = entry.getKey();
-                String str1 = strPath.replaceAll(File.pathSeparator, "/");
+                String str1 = strPath.replaceAll(File.pathSeparator,
+                        "/");
                 result.append(str1);
                 result.append("\n");
                 result.append(entry.getValue().modified.toMillis());
@@ -63,12 +67,14 @@ public class ClientUpdateController implements ServletContextAware {
 
     @ResponseBody
     @RequestMapping(value = "/updater-update-info", method = RequestMethod.GET)
-    public String updaterUpdateInfo(ModelMap model, HttpServletRequest request) {
+    public String updaterUpdateInfo(ModelMap model,
+            HttpServletRequest request) {
         StringBuilder result = new StringBuilder();
         try {
             logger.info("updater-update-info started.");
             logger.info("servletContext={}", servletContext);
-            URL realPathUrl = servletContext.getResource("/resources/updater-update");
+            URL realPathUrl = servletContext
+                    .getResource("/resources/updater-update");
             logger.info("realPathUrl={}", realPathUrl);
             Path realPath = Paths.get(realPathUrl.toURI());
             logger.info("realPath={}", realPath);
@@ -76,7 +82,8 @@ public class ClientUpdateController implements ServletContextAware {
                     .generateFileList(realPath);
             for (Map.Entry<String, FileInfo> entry : map.entrySet()) {
                 String strPath = entry.getKey();
-                String str1 = strPath.replaceAll(File.pathSeparator, "/");
+                String str1 = strPath.replaceAll(File.pathSeparator,
+                        "/");
                 result.append(str1);
                 result.append("\n");
                 result.append(entry.getValue().modified.toMillis());
@@ -93,7 +100,7 @@ public class ClientUpdateController implements ServletContextAware {
 
     @Override
     public void setServletContext(ServletContext servletContext) {
-        logger.info("servletContext="+servletContext);
+        logger.info("servletContext=" + servletContext);
         this.servletContext = servletContext;
     }
 

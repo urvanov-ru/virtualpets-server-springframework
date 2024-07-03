@@ -3,9 +3,6 @@
  */
 package ru.urvanov.virtualpets.server.controller.site;
 
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -18,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import jakarta.xml.bind.annotation.adapters.HexBinaryAdapter;
 import ru.urvanov.virtualpets.server.controller.site.domain.RecoverPassword;
 import ru.urvanov.virtualpets.server.dao.domain.User;
 import ru.urvanov.virtualpets.server.service.UserService;
@@ -29,7 +25,7 @@ import ru.urvanov.virtualpets.server.service.UserService;
  */
 @Controller
 @RequestMapping("site")
-public class RecoverPasswordController {
+public class RecoverPasswordController extends ControllerBase {
     private Logger log = LoggerFactory
             .getLogger(RecoverPasswordController.class);
 

@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 @RequestMapping("site")
-public class ServerInfoController {
+public class ServerInfoController extends ControllerBase {
 
     private static final Logger logger = LoggerFactory
             .getLogger(HomeController.class);

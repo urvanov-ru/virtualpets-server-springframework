@@ -21,7 +21,7 @@ import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 @RestController
 @RequestMapping(value = "rest/v1/RoomService")
-public class RoomController {
+public class RoomController extends ControllerBase {
 
     @Autowired
     private RoomApiService roomService;

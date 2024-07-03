@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 @RequestMapping("site")
-public class HomeController {
+public class HomeController extends ControllerBase {
 
     private static final Logger logger = LoggerFactory
             .getLogger(HomeController.class);

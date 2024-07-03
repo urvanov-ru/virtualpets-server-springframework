@@ -22,7 +22,7 @@ import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 @RestController
 @RequestMapping(value = "rest/v1/PublicService")
-public class PublicController {
+public class PublicController extends ControllerBase {
 
     @Autowired
     public PublicApiService publicService;

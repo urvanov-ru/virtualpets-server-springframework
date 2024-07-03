@@ -17,7 +17,7 @@ import ru.urvanov.virtualpets.server.service.domain.UserProfile;
 
 @Controller
 @RequestMapping("site")
-public class ProfileController {
+public class ProfileController extends ControllerBase {
     private static final Logger logger = LoggerFactory
             .getLogger(ProfileController.class);
 

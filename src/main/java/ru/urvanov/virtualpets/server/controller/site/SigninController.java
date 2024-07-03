@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 @RequestMapping("site")
-public class SigninController {
+public class SigninController extends ControllerBase {
     @RequestMapping(value = "/signin", method = RequestMethod.GET)
     public String signin(Locale locale, Model model,
             @RequestParam(value = "unid") String uniqueIdentifier,

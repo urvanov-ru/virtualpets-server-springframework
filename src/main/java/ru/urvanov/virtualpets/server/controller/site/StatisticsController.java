@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.controller.site;
 
 import java.util.ArrayList;
@@ -21,17 +18,12 @@ import ru.urvanov.virtualpets.server.controller.site.domain.StatisticsParams.Sta
 import ru.urvanov.virtualpets.server.dao.JdbcReportDao;
 import ru.urvanov.virtualpets.server.dao.domain.LastRegisteredUser;
 import ru.urvanov.virtualpets.server.dao.domain.Pet;
-import ru.urvanov.virtualpets.server.dao.domain.User;
 import ru.urvanov.virtualpets.server.service.PetService;
 import ru.urvanov.virtualpets.server.service.UserService;
 
-/**
- * @author fedya
- * 
- */
 @Controller
 @RequestMapping("site")
-public class StatisticsController {
+public class StatisticsController extends ControllerBase {
 
     @Autowired
     private UserService userService;

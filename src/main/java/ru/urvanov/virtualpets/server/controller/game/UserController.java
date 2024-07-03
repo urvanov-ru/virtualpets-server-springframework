@@ -19,7 +19,7 @@ import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 @RestController
 @RequestMapping(value = "rest/v1/UserService")
-public class UserController {
+public class UserController extends ControllerBase {
 
     @Autowired
     private UserApiService userService;
