@@ -158,6 +158,9 @@ public class UserServiceImpl
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
         User user = userDao.findByLogin(username);
+        if (user == null) {
+            throw new UsernameNotFoundException(username);
+        }
         return new UserDetailsImpl(
                 user.getId(),
                 user.getLogin(),
