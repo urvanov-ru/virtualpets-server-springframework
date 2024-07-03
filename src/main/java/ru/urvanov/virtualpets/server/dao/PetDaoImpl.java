@@ -2,6 +2,7 @@ package ru.urvanov.virtualpets.server.dao;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.hibernate.CacheMode;
 import org.hibernate.ScrollMode;
@@ -9,6 +10,7 @@ import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,17 +42,19 @@ public class PetDaoImpl implements PetDao {
 
     @Override
     @Transactional(readOnly = true)
-    public Pet findById(Integer id) {
-        return em.find(Pet.class, id);
+    public Optional<Pet> findById(Integer id) {
+        Pet pet = em.find(Pet.class, id);
+        return Optional.ofNullable(pet);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Pet findFullById(Integer id) {
+    public Optional<Pet> findFullById(Integer id) {
         TypedQuery<Pet> query = em.createNamedQuery(
                 "Pet.findFullById", Pet.class);
         query.setParameter("id", id);
-        return query.getSingleResult();
+        List<Pet> pets = query.getResultList();
+        return DataAccessUtils.optionalResult(pets);
     }
 
     @Override
@@ -66,7 +70,7 @@ public class PetDaoImpl implements PetDao {
     @Override
     @Transactional
     public void delete(Integer petId) {
-        Pet fullPet = this.findFullById(petId);
+        Pet fullPet = this.findFullById(petId).orElseThrow();
         em.remove(fullPet);
     }
 
@@ -165,7 +169,7 @@ public class PetDaoImpl implements PetDao {
 
     @Override
     @Transactional(readOnly = true)
-    public Pet findByIdWithBuildingMaterials(Integer id) {
+    public Optional<Pet> findByIdWithBuildingMaterials(Integer id) {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
         CriteriaQuery<Pet> criteriaQuery
                 = criteriaBuilder.createQuery(Pet.class);
@@ -176,12 +180,13 @@ public class PetDaoImpl implements PetDao {
                 .equal(rootPet.get(Pet_.id), id);
         criteriaQuery.where(predicate);
         TypedQuery<Pet> typedQuery = em.createQuery(criteriaQuery);
-        return typedQuery.getSingleResult();
+        List<Pet> pets = typedQuery.getResultList();
+        return DataAccessUtils.optionalResult(pets);
     }
     
     @Override
     @Transactional(readOnly = true)
-    public Pet findByIdWithFullBuildingMaterials(Integer id) {
+    public Optional<Pet> findByIdWithFullBuildingMaterials(Integer id) {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
         CriteriaQuery<Pet> criteriaQuery
                 = criteriaBuilder.createQuery(Pet.class);
@@ -194,104 +199,115 @@ public class PetDaoImpl implements PetDao {
                 .equal(rootPet.get(Pet_.id), id);
         criteriaQuery.where(predicate);
         TypedQuery<Pet> typedQuery = em.createQuery(criteriaQuery);
-        return typedQuery.getSingleResult();
+        List<Pet> pets = typedQuery.getResultList();
+        return DataAccessUtils.optionalResult(pets);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Pet findByIdWithFullFoods(Integer id) {
-        return em.find(Pet.class, id,
+    public Optional<Pet> findByIdWithFullFoods(Integer id) {
+        Pet pet = em.find(Pet.class, id,
                 Map.of(
                         "jakarta.persistence.fetchgraph",
                         em.getEntityGraph("pet.foods"))
                 );
+        return Optional.ofNullable(pet);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Pet findByIdWithFullDrinks(Integer id) {
-        return em.find(Pet.class, id,
+    public Optional<Pet> findByIdWithFullDrinks(Integer id) {
+        Pet pet = em.find(Pet.class, id,
                 Map.of(
                         "jakarta.persistence.fetchgraph",
                         em.getEntityGraph("pet.drinks"))
                 );
+        return Optional.ofNullable(pet);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Pet findByIdWithFullCloths(Integer id) {
-        return em.find(Pet.class, id,
+    public Optional<Pet> findByIdWithFullCloths(Integer id) {
+        Pet pet = em.find(Pet.class, id,
                 Map.of(
                         "jakarta.persistence.fetchgraph",
                         em.getEntityGraph("pet.cloths"))
                 );
+        return Optional.ofNullable(pet);
     }
 
     @Override
-    public Pet findByIdWithFullBooks(Integer id) {
-        return em.find(Pet.class, id,
+    public Optional<Pet> findByIdWithFullBooks(Integer id) {
+        Pet pet = em.find(Pet.class, id,
                 Map.of(
                         "jakarta.persistence.fetchgraph",
                         em.getEntityGraph("pet.books"))
                 );
+        return Optional.ofNullable(pet);
     }
 
     @Override
-    public Pet findByIdWithJournalEntriesAndAchievements(Integer id) {
-        return em.find(Pet.class, id,
+    public Optional<Pet> findByIdWithJournalEntriesAndAchievements(Integer id) {
+        Pet pet = em.find(Pet.class, id,
                 Map.of(
                         "jakarta.persistence.fetchgraph",
                         em.getEntityGraph(
                                 "pet.journalEntriesAndAchievements"))
                 );
+        return Optional.ofNullable(pet);
     }
 
     @Override
-    public Pet findByIdWithBooksAndJournalEntriesAndBuildingMaterials(
+    public Optional<Pet> findByIdWithBooksAndJournalEntriesAndBuildingMaterials(
             Integer id) {
-        return em.find(Pet.class, id,
+        Pet pet = em.find(Pet.class, id,
                 Map.of(
                         "jakarta.persistence.fetchgraph",
                         em.getEntityGraph("pet.booksAndJournalEntriesAndBuildingMaterials"))
                 );
+        return Optional.ofNullable(pet);
     }
 
     @Override
-    public Pet findByIdWithFoodsAndJournalEntriesAndBuildingMaterials(
+    public Optional<Pet> findByIdWithFoodsAndJournalEntriesAndBuildingMaterials(
             Integer id) {
-        return em.find(Pet.class, id,
+        Pet pet = em.find(Pet.class, id,
                 Map.of(
                         "jakarta.persistence.fetchgraph",
                         em.getEntityGraph("pet.foodsAndJournalEntriesAndBuildingMaterials"))
                 );
+        return Optional.ofNullable(pet);
     }
 
     @Override
-    public Pet findByIdWithDrinksAndJournalEntriesAndBuildingMaterialsAndAchievements(
+    public Optional<Pet> findByIdWithDrinksAndJournalEntriesAndBuildingMaterialsAndAchievements(
             Integer id) {
-        return em.find(Pet.class, id,
+        Pet pet = em.find(Pet.class, id,
                 Map.of(
                         "jakarta.persistence.fetchgraph",
                         em.getEntityGraph("pet.drinksAndJournalEntriesAndBuildingMaterialsAndAchievements"))
                 );
+        return Optional.ofNullable(pet);
     }
 
     @Override
-    public Pet findByIdWithDrinksAndJournalEntriesAndAchievements(Integer id) {
-        return em.find(Pet.class, id,
+    public Optional<Pet> findByIdWithDrinksAndJournalEntriesAndAchievements(Integer id) {
+        Pet pet = em.find(Pet.class, id,
                 Map.of(
                         "jakarta.persistence.fetchgraph",
                         em.getEntityGraph("pet.drinksAndJournalEntriesAndAchievements"))
                 );
+        return Optional.ofNullable(pet);
     }
 
     @Override
-    public Pet findByIdWithFoodsJournalEntriesAndAchievements(Integer id) {
-        return em.find(Pet.class, id,
+    public Optional<Pet> findByIdWithFoodsJournalEntriesAndAchievements(Integer id) {
+        Pet pet = em.find(Pet.class, id,
                 Map.of(
                         "jakarta.persistence.fetchgraph",
                         em.getEntityGraph("pet.foodsAndJournalEntriesAndAchievements"))
                 );
+        return Optional.ofNullable(pet);
     }
 
 }

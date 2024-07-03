@@ -3,8 +3,10 @@ package ru.urvanov.virtualpets.server.dao;
 import java.time.Clock;
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,12 +42,12 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     @Transactional(readOnly = true)
-    public User findByLogin(String login) {
+    public Optional<User> findByLogin(String login) {
         TypedQuery<User> query = em.createNamedQuery(
                 "findByLogin",
                 User.class);
         query.setParameter("login", login);
-        return query.getSingleResult();
+        return DataAccessUtils.optionalResult(query.getResultList());
     }
     
     @SuppressWarnings("unchecked")
@@ -57,8 +59,9 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     @Transactional(readOnly = true)
-    public User findById(Integer id) {
-        return em.find(User.class, id);
+    public Optional<User> findById(Integer id) {
+        User user = em.find(User.class, id);
+        return Optional.ofNullable(user);
     }
 
     @SuppressWarnings("unchecked")
@@ -74,28 +77,31 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     @Transactional(readOnly = true)
-    public User findByLoginAndEmail(String login, String email) {
-        Query query = em.createNamedQuery("findByLoginAndEmail");
+    public Optional<User> findByLoginAndEmail(String login, String email) {
+        TypedQuery<User> query = em.createNamedQuery(
+                "findByLoginAndEmail", User.class);
         query.setParameter("login", login);
         query.setParameter("email", email);
-        return (User) query.getSingleResult();
+        List<User> users = query.getResultList();
+        return DataAccessUtils.optionalResult(users);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public User findByUnid(String unid) {
+    public Optional<User> findByUnid(String unid) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<User> criteriaQuery = cb.createQuery(User.class);
         Root<User> root = criteriaQuery.from(User.class);
         criteriaQuery.select(root);
         Predicate predicate = cb.equal(root.get(User_.unid), unid);
         criteriaQuery.where(predicate);
-        return em.createQuery(criteriaQuery).getSingleResult();
+        List<User> users = em.createQuery(criteriaQuery).getResultList();
+        return DataAccessUtils.optionalResult(users);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public User findByRecoverPasswordKey(String recoverKey) {
+    public Optional<User> findByRecoverPasswordKey(String recoverKey) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<User> criteriaQuery = cb.createQuery(User.class);
         Root<User> root = criteriaQuery.from(User.class);
@@ -108,7 +114,8 @@ public class UserDaoImpl implements UserDao {
                 OffsetDateTime.now(clock));
         Predicate predicate = cb.and(predicate1, predicate2);
         criteriaQuery.where(predicate);
-        return em.createQuery(criteriaQuery).getSingleResult();
+        List<User> users = em.createQuery(criteriaQuery).getResultList();
+        return DataAccessUtils.optionalResult(users);
     }
 
     @Override

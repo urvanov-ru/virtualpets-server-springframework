@@ -1,9 +1,11 @@
 package ru.urvanov.virtualpets.server.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,12 +24,13 @@ import ru.urvanov.virtualpets.server.dao.domain.Bookcase_;
 public class BookcaseDaoImpl implements BookcaseDao {
 
     private static final Logger log = LoggerFactory.getLogger(BookcaseDaoImpl.class);
+    
     @PersistenceContext
     private EntityManager em;
 
     @Override
     @Transactional(readOnly = true)
-    public Bookcase findFullById(Integer id) {
+    public Optional<Bookcase> findFullById(Integer id) {
          CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
          CriteriaQuery<Bookcase> criteriaQuery = criteriaBuilder
                  .createQuery(Bookcase.class);
@@ -39,13 +42,15 @@ public class BookcaseDaoImpl implements BookcaseDao {
          criteriaQuery.where(predicate);
          TypedQuery<Bookcase> typedQuery = em.createQuery(
                  criteriaQuery);
-         return typedQuery.getSingleResult();
+         List<Bookcase> bookcases = typedQuery.getResultList();
+         return DataAccessUtils.optionalResult(bookcases);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Bookcase findById(Integer id) {
-        return em.find(Bookcase.class, id);
+    public Optional<Bookcase> findById(Integer id) {
+        Bookcase bookcase = em.find(Bookcase.class, id);
+        return Optional.ofNullable(bookcase);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package ru.urvanov.virtualpets.server.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,8 +20,9 @@ public class DrinkDaoImpl implements DrinkDao {
     
     @Transactional(readOnly=true)
     @Override
-    public Drink findById(DrinkId id) {
-        return em.find(Drink.class, id);
+    public Optional<Drink> findById(DrinkId id) {
+        Drink drink = em.find(Drink.class, id);
+        return Optional.ofNullable(drink);
     }
 
     @Override

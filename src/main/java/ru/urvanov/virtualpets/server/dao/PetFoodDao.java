@@ -1,23 +1,23 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import ru.urvanov.virtualpets.server.dao.domain.FoodId;
 import ru.urvanov.virtualpets.server.dao.domain.Pet;
 import ru.urvanov.virtualpets.server.dao.domain.PetFood;
 
-/**
- * @author fedya
- *
- */
-public interface PetFoodDao {
-    public PetFood findById(Integer id);
-    public List<PetFood> findByPetId(Integer petId);
-    public List<PetFood> findFullByPetId(Integer petId);
-    public List<PetFood> findByPet(Pet pet);
-    public void save(PetFood food);
-    public PetFood findByPetIdAndFoodType(Integer petId, FoodId foodType);
+interface PetFoodDao {
+    Optional<PetFood> findById(Integer id);
+
+    List<PetFood> findByPetId(Integer petId);
+
+    List<PetFood> findFullByPetId(Integer petId);
+
+    List<PetFood> findByPet(Pet pet);
+
+    void save(PetFood food);
+
+    Optional<PetFood> findByPetIdAndFoodType(Integer petId,
+            FoodId foodType);
 }

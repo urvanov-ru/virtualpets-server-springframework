@@ -1,6 +1,7 @@
 package ru.urvanov.virtualpets.server.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,8 +24,9 @@ public class ClothDaoImpl implements ClothDao {
 
     @Override
     @Transactional(readOnly= true)
-    public Cloth findById(String id) {
-        return em.find(Cloth.class, id);
+    public Optional<Cloth> findById(String id) {
+        Cloth cloth = em.find(Cloth.class, id);
+        return Optional.ofNullable(cloth);
     }
 
     @Override

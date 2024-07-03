@@ -92,9 +92,11 @@ public class PetServiceImpl implements PetService, PetApiService {
     @Override
     public void addExperience(Pet pet, Integer exp) {
         int nextExperience = pet.getExperience() + exp;
-        Level nextLevel = levelDao.findById(pet.getLevel().getId() + 1);
+        Level nextLevel = levelDao.findById(pet.getLevel().getId() + 1)
+                .orElseThrow();
         if (nextLevel == null) {
-            Level lastLevel = levelDao.findById(pet.getLevel().getId());
+            Level lastLevel = levelDao.findById(pet.getLevel().getId())
+                    .orElseThrow();
             pet.setExperience(Math.min(nextExperience, lastLevel.getExperience()));
         } else {
             pet.setExperience(nextExperience);
@@ -196,7 +198,8 @@ public class PetServiceImpl implements PetService, PetApiService {
     public GetPetBooksResult getPetBooks(
             UserPetDetails userPetDetails)
                     throws ServiceException {
-        Pet pet = petDao.findByIdWithFullBooks(userPetDetails.getPetId());
+        Pet pet = petDao.findByIdWithFullBooks(userPetDetails.getPetId())
+                .orElseThrow();
         Set<Book> books = pet.getBooks();
         
         List<ru.urvanov.virtualpets.server.api.domain.Book> resultBooks = books.stream()
@@ -209,7 +212,8 @@ public class PetServiceImpl implements PetService, PetApiService {
 
     @Override
     public GetPetClothsResult getPetCloths(UserPetDetails userPetDetails) {
-        Pet pet = petDao.findByIdWithFullCloths(userPetDetails.getPetId());
+        Pet pet = petDao.findByIdWithFullCloths(userPetDetails.getPetId())
+                .orElseThrow();
         Set<Cloth> cloths = pet.getCloths();
         
         List<ru.urvanov.virtualpets.server.api.domain.Cloth> resultCloths
@@ -234,7 +238,8 @@ public class PetServiceImpl implements PetService, PetApiService {
     public void savePetCloths(UserPetDetails userPetDetails,
             SavePetCloths saveClothArg)
             throws ServiceException {
-        Pet pet = petDao.findById(userPetDetails.getPetId());
+        Pet pet = petDao.findById(userPetDetails.getPetId())
+                .orElseThrow();
         Cloth hat = null;
         if (saveClothArg.hatId() != null) {
             // Получаем прокси сущности Cloth
@@ -281,7 +286,8 @@ public class PetServiceImpl implements PetService, PetApiService {
     public GetPetFoodsResult getPetFoods(UserPetDetails userPetDetails)
             throws ServiceException {
         Pet pet = petDao
-                .findByIdWithFullFoods(userPetDetails.getPetId());
+                .findByIdWithFullFoods(userPetDetails.getPetId())
+                .orElseThrow();
         List<ru.urvanov.virtualpets.server.api.domain.Food> resultFoods = pet
                 .getFoods().values().stream()
                 .map(f -> new ru.urvanov.virtualpets.server.api.domain.Food(
@@ -339,7 +345,7 @@ public class PetServiceImpl implements PetService, PetApiService {
         pet.setUser(userDao.getReference(userPetDetails.getUserId()));
         pet.setComment(arg.comment());
         pet.setPetType(arg.petType());
-        Level level = levelDao.findById(1);
+        Level level = levelDao.findById(1).orElseThrow();
         pet.setLevel(level);
     }
 
@@ -349,7 +355,7 @@ public class PetServiceImpl implements PetService, PetApiService {
     public void select(UserPetDetails userPetDetails, SelectPetArg arg)
             throws ServiceException {
         int id = arg.petId();
-        Pet pet = petDao.findFullById(id);
+        Pet pet = petDao.findFullById(id).orElseThrow();
         OffsetDateTime currentDateTime = OffsetDateTime.now(clock);
         boolean fireAchievement = false;
         if (pet.getEveryDayLoginLast() == null) {
@@ -385,7 +391,7 @@ public class PetServiceImpl implements PetService, PetApiService {
             throws ServiceException {
         Pet pet = petDao
                 .findByIdWithDrinksAndJournalEntriesAndAchievements(
-                        userPetDetails.getPetId());
+                        userPetDetails.getPetId()).orElseThrow();
         Map<DrinkId, PetDrink> drinks = pet.getDrinks();
         PetDrink petDrink = drinks.get(drinkArg.drinkId());
         petDrink.setDrinkCount(petDrink.getDrinkCount() - 1);
@@ -428,9 +434,9 @@ public class PetServiceImpl implements PetService, PetApiService {
             SatietyArg satietyArg)
             throws ServiceException {
         Pet pet = petDao.findByIdWithFoodsJournalEntriesAndAchievements(
-                userPetDetails.getPetId());
+                userPetDetails.getPetId()).orElseThrow();
         PetFood food = petFoodDao.findByPetIdAndFoodType(pet.getId(),
-                satietyArg.foodId());
+                satietyArg.foodId()).orElseThrow();
         if (food == null) {
             throw new ServiceException("Food count = 0.");
         } else {
@@ -468,7 +474,7 @@ public class PetServiceImpl implements PetService, PetApiService {
     public void education(UserPetDetails userPetDetails)
             throws ServiceException {
         Pet pet = petDao.findByIdWithJournalEntriesAndAchievements(
-                userPetDetails.getPetId());
+                userPetDetails.getPetId()).orElseThrow();
         pet.setEducation(100);
 
         if (pet.getJournalEntries()
@@ -499,9 +505,10 @@ public class PetServiceImpl implements PetService, PetApiService {
     @Transactional(rollbackFor = ServiceException.class)
     public void mood(UserPetDetails userPetDetails)
             throws ServiceException {
-        Pet pet = petDao.findById(userPetDetails.getPetId());
+        Pet pet = petDao.findById(userPetDetails.getPetId())
+                .orElseThrow();
         pet.setMood(100);
-        addExperience(petDao.findById(pet.getId()), 1);
+        addExperience(petDao.findById(pet.getId()).orElseThrow(), 1);
     }
     
     @Override
@@ -509,7 +516,7 @@ public class PetServiceImpl implements PetService, PetApiService {
             UserPetDetails userPetDetails)
             throws ServiceException {
         Pet pet = petDao.findByIdWithFullBuildingMaterials(
-                userPetDetails.getPetId());
+                userPetDetails.getPetId()).orElseThrow();
         Map<BuildingMaterialId, PetBuildingMaterial> buildingMaterials = pet
                 .getBuildingMaterials();
 
@@ -526,7 +533,7 @@ public class PetServiceImpl implements PetService, PetApiService {
 
     @Override
     public PetDetails petInformationPage(Integer id) {
-        Pet fullPet = petDao.findFullById(id);
+        Pet fullPet = petDao.findFullById(id).orElseThrow();
         PetDetails result = new PetDetails();
         result.setId(fullPet.getId());
         result.setName(fullPet.getName());
@@ -548,7 +555,7 @@ public class PetServiceImpl implements PetService, PetApiService {
     @Transactional(rollbackFor = {
             DaoException.class, ServiceException.class})
     public void delete(UserPetDetails userPetDetails, Integer petId) {
-        Room room = roomDao.findByPetId(petId);
+        Room room = roomDao.findByPetId(petId).orElseThrow();
         if (room != null) {
             roomDao.delete(room);
         }

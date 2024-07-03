@@ -104,7 +104,7 @@ public class RoomServiceImpl implements RoomApiService {
     private Clock clock;
 
     private Room findOrCreateByPet(Pet pet) {
-        Room room = roomDao.findByPetIdOrNull(pet.getId());
+        Room room = roomDao.findByPetIdOrNull(pet.getId()).orElseThrow();
         if (room == null) {
             room = new Room();
             room.setPetId(pet.getId());
@@ -123,7 +123,8 @@ public class RoomServiceImpl implements RoomApiService {
     public GetRoomInfoResult getRoomInfo(UserPetDetails userPetDetails)
             throws ServiceException {
         logger.info("getRoomInfo started.");
-        Pet pet = petDao.findByIdWithJournalEntriesAndAchievements(userPetDetails.getPetId());
+        Pet pet = petDao.findByIdWithJournalEntriesAndAchievements(userPetDetails.getPetId())
+                .orElseThrow();
         ru.urvanov.virtualpets.server.api.domain.GetRoomInfoResult result = new ru.urvanov.virtualpets.server.api.domain.GetRoomInfoResult();
         result.setMood(pet.getMood());
         result.setEducation(pet.getEducation());
@@ -145,7 +146,8 @@ public class RoomServiceImpl implements RoomApiService {
             result.setBowId(bow.getId());
         }
         
-        Level nextLevelLeague = levelDao.findById(pet.getLevel().getId() + 1);
+        Level nextLevelLeague = levelDao.findById(pet.getLevel().getId() + 1)
+                .orElseThrow();
         LevelInfo levelInfo = new LevelInfo(
                 pet.getLevel().getId(),
                 pet.getExperience(),
@@ -210,7 +212,8 @@ public class RoomServiceImpl implements RoomApiService {
                 1 + random.nextInt(2));
         map.put(BuildingMaterialId.STONE,
                 1 + random.nextInt(2));
-        Room room = roomDao.findByPetId(userPetDetails.getPetId());
+        Room room = roomDao.findByPetId(userPetDetails.getPetId())
+                .orElseThrow();
         boolean boxNewbie = false;
         switch (index) {
         case 0:
@@ -224,7 +227,8 @@ public class RoomServiceImpl implements RoomApiService {
             break;
         }
         if (boxNewbie) {
-            Pet pet = petDao.findFullById(userPetDetails.getPetId());
+            Pet pet = petDao.findFullById(userPetDetails.getPetId())
+                    .orElseThrow();
             Map<BuildingMaterialId, PetBuildingMaterial> petBuildingMaterials = pet
                     .getBuildingMaterials();
             for (Entry<BuildingMaterialId, Integer> entry : map
@@ -288,8 +292,8 @@ public class RoomServiceImpl implements RoomApiService {
             ru.urvanov.virtualpets.server.api.domain.Point position)
             throws ServiceException {
         Pet pet = petDao.findByIdWithFoodsAndJournalEntriesAndBuildingMaterials(
-                userPetDetails.getPetId());
-        Room room = roomDao.findByPetId(pet.getId());
+                userPetDetails.getPetId()).orElseThrow();
+        Room room = roomDao.findByPetId(pet.getId()).orElseThrow();
         if (!pet.getJournalEntries()
                 .containsKey(JournalEntryId.BUILD_REFRIGERATOR)) {
             throw new ServiceException("No now.");
@@ -308,7 +312,8 @@ public class RoomServiceImpl implements RoomApiService {
         }
         
         
-        Refrigerator refrigerator = refrigeratorDao.findFullById(1);
+        Refrigerator refrigerator = refrigeratorDao.findFullById(1)
+                .orElseThrow();
         try {
             petService.substractPetResources(pet, refrigerator);
         } catch (NotEnoughPetResourcesException nepre) {
@@ -336,7 +341,8 @@ public class RoomServiceImpl implements RoomApiService {
     @Transactional(rollbackFor = ServiceException.class)
     public void moveRefrigerator(UserPetDetails userPetDetails, Point position)
             throws ServiceException {
-        Room room = roomDao.findByPetId(userPetDetails.getPetId());
+        Room room = roomDao.findByPetId(userPetDetails.getPetId())
+                .orElseThrow();
         if (room.getRefrigerator() == null) {
             throw new ServiceException("No refrigerator in your room.");
         }
@@ -348,14 +354,16 @@ public class RoomServiceImpl implements RoomApiService {
     @Transactional(rollbackFor = ServiceException.class)
     public void upgradeRefrigerator(UserPetDetails userPetDetails)
             throws ServiceException {
-        Pet pet = petDao.findFullById(userPetDetails.getPetId());
-        Room room = roomDao.findByPetId(pet.getId());
+        Pet pet = petDao.findFullById(userPetDetails.getPetId())
+                .orElseThrow();
+        Room room = roomDao.findByPetId(pet.getId()).orElseThrow();
         if (room.getRefrigerator() == null) {
             throw new ServiceException("No refrigerator in your room.");
         }
         
         Refrigerator refrigerator = refrigeratorDao.findFullById(room
-                .getRefrigerator().getId() + 1);
+                .getRefrigerator().getId() + 1)
+                .orElseThrow();
         if (refrigerator == null) {
             throw new ServiceException("Your refrigerator level is max.");
         }
@@ -373,8 +381,10 @@ public class RoomServiceImpl implements RoomApiService {
     public void buildBookcase(
             UserPetDetails userPetDetails, Point position)
             throws ServiceException {
-        Pet pet = petDao.findByIdWithBooksAndJournalEntriesAndBuildingMaterials(userPetDetails.getPetId());
-        Room room = roomDao.findByPetId(pet.getId());
+        Pet pet = petDao.findByIdWithBooksAndJournalEntriesAndBuildingMaterials(userPetDetails.getPetId())
+                .orElseThrow();
+        Room room = roomDao.findByPetId(pet.getId())
+                .orElseThrow();
         if (!pet.getJournalEntries()
                 .containsKey(JournalEntryId.BUILD_BOOKCASE)) {
             throw new ServiceException("Not now.");
@@ -387,7 +397,7 @@ public class RoomServiceImpl implements RoomApiService {
             pet.getBooks().add(book);
         }
         
-        Bookcase bookcase = bookcaseDao.findFullById(1);
+        Bookcase bookcase = bookcaseDao.findFullById(1).orElseThrow();
         try {
             petService.substractPetResources(pet, bookcase);
         } catch (NotEnoughPetResourcesException nepre) {
@@ -414,13 +424,15 @@ public class RoomServiceImpl implements RoomApiService {
     @Transactional(rollbackFor = ServiceException.class)
     public void upgradeBookcase(UserPetDetails userPetDetails)
             throws ServiceException {
-        Pet pet = petDao.findFullById(userPetDetails.getPetId());
-        Room room = roomDao.findByPetId(pet.getId());
+        Pet pet = petDao.findFullById(userPetDetails.getPetId())
+                .orElseThrow();
+        Room room = roomDao.findByPetId(pet.getId())
+                .orElseThrow();
         if (room.getBookcase() == null) {
             throw new ServiceException("No bookcase in your room.");
         }
         Bookcase bookcase = bookcaseDao.findFullById(room.getBookcase()
-                .getId() + 1);
+                .getId() + 1).orElseThrow();
         if (bookcase == null) {
             throw new ServiceException("Your bookcase level is max.");
         }
@@ -437,7 +449,8 @@ public class RoomServiceImpl implements RoomApiService {
     @Transactional(rollbackFor = ServiceException.class)
     public void moveBookcase(UserPetDetails userPetDetails, Point position)
             throws ServiceException {
-        Room room = roomDao.findByPetId(userPetDetails.getPetId());
+        Room room = roomDao.findByPetId(userPetDetails.getPetId())
+                .orElseThrow();
         if (room.getBookcase() == null) {
             throw new ServiceException("No bookcase in your room.");
         }
@@ -451,8 +464,9 @@ public class RoomServiceImpl implements RoomApiService {
             UserPetDetails userPetDetails, Point position)
             throws ServiceException {
         Pet pet = petDao.findByIdWithDrinksAndJournalEntriesAndBuildingMaterialsAndAchievements(
-                userPetDetails.getPetId());
-        Room room = roomDao.findByPetId(pet.getId());
+                userPetDetails.getPetId()).orElseThrow();
+        Room room = roomDao.findByPetId(pet.getId())
+                .orElseThrow();
         if (!pet.getJournalEntries()
                 .containsKey(JournalEntryId.BUILD_MACHINE_WITH_DRINKS)) {
             throw new ServiceException("Not now.");
@@ -473,7 +487,7 @@ public class RoomServiceImpl implements RoomApiService {
         
         
         MachineWithDrinks machineWithDrinks = machineWithDrinksDao
-                .findFullById(1);
+                .findFullById(1).orElseThrow();
         try {
             petService.substractPetResources(pet, machineWithDrinks);
         } catch (NotEnoughPetResourcesException nepre) {
@@ -501,7 +515,8 @@ public class RoomServiceImpl implements RoomApiService {
     public void moveMachineWithDrinks(
             UserPetDetails userPetDetails, Point position)
             throws ServiceException {
-        Room room = roomDao.findByPetId(userPetDetails.getPetId());
+        Room room = roomDao.findByPetId(userPetDetails.getPetId())
+                .orElseThrow();
         if (room.getMachineWithDrinks() == null) {
             throw new ServiceException("No drink in your room.");
         }
@@ -559,13 +574,16 @@ public class RoomServiceImpl implements RoomApiService {
     @Transactional(rollbackFor = ServiceException.class)
     public void upgradeMachineWithDrinks(UserPetDetails userPetDetails)
             throws ServiceException {
-        Pet pet = petDao.findFullById(userPetDetails.getPetId());
-        Room room = roomDao.findByPetId(pet.getId());
+        Pet pet = petDao.findFullById(userPetDetails.getPetId())
+                .orElseThrow();
+        Room room = roomDao.findByPetId(pet.getId())
+                .orElseThrow();
         if (room.getMachineWithDrinks() == null) {
             throw new ServiceException("No machine with drinks in your room.");
         }
         MachineWithDrinks machineWithDrinks = machineWithDrinksDao
-                .findFullById(room.getMachineWithDrinks().getId() + 1);
+                .findFullById(room.getMachineWithDrinks().getId() + 1)
+                .orElseThrow();
         if (machineWithDrinks == null) {
             throw new ServiceException("Your machine with drinks level is max.");
         }
@@ -582,11 +600,13 @@ public class RoomServiceImpl implements RoomApiService {
     @Transactional(rollbackFor = ServiceException.class)
     public void pickJournalOnFloor(UserPetDetails userPetDetails)
             throws ServiceException {
-        Room room = roomDao.findByPetId(userPetDetails.getPetId());
+        Room room = roomDao.findByPetId(userPetDetails.getPetId())
+                .orElseThrow();
         if (room.isJournalOnFloor() == false)
             throw new ServiceException("There isn't any journal in your room.");
         room.setJournalOnFloor(false);
-        Pet pet = petDao.findById(userPetDetails.getPetId());
+        Pet pet = petDao.findById(userPetDetails.getPetId())
+                .orElseThrow();
         Map<JournalEntryId, PetJournalEntry> petJournalEntries = pet
                 .getJournalEntries();
         if (!pet.getJournalEntries().containsKey(JournalEntryId.WELCOME)) {
@@ -609,7 +629,8 @@ public class RoomServiceImpl implements RoomApiService {
                 .countByPetIdAndJournalEntryCode(userPetDetails.getPetId(),
                         JournalEntryId.OPEN_NEWBIE_BOXES);
         if (count == 0) {
-            Pet fullPet = petDao.findFullById(userPetDetails.getPetId());
+            Pet fullPet = petDao.findFullById(userPetDetails.getPetId())
+                    .orElseThrow();
             PetJournalEntry newPetJournalEntry = new PetJournalEntry();
             newPetJournalEntry.setCreatedAt(OffsetDateTime.now(clock));
             newPetJournalEntry.setPet(fullPet);
@@ -619,7 +640,8 @@ public class RoomServiceImpl implements RoomApiService {
                     newPetJournalEntry.getJournalEntry(), newPetJournalEntry);
             petService.addExperience(fullPet, 1);
             
-            Room room = roomDao.findByPetId(fullPet.getId());
+            Room room = roomDao.findByPetId(fullPet.getId())
+                    .orElseThrow();
             room.setBoxNewbie1(true);
             room.setBoxNewbie2(true);
             room.setBoxNewbie3(true);

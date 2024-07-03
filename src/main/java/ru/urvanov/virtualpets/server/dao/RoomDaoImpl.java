@@ -1,14 +1,13 @@
 package ru.urvanov.virtualpets.server.dao;
 
 import java.util.List;
+import java.util.Optional;
 
-import org.hibernate.Session;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
-import jakarta.persistence.NonUniqueResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -27,7 +26,7 @@ public class RoomDaoImpl implements RoomDao {
 
     @Override
     @Transactional(readOnly = true)
-    public Room findByPetId(Integer petId) {
+    public Optional<Room> findByPetId(Integer petId) {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder(); // (1)
         CriteriaQuery<Room> criteriaQuery
                 = criteriaBuilder.createQuery(Room.class); // (2)
@@ -38,30 +37,8 @@ public class RoomDaoImpl implements RoomDao {
                 petId); // (5)
         criteriaQuery.where(predicate); // (6)
         TypedQuery<Room> query = em.createQuery(criteriaQuery); // (7)
-        return query.getSingleResult(); // (8)
-    }
-    
-    @Override
-    @Transactional(readOnly = true)
-    public Room findByPetIdOrNull(Integer petId) {
-        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-        CriteriaQuery<Room> criteriaQuery
-                = criteriaBuilder.createQuery(Room.class);
-        Root<Room> rootRoom = criteriaQuery.from(Room.class);
-        criteriaQuery.select(rootRoom);
-        Predicate predicate = criteriaBuilder.equal(
-                rootRoom.get(Room_.petId),
-                petId);
-        criteriaQuery.where(predicate);
-        TypedQuery<Room> query = em.createQuery(criteriaQuery);
-        List<Room> rooms = query.getResultList();
-        if (rooms.size() == 1) {
-            return rooms.get(0);
-        } else if (rooms.size() > 1) {
-            throw new NonUniqueResultException();
-        } else {
-            return null;
-        }
+        List<Room> rooms = query.getResultList(); // (8)
+        return DataAccessUtils.optionalResult(rooms); // (9)
     }
     
     @Override

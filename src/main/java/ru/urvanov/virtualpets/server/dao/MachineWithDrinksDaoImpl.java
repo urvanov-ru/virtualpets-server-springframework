@@ -1,6 +1,7 @@
 package ru.urvanov.virtualpets.server.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
@@ -15,6 +16,7 @@ import jakarta.persistence.criteria.Root;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,13 +33,15 @@ public class MachineWithDrinksDaoImpl implements MachineWithDrinksDao {
 
     @Override
     @Transactional(readOnly = true)
-    public MachineWithDrinks findById(Integer id) {
-        return em.find(MachineWithDrinks.class,  id);
+    public Optional<MachineWithDrinks> findById(Integer id) {
+        MachineWithDrinks machineWithDrinks = em.find(
+                MachineWithDrinks.class,  id);
+        return Optional.ofNullable(machineWithDrinks);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public MachineWithDrinks findFullById(Integer id) {
+    public Optional<MachineWithDrinks> findFullById(Integer id) {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
         CriteriaQuery<MachineWithDrinks> criteriaQuery
                 = criteriaBuilder.createQuery(MachineWithDrinks.class);
@@ -51,7 +55,9 @@ public class MachineWithDrinksDaoImpl implements MachineWithDrinksDao {
         criteriaQuery.where(predicate);
         TypedQuery<MachineWithDrinks> typedQuery
                 = em.createQuery(criteriaQuery);
-        return typedQuery.getSingleResult();
+        List<MachineWithDrinks> machineWithDrinksList
+                = typedQuery.getResultList();
+        return DataAccessUtils.optionalResult(machineWithDrinksList);
     }
 
     @Override

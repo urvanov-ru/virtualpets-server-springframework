@@ -118,9 +118,11 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsApiService {
             HiddenObjectsGameStatus hiddenObjectsGameStatus,
             ru.urvanov.virtualpets.server.api.domain.JoinHiddenObjectsGameArg joinHiddenObjectsGameArg)
             throws ServiceException {
-        User user = userDao.findById(userPetDetails.getUserId());
+        User user = userDao.findById(userPetDetails.getUserId())
+                .orElseThrow();
         
-        Pet pet = petDao.findById(userPetDetails.getPetId());
+        Pet pet = petDao.findById(userPetDetails.getPetId())
+                .orElseThrow();
 
         HiddenObjectsGame foundGame = null;
         HiddenObjectsPlayer player = new HiddenObjectsPlayer();
@@ -211,7 +213,8 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsApiService {
         result.setGameStarted(foundGame.isStarted());
         result.setGameOver(foundGame.isGameOver());
         if (foundGame.isGameOver()) {
-            Pet pet = petDao.findById(userPetDetails.getPetId());
+            Pet pet = petDao.findById(userPetDetails.getPetId())
+                    .orElseThrow();
             HiddenObjectsPlayer player = foundGame.getPlayer(pet.getUser()
                     .getId());
             ru.urvanov.virtualpets.server.api.domain.HiddenObjectsReward resultReward = new ru.urvanov.virtualpets.server.api.domain.HiddenObjectsReward();
@@ -357,7 +360,8 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsApiService {
                     if (game.getObjectsForSearchCount() == 0) {
                         Random random = new Random();
                         random.nextInt(MAX_OBJECTS_FOR_SEARCH);
-                        Room room = roomDao.findByPetId(player.getPetId());
+                        Room room = roomDao.findByPetId(player.getPetId())
+                                .orElseThrow();
                         Refrigerator refrigerator = room.getRefrigerator();
                         MachineWithDrinks machineWithDrinks = room
                                 .getMachineWithDrinks();
@@ -388,7 +392,8 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsApiService {
                 reward.setBookId(bookId);
                 player.setReward(reward);
 
-                Pet fullPet = petDao.findFullById(player.getPetId());
+                Pet fullPet = petDao.findFullById(player.getPetId())
+                        .orElseThrow();
                 if (!fullPet.getFoods().containsKey(foodId)) {
                     PetFood food = new PetFood();
                     food.setPet(fullPet);
@@ -409,7 +414,7 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsApiService {
                     }
                 }
                 if ((!clothFound) && (clothId != null)) {
-                    cloths.add(clothDao.findById(clothId));
+                    cloths.add(clothDao.findById(clothId).orElseThrow());
                     reward.setClothId(clothId);
                 }
                 if (buildingMaterialId != null) {
@@ -472,7 +477,7 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsApiService {
                 petService.addExperience(fullPet, experienceReward);
 
                 Level nextLevel = levelDao.findById(fullPet.getLevel()
-                        .getId() + 1);
+                        .getId() + 1).orElseThrow();
                 int maxExperience;
                 if (nextLevel != null) {
                     maxExperience = nextLevel.getExperience();

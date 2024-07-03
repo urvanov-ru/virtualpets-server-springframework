@@ -2,6 +2,7 @@ package ru.urvanov.virtualpets.server.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -19,8 +20,9 @@ public class ChatDaoImpl implements ChatDao {
 
     @Override
     @Transactional(readOnly = true)
-    public Chat findById(Integer id) {
-        return em.find(Chat.class, id);
+    public Optional<Chat> findById(Integer id) {
+        Chat chat = em.find(Chat.class, id);
+        return Optional.ofNullable(chat);
     }
 
     @Override

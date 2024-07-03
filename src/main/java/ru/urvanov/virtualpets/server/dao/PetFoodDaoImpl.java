@@ -1,14 +1,15 @@
 package ru.urvanov.virtualpets.server.dao;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
-import jakarta.persistence.NonUniqueResultException;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.JoinType;
@@ -29,8 +30,9 @@ public class PetFoodDaoImpl implements PetFoodDao {
 
     @Override
     @Transactional(readOnly=true)
-    public PetFood findById(Integer id) {
-        return em.find(PetFood.class, id);
+    public Optional<PetFood> findById(Integer id) {
+        PetFood petFood = em.find(PetFood.class, id);
+        return Optional.ofNullable(petFood);
     }
 
     @Override
@@ -81,7 +83,7 @@ public class PetFoodDaoImpl implements PetFoodDao {
 
     @Override
     @Transactional(readOnly = true)
-    public PetFood findByPetIdAndFoodType(Integer petId, FoodId foodType) {
+    public Optional<PetFood> findByPetIdAndFoodType(Integer petId, FoodId foodType) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<PetFood> criteriaQuery
                 = cb.createQuery(PetFood.class);
@@ -94,7 +96,9 @@ public class PetFoodDaoImpl implements PetFoodDao {
                 petFoodRoot.get(PetFood_.food).get(Food_.id), foodType);
         Predicate predicate = cb.and(predicatePetId, predicateFoodType);
         criteriaQuery.where(predicate);
-        return em.createQuery(criteriaQuery).getSingleResult();
+        TypedQuery<PetFood> typedQuery = em.createQuery(criteriaQuery);
+        List<PetFood> petFoods = typedQuery.getResultList();
+        return DataAccessUtils.optionalResult(petFoods);
     }
 
 }

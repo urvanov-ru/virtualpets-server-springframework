@@ -1,21 +1,19 @@
 package ru.urvanov.virtualpets.server.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import ru.urvanov.virtualpets.server.dao.domain.User;
-/**
- * @author fedya
- *
- */
-public interface UserDao {
-    public void save(User user);
-    public User findByLogin(String login);
-    public List<User> list();
-    public User findById(Integer id);
-    public List<User> findOnline();
-    public User findByLoginAndEmail(String name, String email);
-    public User findByUnid(String unid);
-    public User findByRecoverPasswordKey(String recoverKey);
-    public List<User> findLastRegisteredUsers(int start, int limit);
-    public User getReference(Integer id);
+
+interface UserDao {
+    void save(User user);
+    Optional<User> findByLogin(String login);
+    List<User> list();
+    Optional<User> findById(Integer id);
+    List<User> findOnline();
+    Optional<User> findByLoginAndEmail(String name, String email);
+    Optional<User> findByUnid(String unid);
+    Optional<User> findByRecoverPasswordKey(String recoverKey);
+    List<User> findLastRegisteredUsers(int start, int limit);
+    User getReference(Integer id);
 }

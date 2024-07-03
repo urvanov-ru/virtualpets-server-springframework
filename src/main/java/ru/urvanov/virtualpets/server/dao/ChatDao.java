@@ -1,19 +1,13 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import ru.urvanov.virtualpets.server.dao.domain.Chat;
 
-/**
- * @author fedya
- *
- */
-public interface ChatDao {
-    public Chat findById(Integer id);
-    public List<Chat> findLast(Integer count, Integer userId);
-    public void save(Chat chat);
-    public List<Chat> findFromId(Integer fromId, Integer userId);
+interface ChatDao {
+    Optional<Chat> findById(Integer id);
+    List<Chat> findLast(Integer count, Integer userId);
+    void save(Chat chat);
+    List<Chat> findFromId(Integer fromId, Integer userId);
 }

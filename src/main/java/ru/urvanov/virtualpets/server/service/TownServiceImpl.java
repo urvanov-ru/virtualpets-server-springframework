@@ -41,7 +41,8 @@ public class TownServiceImpl implements ru.urvanov.virtualpets.server.service.To
     public GetTownInfoResult getTownInfo(UserPetDetails userPetDetails)
             throws ServiceException {
         Pet pet = petDao.findByIdWithJournalEntriesAndAchievements(
-                userPetDetails.getPetId());
+                userPetDetails.getPetId())
+                .orElseThrow();
 
         Map<JournalEntryId, PetJournalEntry> mapJournalEntries = pet
                 .getJournalEntries();
@@ -60,7 +61,7 @@ public class TownServiceImpl implements ru.urvanov.virtualpets.server.service.To
         int levelId = pet.getLevel().getId();
         int experience = pet.getExperience();
         Level nextLevelLeague = levelDao
-                .findById(pet.getLevel().getId() + 1);
+                .findById(pet.getLevel().getId() + 1).orElseThrow();
         int maxExperience = nextLevelLeague == null ? Integer.MAX_VALUE
                 : nextLevelLeague.getExperience();
         int minExperience = pet.getLevel().getExperience();

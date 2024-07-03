@@ -1,6 +1,7 @@
 package ru.urvanov.virtualpets.server.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,8 +27,9 @@ public class FoodDaoImpl implements FoodDao {
     }
     @Override
     @Transactional(readOnly = true)
-    public Food findById(FoodId id) {
-        return em.find(Food.class, id);
+    public Optional<Food> findById(FoodId id) {
+        Food food = em.find(Food.class, id);
+        return Optional.ofNullable(food);
     }
 
     @Override

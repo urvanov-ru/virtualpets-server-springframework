@@ -46,7 +46,7 @@ public class ChatServiceImpl implements ChatApiService {
         User user = (User) authentication.getPrincipal();
         Integer userId = user.getId();
         
-        user = userDao.findById(userId);
+        user = userDao.findById(userId).orElseThrow();
         user.setActiveDate(OffsetDateTime.now(clock));
         userDao.save(user);
         

@@ -5,6 +5,7 @@ import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
 
@@ -56,7 +57,7 @@ public class UserServiceImpl
             throw new IncompatibleVersionException("", version,
                     clientVersion);
         }
-        User user = userDao.findByLogin(loginArg.login());
+        User user = userDao.findByLogin(loginArg.login()).orElseThrow();
 
         byte[] b = new byte[256];
         Random r = new Random();
@@ -87,7 +88,7 @@ public class UserServiceImpl
             UserInformationArg userInformationArg)
             throws ServiceException{
         Integer userId = userInformationArg.getUserId();
-        User user = userDao.findById(userId);
+        User user = userDao.findById(userId).orElseThrow();
         UserInformation result = new UserInformation();
         result.setId(userId);
         result.setName(user.getName());
@@ -120,7 +121,8 @@ public class UserServiceImpl
             }
         }
         if (userPetDetails.getUserId().equals(userInformation.getId())) {
-            User user = userDao.findById(userPetDetails.getUserId());
+            User user = userDao.findById(userPetDetails.getUserId())
+                    .orElseThrow();
             user.setName(userInformation.getName());
             user.setSex(userInformation.getSex());
             user.setBirthdate(userInformation.getBirthdate());
@@ -150,7 +152,7 @@ public class UserServiceImpl
     }
 
     @Override
-    public User findByRecoverPasswordKey(String recoverPasswordKey) {
+    public Optional<User> findByRecoverPasswordKey(String recoverPasswordKey) {
         return userDao.findByRecoverPasswordKey(recoverPasswordKey);
     }
 

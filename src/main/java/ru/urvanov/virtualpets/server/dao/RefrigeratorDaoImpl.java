@@ -1,9 +1,11 @@
 package ru.urvanov.virtualpets.server.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,12 +30,13 @@ public class RefrigeratorDaoImpl implements RefrigeratorDao {
     private EntityManager em;
 
     @Override
-    public Refrigerator findById(Integer id) {
-        return em.find(Refrigerator.class, id);
+    public Optional<Refrigerator> findById(Integer id) {
+        Refrigerator refrigerator = em.find(Refrigerator.class, id);
+        return Optional.ofNullable(refrigerator);
     }
 
     @Override
-    public Refrigerator findFullById(Integer id) {
+    public Optional<Refrigerator> findFullById(Integer id) {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
         CriteriaQuery<Refrigerator> criteriaQuery = criteriaBuilder
                 .createQuery(Refrigerator.class);
@@ -44,8 +47,8 @@ public class RefrigeratorDaoImpl implements RefrigeratorDao {
                 id);
         criteriaQuery.where(predicate);
         TypedQuery<Refrigerator> query = em.createQuery(criteriaQuery);
-        Refrigerator refrigerator = query.getSingleResult();
-        return refrigerator;
+        List<Refrigerator> refrigerators = query.getResultList();
+        return DataAccessUtils.optionalResult(refrigerators);
     }
 
     @Override

@@ -94,7 +94,8 @@ public class PublicServiceImpl implements PublicApiService {
                 throw new IncompatibleVersionException("", version,
                         clientVersion);
             }
-            User user = userDao.findByLogin(registerArgument.login());
+            User user = userDao.findByLogin(registerArgument.login())
+                    .orElseThrow();
             if (user != null) {
                 throw new NameIsBusyException();
             }
@@ -143,7 +144,8 @@ public class PublicServiceImpl implements PublicApiService {
         String key = sb.toString();
         OffsetDateTime recoverPasswordValid = OffsetDateTime.now(clock);
         recoverPasswordValid = recoverPasswordValid.minusMonths(1);
-        User user = userDao.findByLoginAndEmail(login, email);
+        User user = userDao.findByLoginAndEmail(login, email)
+                .orElseThrow();
         user.setRecoverPasswordKey(key);
         user.setRecoverPasswordValid(recoverPasswordValid);
         userDao.save(user);
@@ -172,7 +174,7 @@ public class PublicServiceImpl implements PublicApiService {
         }
         SecurityContext securityContext = SecurityContextHolder.getContext();
         String unid = recoverSessionArg.unid();
-        User user = userDao.findByUnid(unid);
+        User user = userDao.findByUnid(unid).orElseThrow();
         if (user != null) {
 
             Set<GrantedAuthority> granted = new HashSet<GrantedAuthority>();

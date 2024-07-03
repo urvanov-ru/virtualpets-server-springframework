@@ -1,10 +1,9 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.dao;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,13 +26,14 @@ public class BuildingMaterialDaoImpl implements BuildingMaterialDao {
     
     @Override
     @Transactional(readOnly = true)
-    public BuildingMaterial findById(BuildingMaterialId id) {
-        return em.find(BuildingMaterial.class, id);
+    public Optional<BuildingMaterial> findById(BuildingMaterialId id) {
+        BuildingMaterial buildingMaterial = em.find(BuildingMaterial.class, id);
+        return Optional.ofNullable(buildingMaterial);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public BuildingMaterial findByCode(BuildingMaterialId code) {
+    public Optional<BuildingMaterial> findByCode(BuildingMaterialId code) {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
         CriteriaQuery<BuildingMaterial> criteriaQuery
                 = criteriaBuilder.createQuery(BuildingMaterial.class);
@@ -45,7 +45,8 @@ public class BuildingMaterialDaoImpl implements BuildingMaterialDao {
         criteriaQuery.where(predicate);
         TypedQuery<BuildingMaterial> query
                 = em.createQuery(criteriaQuery);
-        return query.getSingleResult();
+        List<BuildingMaterial> buildingMaterials = query.getResultList();
+        return DataAccessUtils.optionalResult(buildingMaterials);
     }
 
     @Override

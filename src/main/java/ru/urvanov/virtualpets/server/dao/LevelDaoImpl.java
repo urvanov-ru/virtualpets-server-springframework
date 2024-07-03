@@ -1,6 +1,7 @@
 package ru.urvanov.virtualpets.server.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,8 +21,9 @@ public class LevelDaoImpl implements LevelDao {
     
     @Transactional(readOnly = true)
     @Override
-    public Level findById(Integer id) {
-        return em.find(Level.class, id);
+    public Optional<Level> findById(Integer id) {
+        Level level = em.find(Level.class, id);
+        return Optional.ofNullable(level);
     }
 
     @Transactional(readOnly = true)
