@@ -15,13 +15,13 @@ import ru.urvanov.virtualpets.server.api.domain.JoinHiddenObjectsGameArg;
 import ru.urvanov.virtualpets.server.dao.exception.DaoException;
 import ru.urvanov.virtualpets.server.service.HiddenObjectsApiService;
 import ru.urvanov.virtualpets.server.service.domain.HiddenObjectsGameStatus;
-import ru.urvanov.virtualpets.server.service.domain.SelectedPet;
 import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 @RestController
 @RequestMapping(value = "rest/v1/HiddenObjectsService")
 public class HiddenObjectsController {
+    
     @Autowired
     private HiddenObjectsApiService hiddenObjectsService;
 

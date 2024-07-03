@@ -10,29 +10,29 @@ import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 public interface RoomApiService {
     GetRoomInfoResult getRoomInfo(UserPetDetails userPetDetails)
-            throws DaoException, ServiceException;
+            throws ServiceException;
 
     void buildRefrigerator(UserPetDetails userPetDetails, Point position)
-            throws DaoException, ServiceException;
+            throws ServiceException;
 
     void moveRefrigerator(UserPetDetails userPetDetails, Point position)
-            throws DaoException, ServiceException;
+            throws ServiceException;
 
     void upgradeRefrigerator(UserPetDetails userPetDetails)
-            throws DaoException, ServiceException;
+            throws ServiceException;
 
     public OpenBoxNewbieResult openBoxNewbie(
             UserPetDetails userPetDetails, int index)
-            throws DaoException, ServiceException;
+            throws ServiceException;
 
     void buildBookcase(UserPetDetails userPetDetails, Point position)
-            throws DaoException, ServiceException;
+            throws ServiceException;
 
     void upgradeBookcase(UserPetDetails userPetDetails)
-            throws DaoException, ServiceException;
+            throws ServiceException;
 
     void moveBookcase(UserPetDetails userPetDetails, Point position)
-            throws DaoException, ServiceException;
+            throws ServiceException;
 
     void buildMachineWithDrinks(UserPetDetails userPetDetails,
             Point position) throws DaoException, ServiceException;
@@ -41,13 +41,13 @@ public interface RoomApiService {
             Point position) throws DaoException, ServiceException;
 
     RoomBuildMenuCosts getBuildMenuCosts(UserPetDetails userPetDetails)
-            throws DaoException, ServiceException;
+            throws ServiceException;
 
     void upgradeMachineWithDrinks(UserPetDetails userPetDetails)
-            throws DaoException, ServiceException;
+            throws ServiceException;
 
     void pickJournalOnFloor(UserPetDetails userPetDetails)
-            throws DaoException, ServiceException;
+            throws ServiceException;
 
     void journalClosed(UserPetDetails userPetDetails) throws DaoException, ServiceException;
 }

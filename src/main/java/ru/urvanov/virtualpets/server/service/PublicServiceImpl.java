@@ -36,7 +36,6 @@ import ru.urvanov.virtualpets.server.api.domain.ServerInfo;
 import ru.urvanov.virtualpets.server.api.domain.ServerTechnicalInfo;
 import ru.urvanov.virtualpets.server.dao.UserDao;
 import ru.urvanov.virtualpets.server.dao.domain.User;
-import ru.urvanov.virtualpets.server.dao.exception.DaoException;
 import ru.urvanov.virtualpets.server.service.exception.IncompatibleVersionException;
 import ru.urvanov.virtualpets.server.service.exception.NameIsBusyException;
 import ru.urvanov.virtualpets.server.service.exception.SendMailException;
@@ -75,25 +74,27 @@ public class PublicServiceImpl implements PublicApiService {
     private Clock clock;
 
     @Override
-    public ServerInfo[] getServers(GetServersArg arg) throws ServiceException,
-            DaoException {
-        String clientVersion = arg.version();
+    public ServerInfo[] getServers(GetServersArg getServersArg)
+            throws ServiceException {
+        String clientVersion = getServersArg.version();
         if (!version.equals(clientVersion)) {
-            throw new IncompatibleVersionException("", version, clientVersion);
+            throw new IncompatibleVersionException(
+                    "", version, clientVersion);
         }
         return servers;
     }
 
     @Override
     @Transactional(rollbackFor = ServiceException.class)
-    public void register(RegisterArgument arg) throws ServiceException, DaoException {
+    public void register(RegisterArgument registerArgument)
+            throws ServiceException {
         try {
-            String clientVersion = arg.version();
+            String clientVersion = registerArgument.version();
             if (!version.equals(clientVersion)) {
                 throw new IncompatibleVersionException("", version,
                         clientVersion);
             }
-            User user = userDao.findByLogin(arg.login());
+            User user = userDao.findByLogin(registerArgument.login());
             if (user != null) {
                 throw new NameIsBusyException();
             }
@@ -102,10 +103,10 @@ public class PublicServiceImpl implements PublicApiService {
             }
         } catch (jakarta.persistence.NoResultException noResultException) {
             User user = new User();
-            user.setLogin(arg.login());
-            user.setName(arg.login());
-            user.setPassword(bcryptEncoder.encode(arg.password()));
-            user.setEmail(arg.email());
+            user.setLogin(registerArgument.login());
+            user.setName(registerArgument.login());
+            user.setPassword(bcryptEncoder.encode(registerArgument.password()));
+            user.setEmail(registerArgument.email());
             user.setRegistrationDate(OffsetDateTime.now(clock));
             user.setRole(ru.urvanov.virtualpets.server.dao.domain.Role.USER);
             userDao.save(user);
@@ -115,15 +116,16 @@ public class PublicServiceImpl implements PublicApiService {
 
     @Override
     @Transactional(rollbackFor = ServiceException.class)
-    public void recoverPassword(RecoverPasswordArg argument)
-            throws ServiceException, DaoException {
-        String clientVersion = argument.version();
+    public void recoverPassword(
+            RecoverPasswordArg recoverPasswordArgument)
+            throws ServiceException {
+        String clientVersion = recoverPasswordArgument.version();
         if (!version.equals(clientVersion)) {
             throw new IncompatibleVersionException("", version, clientVersion);
         }
 
-        String email = argument.email();
-        String login = argument.login();
+        String email = recoverPasswordArgument.email();
+        String login = recoverPasswordArgument.login();
 
         MessageDigest digest = null;
         try {
@@ -150,7 +152,7 @@ public class PublicServiceImpl implements PublicApiService {
         SimpleMailMessage msg = new SimpleMailMessage(this.templateMessage);
         msg.setTo(email);
         msg.setText("Dear " + user.getName()
-                + ", follow this link to recover password " + argument.host()
+                + ", follow this link to recover password " + recoverPasswordArgument.host()
                 + "/site/recoverPassword?recoverPasswordKey=" + key + " ");
         try {
             this.mailSender.send(msg);
@@ -162,14 +164,14 @@ public class PublicServiceImpl implements PublicApiService {
 
     @Override
     @Transactional(rollbackFor = ServiceException.class, readOnly = true)
-    public LoginResult recoverSession(RecoverSessionArg arg)
-            throws ServiceException, DaoException {
-        String clientVersion = arg.version();
+    public LoginResult recoverSession(RecoverSessionArg recoverSessionArg)
+            throws ServiceException {
+        String clientVersion = recoverSessionArg.version();
         if (!version.equals(clientVersion)) {
             throw new IncompatibleVersionException("", version, clientVersion);
         }
         SecurityContext securityContext = SecurityContextHolder.getContext();
-        String unid = arg.unid();
+        String unid = recoverSessionArg.unid();
         User user = userDao.findByUnid(unid);
         if (user != null) {
 
@@ -194,7 +196,7 @@ public class PublicServiceImpl implements PublicApiService {
 
     @Override
     public ServerTechnicalInfo getServerTechnicalInfo()
-            throws ServiceException, DaoException {
+            throws ServiceException {
         try {
             
             Properties properties = System.getProperties();

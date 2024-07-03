@@ -52,7 +52,6 @@ import ru.urvanov.virtualpets.server.dao.domain.PetJournalEntry;
 import ru.urvanov.virtualpets.server.dao.domain.Refrigerator;
 import ru.urvanov.virtualpets.server.dao.domain.RefrigeratorCost;
 import ru.urvanov.virtualpets.server.dao.domain.Room;
-import ru.urvanov.virtualpets.server.dao.exception.DaoException;
 import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.NotEnoughPetResourcesException;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
@@ -120,9 +119,9 @@ public class RoomServiceImpl implements RoomApiService {
 
 
     @Override
-    @Transactional(rollbackFor = {DaoException.class, ServiceException.class})
-    public GetRoomInfoResult getRoomInfo(UserPetDetails userPetDetails) throws DaoException,
-            ServiceException {
+    @Transactional(rollbackFor = ServiceException.class)
+    public GetRoomInfoResult getRoomInfo(UserPetDetails userPetDetails)
+            throws ServiceException {
         logger.info("getRoomInfo started.");
         Pet pet = petDao.findByIdWithJournalEntriesAndAchievements(userPetDetails.getPetId());
         ru.urvanov.virtualpets.server.api.domain.GetRoomInfoResult result = new ru.urvanov.virtualpets.server.api.domain.GetRoomInfoResult();
@@ -200,11 +199,12 @@ public class RoomServiceImpl implements RoomApiService {
     
 
     @Override
-    @Transactional(rollbackFor = {DaoException.class, ServiceException.class})
-    public OpenBoxNewbieResult openBoxNewbie(UserPetDetails userPetDetails, int index) throws DaoException,
-            ServiceException {
+    @Transactional(rollbackFor = ServiceException.class)
+    public OpenBoxNewbieResult openBoxNewbie(UserPetDetails userPetDetails, int index)
+            throws ServiceException {
         
-        Map<BuildingMaterialId, Integer> map = new HashMap<BuildingMaterialId, Integer>();
+        Map<BuildingMaterialId, Integer> map
+                = new HashMap<BuildingMaterialId, Integer>();
         Random random = new Random();
         map.put(BuildingMaterialId.TIMBER,
                 1 + random.nextInt(2));
@@ -229,17 +229,18 @@ public class RoomServiceImpl implements RoomApiService {
                     .getBuildingMaterials();
             for (Entry<BuildingMaterialId, Integer> entry : map
                     .entrySet()) {
-                BuildingMaterialId buildingMaterialType = conversionService
-                        .convert(entry.getKey(), BuildingMaterialId.class);
+                BuildingMaterialId buildingMaterialId = entry.getKey();
                 PetBuildingMaterial petBuildingMaterial = petBuildingMaterials
-                        .get(buildingMaterialType);
+                        .get(buildingMaterialId);
                 if (petBuildingMaterial == null) {
                     petBuildingMaterial = new PetBuildingMaterial();
-                    petBuildingMaterial.setBuildingMaterial(buildingMaterialDao.getReference(buildingMaterialType));
+                    petBuildingMaterial.setBuildingMaterial(
+                            buildingMaterialDao.getReference(
+                                    buildingMaterialId));
                     petBuildingMaterial.setBuildingMaterialCount(entry
                             .getValue());
                     petBuildingMaterial.setPet(pet);
-                    petBuildingMaterials.put(buildingMaterialType,
+                    petBuildingMaterials.put(buildingMaterialId,
                             petBuildingMaterial);
                 } else {
                     petBuildingMaterial
@@ -282,13 +283,15 @@ public class RoomServiceImpl implements RoomApiService {
     }
     
     @Override
-    @Transactional(rollbackFor = {DaoException.class, ServiceException.class})
+    @Transactional(rollbackFor = ServiceException.class)
     public void buildRefrigerator(UserPetDetails userPetDetails,
             ru.urvanov.virtualpets.server.api.domain.Point position)
-            throws DaoException, ServiceException {
-        Pet pet = petDao.findByIdWithFoodsAndJournalEntriesAndBuildingMaterials(userPetDetails.getPetId());
+            throws ServiceException {
+        Pet pet = petDao.findByIdWithFoodsAndJournalEntriesAndBuildingMaterials(
+                userPetDetails.getPetId());
         Room room = roomDao.findByPetId(pet.getId());
-        if (!pet.getJournalEntries().containsKey(JournalEntryId.BUILD_REFRIGERATOR)) {
+        if (!pet.getJournalEntries()
+                .containsKey(JournalEntryId.BUILD_REFRIGERATOR)) {
             throw new ServiceException("No now.");
         }
         
@@ -330,9 +333,9 @@ public class RoomServiceImpl implements RoomApiService {
 
 
     @Override
-    @Transactional(rollbackFor = {DaoException.class, ServiceException.class})
-    public void moveRefrigerator(UserPetDetails userPetDetails, Point position) throws DaoException,
-            ServiceException {
+    @Transactional(rollbackFor = ServiceException.class)
+    public void moveRefrigerator(UserPetDetails userPetDetails, Point position)
+            throws ServiceException {
         Room room = roomDao.findByPetId(userPetDetails.getPetId());
         if (room.getRefrigerator() == null) {
             throw new ServiceException("No refrigerator in your room.");
@@ -342,8 +345,9 @@ public class RoomServiceImpl implements RoomApiService {
     }
 
     @Override
-    @Transactional(rollbackFor = {DaoException.class, ServiceException.class})
-    public void upgradeRefrigerator(UserPetDetails userPetDetails) throws DaoException, ServiceException {
+    @Transactional(rollbackFor = ServiceException.class)
+    public void upgradeRefrigerator(UserPetDetails userPetDetails)
+            throws ServiceException {
         Pet pet = petDao.findFullById(userPetDetails.getPetId());
         Room room = roomDao.findByPetId(pet.getId());
         if (room.getRefrigerator() == null) {
@@ -365,8 +369,10 @@ public class RoomServiceImpl implements RoomApiService {
     }
 
     @Override
-    @Transactional(rollbackFor = {DaoException.class, ServiceException.class})
-    public void buildBookcase(UserPetDetails userPetDetails, Point position) throws DaoException, ServiceException {
+    @Transactional(rollbackFor = ServiceException.class)
+    public void buildBookcase(
+            UserPetDetails userPetDetails, Point position)
+            throws ServiceException {
         Pet pet = petDao.findByIdWithBooksAndJournalEntriesAndBuildingMaterials(userPetDetails.getPetId());
         Room room = roomDao.findByPetId(pet.getId());
         if (!pet.getJournalEntries()
@@ -405,8 +411,9 @@ public class RoomServiceImpl implements RoomApiService {
     }
 
     @Override
-    @Transactional(rollbackFor = {DaoException.class, ServiceException.class})
-    public void upgradeBookcase(UserPetDetails userPetDetails) throws DaoException, ServiceException {
+    @Transactional(rollbackFor = ServiceException.class)
+    public void upgradeBookcase(UserPetDetails userPetDetails)
+            throws ServiceException {
         Pet pet = petDao.findFullById(userPetDetails.getPetId());
         Room room = roomDao.findByPetId(pet.getId());
         if (room.getBookcase() == null) {
@@ -427,8 +434,9 @@ public class RoomServiceImpl implements RoomApiService {
     }
 
     @Override
-    @Transactional(rollbackFor = {DaoException.class, ServiceException.class})
-    public void moveBookcase(UserPetDetails userPetDetails, Point position) throws DaoException, ServiceException {
+    @Transactional(rollbackFor = ServiceException.class)
+    public void moveBookcase(UserPetDetails userPetDetails, Point position)
+            throws ServiceException {
         Room room = roomDao.findByPetId(userPetDetails.getPetId());
         if (room.getBookcase() == null) {
             throw new ServiceException("No bookcase in your room.");
@@ -438,10 +446,12 @@ public class RoomServiceImpl implements RoomApiService {
     }
 
     @Override
-    @Transactional(rollbackFor = {DaoException.class, ServiceException.class})
-    public void buildMachineWithDrinks(UserPetDetails userPetDetails, Point position) throws DaoException,
-            ServiceException {
-        Pet pet = petDao.findByIdWithDrinksAndJournalEntriesAndBuildingMaterialsAndAchievements(userPetDetails.getPetId());
+    @Transactional(rollbackFor = ServiceException.class)
+    public void buildMachineWithDrinks(
+            UserPetDetails userPetDetails, Point position)
+            throws ServiceException {
+        Pet pet = petDao.findByIdWithDrinksAndJournalEntriesAndBuildingMaterialsAndAchievements(
+                userPetDetails.getPetId());
         Room room = roomDao.findByPetId(pet.getId());
         if (!pet.getJournalEntries()
                 .containsKey(JournalEntryId.BUILD_MACHINE_WITH_DRINKS)) {
@@ -487,9 +497,10 @@ public class RoomServiceImpl implements RoomApiService {
     }
 
     @Override
-    @Transactional(rollbackFor = {DaoException.class, ServiceException.class})
-    public void moveMachineWithDrinks(UserPetDetails userPetDetails, Point position) throws DaoException,
-            ServiceException {
+    @Transactional(rollbackFor = ServiceException.class)
+    public void moveMachineWithDrinks(
+            UserPetDetails userPetDetails, Point position)
+            throws ServiceException {
         Room room = roomDao.findByPetId(userPetDetails.getPetId());
         if (room.getMachineWithDrinks() == null) {
             throw new ServiceException("No drink in your room.");
@@ -499,8 +510,8 @@ public class RoomServiceImpl implements RoomApiService {
     }
 
     @Override
-    public RoomBuildMenuCosts getBuildMenuCosts(UserPetDetails userPetDetails) throws DaoException,
-            ServiceException {
+    public RoomBuildMenuCosts getBuildMenuCosts(UserPetDetails userPetDetails)
+            throws ServiceException {
         RoomBuildMenuCosts roomBuildMenuCosts = new RoomBuildMenuCosts();
         List<Map<BuildingMaterialId, Integer>> refrigeratorCosts = new ArrayList<Map<BuildingMaterialId, Integer>>();
         List<Refrigerator> refrigerators = refrigeratorDao.findAllFull();
@@ -545,9 +556,9 @@ public class RoomServiceImpl implements RoomApiService {
     }
 
     @Override
-    @Transactional(rollbackFor = {DaoException.class, ServiceException.class})
-    public void upgradeMachineWithDrinks(UserPetDetails userPetDetails) throws DaoException,
-            ServiceException {
+    @Transactional(rollbackFor = ServiceException.class)
+    public void upgradeMachineWithDrinks(UserPetDetails userPetDetails)
+            throws ServiceException {
         Pet pet = petDao.findFullById(userPetDetails.getPetId());
         Room room = roomDao.findByPetId(pet.getId());
         if (room.getMachineWithDrinks() == null) {
@@ -568,8 +579,9 @@ public class RoomServiceImpl implements RoomApiService {
     }
 
     @Override
-    @Transactional(rollbackFor = {DaoException.class, ServiceException.class})
-    public void pickJournalOnFloor(UserPetDetails userPetDetails) throws DaoException, ServiceException {
+    @Transactional(rollbackFor = ServiceException.class)
+    public void pickJournalOnFloor(UserPetDetails userPetDetails)
+            throws ServiceException {
         Room room = roomDao.findByPetId(userPetDetails.getPetId());
         if (room.isJournalOnFloor() == false)
             throw new ServiceException("There isn't any journal in your room.");
@@ -590,8 +602,9 @@ public class RoomServiceImpl implements RoomApiService {
     }
 
     @Override
-    @Transactional(rollbackFor = {DaoException.class, ServiceException.class})
-    public void journalClosed(UserPetDetails userPetDetails) throws DaoException, ServiceException {
+    @Transactional(rollbackFor = ServiceException.class)
+    public void journalClosed(UserPetDetails userPetDetails)
+            throws ServiceException {
         long count =  petJournalEntryDao
                 .countByPetIdAndJournalEntryCode(userPetDetails.getPetId(),
                         JournalEntryId.OPEN_NEWBIE_BOXES);

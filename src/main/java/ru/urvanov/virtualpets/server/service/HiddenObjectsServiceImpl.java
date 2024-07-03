@@ -48,7 +48,6 @@ import ru.urvanov.virtualpets.server.dao.domain.PetFood;
 import ru.urvanov.virtualpets.server.dao.domain.Refrigerator;
 import ru.urvanov.virtualpets.server.dao.domain.Room;
 import ru.urvanov.virtualpets.server.dao.domain.User;
-import ru.urvanov.virtualpets.server.dao.exception.DaoException;
 import ru.urvanov.virtualpets.server.service.domain.HiddenObjectsGameStatus;
 import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
@@ -118,7 +117,7 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsApiService {
             UserPetDetails userPetDetails,
             HiddenObjectsGameStatus hiddenObjectsGameStatus,
             ru.urvanov.virtualpets.server.api.domain.JoinHiddenObjectsGameArg joinHiddenObjectsGameArg)
-            throws DaoException, ServiceException {
+            throws ServiceException {
         User user = userDao.findById(userPetDetails.getUserId());
         
         Pet pet = petDao.findById(userPetDetails.getPetId());
@@ -202,7 +201,6 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsApiService {
                 .getCollectedObjects();
         ru.urvanov.virtualpets.server.api.domain.HiddenObjectsCollected[] resultCollectedObjects = new ru.urvanov.virtualpets.server.api.domain.HiddenObjectsCollected[collectedObjects.length];
         for (n = 0; n < collectedObjects.length; n++) {
-            
             int objectId = collectedObjects[n].getObjectId();
             ru.urvanov.virtualpets.server.api.domain.HiddenObjectsPlayer player = result.getPlayer(collectedObjects[n].getPlayer()
                     .getUserId());
@@ -246,7 +244,7 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsApiService {
     public synchronized ru.urvanov.virtualpets.server.api.domain.HiddenObjectsGame getGameInfo(
             UserPetDetails userPetDetails,
             HiddenObjectsGameStatus hiddenObjectsGameStatus)
-            throws DaoException, ServiceException {
+            throws ServiceException {
         
 //        if (hiddenObjectsGameStatus.isStarted() == null) {
 //            hiddenObjectsGameStarted = false;
@@ -295,7 +293,7 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsApiService {
             UserPetDetails userPetDetails,
             HiddenObjectsGameStatus hiddenObjectsGameStatus,
             ru.urvanov.virtualpets.server.api.domain.CollectObjectArg arg)
-            throws DaoException, ServiceException {
+            throws ServiceException {
 
         Integer userId = userPetDetails.getUserId();
 
@@ -538,7 +536,7 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsApiService {
     public synchronized ru.urvanov.virtualpets.server.api.domain.HiddenObjectsGame startGame(
             UserPetDetails userPetDetails,
             HiddenObjectsGameStatus hiddenObjectsGameStatus)
-            throws DaoException, ServiceException {
+            throws ServiceException {
 //        if (hiddenObjectsGameStarted == null) {
 //            hiddenObjectsGameStarted = false;
 //        }

@@ -48,10 +48,9 @@ public class UserServiceImpl
     private Clock clock;
 
     @Override
-    @Transactional(rollbackFor = { DaoException.class,
-            ServiceException.class })
+    @Transactional(rollbackFor = ServiceException.class)
     public LoginResult login(LoginArg loginArg)
-            throws ServiceException, DaoException {
+            throws ServiceException {
         String clientVersion = loginArg.version();
         if (!version.equals(clientVersion)) {
             throw new IncompatibleVersionException("", version,
@@ -73,7 +72,8 @@ public class UserServiceImpl
 
     @Override
     public RefreshUsersOnlineResult getUsersOnline(
-            UserPetDetails userPetDetails) {
+            UserPetDetails userPetDetails) 
+            throws ServiceException {
         List<User> users = userDao.findOnline();
         List<UserInfo> userInfos = users.stream()
                 .map(u -> new UserInfo(u.getId(), u.getName()))
@@ -84,7 +84,8 @@ public class UserServiceImpl
     @Override
     public UserInformation getUserInformation(
             UserPetDetails userPetDetails,
-            UserInformationArg userInformationArg) {
+            UserInformationArg userInformationArg)
+            throws ServiceException{
         Integer userId = userInformationArg.getUserId();
         User user = userDao.findById(userId);
         UserInformation result = new UserInformation();
@@ -100,10 +101,9 @@ public class UserServiceImpl
     }
 
     @Override
-    @Transactional(rollbackFor = { DaoException.class,
-            ServiceException.class })
+    @Transactional(rollbackFor = ServiceException.class)
     public void closeSession(UserPetDetails userPetDetails)
-            throws DaoException, ServiceException {
+            throws ServiceException {
         User user = userDao.findById(userPetDetails.getUserId());
         user.setUnid(null);
     }
@@ -112,7 +112,7 @@ public class UserServiceImpl
     public void updateUserInformation(
             UserPetDetails userPetDetails,
             UserInformation userInformation)
-            throws ServiceException, DaoException {
+            throws ServiceException {
         byte[] photo = userInformation.getPhoto();
         if (photo != null) {
             if (photo.length > 100000) {

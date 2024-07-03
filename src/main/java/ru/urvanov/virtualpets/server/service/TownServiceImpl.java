@@ -18,7 +18,6 @@ import ru.urvanov.virtualpets.server.dao.domain.JournalEntryId;
 import ru.urvanov.virtualpets.server.dao.domain.Level;
 import ru.urvanov.virtualpets.server.dao.domain.Pet;
 import ru.urvanov.virtualpets.server.dao.domain.PetJournalEntry;
-import ru.urvanov.virtualpets.server.dao.exception.DaoException;
 import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
@@ -38,10 +37,11 @@ public class TownServiceImpl implements ru.urvanov.virtualpets.server.service.To
     private Clock clock;
 
     @Override
-    @Transactional(rollbackFor = {DaoException.class, ServiceException.class})
-    public GetTownInfoResult getTownInfo(UserPetDetails userPetDetails) throws DaoException,
-            ServiceException {
-        Pet pet = petDao.findByIdWithJournalEntriesAndAchievements(userPetDetails.getPetId());
+    @Transactional(rollbackFor = ServiceException.class)
+    public GetTownInfoResult getTownInfo(UserPetDetails userPetDetails)
+            throws ServiceException {
+        Pet pet = petDao.findByIdWithJournalEntriesAndAchievements(
+                userPetDetails.getPetId());
 
         Map<JournalEntryId, PetJournalEntry> mapJournalEntries = pet
                 .getJournalEntries();

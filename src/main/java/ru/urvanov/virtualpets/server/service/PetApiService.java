@@ -12,57 +12,55 @@ import ru.urvanov.virtualpets.server.api.domain.PetListResult;
 import ru.urvanov.virtualpets.server.api.domain.SatietyArg;
 import ru.urvanov.virtualpets.server.api.domain.SavePetCloths;
 import ru.urvanov.virtualpets.server.api.domain.SelectPetArg;
-import ru.urvanov.virtualpets.server.auth.UserDetailsImpl;
 import ru.urvanov.virtualpets.server.dao.exception.DaoException;
-import ru.urvanov.virtualpets.server.service.domain.SelectedPet;
 import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 public interface PetApiService {
     PetListResult getUserPets(UserPetDetails userPetDetails)
-            throws DaoException, ServiceException;
+            throws ServiceException;
 
     void create(UserPetDetails userPetDetails, CreatePetArg arg)
-            throws DaoException, ServiceException;
+            throws ServiceException;
 
     void select(UserPetDetails userPetDetails, SelectPetArg arg)
-            throws DaoException, ServiceException;
+            throws ServiceException;
 
     void drink(UserPetDetails userPetDetails, DrinkArg arg)
-            throws DaoException, ServiceException;
+            throws ServiceException;
 
     void satiety(UserPetDetails userPetDetails, SatietyArg satietyArg)
-            throws DaoException, ServiceException;
+            throws ServiceException;
 
     void education(UserPetDetails userPetDetails)
-            throws DaoException, ServiceException;
+            throws ServiceException;
 
     void mood(UserPetDetails userPetDetails)
-            throws DaoException, ServiceException;
+            throws ServiceException;
 
     GetPetBooksResult getPetBooks(UserPetDetails userPetDetails)
-            throws DaoException, ServiceException;
+            throws ServiceException;
 
     GetPetClothsResult getPetCloths(UserPetDetails userPetDetails)
-            throws DaoException, ServiceException;
+            throws ServiceException;
 
     void savePetCloths(UserPetDetails userPetDetails, SavePetCloths saveClothArg)
-            throws DaoException, ServiceException;
+            throws ServiceException;
 
     GetPetDrinksResult getPetDrinks(UserPetDetails userPetDetails)
-            throws DaoException, ServiceException;
+            throws ServiceException;
 
     GetPetFoodsResult getPetFoods(UserPetDetails userPetDetails)
-            throws DaoException, ServiceException;
+            throws ServiceException;
 
     GetPetJournalEntriesResult getPetJournalEntries(
             UserPetDetails userPetDetails, int count)
-            throws DaoException, ServiceException;
+            throws ServiceException;
 
     GetPetRucksackInnerResult getPetRucksackInner(
             UserPetDetails userPetDetails)
-            throws DaoException, ServiceException;
+            throws ServiceException;
 
     void delete(UserPetDetails userPetDetails, Integer petId)
-            throws DaoException, ServiceException;;
+            throws ServiceException;;
 }
