@@ -7,7 +7,8 @@ import ru.urvanov.virtualpets.server.dao.domain.FoodId;
 import ru.urvanov.virtualpets.server.dao.domain.Pet;
 import ru.urvanov.virtualpets.server.dao.domain.PetFood;
 
-interface PetFoodDao {
+public interface PetFoodDao {
+
     Optional<PetFood> findById(Integer id);
 
     List<PetFood> findByPetId(Integer petId);

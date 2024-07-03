@@ -105,7 +105,8 @@ public class UserServiceImpl
     @Transactional(rollbackFor = ServiceException.class)
     public void closeSession(UserPetDetails userPetDetails)
             throws ServiceException {
-        User user = userDao.findById(userPetDetails.getUserId());
+        User user = userDao.findById(userPetDetails.getUserId())
+                .orElseThrow();
         user.setUnid(null);
     }
 
@@ -159,7 +160,8 @@ public class UserServiceImpl
     @Override
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
-        User user = userDao.findByLogin(username);
+        User user = userDao.findByLogin(username)
+                .orElseThrow();
         if (user == null) {
             throw new UsernameNotFoundException(username);
         }

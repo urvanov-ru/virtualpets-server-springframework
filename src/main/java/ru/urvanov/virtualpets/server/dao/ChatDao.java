@@ -5,7 +5,8 @@ import java.util.Optional;
 
 import ru.urvanov.virtualpets.server.dao.domain.Chat;
 
-interface ChatDao {
+public interface ChatDao {
+
     Optional<Chat> findById(Integer id);
 
     List<Chat> findLast(Integer count, Integer userId);

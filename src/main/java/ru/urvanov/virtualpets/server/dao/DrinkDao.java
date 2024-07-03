@@ -7,6 +7,7 @@ import ru.urvanov.virtualpets.server.dao.domain.Drink;
 import ru.urvanov.virtualpets.server.dao.domain.DrinkId;
 
 public interface DrinkDao {
+
     Optional<Drink> findById(DrinkId id);
 
     Drink getReference(DrinkId id);

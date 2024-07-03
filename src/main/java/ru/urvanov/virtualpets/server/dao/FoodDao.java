@@ -7,6 +7,7 @@ import ru.urvanov.virtualpets.server.dao.domain.Food;
 import ru.urvanov.virtualpets.server.dao.domain.FoodId;
 
 public interface FoodDao {
+
     Optional<Food> findById(FoodId id);
 
     Food getReference(FoodId id);

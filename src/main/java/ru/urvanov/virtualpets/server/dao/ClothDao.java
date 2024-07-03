@@ -5,7 +5,8 @@ import java.util.Optional;
 
 import ru.urvanov.virtualpets.server.dao.domain.Cloth;
 
-interface ClothDao {
+public interface ClothDao {
+
     Optional<Cloth> findById(String id);
 
     Cloth getReference(String id);

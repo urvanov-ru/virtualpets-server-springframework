@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.testcontainers.shaded.com.google.common.base.Optional;
 
 import ru.urvanov.virtualpets.server.controller.site.domain.RecoverPassword;
 import ru.urvanov.virtualpets.server.dao.domain.User;
@@ -44,9 +45,9 @@ public class RecoverPasswordController extends ControllerBase {
 
     @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
     public String changePassword(RecoverPassword recoverPassword, BindingResult bindingResult, Model model, Locale locale) {
-        User user = userService.findByRecoverPasswordKey(recoverPassword
+        Optional<User> user = userService.findByRecoverPasswordKey(recoverPassword
                 .getRecoverPasswordKey());
-        if (user != null) {
+        if (user.isPresent()) {
 //            MessageDigest md5;
 //            try {
 //                md5 = MessageDigest.getInstance("MD5");

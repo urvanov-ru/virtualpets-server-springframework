@@ -11,9 +11,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.springframework-version>6.1.10</org.springframework-version>
         <org.aspectj-version>1.9.21</org.aspectj-version>
-        <org.springframework-security-version>6.1.2</org.springframework-security-version>
+        <org.springframework-security-version>6.3.1</org.springframework-security-version>
         <jackson.version>2.15.2</jackson.version>
-        <hibernate.version>6.2.6.Final</hibernate.version>
+        <hibernate.version>6.5.2.Final</hibernate.version>
         <hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
     </properties>
     <dependencies>

@@ -1,6 +1,7 @@
 package ru.urvanov.virtualpets.server.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import ru.urvanov.virtualpets.server.dao.domain.User;
 import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
@@ -12,6 +13,6 @@ public interface UserService {
 
     List<User> findLastRegisteredUsers(int start, int limit);
 
-    User findByRecoverPasswordKey(String recoverPasswordKey);
+    Optional<User> findByRecoverPasswordKey(String recoverPasswordKey);
 
 }

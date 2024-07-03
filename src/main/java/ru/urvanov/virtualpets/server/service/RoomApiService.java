@@ -4,7 +4,6 @@ import ru.urvanov.virtualpets.server.api.domain.GetRoomInfoResult;
 import ru.urvanov.virtualpets.server.api.domain.OpenBoxNewbieResult;
 import ru.urvanov.virtualpets.server.api.domain.Point;
 import ru.urvanov.virtualpets.server.api.domain.RoomBuildMenuCosts;
-import ru.urvanov.virtualpets.server.dao.exception.DaoException;
 import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
@@ -35,10 +34,10 @@ public interface RoomApiService {
             throws ServiceException;
 
     void buildMachineWithDrinks(UserPetDetails userPetDetails,
-            Point position) throws DaoException, ServiceException;
+            Point position) throws ServiceException;
 
     void moveMachineWithDrinks(UserPetDetails userPetDetails,
-            Point position) throws DaoException, ServiceException;
+            Point position) throws ServiceException;
 
     RoomBuildMenuCosts getBuildMenuCosts(UserPetDetails userPetDetails)
             throws ServiceException;
@@ -49,5 +48,6 @@ public interface RoomApiService {
     void pickJournalOnFloor(UserPetDetails userPetDetails)
             throws ServiceException;
 
-    void journalClosed(UserPetDetails userPetDetails) throws DaoException, ServiceException;
+    void journalClosed(UserPetDetails userPetDetails)
+            throws ServiceException;
 }

@@ -98,13 +98,10 @@ public class RoomServiceImpl implements RoomApiService {
     private LevelDao levelDao;
     
     @Autowired
-    private ConversionService conversionService;
-    
-    @Autowired
     private Clock clock;
 
     private Room findOrCreateByPet(Pet pet) {
-        Room room = roomDao.findByPetIdOrNull(pet.getId()).orElseThrow();
+        Room room = roomDao.findByPetId(pet.getId()).orElseThrow();
         if (room == null) {
             room = new Room();
             room.setPetId(pet.getId());
