@@ -19,7 +19,7 @@ import ru.urvanov.virtualpets.server.api.domain.ServerTechnicalInfo;
 import ru.urvanov.virtualpets.server.service.PublicApiService;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
-@RestController    // (1)
+@RestController // (1)
 @RequestMapping(value = "rest/v1/PublicService") // (2)
 public class PublicController extends ControllerBase { // (3)
 
@@ -36,22 +36,24 @@ public class PublicController extends ControllerBase { // (3)
 
     @ResponseStatus(HttpStatus.NO_CONTENT) // (7)
     @RequestMapping(method = RequestMethod.POST, value = "register")//(8)
-    public void register(@RequestBody RegisterArgument arg) // (9)
+    public void register(
+            @RequestBody RegisterArgument registerArgument) // (9)
             throws ServiceException {
-        publicService.register(arg);
+        publicService.register(registerArgument);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(method = RequestMethod.POST, value = "recoverPassword")
-    public void recoverPassword(RecoverPasswordArg argument)
+    public void recoverPassword(RecoverPasswordArg recoverPasswordArg)
             throws ServiceException {
-        publicService.recoverPassword(argument);
+        publicService.recoverPassword(recoverPasswordArg);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "recoverSession")
-    public LoginResult recoverSession(RecoverSessionArg arg)
+    public LoginResult recoverSession(
+            RecoverSessionArg recoverSessionArg)
             throws ServiceException {
-        return publicService.recoverSession(arg);
+        return publicService.recoverSession(recoverSessionArg);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "server-technical-info")
