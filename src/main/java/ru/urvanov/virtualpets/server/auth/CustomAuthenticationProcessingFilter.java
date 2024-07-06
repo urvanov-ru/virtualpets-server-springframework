@@ -89,7 +89,6 @@ public class CustomAuthenticationProcessingFilter
             ServletException {
         LoginArg creds = new ObjectMapper()
                 .readValue(request.getInputStream(), LoginArg.class);
-
         Authentication authentication = getAuthenticationManager()
                 .authenticate(new UsernamePasswordAuthenticationToken(
                         creds.login(), creds.password(),

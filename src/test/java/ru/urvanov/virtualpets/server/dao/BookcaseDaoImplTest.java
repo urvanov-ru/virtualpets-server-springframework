@@ -1,25 +1,18 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.dao;
 
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import jakarta.persistence.NoResultException;
 import ru.urvanov.virtualpets.server.dao.domain.Bookcase;
 import ru.urvanov.virtualpets.server.test.annotation.DataSets;
 
-/**
- * @author fedya
- *
- */
 public class BookcaseDaoImplTest extends AbstractDaoImplTest {
     
     @Autowired
@@ -43,8 +36,8 @@ public class BookcaseDaoImplTest extends AbstractDaoImplTest {
     @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/BookcaseServiceImplTest.xls")
     @Test
     void testFind3() {
-        Bookcase bookcase = bookcaseDao.findById(-1).orElseThrow();
-        assertNull(bookcase);
+        Optional<Bookcase> bookcase = bookcaseDao.findById(-1);
+        assertTrue(bookcase.isEmpty());
     }
     
     @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/BookcaseServiceImplTest.xls")

@@ -1,6 +1,7 @@
 package ru.urvanov.virtualpets.server.controller.site;
 
 import java.util.Locale;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +12,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.testcontainers.shaded.com.google.common.base.Optional;
 
 import ru.urvanov.virtualpets.server.controller.site.domain.RecoverPassword;
 import ru.urvanov.virtualpets.server.dao.domain.User;

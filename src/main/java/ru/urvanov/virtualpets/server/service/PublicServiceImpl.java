@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.Set;
 
@@ -88,30 +89,24 @@ public class PublicServiceImpl implements PublicApiService {
     @Transactional(rollbackFor = ServiceException.class)
     public void register(RegisterArgument registerArgument)
             throws ServiceException {
-        try {
-            String clientVersion = registerArgument.version();
-            if (!version.equals(clientVersion)) {
-                throw new IncompatibleVersionException("", version,
-                        clientVersion);
-            }
-            User user = userDao.findByLogin(registerArgument.login())
-                    .orElseThrow();
-            if (user != null) {
-                throw new NameIsBusyException();
-            }
-            if (user == null) {
-                throw new jakarta.persistence.NoResultException();
-            }
-        } catch (jakarta.persistence.NoResultException noResultException) {
-            User user = new User();
-            user.setLogin(registerArgument.login());
-            user.setName(registerArgument.login());
-            user.setPassword(bcryptEncoder.encode(registerArgument.password()));
-            user.setEmail(registerArgument.email());
-            user.setRegistrationDate(OffsetDateTime.now(clock));
-            user.setRole(ru.urvanov.virtualpets.server.dao.domain.Role.USER);
-            userDao.save(user);
+        String clientVersion = registerArgument.version();
+        if (!version.equals(clientVersion)) {
+            throw new IncompatibleVersionException("", version,
+                    clientVersion);
         }
+        Optional<User> existUser = userDao.findByLogin(
+                registerArgument.login());
+        if (existUser.isPresent()) {
+            throw new NameIsBusyException();
+        }
+        User user = new User();
+        user.setLogin(registerArgument.login());
+        user.setName(registerArgument.login());
+        user.setPassword(bcryptEncoder.encode(registerArgument.password()));
+        user.setEmail(registerArgument.email());
+        user.setRegistrationDate(OffsetDateTime.now(clock));
+        user.setRole(ru.urvanov.virtualpets.server.dao.domain.Role.USER);
+        userDao.save(user);
     }
 
 

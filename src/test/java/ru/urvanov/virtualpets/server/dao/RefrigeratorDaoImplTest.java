@@ -1,24 +1,16 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.dao;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import jakarta.persistence.NoResultException;
-import ru.urvanov.virtualpets.server.dao.RefrigeratorDao;
 import ru.urvanov.virtualpets.server.dao.domain.Refrigerator;
 import ru.urvanov.virtualpets.server.test.annotation.DataSets;
 
-/**
- * @author fedya
- *
- */
 public class RefrigeratorDaoImplTest extends AbstractDaoImplTest {
 
     @Autowired
@@ -44,15 +36,14 @@ public class RefrigeratorDaoImplTest extends AbstractDaoImplTest {
     @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/RefrigeratorServiceImplTest.xls")
     @Test
     public void testFind3() {
-        Refrigerator refrigerator = refrigeratorDao.findById(-1)
-                .orElseThrow();
-        assertNull(refrigerator);
+        Optional<Refrigerator> refrigerator = refrigeratorDao.findById(-1);
+        assertTrue(refrigerator.isEmpty());
     }
 
     @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/RefrigeratorServiceImplTest.xls")
     @Test
     public void testFind4() {
-        assertThrows(NoResultException.class,
-                () -> refrigeratorDao.findFullById(-1));
+        Optional<Refrigerator> refrigerator = refrigeratorDao.findFullById(-1);
+        assertTrue(refrigerator.isEmpty());
     }
 }

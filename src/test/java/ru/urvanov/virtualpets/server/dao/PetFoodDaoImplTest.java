@@ -1,32 +1,21 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import jakarta.persistence.NoResultException;
-import ru.urvanov.virtualpets.server.dao.FoodDao;
-import ru.urvanov.virtualpets.server.dao.PetDao;
-import ru.urvanov.virtualpets.server.dao.PetFoodDao;
 import ru.urvanov.virtualpets.server.dao.domain.Food;
 import ru.urvanov.virtualpets.server.dao.domain.FoodId;
 import ru.urvanov.virtualpets.server.dao.domain.Pet;
 import ru.urvanov.virtualpets.server.dao.domain.PetFood;
 import ru.urvanov.virtualpets.server.test.annotation.DataSets;
 
-/**
- * @author fedya
- *
- */
 public class PetFoodDaoImplTest extends AbstractDaoImplTest {
 
     @Autowired
@@ -87,7 +76,8 @@ public class PetFoodDaoImplTest extends AbstractDaoImplTest {
     @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/PetFoodServiceImplTest.xls")
     @Test
     public void testFindByPetIdAndFoodType2() {
-        assertThrows(NoResultException.class, () -> petFoodDao
-                .findByPetIdAndFoodType(13463456, FoodId.CHOCOLATE));
+        Optional<PetFood> petFood = petFoodDao
+                .findByPetIdAndFoodType(13463456, FoodId.CHOCOLATE);
+        assertTrue(petFood.isEmpty());
     }
 }

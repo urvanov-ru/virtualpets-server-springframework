@@ -34,42 +34,16 @@
         class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
         <property name="converters">
             <set>
-                <!--<bean
-                    class="ru.urvanov.virtualpets.server.convserv.PetTypeServerToSharedConverter" />
                 <bean
-                    class="ru.urvanov.virtualpets.server.convserv.PetTypeSharedToServerConverter" />
+                    class="ru.urvanov.virtualpets.server.convserv.BookToApiConverter" />
                 <bean
-                    class="ru.urvanov.virtualpets.server.convserv.RoleServerToSharedConverter" />
+                    class="ru.urvanov.virtualpets.server.convserv.ClothToApiConverter" />
                 <bean
-                    class="ru.urvanov.virtualpets.server.convserv.RoleSharedToServerConverter" />
+                    class="ru.urvanov.virtualpets.server.convserv.DrinkToApiConverter" />
                 <bean
-                    class="ru.urvanov.virtualpets.server.convserv.FoodTypeServerToSharedConverter" />
+                    class="ru.urvanov.virtualpets.server.convserv.FoodToApiConverter" />
                 <bean
-                    class="ru.urvanov.virtualpets.server.convserv.FoodTypeSharedToServerConverter" />
-                <bean
-                    class="ru.urvanov.virtualpets.server.convserv.ClothTypeServerToSharedConverter" />
-                <bean
-                    class="ru.urvanov.virtualpets.server.convserv.ClothTypeSharedToServerConverter" />
-                <bean
-                    class="ru.urvanov.virtualpets.server.convserv.SexServerToSharedConverter" />
-                <bean
-                    class="ru.urvanov.virtualpets.server.convserv.SexSharedToServerConverter" />
-                <bean
-                    class="ru.urvanov.virtualpets.server.convserv.BuildingMaterialTypeServerToSharedConverter" />
-                <bean
-                    class="ru.urvanov.virtualpets.server.convserv.BuildingMaterialTypeSharedToServerConverter" />
-                <bean
-                    class="ru.urvanov.virtualpets.server.convserv.DrinkTypeServerToSharedConverter" />
-                <bean
-                    class="ru.urvanov.virtualpets.server.convserv.DrinkTypeSharedToServerConverter" />
-                <bean
-                    class="ru.urvanov.virtualpets.server.convserv.JournalEntryTypeSharedToServerConverter" />
-                <bean
-                    class="ru.urvanov.virtualpets.server.convserv.JournalEntryTypeServerToSharedConverter" />
-                <bean
-                    class="ru.urvanov.virtualpets.server.convserv.AchievementCodeServerToSharedConverter" />
-                <bean
-                    class="ru.urvanov.virtualpets.server.convserv.AchievementCodeSharedToServerConverter" />-->
+                    class="ru.urvanov.virtualpets.server.convserv.PetToApiConverter" />
             </set>
         </property>
     </bean>

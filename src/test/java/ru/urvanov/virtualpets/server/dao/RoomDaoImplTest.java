@@ -1,28 +1,18 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.dao;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import jakarta.persistence.NoResultException;
-import ru.urvanov.virtualpets.server.dao.PetDao;
-import ru.urvanov.virtualpets.server.dao.RoomDao;
 import ru.urvanov.virtualpets.server.dao.domain.Pet;
 import ru.urvanov.virtualpets.server.dao.domain.Room;
 import ru.urvanov.virtualpets.server.test.annotation.DataSets;
 
-/**
- * @author fedya
- *
- */
 public class RoomDaoImplTest extends AbstractDaoImplTest {
     
     @Autowired
@@ -42,7 +32,8 @@ public class RoomDaoImplTest extends AbstractDaoImplTest {
     @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/RoomServiceImplTest.xls")
     @Test
     public void testFind2() {
-        assertThrows(NoResultException.class, () -> roomDao.findByPetId(-1));
+        Optional<Room> room = roomDao.findByPetId(-1);
+        assertTrue(room.isEmpty());
     }
     
     @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/RoomServiceImplTest.xls")

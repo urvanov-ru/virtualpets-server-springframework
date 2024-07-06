@@ -1,11 +1,11 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.dao;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +15,6 @@ import ru.urvanov.virtualpets.server.dao.MachineWithDrinksDao;
 import ru.urvanov.virtualpets.server.dao.domain.MachineWithDrinks;
 import ru.urvanov.virtualpets.server.test.annotation.DataSets;
 
-/**
- * @author fedya
- *
- */
 public class MachineWithDrinksDaoImplTest extends AbstractDaoImplTest {
 
     @Autowired
@@ -44,15 +40,14 @@ public class MachineWithDrinksDaoImplTest extends AbstractDaoImplTest {
     @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/BookcaseServiceImplTest.xls")
     @Test
     public void testFind3() {
-        MachineWithDrinks drink = machineWithDrinksDao.findById(-1)
-                .orElseThrow();
-        assertNull(drink);
+        Optional<MachineWithDrinks> drink = machineWithDrinksDao.findById(-1);
+        assertTrue(drink.isEmpty());
     }
 
     @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/BookcaseServiceImplTest.xls")
     @Test
     public void testFind4() {
-        assertThrows(NoResultException.class,
-                () -> machineWithDrinksDao.findFullById(-1));
+        Optional<MachineWithDrinks> machineWithDrinks =  machineWithDrinksDao.findFullById(-1);
+        assertTrue(machineWithDrinks.isEmpty());
     }
 }
