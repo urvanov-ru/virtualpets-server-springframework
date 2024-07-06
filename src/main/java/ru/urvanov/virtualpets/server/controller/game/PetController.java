@@ -26,7 +26,6 @@ import ru.urvanov.virtualpets.server.api.domain.SatietyArg;
 import ru.urvanov.virtualpets.server.api.domain.SavePetCloths;
 import ru.urvanov.virtualpets.server.api.domain.SelectPetArg;
 import ru.urvanov.virtualpets.server.auth.UserDetailsImpl;
-import ru.urvanov.virtualpets.server.dao.exception.DaoException;
 import ru.urvanov.virtualpets.server.service.PetApiService;
 import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
@@ -44,7 +43,7 @@ public class PetController extends ControllerBase {
     @RequestMapping(value = "getUserPets", method = RequestMethod.GET)
     public PetListResult getUserPets(
             @AuthenticationPrincipal UserDetailsImpl userDetailsImpl)
-            throws DaoException, ServiceException {
+            throws ServiceException {
         return petService.getUserPets(userPetDetails);
     }
 
@@ -53,7 +52,7 @@ public class PetController extends ControllerBase {
     public void create(
             @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
             @RequestBody CreatePetArg createPetArg)
-            throws DaoException, ServiceException {
+            throws ServiceException {
         petService.create(userPetDetails, createPetArg);
     }
 
@@ -62,7 +61,7 @@ public class PetController extends ControllerBase {
     public void select(
             @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
             @RequestBody SelectPetArg selectPetArg)
-            throws DaoException, ServiceException {
+            throws ServiceException {
         petService.select(userPetDetails, selectPetArg);
     }
 
@@ -71,7 +70,7 @@ public class PetController extends ControllerBase {
     public void delete(
             @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
             @PathVariable Integer petId)
-            throws DaoException, ServiceException {
+            throws ServiceException {
         petService.delete(userPetDetails, petId);
     }
 
@@ -80,7 +79,7 @@ public class PetController extends ControllerBase {
     public void drink(
             @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
             @RequestBody DrinkArg drinkArg)
-            throws DaoException, ServiceException {
+            throws ServiceException {
         petService.drink(userPetDetails, drinkArg);
     }
 
@@ -89,57 +88,57 @@ public class PetController extends ControllerBase {
     public void eat(
             @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
             @RequestBody SatietyArg satietyArg)
-            throws DaoException, ServiceException {
+            throws ServiceException {
         petService.satiety(userPetDetails, satietyArg);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value = "education", method = RequestMethod.POST)
-    public void education() throws DaoException, ServiceException {
+    public void education() throws ServiceException {
         petService.education(userPetDetails);
     }
 
     @GetMapping(value = "getPetBooks")
     public GetPetBooksResult getPetBooks()
-            throws DaoException, ServiceException {
+            throws ServiceException {
         return petService.getPetBooks(userPetDetails);
     }
 
     @GetMapping(value = "getPetCloths")
     public GetPetClothsResult getPetCloths()
-            throws DaoException, ServiceException {
+            throws ServiceException {
         return petService.getPetCloths(userPetDetails);
     }
 
     @PostMapping(value = "savePetCloths")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void savePetCloth(@RequestBody SavePetCloths saveClothArg)
-            throws DaoException, ServiceException {
+            throws ServiceException {
         petService.savePetCloths(userPetDetails, saveClothArg);
     }
 
     @GetMapping(value = "getPetDrinks")
     public GetPetDrinksResult getPetDrinks()
-            throws DaoException, ServiceException {
+            throws ServiceException {
         return petService.getPetDrinks(userPetDetails);
     }
 
     @GetMapping(value = "getPetFoods")
     public GetPetFoodsResult getPetFoods()
-            throws DaoException, ServiceException {
+            throws ServiceException {
         return petService.getPetFoods(userPetDetails);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getPetJournalEntries")
     public GetPetJournalEntriesResult getPetJournalEntries(
             @RequestParam(name = "count") int count)
-            throws DaoException, ServiceException {
+            throws ServiceException {
         return petService.getPetJournalEntries(userPetDetails, count);
     }
 
     @GetMapping(value = "getPetRucksackInner")
     public GetPetRucksackInnerResult getPetRucksackInner()
-            throws DaoException, ServiceException {
+            throws ServiceException {
         return petService.getPetRucksackInner(userPetDetails);
     }
 }

@@ -6,13 +6,10 @@ import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
 
 import ru.urvanov.virtualpets.server.api.domain.LoginArg;
 import ru.urvanov.virtualpets.server.api.domain.LoginResult;
 import ru.urvanov.virtualpets.server.auth.UserDetailsImpl;
-import ru.urvanov.virtualpets.server.dao.exception.DaoException;
 import ru.urvanov.virtualpets.server.service.UserApiService;
 import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
@@ -31,7 +28,7 @@ public class UserController extends ControllerBase {
     public LoginResult login(
             @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
             @RequestAttribute("loginArg") LoginArg loginArg)
-            throws ServiceException, DaoException {
+            throws ServiceException {
         LoginResult result = userService.login(loginArg);
         userPetDetails.setUserId(result.userId());
         return result;

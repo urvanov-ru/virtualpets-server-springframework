@@ -14,7 +14,6 @@ import ru.urvanov.virtualpets.server.api.domain.GetRoomInfoResult;
 import ru.urvanov.virtualpets.server.api.domain.OpenBoxNewbieResult;
 import ru.urvanov.virtualpets.server.api.domain.Point;
 import ru.urvanov.virtualpets.server.api.domain.RoomBuildMenuCosts;
-import ru.urvanov.virtualpets.server.dao.exception.DaoException;
 import ru.urvanov.virtualpets.server.service.RoomApiService;
 import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
@@ -31,95 +30,95 @@ public class RoomController extends ControllerBase {
 
     @GetMapping(value = "getRoomInfo")
     public GetRoomInfoResult getRoomInfo()
-            throws DaoException, ServiceException {
+            throws ServiceException {
         return roomService.getRoomInfo(userPetDetails);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping(value = "pickJournalOnFloor")
     public void pickJournalOnfloor()
-            throws DaoException, ServiceException {
+            throws ServiceException {
         roomService.pickJournalOnFloor(userPetDetails);
     }
 
     @PostMapping(value = "getBuildMenuCosts")
     public RoomBuildMenuCosts getBuildMenuCosts()
-            throws DaoException, ServiceException {
+            throws ServiceException {
         return roomService.getBuildMenuCosts(userPetDetails);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping(value = "journalClosed")
-    public void journalClosed() throws DaoException, ServiceException {
+    public void journalClosed() throws ServiceException {
         roomService.journalClosed(userPetDetails);
     }
 
     @PostMapping(value = "openBoxNewbie/{index}/")
     public OpenBoxNewbieResult openBoxNewbie(
             @PathVariable("index") int index)
-            throws DaoException, ServiceException {
+            throws ServiceException {
         return roomService.openBoxNewbie(userPetDetails, index);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping(value = "buildMachineWithDrinks")
     public void buildMachineWithDrinks(@RequestBody Point position)
-            throws DaoException, ServiceException {
+            throws ServiceException {
         roomService.buildMachineWithDrinks(userPetDetails, position);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping(value = "moveMachineWithDrinks")
     public void moveMachineWithDrinks(@RequestBody Point position)
-            throws DaoException, ServiceException {
+            throws ServiceException {
         roomService.moveMachineWithDrinks(userPetDetails, position);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping(value = "buildRefrigerator")
     public void buildRefrigerator(@RequestBody Point position)
-            throws DaoException, ServiceException {
+            throws ServiceException {
         roomService.buildRefrigerator(userPetDetails, position);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping(value = "moveRefrigerator")
     public void moveRefrigerator(@RequestBody Point position)
-            throws DaoException, ServiceException {
+            throws ServiceException {
         roomService.moveRefrigerator(userPetDetails, position);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping(value = "buildBookcase")
     public void buildBookcase(@RequestBody Point position)
-            throws DaoException, ServiceException {
+            throws ServiceException {
         roomService.buildBookcase(userPetDetails, position);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping(value = "moveBookcase")
     public void moveBookcase(@RequestBody Point position)
-            throws DaoException, ServiceException {
+            throws ServiceException {
         roomService.moveBookcase(userPetDetails, position);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping(value = "upgradeRefrigerator")
     public void upgradeRefrigerator()
-            throws DaoException, ServiceException {
+            throws ServiceException {
         roomService.upgradeRefrigerator(userPetDetails);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping(value = "upgradeBookcase")
-    public void upgradeBookcase() throws DaoException, ServiceException {
+    public void upgradeBookcase() throws ServiceException {
         roomService.upgradeBookcase(userPetDetails);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping(value = "upgradeMachineWithDrinks")
     public void upgradeMachineWithDrinks()
-            throws DaoException, ServiceException {
+            throws ServiceException {
         roomService.upgradeMachineWithDrinks(userPetDetails);
     }
 

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.urvanov.virtualpets.server.api.domain.CollectObjectArg;
 import ru.urvanov.virtualpets.server.api.domain.HiddenObjectsGame;
 import ru.urvanov.virtualpets.server.api.domain.JoinHiddenObjectsGameArg;
-import ru.urvanov.virtualpets.server.dao.exception.DaoException;
 import ru.urvanov.virtualpets.server.service.HiddenObjectsApiService;
 import ru.urvanov.virtualpets.server.service.domain.HiddenObjectsGameStatus;
 import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
@@ -34,14 +33,14 @@ public class HiddenObjectsController extends ControllerBase {
     @PostMapping("joinGame")
     public HiddenObjectsGame joinGame(
             @RequestBody JoinHiddenObjectsGameArg joinHiddenObjectsGameArg)
-            throws DaoException, ServiceException {
+            throws ServiceException {
         return hiddenObjectsService.joinGame(userPetDetails,
                 hiddenObjectsGameStatus, joinHiddenObjectsGameArg);
     }
 
     @GetMapping("getGameInfo")
     public HiddenObjectsGame getGameInfo()
-            throws DaoException, ServiceException {
+            throws ServiceException {
         return hiddenObjectsService.getGameInfo(userPetDetails,
                 hiddenObjectsGameStatus);
     }
@@ -49,21 +48,21 @@ public class HiddenObjectsController extends ControllerBase {
     @PostMapping("collectObject")
     public HiddenObjectsGame collectObject(
             @RequestBody CollectObjectArg collectObjectArg)
-            throws DaoException, ServiceException {
+            throws ServiceException {
         return hiddenObjectsService.collectObject(userPetDetails,
                 hiddenObjectsGameStatus, collectObjectArg);
     }
 
     @PostMapping("startGame")
     public HiddenObjectsGame startGame()
-            throws DaoException, ServiceException {
+            throws ServiceException {
         return hiddenObjectsService.startGame(userPetDetails,
                 hiddenObjectsGameStatus);
     }
 
     @PostMapping("leaveGame")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void leaveGame() throws DaoException, ServiceException {
+    public void leaveGame() throws ServiceException {
         hiddenObjectsService.leaveGame(userPetDetails,
                 hiddenObjectsGameStatus);
     }

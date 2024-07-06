@@ -16,7 +16,6 @@ import ru.urvanov.virtualpets.server.api.domain.RecoverSessionArg;
 import ru.urvanov.virtualpets.server.api.domain.RegisterArgument;
 import ru.urvanov.virtualpets.server.api.domain.ServerInfo;
 import ru.urvanov.virtualpets.server.api.domain.ServerTechnicalInfo;
-import ru.urvanov.virtualpets.server.dao.exception.DaoException;
 import ru.urvanov.virtualpets.server.service.PublicApiService;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
@@ -30,33 +29,33 @@ public class PublicController extends ControllerBase {
     @RequestMapping(method = RequestMethod.GET, value = "servers")
     public ServerInfo[] getServers(
             @RequestParam(name = "version") String version)
-            throws ServiceException, DaoException {
+            throws ServiceException {
         GetServersArg arg = new GetServersArg(version);
         return publicService.getServers(arg);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "register")
     public void register(@RequestBody RegisterArgument arg)
-            throws ServiceException, DaoException {
+            throws ServiceException {
         publicService.register(arg);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(method = RequestMethod.POST, value = "recoverPassword")
     public void recoverPassword(RecoverPasswordArg argument)
-            throws ServiceException, DaoException {
+            throws ServiceException {
         publicService.recoverPassword(argument);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "recoverSession")
     public LoginResult recoverSession(RecoverSessionArg arg)
-            throws ServiceException, DaoException {
+            throws ServiceException {
         return publicService.recoverSession(arg);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "server-technical-info")
     public ServerTechnicalInfo getServerTechnicalInfo()
-            throws ServiceException, DaoException {
+            throws ServiceException {
         return publicService.getServerTechnicalInfo();
     }
 
