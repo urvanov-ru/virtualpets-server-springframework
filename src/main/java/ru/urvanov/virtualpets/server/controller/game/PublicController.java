@@ -34,10 +34,10 @@ public class PublicController extends ControllerBase { // (3)
         return publicService.getServers(arg); // (6)
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT) // (7)
-    @RequestMapping(method = RequestMethod.POST, value = "register")//(8)
+    @ResponseStatus(HttpStatus.NO_CONTENT) // (1)
+    @RequestMapping(method = RequestMethod.POST, value = "register")//(2)
     public void register(
-            @RequestBody RegisterArgument registerArgument) // (9)
+            @RequestBody RegisterArgument registerArgument) // (3)
             throws ServiceException {
         publicService.register(registerArgument);
     }
