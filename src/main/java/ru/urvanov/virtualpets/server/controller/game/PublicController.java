@@ -34,9 +34,9 @@ public class PublicController extends ControllerBase { // (3)
         return publicService.getServers(arg); // (6)
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @RequestMapping(method = RequestMethod.POST, value = "register")//(7)
-    public void register(@RequestBody RegisterArgument arg) // (8)
+    @ResponseStatus(HttpStatus.NO_CONTENT) // (7)
+    @RequestMapping(method = RequestMethod.POST, value = "register")//(8)
+    public void register(@RequestBody RegisterArgument arg) // (9)
             throws ServiceException {
         publicService.register(arg);
     }
