@@ -19,23 +19,24 @@ import ru.urvanov.virtualpets.server.api.domain.ServerTechnicalInfo;
 import ru.urvanov.virtualpets.server.service.PublicApiService;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
-@RestController
-@RequestMapping(value = "rest/v1/PublicService")
-public class PublicController extends ControllerBase {
+@RestController    // (1)
+@RequestMapping(value = "rest/v1/PublicService") // (2)
+public class PublicController extends ControllerBase { // (3)
 
     @Autowired
     public PublicApiService publicService;
 
-    @RequestMapping(method = RequestMethod.GET, value = "servers")
+    @RequestMapping(method = RequestMethod.GET, value = "servers") // (4)
     public ServerInfo[] getServers(
-            @RequestParam(name = "version") String version)
+            @RequestParam(name = "version") String version) // (5)
             throws ServiceException {
         GetServersArg arg = new GetServersArg(version);
-        return publicService.getServers(arg);
+        return publicService.getServers(arg); // (6)
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "register")
-    public void register(@RequestBody RegisterArgument arg)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @RequestMapping(method = RequestMethod.POST, value = "register")//(7)
+    public void register(@RequestBody RegisterArgument arg) // (8)
             throws ServiceException {
         publicService.register(arg);
     }
