@@ -2,7 +2,6 @@ package ru.urvanov.virtualpets.server.controller.game;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +24,6 @@ import ru.urvanov.virtualpets.server.api.domain.PetListResult;
 import ru.urvanov.virtualpets.server.api.domain.SatietyArg;
 import ru.urvanov.virtualpets.server.api.domain.SavePetCloths;
 import ru.urvanov.virtualpets.server.api.domain.SelectPetArg;
-import ru.urvanov.virtualpets.server.auth.UserDetailsImpl;
 import ru.urvanov.virtualpets.server.service.PetApiService;
 import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
@@ -41,26 +39,21 @@ public class PetController extends ControllerBase {
     private UserPetDetails userPetDetails;
 
     @RequestMapping(value = "getUserPets", method = RequestMethod.GET)
-    public PetListResult getUserPets(
-            @AuthenticationPrincipal UserDetailsImpl userDetailsImpl)
+    public PetListResult getUserPets()
             throws ServiceException {
         return petService.getUserPets(userPetDetails);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value = "create", method = RequestMethod.POST)
-    public void create(
-            @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
-            @RequestBody CreatePetArg createPetArg)
+    public void create(@RequestBody CreatePetArg createPetArg)
             throws ServiceException {
         petService.create(userPetDetails, createPetArg);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value = "select", method = RequestMethod.POST)
-    public void select(
-            @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
-            @RequestBody SelectPetArg selectPetArg)
+    public void select(@RequestBody SelectPetArg selectPetArg)
             throws ServiceException {
         petService.select(userPetDetails, selectPetArg);
     }
@@ -68,27 +61,21 @@ public class PetController extends ControllerBase {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value = "delete/{petId}",
             method = RequestMethod.DELETE)
-    public void delete(
-            @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
-            @PathVariable Integer petId)
+    public void delete(@PathVariable Integer petId)
             throws ServiceException {
         petService.delete(userPetDetails, petId);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value = "drink", method = RequestMethod.POST)
-    public void drink(
-            @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
-            @RequestBody DrinkArg drinkArg)
+    public void drink(@RequestBody DrinkArg drinkArg)
             throws ServiceException {
         petService.drink(userPetDetails, drinkArg);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value = "satiety", method = RequestMethod.POST)
-    public void eat(
-            @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
-            @RequestBody SatietyArg satietyArg)
+    public void eat(@RequestBody SatietyArg satietyArg)
             throws ServiceException {
         petService.satiety(userPetDetails, satietyArg);
     }
@@ -130,7 +117,8 @@ public class PetController extends ControllerBase {
         return petService.getPetFoods(userPetDetails);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "getPetJournalEntries")
+    @RequestMapping(method = RequestMethod.GET,
+            value = "getPetJournalEntries")
     public GetPetJournalEntriesResult getPetJournalEntries(
             @RequestParam(name = "count") int count)
             throws ServiceException {
