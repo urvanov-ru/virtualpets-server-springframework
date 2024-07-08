@@ -66,7 +66,8 @@ public class PetController extends ControllerBase {
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @RequestMapping(value = "delete/{petId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "delete/{petId}",
+            method = RequestMethod.DELETE)
     public void delete(
             @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
             @PathVariable Integer petId)
