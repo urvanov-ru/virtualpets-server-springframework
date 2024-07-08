@@ -61,7 +61,7 @@ public class PetController extends ControllerBase {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value = "delete/{petId}",
             method = RequestMethod.DELETE)
-    public void delete(@PathVariable Integer petId)
+    public void delete(@PathVariable("petId") Integer petId)
             throws ServiceException {
         petService.delete(userPetDetails, petId);
     }
