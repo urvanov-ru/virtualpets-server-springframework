@@ -249,7 +249,8 @@ public class PetDaoImpl implements PetDao {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Pet> findByIdWithJournalEntriesAndAchievements(Integer id) {
+    public Optional<Pet> findByIdWithJournalEntriesAndAchievements(
+            Integer id) {
         Pet pet = em.find(Pet.class, id,
                 Map.of(
                         "jakarta.persistence.fetchgraph",
