@@ -237,6 +237,7 @@ public class PetDaoImpl implements PetDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Pet> findByIdWithFullBooks(Integer id) {
         Pet pet = em.find(Pet.class, id,
                 Map.of(
@@ -247,6 +248,7 @@ public class PetDaoImpl implements PetDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Pet> findByIdWithJournalEntriesAndAchievements(Integer id) {
         Pet pet = em.find(Pet.class, id,
                 Map.of(
@@ -258,6 +260,7 @@ public class PetDaoImpl implements PetDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Pet> findByIdWithBooksAndJournalEntriesAndBuildingMaterials(
             Integer id) {
         Pet pet = em.find(Pet.class, id,
@@ -269,6 +272,7 @@ public class PetDaoImpl implements PetDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Pet> findByIdWithFoodsAndJournalEntriesAndBuildingMaterials(
             Integer id) {
         Pet pet = em.find(Pet.class, id,
@@ -280,6 +284,7 @@ public class PetDaoImpl implements PetDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Pet> findByIdWithDrinksAndJournalEntriesAndBuildingMaterialsAndAchievements(
             Integer id) {
         Pet pet = em.find(Pet.class, id,
@@ -291,6 +296,7 @@ public class PetDaoImpl implements PetDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Pet> findByIdWithDrinksAndJournalEntriesAndAchievements(Integer id) {
         Pet pet = em.find(Pet.class, id,
                 Map.of(
@@ -301,6 +307,7 @@ public class PetDaoImpl implements PetDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Pet> findByIdWithFoodsJournalEntriesAndAchievements(Integer id) {
         Pet pet = em.find(Pet.class, id,
                 Map.of(
