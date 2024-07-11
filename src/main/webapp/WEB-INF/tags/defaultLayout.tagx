@@ -3,7 +3,8 @@
     xmlns:c = "http://java.sun.com/jsp/jstl/core"
     xmlns:spring = "http://www.springframework.org/tags">
 <jsp:output doctype-root-element = "html"
-    doctype-system = "about:legacy-compat" omit-xml-declaration = "yes" />
+    doctype-system = "about:legacy-compat"
+    omit-xml-declaration = "yes" />
 
 <head>
 <meta http-equiv = "Content-Type" content = "text/html;charset=UTF-8" />
