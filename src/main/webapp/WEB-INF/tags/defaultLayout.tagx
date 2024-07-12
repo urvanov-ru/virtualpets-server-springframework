@@ -5,11 +5,9 @@
 <jsp:output doctype-root-element = "html"
     doctype-system = "about:legacy-compat"
     omit-xml-declaration = "yes" />
-
+<jsp:directive.attribute name="headAdditional" fragment = "true" />
 <head>
-    <spring:message code = "virtualpets-server-springframework.app_name"
-        var = "app_name_var" />
-    <title><c:out value = "${app_name_var}" /></title>
+    <jsp:invoke fragment = "headAdditional" />
     <meta http-equiv = "Content-Type" content = "text/html;charset=UTF-8" />
     <spring:theme code = "stylesheet" var = "stylesheet_var" />
     <spring:url value = "${stylesheet_var}" var = "stylesheet_url" />

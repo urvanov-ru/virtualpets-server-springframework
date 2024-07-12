@@ -2,10 +2,9 @@
 <div xmlns:jsp="http://java.sun.com/JSP/Page"
     xmlns:c="http://java.sun.com/jsp/jstl/core"
     xmlns:spring="http://www.springframework.org/tags">
-    <jsp:directive.page contentType="text/html;charset=UTF-8"
-        pageEncoding="UTF-8" />
-    <jsp:directive.page session="false" />
+    <jsp:directive.page pageEncoding = "UTF-8" />
     <jsp:output omit-xml-declaration="yes" />
+    <spring:htmlEscape defaultHtmlEscape = "true" />
     <spring:message code = "virtualpets-server-springframework.app_name"
         var = "app_name_var" />
     <spring:url value="/resources/images/logo.jpg" var="logo_url" />

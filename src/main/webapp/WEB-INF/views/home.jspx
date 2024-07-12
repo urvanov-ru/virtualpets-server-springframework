@@ -3,11 +3,21 @@
     xmlns:c = "http://java.sun.com/jsp/jstl/core"
     xmlns:spring = "http://www.springframework.org/tags"
     xmlns:custom = "urn:jsptagdir:/WEB-INF/tags">
-<div id = "main">
-<jsp:directive.page contentType = "text/html;charset=UTF-8" />
-<jsp:directive.page session = "false" />
+<jsp:attribute name = "headAdditional" >
+    <spring:message
+        code = "virtualpets-server-springframework.app_name"
+        var = "title_var"
+        htmlEscape = "true" />
+    <title>${title_var}</title>
+</jsp:attribute>
+
+<jsp:directive.page
+    contentType = "text/html;charset=UTF-8"
+    pageEncoding = "UTF-8"
+    session = "false" />
 <jsp:output omit-xml-declaration = "yes" />
 
+<div id = "main">
     <spring:message code = "virtualpets-server-springframework.site.welcome_message1"
         var = "welcome_message1_var" />
     ${welcome_message1_var}
