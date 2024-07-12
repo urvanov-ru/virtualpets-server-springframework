@@ -7,9 +7,12 @@
     omit-xml-declaration = "yes" />
 
 <head>
-<meta http-equiv = "Content-Type" content = "text/html;charset=UTF-8" />
-<spring:theme code = "stylesheet" var = "stylesheet_var" />
-<spring:url value = "${stylesheet_var}" var = "stylesheet_url" />
+    <spring:message code = "virtualpets-server-springframework.app_name"
+        var = "app_name_var" />
+    <title><c:out value = "${app_name_var}" /></title>
+    <meta http-equiv = "Content-Type" content = "text/html;charset=UTF-8" />
+    <spring:theme code = "stylesheet" var = "stylesheet_var" />
+    <spring:url value = "${stylesheet_var}" var = "stylesheet_url" />
 <link rel = "stylesheet" href = "${stylesheet_url}" type = "text/css"
     media = "screen" />
 </head>
