@@ -20,23 +20,32 @@
 <jsp:output omit-xml-declaration = "yes" />
 
 <div id = "main">
-    <spring:message code = "virtualpets-server-springframework.site.records_in_page"
+    <spring:message
+        code = "virtualpets-server-springframework.site.records_in_page"
         var = "records_in_page_var" />
-    <spring:message code = "virtualpets-server-springframework.site.statistics_type"
+    <spring:message
+        code = "virtualpets-server-springframework.site.statistics_type"
         var = "statistics_type_var" />
-    <spring:message code = "virtualpets-server-springframework.site.show_statistics"
+    <spring:message
+        code = "virtualpets-server-springframework.site.show_statistics"
         var = "show_statistics_var" />
-    <spring:message code = "virtualpets-server-springframework.site.statistics"
+    <spring:message
+        code = "virtualpets-server-springframework.site.statistics"
         var = "statistics_var" />
-    <spring:message code = "virtualpets-server-springframework.site.last_registered_users"
+    <spring:message
+        code = "virtualpets-server-springframework.site.last_registered_users"
         var = "last_registered_users_var" />
-    <spring:message code = "virtualpets-server-springframework.site.last_created_pets"
+    <spring:message
+        code = "virtualpets-server-springframework.site.last_created_pets"
         var = "last_created_pets_var" />
-    <spring:message code = "virtualpets-server-springframework.site.registration_date"
+    <spring:message
+        code = "virtualpets-server-springframework.site.registration_date"
         var = "registration_date_var" />
-    <spring:message code = "virtualpets-server-springframework.site.name"
+    <spring:message
+        code = "virtualpets-server-springframework.site.name"
         var = "name_var" />
-    <spring:message code = "virtualpets-server-springframework.site.pets_count"
+    <spring:message
+        code = "virtualpets-server-springframework.site.pets_count"
         var = "pets_count_var" />
 
 
@@ -68,7 +77,7 @@
             </div>
         </div>
     </form:form>
-    <c:if test = "${users.size()>0}">
+    <c:if test = "${users.size() > 0}">
         <table>
             <caption>${last_registered_users_var}</caption>
             <thead>
@@ -90,7 +99,7 @@
             </tbody>
         </table>
     </c:if>
-    <c:if test = "${pets.size() >0}">
+    <c:if test = "${pets.size() > 0}">
         <table>
             <c:forEach var = "pet" items = "${pets}">
                 <tr>
