@@ -1,5 +1,6 @@
 package ru.urvanov.virtualpets.server.controller.site;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -19,6 +20,9 @@ public class ServerInfoController extends ControllerBase {
 
     private static final Logger logger = LoggerFactory
             .getLogger(HomeController.class);
+    
+    private static final String HTML_ESCAPE_TEST
+            = "<H1><тест>экранирование</тест></H1>";
 
     public class Info {
         String key;
@@ -54,9 +58,12 @@ public class ServerInfoController extends ControllerBase {
 
         String[] propertyNames = { "java.version", "java.vendor",
                 "os.name", "os.arch", "os.version" };
-        List<Info> infos = java.util.Arrays.stream(propertyNames)
+        List<Info> properties = java.util.Arrays.stream(propertyNames)
                 .map((key) -> new Info(key, System.getProperty(key)))
                 .collect(Collectors.toList());
+        List<Info> infos = new ArrayList<>();
+        infos.addAll(properties);
+        infos.add(new Info(HTML_ESCAPE_TEST, HTML_ESCAPE_TEST));
         model.addAttribute("infos", infos);
 
         return "information/serverInfo";
