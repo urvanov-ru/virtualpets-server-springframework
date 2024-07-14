@@ -49,7 +49,7 @@ public class ServerInfoController extends ControllerBase {
 
     @RequestMapping(value = "/information/serverInfo",
             method = RequestMethod.GET)
-    public String home(Locale locale, Model model,
+    public String serverInfo(Locale locale, Model model,
             HttpServletRequest request) {
         logger.info("Welcome home! The client locale is {}.", locale);
 
