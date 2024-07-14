@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.controller.site;
 
 import java.util.List;
@@ -16,10 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-/**
- * @author fedya
- *
- */
 @Controller
 @RequestMapping("site")
 public class ServerInfoController extends ControllerBase {
@@ -54,12 +47,14 @@ public class ServerInfoController extends ControllerBase {
 
     }
 
-    @RequestMapping(value = "/information/serverInfo", method = RequestMethod.GET)
-    public String home(Locale locale, Model model, HttpServletRequest request) {
+    @RequestMapping(value = "/information/serverInfo",
+            method = RequestMethod.GET)
+    public String home(Locale locale, Model model,
+            HttpServletRequest request) {
         logger.info("Welcome home! The client locale is {}.", locale);
 
-        String[] propertyNames = { "java.version", "java.vendor", "os.name",
-                "os.arch", "os.version" };
+        String[] propertyNames = { "java.version", "java.vendor",
+                "os.name", "os.arch", "os.version" };
         List<Info> infos = java.util.Arrays.stream(propertyNames)
                 .map((key) -> new Info(key, System.getProperty(key)))
                 .collect(Collectors.toList());
