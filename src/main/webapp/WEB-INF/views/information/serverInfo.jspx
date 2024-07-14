@@ -27,16 +27,14 @@
         code = "virtualpets-server-springframework.site.server_info"
         var = "server_info" />
     <H1>${server_info}</H1>
-        <p>
         <table>
             <caption>${server_info}</caption>
             <c:forEach var = "info" items = "${infos}">
                 <tr>
                     <td><c:out value = "${info.key}" /></td>
-                    <td><c:out value = "${info.value}" /></td>
+                    <td><spring:escapeBody>${info.value}</spring:escapeBody></td>
                 </tr>
             </c:forEach>
         </table>
-        </p>
 </div>
 </custom:defaultLayout>
