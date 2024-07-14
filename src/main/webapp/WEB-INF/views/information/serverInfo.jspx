@@ -31,8 +31,14 @@
             <caption>${server_info}</caption>
             <c:forEach var = "info" items = "${infos}">
                 <tr>
-                    <td><c:out value = "${info.key}" /></td>
-                    <td><spring:escapeBody>${info.value}</spring:escapeBody></td>
+                    <td>
+                        <c:out value = "${info.key}" />
+                    </td>
+                    <td>
+                        <spring:escapeBody>
+                            ${info.value}
+                        </spring:escapeBody>
+                    </td>
                 </tr>
             </c:forEach>
         </table>
