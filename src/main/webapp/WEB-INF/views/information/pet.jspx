@@ -47,7 +47,8 @@
         <p>
             ${pet_experience_var}
             :
-            <spring:escapeBody>${pet.experience == null ? 0 : pet.experience}</spring:escapeBody>
+            <spring:escapeBody>${pet.experience == null
+                ? 0 : pet.experience}</spring:escapeBody>
         </p>
         <H2>${achievements_var}</H2>
         <c:forEach var = "info" items = "${pet.achievements}">
