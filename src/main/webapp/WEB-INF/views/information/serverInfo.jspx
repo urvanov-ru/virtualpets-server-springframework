@@ -32,8 +32,8 @@
             <caption>${server_info}</caption>
             <c:forEach var = "info" items = "${infos}">
                 <tr>
-                    <td>${info.key}</td>
-                    <td>${info.value}</td>
+                    <td><c:out value = "${info.key}" /></td>
+                    <td><c:out value = "${info.value}" /></td>
                 </tr>
             </c:forEach>
         </table>
