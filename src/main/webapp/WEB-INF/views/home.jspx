@@ -18,11 +18,13 @@
 <jsp:output omit-xml-declaration = "yes" />
 
 <div id = "main">
-    <spring:message code = "virtualpets-server-springframework.site.welcome_message1"
+    <spring:message
+        code = "virtualpets-server-springframework.site.welcome_message1"
         var = "welcome_message1_var" />
     ${welcome_message1_var}
     
-    <spring:message code = "virtualpets-server-springframework.site.welcome_message2"
+    <spring:message
+        code = "virtualpets-server-springframework.site.welcome_message2"
         var = "welcome_message2_var" />
     ${welcome_message2_var}
     <spring:url value = "/resources/images/screenshot001.jpg"
@@ -30,7 +32,8 @@
     <img alt = "screenshot001" src = "${screenshot001_url}"
         width = "457" height = "351" />
     
-    <spring:message code = "virtualpets-server-springframework.site.welcome_message3"
+    <spring:message
+        code = "virtualpets-server-springframework.site.welcome_message3"
         var = "welcome_message3_var" />
     ${welcome_message3_var}
     <spring:url value = "/resources/images/screenshot002.jpg"
@@ -38,13 +41,13 @@
     <img alt = "screenshot002" src = "${screenshot002_url}"
         width = "457" height = "351" />
     
-    <spring:message code  = "virtualpets-server-springframework.site.welcome_message4"
+    <spring:message
+        code  = "virtualpets-server-springframework.site.welcome_message4"
         var = "welcome_message4_var" />
     ${welcome_message4_var}
     <spring:url value = "/resources/images/screenshot003.jpg"
         var = "screenshot003_url" />
     <img alt = "screenshot003" src = "${screenshot003_url}"
         width = "457" height = "351" />
-
 </div>
 </custom:defaultLayout>
