@@ -4,75 +4,88 @@
     xmlns:spring = "http://www.springframework.org/tags"
     xmlns:custom = "urn:jsptagdir:/WEB-INF/tags">
 
-<jsp:attribute name = "headAdditional" >
+<jsp:attribute name = "headAdditional">
     <spring:message
-        code = "virtualpets-server-springframework.site.pet_info"
-        var = "title_var"
-        htmlEscape = "true" />
+            code = "virtualpets-server-springframework.site.pet_info"
+            var = "title_var" htmlEscape = "true" />
     <title>${title_var}</title>
 </jsp:attribute>
 
 <spring:htmlEscape defaultHtmlEscape = "true" />
-<jsp:directive.page
-    contentType = "text/html;charset=UTF-8"
-    pageEncoding = "UTF-8"
-    session = "false" />
+<jsp:directive.page contentType = "text/html;charset=UTF-8"
+    pageEncoding = "UTF-8" session = "false" />
 <jsp:output omit-xml-declaration = "yes" />
 
 <div id = "main">
-    <p>
     <div>
-        <spring:message code = "virtualpets-server-springframework.site.pet_info"
+        <spring:message
+            code = "virtualpets-server-springframework.site.pet_info"
             var = "pet_info_var" />
-        <spring:message code = "virtualpets-server-springframework.site.pet_name"
+        <spring:message
+            code = "virtualpets-server-springframework.site.pet_name"
             var = "pet_name_var" />
-        <spring:message code = "virtualpets-server-springframework.site.pet_level"
+        <spring:message
+            code = "virtualpets-server-springframework.site.pet_level"
             var = "pet_level_var" />
-        <spring:message code = "virtualpets-server-springframework.site.pet_experience"
+        <spring:message
+            code = "virtualpets-server-springframework.site.pet_experience"
             var = "pet_experience_var" />
-        <spring:message code = "virtualpets-server-springframework.site.achievements"
+        <spring:message
+            code = "virtualpets-server-springframework.site.achievements"
             var = "achievements_var" />
-        <H1><c:out value = "${pet_info_var}" /></H1>
-        <p><c:out value = "${pet_name_var}" /> : <c:out value = "${pet.name}" /></p>
-        <p><c:out value = "${pet_level_var}" /> : <c:out value = "${pet.level}" /></p>
-        <p><c:out value = "${pet_experience_var}" /> : <c:out value = "${pet.experience}" /></p>
-        <H1><c:out value = "${achievements}" /></H1>
+        <H1>${pet_info_var}</H1>
+        <p>
+            ${pet_name_var}
+            :
+            <spring:escapeBody>${pet.name}</spring:escapeBody>
+        </p>
+        <p>
+            ${pet_level_var}
+            :
+            <spring:escapeBody>${pet.level}</spring:escapeBody>
+        </p>
+        <p>
+            ${pet_experience_var}
+            :
+            <spring:escapeBody>${pet.experience == null ? 0 : pet.experience}</spring:escapeBody>
+        </p>
+        <H2>${achievements_var}</H2>
         <c:forEach var = "info" items = "${pet.achievements}">
             <c:if test = "${info.unlocked}">
                 <div class = "achievementUnlocked">
-                    <p><spring:message
-                        code = "virtualpets-server-springframework.achievement.${info.code}"
-                        var = "achievementName" />
-                    <c:out value = "${achievementName}" />
+                    <p>
+                        <spring:message
+                            code = "virtualpets-server-springframework.achievement.${info.code}"
+                            var = "achievementName" />
+                        ${achievementName}
                     </p>
                     <p>
-                    <spring:message
-                        code = "virtualpets-server-springframework.achievement.${info.code}_DESCRIPTION"
-                        var = "achievementNameDescription" />
-                    <c:out value = "${achievementNameDescription}" />
+                        <spring:message
+                            code = "virtualpets-server-springframework.achievement.${info.code}_DESCRIPTION"
+                            var = "achievementNameDescription" />
+                        ${achievementNameDescription}
                     </p>
                 </div>
             </c:if>
             <c:if test = "${!info.unlocked}">
                 <div class = "achievementLocked">
                     <p>
-                    <spring:message
-                        code = "virtualpets-server-springframework.achievement.${info.code}"
-                        var = "achievementName" />
-                    <c:out value = "${achievementName}" /><p></p>
+                        <spring:message
+                            code = "virtualpets-server-springframework.achievement.${info.code}"
+                            var = "achievementName" />
+                        ${achievementName}
+                    <p></p>
                     </p>
                     <p>
-                    <spring:message
-                        code = "virtualpets-server-springframework.achievement.${info.code}_DESCRIPTION"
-                        var = "achievementNameDescription" />
-                    <c:out value = "${achievementNameDescription}" />
+                        <spring:message
+                            code = "virtualpets-server-springframework.achievement.${info.code}_DESCRIPTION"
+                            var = "achievementNameDescription" />
+                        ${achievementNameDescription}
                     </p>
                 </div>
             </c:if>
-            <p>
-            </p>
+            <p></p>
         </c:forEach>
     </div>
-    </p>
 </div>
 </custom:defaultLayout>
