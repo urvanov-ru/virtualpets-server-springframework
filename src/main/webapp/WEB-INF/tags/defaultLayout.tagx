@@ -12,8 +12,8 @@
         content = "text/html;charset=UTF-8" />
     <spring:theme code = "stylesheet" var = "stylesheet_var" />
     <spring:url value = "${stylesheet_var}" var = "stylesheet_url" />
-<link rel = "stylesheet" href = "${stylesheet_url}" type = "text/css"
-    media = "screen" />
+    <link rel = "stylesheet" href = "${stylesheet_url}" type = "text/css"
+        media = "screen" />
 </head>
 <body>
     <div class = "header">
