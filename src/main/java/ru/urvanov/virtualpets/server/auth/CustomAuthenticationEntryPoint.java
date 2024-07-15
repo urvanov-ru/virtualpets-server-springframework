@@ -14,13 +14,20 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
+/**
+ * AuthenticationEntryPoint перебрасывает на форму входа.
+ * В приложении сервера виртуальных питомцев только возвращает 
+ * ответ с 403 Forbidden и JSON с ошибкой.
+ */
+public class CustomAuthenticationEntryPoint
+        implements AuthenticationEntryPoint {
 
     private ObjectWriter objectWriter = new ObjectMapper().writer();
     
     @Override
     public void commence(HttpServletRequest request,
-            HttpServletResponse response, AuthenticationException authException)
+            HttpServletResponse response,
+            AuthenticationException authException)
             throws IOException, ServletException {
         HttpStatus statusCode = HttpStatus.FORBIDDEN;
         response.setStatus(statusCode.value());
@@ -31,7 +38,8 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
                         ? authException.getMessage()
                         : authException
                                 .getLocalizedMessage());
-        response.getWriter().write(objectWriter.writeValueAsString(problemDetail));
+        response.getWriter()
+                .write(objectWriter.writeValueAsString(problemDetail));
     }
 
 }
