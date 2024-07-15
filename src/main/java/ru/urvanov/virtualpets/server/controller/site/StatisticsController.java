@@ -26,15 +26,13 @@ import ru.urvanov.virtualpets.server.service.UserService;
 public class StatisticsController extends ControllerBase {
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
     private PetService petService;
-    
+
     @Autowired
     private JdbcReportDao jdbcReportDao;
 
-    @RequestMapping(value = "/information/statistics", method = RequestMethod.GET)
+    @RequestMapping(value = "/information/statistics",
+            method = RequestMethod.GET)
     public String showStatistics(Locale locale, Model model) {
         StatisticsParams statisticsParams = new StatisticsParams();
         statisticsParams.setMaxRecordsCount(100);
@@ -43,7 +41,8 @@ public class StatisticsController extends ControllerBase {
         return "information/statistics";
     }
 
-    @RequestMapping(value = "/information/statistics", method = RequestMethod.POST)
+    @RequestMapping(value = "/information/statistics",
+            method = RequestMethod.POST)
     public String showStatistics(Locale locale, Model model,
             @Valid @ModelAttribute StatisticsParams statisticsParams,
             BindingResult statisticsParamsBindingResult) {
@@ -53,7 +52,8 @@ public class StatisticsController extends ControllerBase {
         if (!statisticsParamsBindingResult.hasErrors()) {
             switch (statisticsParams.getType()) {
             case LAST_REGISTERED_USERS:
-                users = jdbcReportDao.findLastRegisteredUsers(0, statisticsParams.getMaxRecordsCount());
+                users = jdbcReportDao.findLastRegisteredUsers(0,
+                        statisticsParams.getMaxRecordsCount());
                 break;
             case LAST_CREATED_PETS:
                 pets = petService.findLastCreatedPets(0,
