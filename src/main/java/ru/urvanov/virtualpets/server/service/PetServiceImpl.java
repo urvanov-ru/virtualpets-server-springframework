@@ -3,6 +3,7 @@ package ru.urvanov.virtualpets.server.service;
 import java.time.Clock;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -56,6 +57,7 @@ import ru.urvanov.virtualpets.server.dao.domain.PetJournalEntry;
 import ru.urvanov.virtualpets.server.dao.domain.Refrigerator;
 import ru.urvanov.virtualpets.server.dao.domain.RefrigeratorCost;
 import ru.urvanov.virtualpets.server.dao.domain.Room;
+import ru.urvanov.virtualpets.server.service.domain.LastRegisteredPet;
 import ru.urvanov.virtualpets.server.service.domain.PetDetails;
 import ru.urvanov.virtualpets.server.service.domain.PetInformationPageAchievement;
 import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
@@ -193,8 +195,14 @@ public class PetServiceImpl implements PetService, PetApiService {
     }
 
     @Override
-    public List<Pet> findLastCreatedPets(int start, int limit) {
-        return petDao.findLastCreatedPets(start, limit);
+    public List<LastRegisteredPet> findLastCreatedPets(
+            int start, int limit) {
+        List<Pet> found = petDao.findLastCreatedPets(start, limit);
+        return found.stream()
+                .map(p -> new LastRegisteredPet(
+                        Date.from(p.getCreatedDate().toInstant()),
+                        p.getName()))
+                .toList();
     }
     
     @Override

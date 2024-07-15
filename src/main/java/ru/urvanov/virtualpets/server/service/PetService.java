@@ -7,6 +7,7 @@ import ru.urvanov.virtualpets.server.dao.domain.Bookcase;
 import ru.urvanov.virtualpets.server.dao.domain.MachineWithDrinks;
 import ru.urvanov.virtualpets.server.dao.domain.Pet;
 import ru.urvanov.virtualpets.server.dao.domain.Refrigerator;
+import ru.urvanov.virtualpets.server.service.domain.LastRegisteredPet;
 import ru.urvanov.virtualpets.server.service.domain.PetDetails;
 import ru.urvanov.virtualpets.server.service.exception.NotEnoughPetResourcesException;
 
@@ -29,7 +30,7 @@ public interface PetService {
 
     public List<AchievementId> calculateAchievements(Pet pet);
 
-    List<Pet> findLastCreatedPets(int start, int limit);
+    List<LastRegisteredPet> findLastCreatedPets(int start, int limit);
 
     void addAchievementIfNot(Pet pet, AchievementId achievement);
 

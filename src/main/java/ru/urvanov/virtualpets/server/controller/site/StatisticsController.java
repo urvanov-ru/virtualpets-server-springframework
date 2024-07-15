@@ -17,8 +17,8 @@ import ru.urvanov.virtualpets.server.controller.site.domain.StatisticsParams;
 import ru.urvanov.virtualpets.server.controller.site.domain.StatisticsParams.StatisticsType;
 import ru.urvanov.virtualpets.server.dao.JdbcReportDao;
 import ru.urvanov.virtualpets.server.dao.domain.LastRegisteredUser;
-import ru.urvanov.virtualpets.server.dao.domain.Pet;
 import ru.urvanov.virtualpets.server.service.PetService;
+import ru.urvanov.virtualpets.server.service.domain.LastRegisteredPet;
 
 @Controller
 @RequestMapping("site")
@@ -46,7 +46,7 @@ public class StatisticsController extends ControllerBase {
             BindingResult statisticsParamsBindingResult) {
 
         List<LastRegisteredUser> users = new ArrayList<>();
-        List<Pet> pets = new ArrayList<Pet>();
+        List<LastRegisteredPet> pets = new ArrayList<>();
         if (!statisticsParamsBindingResult.hasErrors()) {
             switch (statisticsParams.type()) {
             case LAST_REGISTERED_USERS:
