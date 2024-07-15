@@ -200,6 +200,7 @@ public class PetServiceImpl implements PetService, PetApiService {
         List<Pet> found = petDao.findLastCreatedPets(start, limit);
         return found.stream()
                 .map(p -> new LastRegisteredPet(
+                        p.getId(),
                         Date.from(p.getCreatedDate().toInstant()),
                         p.getName()))
                 .toList();
