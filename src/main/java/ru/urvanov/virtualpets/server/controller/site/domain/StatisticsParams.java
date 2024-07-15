@@ -1,16 +1,9 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.controller.site.domain;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
-/**
- * @author fedya
- * 
- */
 public class StatisticsParams {
     @NotNull
     @Min(1)
