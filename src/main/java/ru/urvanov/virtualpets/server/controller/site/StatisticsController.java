@@ -19,7 +19,6 @@ import ru.urvanov.virtualpets.server.dao.JdbcReportDao;
 import ru.urvanov.virtualpets.server.dao.domain.LastRegisteredUser;
 import ru.urvanov.virtualpets.server.dao.domain.Pet;
 import ru.urvanov.virtualpets.server.service.PetService;
-import ru.urvanov.virtualpets.server.service.UserService;
 
 @Controller
 @RequestMapping("site")
@@ -34,9 +33,8 @@ public class StatisticsController extends ControllerBase {
     @RequestMapping(value = "/information/statistics",
             method = RequestMethod.GET)
     public String showStatistics(Locale locale, Model model) {
-        StatisticsParams statisticsParams = new StatisticsParams();
-        statisticsParams.setMaxRecordsCount(100);
-        statisticsParams.setType(StatisticsType.LAST_REGISTERED_USERS);
+        StatisticsParams statisticsParams = new StatisticsParams(
+                100, StatisticsType.LAST_REGISTERED_USERS);
         model.addAttribute("statisticsParams", statisticsParams);
         return "information/statistics";
     }
@@ -50,14 +48,14 @@ public class StatisticsController extends ControllerBase {
         List<LastRegisteredUser> users = new ArrayList<>();
         List<Pet> pets = new ArrayList<Pet>();
         if (!statisticsParamsBindingResult.hasErrors()) {
-            switch (statisticsParams.getType()) {
+            switch (statisticsParams.type()) {
             case LAST_REGISTERED_USERS:
                 users = jdbcReportDao.findLastRegisteredUsers(0,
-                        statisticsParams.getMaxRecordsCount());
+                        statisticsParams.maxRecordsCount());
                 break;
             case LAST_CREATED_PETS:
                 pets = petService.findLastCreatedPets(0,
-                        statisticsParams.getMaxRecordsCount());
+                        statisticsParams.maxRecordsCount());
             }
         }
         model.addAttribute("users", users);
