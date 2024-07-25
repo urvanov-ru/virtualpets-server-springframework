@@ -1,4 +1,6 @@
 package ru.urvanov.virtualpets.server.api.domain;
 
-public record Point(int x, int y) {
+import jakarta.validation.constraints.NotNull;
+
+public record Point(@NotNull int x, @NotNull int y) {
 };

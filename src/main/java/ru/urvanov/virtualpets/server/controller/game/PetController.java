@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
 import ru.urvanov.virtualpets.server.api.domain.CreatePetArg;
 import ru.urvanov.virtualpets.server.api.domain.DrinkArg;
 import ru.urvanov.virtualpets.server.api.domain.GetPetBooksResult;
@@ -46,14 +47,14 @@ public class PetController extends ControllerBase {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value = "create", method = RequestMethod.POST)
-    public void create(@RequestBody CreatePetArg createPetArg)
+    public void create(@RequestBody @Valid CreatePetArg createPetArg)
             throws ServiceException {
         petService.create(userPetDetails, createPetArg);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value = "select", method = RequestMethod.POST)
-    public void select(@RequestBody SelectPetArg selectPetArg)
+    public void select(@RequestBody @Valid SelectPetArg selectPetArg)
             throws ServiceException {
         petService.select(userPetDetails, selectPetArg);
     }
@@ -68,14 +69,14 @@ public class PetController extends ControllerBase {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value = "drink", method = RequestMethod.POST)
-    public void drink(@RequestBody DrinkArg drinkArg)
+    public void drink(@RequestBody @Valid DrinkArg drinkArg)
             throws ServiceException {
         petService.drink(userPetDetails, drinkArg);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value = "satiety", method = RequestMethod.POST)
-    public void eat(@RequestBody SatietyArg satietyArg)
+    public void eat(@RequestBody @Valid SatietyArg satietyArg)
             throws ServiceException {
         petService.satiety(userPetDetails, satietyArg);
     }
@@ -100,7 +101,8 @@ public class PetController extends ControllerBase {
 
     @PostMapping(value = "savePetCloths")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void savePetCloth(@RequestBody SavePetCloths saveClothArg)
+    public void savePetCloth(
+            @RequestBody @Valid SavePetCloths saveClothArg)
             throws ServiceException {
         petService.savePetCloths(userPetDetails, saveClothArg);
     }

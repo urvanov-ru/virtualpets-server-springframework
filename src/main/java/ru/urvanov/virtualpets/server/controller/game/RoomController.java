@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
 import ru.urvanov.virtualpets.server.api.domain.GetRoomInfoResult;
 import ru.urvanov.virtualpets.server.api.domain.OpenBoxNewbieResult;
 import ru.urvanov.virtualpets.server.api.domain.Point;
@@ -62,42 +63,48 @@ public class RoomController extends ControllerBase {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping(value = "buildMachineWithDrinks")
-    public void buildMachineWithDrinks(@RequestBody Point position)
+    public void buildMachineWithDrinks(
+            @RequestBody @Valid Point position)
             throws ServiceException {
         roomService.buildMachineWithDrinks(userPetDetails, position);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping(value = "moveMachineWithDrinks")
-    public void moveMachineWithDrinks(@RequestBody Point position)
+    public void moveMachineWithDrinks(
+            @RequestBody @Valid  Point position)
             throws ServiceException {
         roomService.moveMachineWithDrinks(userPetDetails, position);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping(value = "buildRefrigerator")
-    public void buildRefrigerator(@RequestBody Point position)
+    public void buildRefrigerator(
+            @RequestBody @Valid Point position)
             throws ServiceException {
         roomService.buildRefrigerator(userPetDetails, position);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping(value = "moveRefrigerator")
-    public void moveRefrigerator(@RequestBody Point position)
+    public void moveRefrigerator(
+            @RequestBody @Valid Point position)
             throws ServiceException {
         roomService.moveRefrigerator(userPetDetails, position);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping(value = "buildBookcase")
-    public void buildBookcase(@RequestBody Point position)
+    public void buildBookcase(
+            @RequestBody @Valid Point position)
             throws ServiceException {
         roomService.buildBookcase(userPetDetails, position);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping(value = "moveBookcase")
-    public void moveBookcase(@RequestBody Point position)
+    public void moveBookcase(
+            @RequestBody @Valid Point position)
             throws ServiceException {
         roomService.moveBookcase(userPetDetails, position);
     }

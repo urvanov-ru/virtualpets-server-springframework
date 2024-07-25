@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
 import ru.urvanov.virtualpets.server.api.domain.GetServersArg;
 import ru.urvanov.virtualpets.server.api.domain.LoginResult;
 import ru.urvanov.virtualpets.server.api.domain.RecoverPasswordArg;
@@ -37,26 +38,30 @@ public class PublicController extends ControllerBase { // (3)
     @ResponseStatus(HttpStatus.NO_CONTENT) // (1)
     @RequestMapping(method = RequestMethod.POST, value = "register")//(2)
     public void register(
-            @RequestBody RegisterArgument registerArgument) // (3)
+            @RequestBody @Valid RegisterArgument registerArgument) // (3)
             throws ServiceException {
         publicService.register(registerArgument);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @RequestMapping(method = RequestMethod.POST, value = "recoverPassword")
-    public void recoverPassword(RecoverPasswordArg recoverPasswordArg)
+    @RequestMapping(method = RequestMethod.POST,
+            value = "recoverPassword")
+    public void recoverPassword(
+            @RequestBody @Valid RecoverPasswordArg recoverPasswordArg)
             throws ServiceException {
         publicService.recoverPassword(recoverPasswordArg);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "recoverSession")
+    @RequestMapping(method = RequestMethod.POST,
+            value = "recoverSession")
     public LoginResult recoverSession(
-            RecoverSessionArg recoverSessionArg)
+            @RequestBody @Valid RecoverSessionArg recoverSessionArg)
             throws ServiceException {
         return publicService.recoverSession(recoverSessionArg);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "server-technical-info")
+    @RequestMapping(method = RequestMethod.GET,
+            value = "server-technical-info")
     public ServerTechnicalInfo getServerTechnicalInfo()
             throws ServiceException {
         return publicService.getServerTechnicalInfo();

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
 import ru.urvanov.virtualpets.server.api.domain.CollectObjectArg;
 import ru.urvanov.virtualpets.server.api.domain.HiddenObjectsGame;
 import ru.urvanov.virtualpets.server.api.domain.JoinHiddenObjectsGameArg;
@@ -32,7 +33,8 @@ public class HiddenObjectsController extends ControllerBase {
 
     @PostMapping("joinGame")
     public HiddenObjectsGame joinGame(
-            @RequestBody JoinHiddenObjectsGameArg joinHiddenObjectsGameArg)
+            @RequestBody @Valid
+            JoinHiddenObjectsGameArg joinHiddenObjectsGameArg)
             throws ServiceException {
         return hiddenObjectsService.joinGame(userPetDetails,
                 hiddenObjectsGameStatus, joinHiddenObjectsGameArg);
@@ -47,7 +49,7 @@ public class HiddenObjectsController extends ControllerBase {
 
     @PostMapping("collectObject")
     public HiddenObjectsGame collectObject(
-            @RequestBody CollectObjectArg collectObjectArg)
+            @RequestBody @Valid CollectObjectArg collectObjectArg)
             throws ServiceException {
         return hiddenObjectsService.collectObject(userPetDetails,
                 hiddenObjectsGameStatus, collectObjectArg);

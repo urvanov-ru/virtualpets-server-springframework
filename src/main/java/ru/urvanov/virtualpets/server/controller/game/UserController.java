@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
 import ru.urvanov.virtualpets.server.api.domain.LoginArg;
 import ru.urvanov.virtualpets.server.api.domain.LoginResult;
 import ru.urvanov.virtualpets.server.auth.UserDetailsImpl;
@@ -27,7 +28,7 @@ public class UserController extends ControllerBase {
     @RequestMapping(method = RequestMethod.POST, value = "login")
     public LoginResult login(
             @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
-            @RequestAttribute("loginArg") LoginArg loginArg)
+            @RequestAttribute("loginArg") @Valid LoginArg loginArg)
             throws ServiceException {
         LoginResult result = userService.login(loginArg);
         userPetDetails.setUserId(result.userId());
