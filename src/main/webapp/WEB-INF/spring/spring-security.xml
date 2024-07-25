@@ -15,7 +15,7 @@
     http://www.springframework.org/schema/http/spring-http.xsd
      ">
 
-    <security:http pattern = "/site/*" security = "none" /> 
+    <security:http pattern = "/site/**" security = "none" /> 
 
     <security:http pattern = "/rest/**" realm = "SecRemoting" create-session = "always"
             authentication-manager-ref = "authenticationManager"
