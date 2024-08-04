@@ -45,6 +45,7 @@ import ru.urvanov.virtualpets.server.dao.domain.BuildingMaterialId;
 import ru.urvanov.virtualpets.server.dao.domain.Cloth;
 import ru.urvanov.virtualpets.server.dao.domain.DrinkId;
 import ru.urvanov.virtualpets.server.dao.domain.JournalEntryId;
+import ru.urvanov.virtualpets.server.dao.domain.LastCreatedPet;
 import ru.urvanov.virtualpets.server.dao.domain.Level;
 import ru.urvanov.virtualpets.server.dao.domain.MachineWithDrinks;
 import ru.urvanov.virtualpets.server.dao.domain.MachineWithDrinksCost;
@@ -57,7 +58,6 @@ import ru.urvanov.virtualpets.server.dao.domain.PetJournalEntry;
 import ru.urvanov.virtualpets.server.dao.domain.Refrigerator;
 import ru.urvanov.virtualpets.server.dao.domain.RefrigeratorCost;
 import ru.urvanov.virtualpets.server.dao.domain.Room;
-import ru.urvanov.virtualpets.server.service.domain.LastRegisteredPet;
 import ru.urvanov.virtualpets.server.service.domain.PetDetails;
 import ru.urvanov.virtualpets.server.service.domain.PetInformationPageAchievement;
 import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
@@ -195,11 +195,11 @@ public class PetServiceImpl implements PetService, PetApiService {
     }
 
     @Override
-    public List<LastRegisteredPet> findLastCreatedPets(
+    public List<LastCreatedPet> findLastCreatedPets(
             int start, int limit) {
         List<Pet> found = petDao.findLastCreatedPets(start, limit);
         return found.stream()
-                .map(p -> new LastRegisteredPet(
+                .map(p -> new LastCreatedPet(
                         p.getId(),
                         Date.from(p.getCreatedDate().toInstant()),
                         p.getName()))

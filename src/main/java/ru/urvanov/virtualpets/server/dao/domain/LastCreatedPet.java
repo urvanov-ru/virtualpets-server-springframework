@@ -1,13 +1,14 @@
-package ru.urvanov.virtualpets.server.service.domain;
+package ru.urvanov.virtualpets.server.dao.domain;
 
 import java.util.Date;
 
-public class LastRegisteredPet {
+public class LastCreatedPet {
     private Integer id;
     private Date createdDate;
     private String name;
     
-    public LastRegisteredPet(Integer id, Date createdDate, String name) {
+    public LastCreatedPet(Integer id, Date createdDate, String name) {
+        this.id = id;
         this.createdDate = createdDate;
         this.name = name;
     }
