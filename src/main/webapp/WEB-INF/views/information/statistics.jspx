@@ -4,7 +4,8 @@
     xmlns:spring = "http://www.springframework.org/tags"
     xmlns:form = "http://www.springframework.org/tags/form"
     xmlns:custom = "urn:jsptagdir:/WEB-INF/tags"
-    xmlns:fmt = "http://java.sun.com/jsp/jstl/fmt">
+    xmlns:fmt = "http://java.sun.com/jsp/jstl/fmt"
+    xmlns:security = "http://www.springframework.org/security/tags">
 
 <jsp:attribute name = "headAdditional" >
     <spring:message
@@ -48,6 +49,9 @@
     <spring:message
         code = "virtualpets-server-springframework.site.pets_count"
         var = "pets_count_var" />
+    <spring:message
+        code = "virtualpets-server-springframework.site.change_user_access"
+        var = "change_user_access_var" />
 
 
     <H1>${statistics_var}</H1>
@@ -74,7 +78,7 @@
             </div>
             <div
                 style = "width: 300px; display: inline; margin-left: auto;">
-                <input type = "submit" value = "${show_statistics_var}" />
+                <form:button>${show_statistics_var}</form:button>
             </div>
         </div>
     </form:form>
@@ -86,6 +90,9 @@
                 <th>${registration_date_var}</th>
                 <th>${name_var}</th>
                 <th>${pets_count_var}</th>
+                <security:authorize url="/site/admin/user">
+                <th></th>
+                </security:authorize>
                 </tr>
             </thead>
             <tbody>
@@ -101,6 +108,16 @@
                     <td>
                         <spring:escapeBody>${user.petsCount}</spring:escapeBody>
                     </td>
+                    <security:authorize url="/site/admin/user">
+                    <td>
+                        <spring:url
+                            value = "/site/admin/user/{userId}"
+                            var = "change_user_access_url" >
+                            <spring:param name = "userId" value = "${user.id}" />
+                        </spring:url>
+                        <a href = "${change_user_access_url}">${change_user_access_var}</a>
+                    </td>
+                    </security:authorize>
                 </tr>
             </c:forEach>
             </tbody>

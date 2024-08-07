@@ -19,8 +19,6 @@ public interface UserDao {
 
     Optional<User> findByLoginAndEmail(String name, String email);
 
-    Optional<User> findByUnid(String unid);
-
     Optional<User> findByRecoverPasswordKey(String recoverKey);
 
     List<User> findLastRegisteredUsers(int start, int limit);

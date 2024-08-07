@@ -78,7 +78,6 @@ a:visited {
 	font-family: fantasy;
 }
 
-}
 .footer {
 	margin-top: 15px;
 	border-top: 1px dashed #999999;
@@ -127,21 +126,21 @@ input[type=text] {
 	border-style: solid;
 }
 
-input[type=button],input[type=submit],select option {
+input[type=button],input[type=submit],select option,button {
 	background: #b543a6;
 	border-style: solid;
 	border-color: #ff92f1 #940181 #940181 #ff92f1;
 	border-width: 3px;
 }
 
-input[type=button]:hover,input[type=submit]:hover,select option:hover {
+input[type=button]:hover,input[type=submit]:hover,select option:hover,button:hover {
 	background: #f45ce0;
 	border-style: solid;
 	border-color: #ff92f1 #940181 #940181 #ff92f1;
 	border-width: 3px;
 }
 
-input[type=button]:active,input[type=submit]:active,select option:active
+input[type=button]:active,input[type=submit]:active,select option:active,button:active
 	{
 	background: #f45ce0;
 	border-style: solid;

@@ -14,6 +14,7 @@ public class LastRegisteredUserMapper
     public LastRegisteredUser mapRow(ResultSet rs, int rowNum)
             throws SQLException {
         LastRegisteredUser lastRegisteredUser = new LastRegisteredUser();
+        lastRegisteredUser.setId(rs.getInt("id"));
         lastRegisteredUser.setRegistrationDate(
                 rs.getTimestamp("registration_date"));
         lastRegisteredUser.setName(rs.getString("name"));

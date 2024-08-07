@@ -88,19 +88,6 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<User> findByUnid(String unid) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<User> criteriaQuery = cb.createQuery(User.class);
-        Root<User> root = criteriaQuery.from(User.class);
-        criteriaQuery.select(root);
-        Predicate predicate = cb.equal(root.get(User_.unid), unid);
-        criteriaQuery.where(predicate);
-        List<User> users = em.createQuery(criteriaQuery).getResultList();
-        return DataAccessUtils.optionalResult(users);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
     public Optional<User> findByRecoverPasswordKey(String recoverKey) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<User> criteriaQuery = cb.createQuery(User.class);

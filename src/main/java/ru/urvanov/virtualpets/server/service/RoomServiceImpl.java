@@ -53,6 +53,7 @@ import ru.urvanov.virtualpets.server.dao.domain.Refrigerator;
 import ru.urvanov.virtualpets.server.dao.domain.RefrigeratorCost;
 import ru.urvanov.virtualpets.server.dao.domain.Room;
 import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
+import ru.urvanov.virtualpets.server.service.exception.NotNowException;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 @Service
@@ -289,7 +290,7 @@ public class RoomServiceImpl implements RoomApiService {
         Room room = roomDao.findByPetId(pet.getId()).orElseThrow();
         if (!pet.getJournalEntries()
                 .containsKey(JournalEntryId.BUILD_REFRIGERATOR)) {
-            throw new ServiceException("No now.");
+            throw new NotNowException();
         }
 
         final int DRY_FOOD_ADD_COUNT = 10;
@@ -374,7 +375,7 @@ public class RoomServiceImpl implements RoomApiService {
         Room room = roomDao.findByPetId(pet.getId()).orElseThrow();
         if (!pet.getJournalEntries()
                 .containsKey(JournalEntryId.BUILD_BOOKCASE)) {
-            throw new ServiceException("Not now.");
+            throw new NotNowException();
         }
 
         Book book = bookDao.findById("DESTINY");
@@ -449,7 +450,7 @@ public class RoomServiceImpl implements RoomApiService {
         Room room = roomDao.findByPetId(pet.getId()).orElseThrow();
         if (!pet.getJournalEntries()
                 .containsKey(JournalEntryId.BUILD_MACHINE_WITH_DRINKS)) {
-            throw new ServiceException("Not now.");
+            throw new NotNowException();
         }
 
         final int WATER_ADD_COUNT = 10;

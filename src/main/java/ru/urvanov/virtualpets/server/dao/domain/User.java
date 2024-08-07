@@ -3,14 +3,8 @@ package ru.urvanov.virtualpets.server.dao.domain;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -37,7 +31,7 @@ import jakarta.validation.constraints.Size;
 @NamedQuery(name="findByLoginAndPassword", query="from User u where u.login=:login and u.password=:password")
 @NamedQuery(name="findOnline", query="from User u where u.activeDate > :date")
 @NamedQuery(name="findByLoginAndEmail", query="from User u where u.login=:login and u.email=:email")
-public class User implements UserDetails, Serializable{
+public class User implements Serializable{
 
     private static final long serialVersionUID = 6592049980085443679L;
 
@@ -64,6 +58,9 @@ public class User implements UserDetails, Serializable{
     @Column(name = "password")
     @Size(max = 100)
     private String password;
+    
+    @Column(name = "enabled")
+    private boolean enabled;
     
 
     @Column(name = "registration_date")
@@ -94,9 +91,8 @@ public class User implements UserDetails, Serializable{
     @Size(max = 50)
     private String city;
 
-    @Column(name = "role")
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    @Column(name = "roles")
+    private String roles;
 
     @Column(name = "email")
     @Size(max = 100)
@@ -108,13 +104,6 @@ public class User implements UserDetails, Serializable{
     
     @Column(name="recover_password_valid")
     private OffsetDateTime recoverPasswordValid;
-    
-    /**
-     * Уникальный идентификатор. Используется для восстановления подключения
-     * без ввода пароля.
-     */
-    @Column(name="unid")
-    private String unid;
     
     @OneToMany(mappedBy="user")
     private Set<Pet> pets;
@@ -148,6 +137,14 @@ public class User implements UserDetails, Serializable{
 
     public String getPassword() {
         return password;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public void setPassword(String password) {
@@ -218,12 +215,12 @@ public class User implements UserDetails, Serializable{
         this.city = city;
     }
 
-    public Role getRole() {
-        return role;
+    public String getRoles() {
+        return roles;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRoles(String roles) {
+        this.roles = roles;
     }
 
     public String getEmail() {
@@ -260,46 +257,6 @@ public class User implements UserDetails, Serializable{
 
     public Integer getVersion() {
         return version;
-    }
-
-    public String getUnid() {
-        return unid;
-    }
-
-    public void setUnid(String unid) {
-        this.unid = unid;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        Set<GrantedAuthority> granted = new HashSet<GrantedAuthority>();
-        granted.add(new SimpleGrantedAuthority("ROLE_USER"));
-        return granted;
-    }
-
-    @Override
-    public String getUsername() {
-        return login;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
     }
     
     @Override

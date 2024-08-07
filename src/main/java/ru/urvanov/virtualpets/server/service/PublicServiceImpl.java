@@ -5,37 +5,28 @@ import java.security.NoSuchAlgorithmException;
 import java.time.Clock;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Properties;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.annotation.PostConstruct;
-import ru.urvanov.virtualpets.server.api.domain.GetServersArg;
+import ru.urvanov.virtualpets.server.api.domain.LoginArg;
 import ru.urvanov.virtualpets.server.api.domain.LoginResult;
 import ru.urvanov.virtualpets.server.api.domain.RecoverPasswordArg;
-import ru.urvanov.virtualpets.server.api.domain.RecoverSessionArg;
+//import ru.urvanov.virtualpets.server.api.domain.RecoverSessionArg;
 import ru.urvanov.virtualpets.server.api.domain.RegisterArgument;
-import ru.urvanov.virtualpets.server.api.domain.ServerInfo;
 import ru.urvanov.virtualpets.server.api.domain.ServerTechnicalInfo;
 import ru.urvanov.virtualpets.server.dao.UserDao;
+import ru.urvanov.virtualpets.server.dao.domain.Role;
 import ru.urvanov.virtualpets.server.dao.domain.User;
 import ru.urvanov.virtualpets.server.service.exception.IncompatibleVersionException;
 import ru.urvanov.virtualpets.server.service.exception.NameIsBusyException;
@@ -57,33 +48,14 @@ public class PublicServiceImpl implements PublicApiService {
     @Autowired
     private String version;
 
-    @Value("${virtualpets-server-springframework.servers.url}")
-    private String[] serversUrl;
-    
-    @Value("${virtualpets-server-springframework.servers.name}")
-    private String[] serversName;
-    
-    @Value("${virtualpets-server-springframework.servers.locale}")
-    private String[] serversLocale;
-
-    private ServerInfo[] servers;
+    @Value("${virtualpets-server-springframework.server.url}")
+    private String serverUrl;
     
     @Autowired
     private BCryptPasswordEncoder bcryptEncoder;
     
     @Autowired
     private Clock clock;
-
-    @Override
-    public ServerInfo[] getServers(GetServersArg getServersArg)
-            throws ServiceException {
-        String clientVersion = getServersArg.version();
-        if (!version.equals(clientVersion)) {
-            throw new IncompatibleVersionException(
-                    "", version, clientVersion);
-        }
-        return servers;
-    }
 
     @Override
     @Transactional(rollbackFor = ServiceException.class)
@@ -101,12 +73,27 @@ public class PublicServiceImpl implements PublicApiService {
         }
         User user = new User();
         user.setLogin(registerArgument.login());
-        user.setName(registerArgument.login());
+        user.setName(registerArgument.name());
         user.setPassword(bcryptEncoder.encode(registerArgument.password()));
         user.setEmail(registerArgument.email());
         user.setRegistrationDate(OffsetDateTime.now(clock));
-        user.setRole(ru.urvanov.virtualpets.server.dao.domain.Role.USER);
+        user.setRoles(Role.USER.name());
+        user.setEnabled(true);
         userDao.save(user);
+    }
+    
+    @Override
+    @Transactional(rollbackFor = ServiceException.class)
+    public LoginResult login(LoginArg loginArg)
+            throws ServiceException {
+        String clientVersion = loginArg.version();
+        if (!version.equals(clientVersion)) {
+            throw new IncompatibleVersionException("", version,
+                    clientVersion);
+        }
+        User user = userDao.findByLogin(loginArg.login()).orElseThrow();
+        return new LoginResult(true, null, user.getId(),
+                user.getLogin(), user.getName());
     }
 
 
@@ -149,7 +136,7 @@ public class PublicServiceImpl implements PublicApiService {
         SimpleMailMessage msg = new SimpleMailMessage(this.templateMessage);
         msg.setTo(email);
         msg.setText("Dear " + user.getName()
-                + ", follow this link to recover password " + recoverPasswordArgument.host()
+                + ", follow this link to recover password " + serverUrl
                 + "/site/recoverPassword?recoverPasswordKey=" + key + " ");
         try {
             this.mailSender.send(msg);
@@ -157,38 +144,6 @@ public class PublicServiceImpl implements PublicApiService {
             throw new SendMailException("Send mail exception.", ex);
         }
 
-    }
-
-    @Override
-    @Transactional(rollbackFor = ServiceException.class, readOnly = true)
-    public LoginResult recoverSession(RecoverSessionArg recoverSessionArg)
-            throws ServiceException {
-        String clientVersion = recoverSessionArg.version();
-        if (!version.equals(clientVersion)) {
-            throw new IncompatibleVersionException("", version, clientVersion);
-        }
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        String unid = recoverSessionArg.unid();
-        User user = userDao.findByUnid(unid).orElseThrow();
-        if (user != null) {
-
-            Set<GrantedAuthority> granted = new HashSet<GrantedAuthority>();
-            granted.add(new SimpleGrantedAuthority("ROLE_USER"));
-
-            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-                    user, null, granted);
-            securityContext.setAuthentication(token);
-        }
-        Authentication auth = securityContext.getAuthentication();
-
-        LoginResult loginResult;
-        Object principal = auth.getPrincipal();
-        if (principal instanceof User) {
-            loginResult = new LoginResult(true, null, user.getId(), user.getUnid());
-        } else {
-            throw new ServiceException("Failed to recover session");
-        }
-        return loginResult;
     }
 
     @Override
@@ -206,22 +161,6 @@ public class PublicServiceImpl implements PublicApiService {
             return info;
         } catch (Exception ex) {
             throw new ServiceException(ex);
-        }
-    }
-    
-    @PostConstruct
-    public void init() {
-
-        if ((serversUrl.length != serversName.length)
-                || (serversName.length != serversLocale.length)) {
-            throw new IllegalStateException("application.servers.url, application.servers.name, application.servers.locale should have the same count of elements. Elements are splitted by '|'.");
-        }
-        servers = new ServerInfo[serversUrl.length];
-        for (int n = 0; n < serversUrl.length; n++) {
-            servers[n] = new ServerInfo(
-                    serversUrl[n],
-                    serversName[n],
-                    serversLocale[n]);
         }
     }
 

@@ -10,6 +10,7 @@ import ru.urvanov.virtualpets.server.dao.domain.Pet;
 import ru.urvanov.virtualpets.server.dao.domain.Refrigerator;
 import ru.urvanov.virtualpets.server.service.domain.PetDetails;
 import ru.urvanov.virtualpets.server.service.exception.NotEnoughPetResourcesException;
+import ru.urvanov.virtualpets.server.service.exception.PetNotFoundException;
 
 public interface PetService {
 
@@ -34,5 +35,5 @@ public interface PetService {
 
     void addAchievementIfNot(Pet pet, AchievementId achievement);
 
-    public PetDetails petInformationPage(Integer id);
+    public PetDetails petInformationPage(Integer id) throws PetNotFoundException;
 }

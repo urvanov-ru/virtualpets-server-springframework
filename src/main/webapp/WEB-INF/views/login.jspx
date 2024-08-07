@@ -1,0 +1,74 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<custom:defaultLayout xmlns:jsp = "http://java.sun.com/JSP/Page"
+    xmlns:c = "http://java.sun.com/jsp/jstl/core"
+    xmlns:spring = "http://www.springframework.org/tags"
+    xmlns:custom = "urn:jsptagdir:/WEB-INF/tags">
+<jsp:attribute name = "headAdditional" >
+    <spring:message
+        code = "virtualpets-server-springframework.site.title"
+        var = "title_var"
+        htmlEscape = "true" />
+    <title>${title_var}</title>
+</jsp:attribute>
+
+<spring:htmlEscape defaultHtmlEscape = "true" />
+<jsp:directive.page
+    contentType = "text/html;charset=UTF-8"
+    pageEncoding = "UTF-8"
+    session = "false" />
+<jsp:output omit-xml-declaration = "yes" />
+<jsp:output omit-xml-declaration = "yes" />
+
+<div id = "main">
+    <spring:message
+        code = "virtualpets-server-springframework.site.username"
+        var = "name_var" />
+    <spring:message
+        code = "virtualpets-server-springframework.site.password"
+        var = "password_var" />
+    <spring:message
+        code = "virtualpets-server-springframework.site.remember-me"
+        var = "remember_me_var" />
+    <spring:message
+        code = "virtualpets-server-springframework.site.login"
+        var = "login_var" />
+    <spring:url value = "/site/login"
+        var = "login_url" />
+    
+    <spring:message
+        code = "virtualpets-server-springframework.site.login-error"
+        var = "login_error_var" />
+    <spring:message
+        code = "virtualpets-server-springframework.site.logout-success"
+        var = "logout_success_var" />
+    
+    <form action="${login_url}" method="post">
+        <div style = "width: 300px;" class = "form">
+            <div>
+                <input type = "text" name = "username" placeholder = "${name_var}" />
+            </div>
+            
+            <div>
+                <input type = "password" name = "password" placeholder = "${password_var}"/>
+            </div>
+            
+            <input type="hidden"
+                name="${_csrf.parameterName}"
+                value="${_csrf.token}"/>
+            <c:if test = "${param.error != null}">
+            <div class = "error">
+            ${login_error_var}
+            </div>
+            </c:if>
+            <c:if test = "${param.logout != null}">
+            <div>
+            ${logout_success_var}
+            </div>
+            </c:if>
+            <div>
+                <input type = "submit" value = "${login_var}" />
+            </div>
+        </div>
+    </form>
+</div>
+</custom:defaultLayout>

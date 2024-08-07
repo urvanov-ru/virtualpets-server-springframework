@@ -1,0 +1,91 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<custom:defaultLayout xmlns:jsp = "http://java.sun.com/JSP/Page"
+    xmlns:c = "http://java.sun.com/jsp/jstl/core"
+    xmlns:spring = "http://www.springframework.org/tags"
+    xmlns:sec = "http://www.springframework.org/security/tags"
+    xmlns:custom = "urn:jsptagdir:/WEB-INF/tags"
+    xmlns:form = "http://www.springframework.org/tags/form">
+<jsp:attribute name = "headAdditional" >
+    <title>${title_var}</title>
+</jsp:attribute>
+
+<spring:htmlEscape defaultHtmlEscape = "true" />
+<jsp:directive.page
+    contentType = "text/html;charset=UTF-8"
+    pageEncoding = "UTF-8"
+    session = "false" />
+<jsp:output omit-xml-declaration = "yes" />
+
+<div id = "main">
+    <spring:url value = "/site/logout"
+        var = "logout_url" />
+    <spring:message
+        code = "virtualpets-server-springframework.site.username"
+        var = "username_var" />
+    <spring:message
+        code = "virtualpets-server-springframework.site.name"
+        var = "name_var" />
+    <spring:message
+        code = "virtualpets-server-springframework.site.logout"
+        var = "logout_var" />
+    <spring:message
+        code = "virtualpets-server-springframework.site.admin_panel"
+        var = "admin_panel_var" />
+    <spring:message
+        code = "virtualpets-server-springframework.site.user_access_rights"
+        var = "user_access_rights_var" />
+    <spring:message
+        code = "virtualpets-server-springframework.site.save"
+        var = "save_var" />
+    <spring:message
+        code = "virtualpets-server-springframework.site.account_enabled"
+        var = "enabled_var" />
+    <spring:message
+        code = "virtualpets-server-springframework.site.saved"
+        var = "saved_var" />
+    <spring:message
+        code = "virtualpets-server-springframework.site.admin_panel"
+        var = "admin_panel_var" />
+    
+    <sec:authorize url = "/site/admin">
+    <div>
+        <spring:url value = "/site/admin"
+            var = "admin_panel_url" />
+        <a href="${admin_panel_url}">${admin_panel_var}</a>
+    </div>
+    </sec:authorize>
+    <p>
+        ID: ${userAccessRights.id} 
+    </p>
+    <p>
+        ${username_var}: <spring:escapeBody>${userAccessRights.login}</spring:escapeBody>
+    </p>
+    <p>
+        ${name_var}: <spring:escapeBody>${userAccessRights.name}</spring:escapeBody> 
+    </p>
+    <form:form modelAttribute  = "userAccessRights">
+        <div>
+        ${user_access_rights_var}
+        </div>
+        <sec:authentication var="principal" property="principal" />
+        <c:set var = "editEnabled" value = "${userAccessRights.id ne principal.userId}" />
+        <div>
+        <form:checkbox path="enabled" disabled = "${!editEnabled}" />${enabled_var}
+        </div>
+        <div>
+        <form:checkboxes path="roles"  disabled = "${!editEnabled}" items="${userAccessRights.allRoles}"/>
+        </div>
+        <div>
+        <form:errors path = "roles" class = "error" />
+        </div>
+        <c:if test="${saved}">
+        <div>
+        ${saved_var}
+        </div>
+        </c:if>
+        <div>
+        <form:button disabled = "${!editEnabled}">${save_var}</form:button>
+        </div>
+    </form:form>
+</div>
+</custom:defaultLayout>

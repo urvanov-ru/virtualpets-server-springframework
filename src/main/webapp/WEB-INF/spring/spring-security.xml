@@ -15,15 +15,33 @@
     http://www.springframework.org/schema/http/spring-http.xsd
      ">
 
-    <security:http pattern = "/site/**" security = "none" /> 
+<security:method-security />
 
-    <security:http pattern = "/rest/**" realm = "SecRemoting" create-session = "always"
+    <security:http pattern = "/site/**"
+            authentication-manager-ref = "authenticationManager">
+        
+        <security:intercept-url pattern = "/site/admin/**"
+            access = "hasRole('ROLE_ADMIN') || hasRole('ROLE_SUPER_ADMIN')" />
+        <security:intercept-url pattern = "/site/user/**"
+            access = "hasRole('ROLE_USER')" />
+        <security:intercept-url pattern = "/site/**"
+            access = "permitAll" />
+        <!-- Default to Spring MVC's CORS configuration -->
+        <security:cors  /> 
+        <security:csrf />
+        <security:form-login login-page = "/site/login"
+            login-processing-url = "/site/login"
+            default-target-url = "/site/user/profile"
+            authentication-failure-url = "/site/login?error=1" />
+        <security:logout logout-url = "/site/logout"
+            logout-success-url = "/site/login?logout=1" />
+    </security:http> 
+
+    <security:http pattern = "/rest/**"
             authentication-manager-ref = "authenticationManager"
             entry-point-ref = "authenticationEntryPoint"
-            security-context-repository-ref = "securityContextRepository">
-        
+            >
         <!-- <security:http-basic />  -->
-        <security:custom-filter ref = "customSecurityFilter" after = "BASIC_AUTH_FILTER" />
         <security:intercept-url pattern = "/rest/v1/PublicService/**"
             access = "permitAll" />
         <security:intercept-url pattern = "/rest/v1/UserService/login"
@@ -31,9 +49,8 @@
         <security:intercept-url pattern = "/rest/**"
             access = "hasRole('ROLE_USER')" />
         <!-- Default to Spring MVC's CORS configuration -->
-        <security:cors  /> 
-        <security:csrf disabled = "true"/>
-        
+        <security:cors /> 
+        <security:csrf disabled = "true" />
     </security:http>
     
     <bean id = "securityContextRepository" class = "org.springframework.security.web.context.DelegatingSecurityContextRepository">
@@ -48,17 +65,11 @@
     <bean id = "authenticationEntryPoint" class = "ru.urvanov.virtualpets.server.auth.CustomAuthenticationEntryPoint">
     </bean>
     
-    
-    <bean id = "customSecurityFilter" class = "ru.urvanov.virtualpets.server.auth.CustomAuthenticationProcessingFilter">
-        <constructor-arg name = "authenticationManager" ref = "authenticationManager" />
-        <property name = "securityContextRepository" ref = "securityContextRepository" />
-    </bean>
-    
     <bean id = "bcryptEncoder" class = "org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
     
     <bean id = "authenticationProvider"
         class = "ru.urvanov.virtualpets.server.auth.DatabaseAuthenticationProvider">
-        <property name = "userDetailsService" ref = "userService" />
+        <property name = "userDetailsService" ref = "userDetailsService" />
         <property name = "bcryptEncoder" ref = "bcryptEncoder" />
     </bean>
     
@@ -68,4 +79,19 @@
             ref = "authenticationProvider" >
         </security:authentication-provider>
     </security:authentication-manager>
+
+    <!--<bean id = "roleHierarchy"
+        class = "org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl"
+        factory-method = "fromHierarchy">
+        <constructor-arg>
+            <value>
+             ROLE_ADMIN > ROLE_USER
+             ROLE_USER > ROLE_AUTHENTICATED
+             ROLE_AUTHENTICATED > ROLE_UNAUTHENTICATED
+             </value>
+         </constructor-arg>
+    </bean>-->
+    
+    
+
 </beans>

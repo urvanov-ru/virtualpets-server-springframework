@@ -1,0 +1,68 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<custom:defaultLayout xmlns:jsp = "http://java.sun.com/JSP/Page"
+    xmlns:c = "http://java.sun.com/jsp/jstl/core"
+    xmlns:spring = "http://www.springframework.org/tags"
+    xmlns:sec = "http://www.springframework.org/security/tags"
+    xmlns:custom = "urn:jsptagdir:/WEB-INF/tags">
+<jsp:attribute name = "headAdditional" >
+    <spring:message
+        code = "virtualpets-server-springframework.app_name"
+        var = "title_var"
+        htmlEscape = "true" />
+    <title>${title_var}</title>
+</jsp:attribute>
+
+<spring:htmlEscape defaultHtmlEscape = "true" />
+<jsp:directive.page
+    contentType = "text/html;charset=UTF-8"
+    pageEncoding = "UTF-8"
+    session = "false" />
+<jsp:output omit-xml-declaration = "yes" />
+
+<div id = "main">
+    <spring:url value = "/admin/logout"
+        var = "logout_url" />
+    <spring:message
+        code = "virtualpets-server-springframework.site.name"
+        var = "username_var" />
+    <spring:message
+        code = "virtualpets-server-springframework.site.logout"
+        var = "logout_var" />
+    <spring:message
+        code = "virtualpets-server-springframework.site.statistics"
+        var = "statistics_var" />
+    <spring:message
+        code = "virtualpets-server-springframework.site.profile"
+        var = "profile_var" />
+    
+    <div>
+        ${username_var}: <sec:authentication property = "principal.username" /> 
+    </div>
+    <sec:authorize url="/site/user/profile">
+        <div>
+            <spring:url value = "/site/user/profile"
+                var = "profile_url" />
+            <a href = "${profile_url}">${profile_var}</a>
+        </div>
+    </sec:authorize>
+    <div>
+        <spring:url value = "/site/information/statistics"
+        var = "statistics_url" />
+        <a href = "${statistics_url}">${statistics_var}</a>
+    </div>
+    <div>
+        <spring:url value = "/site/logout"
+            var = "logout_url" />
+       <form method = "POST" action = "${logout_url}">
+            <input type="hidden"
+                name="${_csrf.parameterName}"
+                value="${_csrf.token}"/>
+            <input type="submit" value = "${logout_var}" />
+        </form>
+    </div>
+    <div>
+    
+    ADMINISTRATOR PANEL
+    </div>
+</div>
+</custom:defaultLayout>

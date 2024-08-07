@@ -12,6 +12,7 @@ import ru.urvanov.virtualpets.server.api.domain.PetListResult;
 import ru.urvanov.virtualpets.server.api.domain.SatietyArg;
 import ru.urvanov.virtualpets.server.api.domain.SavePetCloths;
 import ru.urvanov.virtualpets.server.api.domain.SelectPetArg;
+import ru.urvanov.virtualpets.server.dao.domain.Pet;
 import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
@@ -60,6 +61,6 @@ public interface PetApiService {
             UserPetDetails userPetDetails)
             throws ServiceException;
 
-    void delete(UserPetDetails userPetDetails, Integer petId)
+    Pet delete(UserPetDetails userPetDetails, Integer petId)
             throws ServiceException;;
 }

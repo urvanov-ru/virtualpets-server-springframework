@@ -75,8 +75,6 @@ a:visited {
 	text-indent: 20px;
 }
 
-
-}
 .footer {
 	margin-top: 15px;
 	border-top: 1px dashed #999999;
@@ -122,19 +120,19 @@ input[type=text] {
 	border-style: solid;
 }
 
-input[type=button],input[type=submit],select option {
+input[type=button],input[type=submit],select option,button {
 	border-style: solid;
 	border-color: #c0c0ff #8181ff #8181ff #c0c0ff;
 	border-width: 3px;
 }
 
-input[type=button]:hover,input[type=submit]:hover,select option:hover {
+input[type=button]:hover,input[type=submit]:hover,select option:hover,button:hover {
 	border-style: solid;
 	border-color: #c0c0ff #8181ff #8181ff #c0c0ff;
 	border-width: 3px;
 }
 
-input[type=button]:active,input[type=submit]:active,select option:active
+input[type=button]:active,input[type=submit]:active,select option:active,button:active
 	{
 	border-style: solid;
 	border-color: #8181ff #c0c0ff #c0c0ff #8181ff;

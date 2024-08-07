@@ -31,12 +31,14 @@ public class JdbcReportDaoImpl implements JdbcReportDao {
             int limit) {
         return jdbcTemplate.query("""
                 select
+                  u.id as id,
                   u.registration_date as registration_date,
                   u.name as name,
                   count(p.id) as pets_count
                 from "user" u
                   left join pet p on p.user_id = u.id
                 group by
+                  u.id,
                   u.registration_date,
                   u.name
                 order by registration_date desc offset ? limit ?

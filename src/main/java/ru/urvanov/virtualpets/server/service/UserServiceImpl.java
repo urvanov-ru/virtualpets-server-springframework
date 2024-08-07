@@ -1,77 +1,38 @@
 package ru.urvanov.virtualpets.server.service;
 
-import java.time.Clock;
-import java.time.OffsetDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
-import java.util.Random;
 import java.util.stream.Collectors;
 
-import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ru.urvanov.virtualpets.server.api.domain.LoginArg;
-import ru.urvanov.virtualpets.server.api.domain.LoginResult;
 import ru.urvanov.virtualpets.server.api.domain.RefreshUsersOnlineResult;
 import ru.urvanov.virtualpets.server.api.domain.UserInfo;
 import ru.urvanov.virtualpets.server.api.domain.UserInformation;
 import ru.urvanov.virtualpets.server.api.domain.UserInformationArg;
-import ru.urvanov.virtualpets.server.auth.UserDetailsImpl;
 import ru.urvanov.virtualpets.server.dao.UserDao;
+import ru.urvanov.virtualpets.server.dao.domain.Role;
 import ru.urvanov.virtualpets.server.dao.domain.User;
-import ru.urvanov.virtualpets.server.dao.exception.DaoException;
+import ru.urvanov.virtualpets.server.service.domain.UserAccessRights;
 import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.domain.UserProfile;
-import ru.urvanov.virtualpets.server.service.exception.IncompatibleVersionException;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
+import ru.urvanov.virtualpets.server.service.exception.UserNotFoundException;
 
 @Service("userService")
 public class UserServiceImpl
-        implements UserService, UserApiService, UserDetailsService {
-
-    private static final DateTimeFormatter unidDateTimeFormatter = DateTimeFormatter
-            .ofPattern("yyyyMMddHHmmssSSS", Locale.ROOT);
+        implements UserApiService, UserService {
 
     @Autowired
     private UserDao userDao;
 
-    @Autowired
-    private String version;
-
-    @Autowired
-    private Clock clock;
-
     @Override
-    @Transactional(rollbackFor = ServiceException.class)
-    public LoginResult login(LoginArg loginArg)
-            throws ServiceException {
-        String clientVersion = loginArg.version();
-        if (!version.equals(clientVersion)) {
-            throw new IncompatibleVersionException("", version,
-                    clientVersion);
-        }
-        User user = userDao.findByLogin(loginArg.login()).orElseThrow();
-
-        byte[] b = new byte[256];
-        Random r = new Random();
-        r.nextBytes(b);
-        String uniqueIdentifier = Base64.encodeBase64String(b);
-        uniqueIdentifier = uniqueIdentifier + unidDateTimeFormatter
-                .format(OffsetDateTime.now(clock));
-        user.setUnid(uniqueIdentifier);
-
-        return new LoginResult(true, null, user.getId(),
-                uniqueIdentifier);
-    }
-
-    @Override
+    @PreAuthorize("hasRole('USER')")
     public RefreshUsersOnlineResult getUsersOnline(
             UserPetDetails userPetDetails) 
             throws ServiceException {
@@ -83,6 +44,7 @@ public class UserServiceImpl
     }
 
     @Override
+    @PreAuthorize("hasRole('USER')")
     public UserInformation getUserInformation(
             UserPetDetails userPetDetails,
             UserInformationArg userInformationArg)
@@ -102,15 +64,7 @@ public class UserServiceImpl
     }
 
     @Override
-    @Transactional(rollbackFor = ServiceException.class)
-    public void closeSession(UserPetDetails userPetDetails)
-            throws ServiceException {
-        User user = userDao.findById(userPetDetails.getUserId())
-                .orElseThrow();
-        user.setUnid(null);
-    }
-
-    @Override
+    @PreAuthorize("hasRole('USER')")
     public void updateUserInformation(
             UserPetDetails userPetDetails,
             UserInformation userInformation)
@@ -158,16 +112,33 @@ public class UserServiceImpl
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username)
-            throws UsernameNotFoundException {
-        Optional<User> user = userDao.findByLogin(username);
-        return user.map(u -> new UserDetailsImpl(
-                u.getId(),
-                u.getLogin(),
-                u.getPassword(),
-                u.getAuthorities()))
-                .orElseThrow(() ->
-                        new UsernameNotFoundException(username));
+    @PreAuthorize("hasRole('ADMIN')")
+    public UserAccessRights findUserAccessRights(Integer id)
+            throws UserNotFoundException {
+        return userDao.findById(id).map(u -> {
+            UserAccessRights userAccessRights = new UserAccessRights();
+            userAccessRights.setId(u.getId());
+            userAccessRights.setName(u.getName());
+            userAccessRights.setLogin(u.getLogin());
+            userAccessRights.setEnabled(u.isEnabled());
+            userAccessRights.setAllRoles(Arrays.stream(Role.values())
+                    .map(Role::name).toArray(String[]::new));
+            userAccessRights.setRoles(u.getRoles().split(","));
+            return userAccessRights;
+        }).orElseThrow(() -> new UserNotFoundException(id));
     }
 
+    @Override
+    @PreAuthorize("hasRole('ADMIN') && (#userAccessRights.id ne principal.userId)")
+    @Transactional(rollbackFor = ServiceException.class)
+    public UserAccessRights saveUserAccessRights(@P("userAccessRights") UserAccessRights userAccessRights)
+            throws UserNotFoundException {
+        User user = userDao.findById(userAccessRights.getId())
+                .orElseThrow(() -> new UserNotFoundException(
+                        userAccessRights.getId()));
+        
+        user.setRoles(String.join(",", userAccessRights.getRoles()));
+        user.setEnabled(userAccessRights.isEnabled());
+        return this.findUserAccessRights(userAccessRights.getId());
+    }
 }

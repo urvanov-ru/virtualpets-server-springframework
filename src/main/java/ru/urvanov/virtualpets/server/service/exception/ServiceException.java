@@ -7,22 +7,18 @@ public class ServiceException extends Exception {
     private String errorCode = "unknown";
     
     public ServiceException() {
-        // TODO Auto-generated constructor stub
     }
 
-    public ServiceException(String arg0) {
-        super(arg0);
-        // TODO Auto-generated constructor stub
+    public ServiceException(String message) {
+        super(message);
     }
 
-    public ServiceException(Throwable arg0) {
-        super(arg0);
-        // TODO Auto-generated constructor stub
+    public ServiceException(Throwable throwable) {
+        super(throwable);
     }
 
-    public ServiceException(String arg0, Throwable arg1) {
-        super(arg0, arg1);
-        // TODO Auto-generated constructor stub
+    public ServiceException(String message, Throwable throwable) {
+        super(message, throwable);
     }
     
     protected void setErrorCode(String errorCode) {

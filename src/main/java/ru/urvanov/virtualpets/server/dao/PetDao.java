@@ -13,7 +13,7 @@ public interface PetDao {
 
     void save(Pet pet);
 
-    void delete(Integer petId);
+    void delete(Pet fullPet);
 
     List<Pet> findByUserId(Integer userId);
 

@@ -120,21 +120,21 @@ input[type=text] {
     border-style: solid;
 }
 
-input[type=button],input[type=submit],select option {
+input[type=button],input[type=submit],select option,button {
     background: #ac8d5c;
     border-style: solid;
     border-color: #efe7db #1f1301 #1f1301 #efe7db;
     border-width: 3px;
 }
 
-input[type=button]:hover,input[type=submit]:hover,select option:hover {
+input[type=button]:hover,input[type=submit]:hover,select option:hover,button:hover {
     background: #dbc199;
     border-style: solid;
     border-color: #efe7db #1f1301 #1f1301 #efe7db;
     border-width: 3px;
 }
 
-input[type=button]:active,input[type=submit]:active,select option:active
+input[type=button]:active,input[type=submit]:active,select option:active,button:active
     {
     background: #dbc199;
     border-style: solid;

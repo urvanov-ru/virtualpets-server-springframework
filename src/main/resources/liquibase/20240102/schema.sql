@@ -62,6 +62,7 @@ CREATE TABLE "user" (
                      login varchar(50) DEFAULT NULL,
                      name varchar(50) NOT NULL,
                      password varchar(100) NULL,
+                     enabled boolean NOT NULL default true,
                      registration_date timestamp with time zone NOT NULL,
                      login_date timestamp with time zone DEFAULT NULL,
                      active_date timestamp with time zone DEFAULT NULL,
@@ -70,11 +71,10 @@ CREATE TABLE "user" (
                      comment varchar(50) DEFAULT NULL,
                      country varchar(50) DEFAULT NULL,
                      city varchar(50) DEFAULT NULL,
-                     role varchar(50) NOT NULL DEFAULT '0',
+                     roles varchar(50) NOT NULL DEFAULT 'USER',
                      email varchar(100) DEFAULT NULL,
                      recover_password_key varchar(50) DEFAULT NULL,
                      recover_password_valid timestamp with time zone DEFAULT NULL,
-                     unid varchar(1000) DEFAULT NULL,
                      version INT NOT NULL DEFAULT 0,
                      PRIMARY KEY (id)
 );
@@ -83,13 +83,27 @@ create unique index idx_user_login on "user"(login);
 
 ALTER TABLE "user"  ADD CONSTRAINT chk_user_sex CHECK (sex = 'MAN' OR sex = 'WOMAN');
 
-INSERT INTO "user"(login, name,password,registration_date,role)
-values('admin', 'admin','$2a$10$JT0l8oNHQuohL8SMLHCBludsjTiJNpG.uDHc3QGkP5V.aMMLSEa7G',now(),'USER');
 
+INSERT INTO "user"(login, name,password,registration_date,roles)
+values('admin', 'Admin','$2a$10$JT0l8oNHQuohL8SMLHCBludsjTiJNpG.uDHc3QGkP5V.aMMLSEa7G',now(),'ADMIN,USER');
+
+INSERT INTO "user"(login, name,password,registration_date,roles)
+values('test', 'Tester','$2a$10$JT0l8oNHQuohL8SMLHCBludsjTiJNpG.uDHc3QGkP5V.aMMLSEa7G',now(),'USER');
+
+INSERT INTO "user"(login, name,password,registration_date,roles)
+values('user', 'Tester','$2a$10$JT0l8oNHQuohL8SMLHCBludsjTiJNpG.uDHc3QGkP5V.aMMLSEa7G',now(),'USER');
 
 INSERT INTO pet(name,created_date,login_date,user_id,pet_type)
-select 'admin',now(),now(),t_user.id,0
-from "user" t_user where t_user.name='admin';
+select 'Admin',now(),now(),t_user.id,0
+from "user" t_user where t_user.login='admin';
+
+INSERT INTO pet(name,created_date,login_date,user_id,pet_type)
+select 'User',now(),now(),t_user.id,0
+from "user" t_user where t_user.login='user';
+
+INSERT INTO pet(name,created_date,login_date,user_id,pet_type)
+select 'Tester',now(),now(),t_user.id,0
+from "user" t_user where t_user.login='test';
 
 
 CREATE TABLE pet_cloth (
@@ -130,23 +144,6 @@ INSERT INTO cloth(id, cloth_type, wardrobe_order, hidden_objects_game_drop_rate)
 VALUES('BLUE_BOW', 'BOW', 1, 0.1);
 INSERT INTO cloth(id, cloth_type, wardrobe_order, hidden_objects_game_drop_rate)
 VALUES('BLUE_FLOWER', 'BOW', 2, 0.1);
-
-
- create table UserConnection (userId varchar(255) not null,
-     providerId varchar(255) not null,
-     providerUserId varchar(255),
-     rank int not null,
-     displayName varchar(255),
-     profileUrl varchar(512),
-     imageUrl varchar(512),
-     accessToken varchar(255) not null,
-     secret varchar(255),
-     refreshToken varchar(255),
-     expireTime bigint,
-     primary key (userId, providerId, providerUserId));
-
-create unique index UserConnectionRank on UserConnection(userId, providerId, rank);
-
 
 
 alter table chat add constraint fk_chat_addressee

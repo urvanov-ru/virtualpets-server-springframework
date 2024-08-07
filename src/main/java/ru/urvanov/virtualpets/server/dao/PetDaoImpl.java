@@ -69,8 +69,7 @@ public class PetDaoImpl implements PetDao {
 
     @Override
     @Transactional
-    public void delete(Integer petId) {
-        Pet fullPet = this.findFullById(petId).orElseThrow();
+    public void delete(Pet fullPet) {
         em.remove(fullPet);
     }
 
