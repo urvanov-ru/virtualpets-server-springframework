@@ -578,7 +578,8 @@ public class PetServiceImpl implements PetService, PetApiService {
     @Override
     @PreAuthorize("hasRole('USER')")
     @Transactional(rollbackFor = ServiceException.class)
-    public Pet delete(UserPetDetails userPetDetails, Integer petId) throws ServiceException {
+    public void delete(UserPetDetails userPetDetails, Integer petId)
+            throws ServiceException {
         Pet pet = petDao.findFullById(petId)
                 .orElseThrow(() -> new PetNotFoundException(petId));
         if (pet.getUser().getId().equals(userPetDetails.getUserId())) {
@@ -587,7 +588,6 @@ public class PetServiceImpl implements PetService, PetApiService {
         } else {
             throw new PetNotFoundException(petId);
         }
-        return pet;
     }
 
 }

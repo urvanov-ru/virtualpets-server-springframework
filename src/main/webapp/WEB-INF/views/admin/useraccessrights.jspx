@@ -6,7 +6,7 @@
     xmlns:custom = "urn:jsptagdir:/WEB-INF/tags"
     xmlns:form = "http://www.springframework.org/tags/form">
 <jsp:attribute name = "headAdditional" >
-    <title>${title_var}</title>
+    <title><c:out value = "${userAccessRights.name}" /></title>
 </jsp:attribute>
 
 <spring:htmlEscape defaultHtmlEscape = "true" />
@@ -47,13 +47,11 @@
         code = "virtualpets-server-springframework.site.admin_panel"
         var = "admin_panel_var" />
     
-    <sec:authorize url = "/site/admin">
     <div>
         <spring:url value = "/site/admin"
             var = "admin_panel_url" />
         <a href="${admin_panel_url}">${admin_panel_var}</a>
     </div>
-    </sec:authorize>
     <p>
         ID: ${userAccessRights.id} 
     </p>

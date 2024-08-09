@@ -61,6 +61,6 @@ public interface PetApiService {
             UserPetDetails userPetDetails)
             throws ServiceException;
 
-    Pet delete(UserPetDetails userPetDetails, Integer petId)
+    void delete(UserPetDetails userPetDetails, Integer petId)
             throws ServiceException;;
 }
