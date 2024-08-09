@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ru.urvanov.virtualpets.server.controller.api.domain.GetTownInfoResult;
-import ru.urvanov.virtualpets.server.controller.api.domain.LevelInfo;
+import ru.urvanov.virtualpets.server.controller.game.domain.GetTownInfoResult;
+import ru.urvanov.virtualpets.server.controller.game.domain.LevelInfo;
 import ru.urvanov.virtualpets.server.dao.LevelDao;
 import ru.urvanov.virtualpets.server.dao.PetDao;
 import ru.urvanov.virtualpets.server.dao.domain.AchievementId;
@@ -22,7 +22,7 @@ import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 @Service
-public class TownServiceImpl implements ru.urvanov.virtualpets.server.service.TownApiService {
+public class TownServiceImpl implements ru.urvanov.virtualpets.server.service.TownGameService {
 
     @Autowired
     private ru.urvanov.virtualpets.server.service.PetService petService;

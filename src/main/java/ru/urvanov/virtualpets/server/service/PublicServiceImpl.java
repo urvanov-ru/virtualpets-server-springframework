@@ -15,15 +15,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ru.urvanov.virtualpets.server.controller.api.domain.LoginArg;
-import ru.urvanov.virtualpets.server.controller.api.domain.LoginResult;
-import ru.urvanov.virtualpets.server.controller.api.domain.RecoverPasswordArg;
-import ru.urvanov.virtualpets.server.controller.api.domain.RegisterArgument;
-import ru.urvanov.virtualpets.server.controller.api.domain.ServerTechnicalInfo;
+import ru.urvanov.virtualpets.server.controller.game.domain.LoginArg;
+import ru.urvanov.virtualpets.server.controller.game.domain.LoginResult;
+import ru.urvanov.virtualpets.server.controller.game.domain.RecoverPasswordArg;
+import ru.urvanov.virtualpets.server.controller.game.domain.RegisterArgument;
+import ru.urvanov.virtualpets.server.controller.game.domain.ServerTechnicalInfo;
 import ru.urvanov.virtualpets.server.dao.UserDao;
 import ru.urvanov.virtualpets.server.dao.domain.Role;
 import ru.urvanov.virtualpets.server.dao.domain.User;
@@ -33,7 +33,7 @@ import ru.urvanov.virtualpets.server.service.exception.SendMailException;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 @Service
-public class PublicServiceImpl implements PublicApiService {
+public class PublicServiceImpl implements PublicGameService {
 
     @Autowired
     private UserDao userDao;
@@ -51,7 +51,7 @@ public class PublicServiceImpl implements PublicApiService {
     private String serverUrl;
     
     @Autowired
-    private BCryptPasswordEncoder bcryptEncoder;
+    private PasswordEncoder passwordEncoder;
     
     @Autowired
     private Clock clock;
@@ -73,7 +73,7 @@ public class PublicServiceImpl implements PublicApiService {
         User user = new User();
         user.setLogin(registerArgument.login());
         user.setName(registerArgument.name());
-        user.setPassword(bcryptEncoder.encode(registerArgument.password()));
+        user.setPassword(passwordEncoder.encode(registerArgument.password()));
         user.setEmail(registerArgument.email());
         user.setRegistrationDate(OffsetDateTime.now(clock));
         user.setRoles(Role.USER.name());

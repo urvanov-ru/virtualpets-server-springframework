@@ -5,7 +5,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ru.urvanov.virtualpets.server.controller.api.domain.HiddenObjectsGame;
+import ru.urvanov.virtualpets.server.controller.game.domain.HiddenObjectsGame;
 
 public class SchemaBasedAdvice {
 

@@ -2,7 +2,7 @@ package ru.urvanov.virtualpets.server.convserv;
 
 import org.springframework.core.convert.converter.Converter;
 
-import ru.urvanov.virtualpets.server.controller.api.domain.PetInfo;
+import ru.urvanov.virtualpets.server.controller.game.domain.PetInfo;
 import ru.urvanov.virtualpets.server.dao.domain.Pet;
 
 public class PetToApiConverter implements Converter<Pet, PetInfo> {

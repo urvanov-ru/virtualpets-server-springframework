@@ -33,7 +33,7 @@
             logout-success-url = "/site/login?logout=1" />
     </security:http> 
 
-    <security:http pattern = "/rest/**"
+    <security:http pattern = "/api/**"
             authentication-manager-ref = "authenticationManager"
             entry-point-ref = "authenticationEntryPoint"
             >
@@ -59,17 +59,16 @@
         class = "ru.urvanov.virtualpets.server.auth.CustomAuthenticationEntryPoint">
     </bean>
     
-    <bean id = "bcryptEncoder"
+    <bean id = "passwordEncoder"
         class = "org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
     
     <bean id = "authenticationProvider"
-        class = "ru.urvanov.virtualpets.server.auth.DatabaseAuthenticationProvider">
+        class = "org.springframework.security.authentication.dao.DaoAuthenticationProvider">
         <property name = "userDetailsService" ref = "userDetailsService" />
-        <property name = "bcryptEncoder" ref = "bcryptEncoder" />
+        <property name = "passwordEncoder" ref = "passwordEncoder" />
     </bean>
     
-    <security:authentication-manager
-        alias = "authenticationManager" >
+    <security:authentication-manager>
         <security:authentication-provider
             ref = "authenticationProvider" >
         </security:authentication-provider>

@@ -11,10 +11,10 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import ru.urvanov.virtualpets.server.controller.api.domain.ChatMessage;
-import ru.urvanov.virtualpets.server.controller.api.domain.RefreshChatArg;
-import ru.urvanov.virtualpets.server.controller.api.domain.RefreshChatResult;
-import ru.urvanov.virtualpets.server.controller.api.domain.SendChatMessageArg;
+import ru.urvanov.virtualpets.server.controller.game.domain.ChatMessage;
+import ru.urvanov.virtualpets.server.controller.game.domain.RefreshChatArg;
+import ru.urvanov.virtualpets.server.controller.game.domain.RefreshChatResult;
+import ru.urvanov.virtualpets.server.controller.game.domain.SendChatMessageArg;
 import ru.urvanov.virtualpets.server.dao.ChatDao;
 import ru.urvanov.virtualpets.server.dao.UserDao;
 import ru.urvanov.virtualpets.server.dao.domain.Chat;
@@ -22,7 +22,7 @@ import ru.urvanov.virtualpets.server.dao.domain.User;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 @Service
-public class ChatServiceImpl implements ChatApiService {
+public class ChatServiceImpl implements ChatGameService {
 
     @Autowired
     private ChatDao chatDao;
