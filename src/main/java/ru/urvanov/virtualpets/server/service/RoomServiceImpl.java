@@ -16,11 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ru.urvanov.virtualpets.server.controller.game.domain.GetRoomInfoResult;
-import ru.urvanov.virtualpets.server.controller.game.domain.LevelInfo;
-import ru.urvanov.virtualpets.server.controller.game.domain.OpenBoxNewbieResult;
-import ru.urvanov.virtualpets.server.controller.game.domain.Point;
-import ru.urvanov.virtualpets.server.controller.game.domain.RoomBuildMenuCosts;
+import ru.urvanov.virtualpets.server.controller.api.domain.GetRoomInfoResult;
+import ru.urvanov.virtualpets.server.controller.api.domain.LevelInfo;
+import ru.urvanov.virtualpets.server.controller.api.domain.OpenBoxNewbieResult;
+import ru.urvanov.virtualpets.server.controller.api.domain.Point;
+import ru.urvanov.virtualpets.server.controller.api.domain.RoomBuildMenuCosts;
 import ru.urvanov.virtualpets.server.dao.BookDao;
 import ru.urvanov.virtualpets.server.dao.BookcaseDao;
 import ru.urvanov.virtualpets.server.dao.BuildingMaterialDao;
@@ -121,7 +121,7 @@ public class RoomServiceImpl implements RoomApiService {
         logger.info("getRoomInfo started.");
         Pet pet = petDao.findByIdWithJournalEntriesAndAchievements(
                 userPetDetails.getPetId()).orElseThrow();
-        ru.urvanov.virtualpets.server.controller.game.domain.GetRoomInfoResult result = new ru.urvanov.virtualpets.server.controller.game.domain.GetRoomInfoResult();
+        ru.urvanov.virtualpets.server.controller.api.domain.GetRoomInfoResult result = new ru.urvanov.virtualpets.server.controller.api.domain.GetRoomInfoResult();
         result.setMood(pet.getMood());
         result.setEducation(pet.getEducation());
         result.setSatiety(pet.getSatiety());
@@ -281,7 +281,7 @@ public class RoomServiceImpl implements RoomApiService {
     @Override
     @Transactional(rollbackFor = ServiceException.class)
     public void buildRefrigerator(UserPetDetails userPetDetails,
-            ru.urvanov.virtualpets.server.controller.game.domain.Point position)
+            ru.urvanov.virtualpets.server.controller.api.domain.Point position)
             throws ServiceException {
         Pet pet = petDao
                 .findByIdWithFoodsAndJournalEntriesAndBuildingMaterials(

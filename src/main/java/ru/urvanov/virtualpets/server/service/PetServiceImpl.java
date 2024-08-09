@@ -18,19 +18,19 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ru.urvanov.virtualpets.server.controller.game.domain.CreatePetArg;
-import ru.urvanov.virtualpets.server.controller.game.domain.DrinkArg;
-import ru.urvanov.virtualpets.server.controller.game.domain.GetPetBooksResult;
-import ru.urvanov.virtualpets.server.controller.game.domain.GetPetClothsResult;
-import ru.urvanov.virtualpets.server.controller.game.domain.GetPetDrinksResult;
-import ru.urvanov.virtualpets.server.controller.game.domain.GetPetFoodsResult;
-import ru.urvanov.virtualpets.server.controller.game.domain.GetPetJournalEntriesResult;
-import ru.urvanov.virtualpets.server.controller.game.domain.GetPetRucksackInnerResult;
-import ru.urvanov.virtualpets.server.controller.game.domain.PetInfo;
-import ru.urvanov.virtualpets.server.controller.game.domain.PetListResult;
-import ru.urvanov.virtualpets.server.controller.game.domain.SatietyArg;
-import ru.urvanov.virtualpets.server.controller.game.domain.SavePetCloths;
-import ru.urvanov.virtualpets.server.controller.game.domain.SelectPetArg;
+import ru.urvanov.virtualpets.server.controller.api.domain.CreatePetArg;
+import ru.urvanov.virtualpets.server.controller.api.domain.DrinkArg;
+import ru.urvanov.virtualpets.server.controller.api.domain.GetPetBooksResult;
+import ru.urvanov.virtualpets.server.controller.api.domain.GetPetClothsResult;
+import ru.urvanov.virtualpets.server.controller.api.domain.GetPetDrinksResult;
+import ru.urvanov.virtualpets.server.controller.api.domain.GetPetFoodsResult;
+import ru.urvanov.virtualpets.server.controller.api.domain.GetPetJournalEntriesResult;
+import ru.urvanov.virtualpets.server.controller.api.domain.GetPetRucksackInnerResult;
+import ru.urvanov.virtualpets.server.controller.api.domain.PetInfo;
+import ru.urvanov.virtualpets.server.controller.api.domain.PetListResult;
+import ru.urvanov.virtualpets.server.controller.api.domain.SatietyArg;
+import ru.urvanov.virtualpets.server.controller.api.domain.SavePetCloths;
+import ru.urvanov.virtualpets.server.controller.api.domain.SelectPetArg;
 import ru.urvanov.virtualpets.server.dao.ClothDao;
 import ru.urvanov.virtualpets.server.dao.LevelDao;
 import ru.urvanov.virtualpets.server.dao.PetDao;
@@ -215,11 +215,11 @@ public class PetServiceImpl implements PetService, PetApiService {
                 .orElseThrow();
         Set<Book> books = pet.getBooks();
         
-        List<ru.urvanov.virtualpets.server.controller.game.domain.Book> resultBooks
+        List<ru.urvanov.virtualpets.server.controller.api.domain.Book> resultBooks
                 = books.stream()
                 .map(b -> conversionService.convert(
                         b,
-                        ru.urvanov.virtualpets.server.controller.game.domain.Book.class))
+                        ru.urvanov.virtualpets.server.controller.api.domain.Book.class))
                 .collect(Collectors.toList());
         
         return new GetPetBooksResult(resultBooks);
@@ -232,14 +232,14 @@ public class PetServiceImpl implements PetService, PetApiService {
                 .orElseThrow();
         Set<Cloth> cloths = pet.getCloths();
         
-        List<ru.urvanov.virtualpets.server.controller.game.domain.Cloth> resultCloths
+        List<ru.urvanov.virtualpets.server.controller.api.domain.Cloth> resultCloths
                 = cloths.stream()
                 .map(c -> conversionService.convert(
                         c,
-                        ru.urvanov.virtualpets.server.controller.game.domain.Cloth.class))
+                        ru.urvanov.virtualpets.server.controller.api.domain.Cloth.class))
                 .collect(Collectors.toList());
 
-        ru.urvanov.virtualpets.server.controller.game.domain.GetPetClothsResult result = new ru.urvanov.virtualpets.server.controller.game.domain.GetPetClothsResult(
+        ru.urvanov.virtualpets.server.controller.api.domain.GetPetClothsResult result = new ru.urvanov.virtualpets.server.controller.api.domain.GetPetClothsResult(
                 Optional.of(pet).map(Pet::getHat).map(Cloth::getId).orElse(null),
                 Optional.of(pet).map(Pet::getCloth).map(Cloth::getId).orElse(null),
                 Optional.of(pet).map(Pet::getBow).map(Cloth::getId).orElse(null),
@@ -284,12 +284,12 @@ public class PetServiceImpl implements PetService, PetApiService {
                 .findByIdWithFullDrinks(userPetDetails.getPetId())
                 .orElseThrow();
         Map<DrinkId, PetDrink> drinks = pet.getDrinks();
-        List<ru.urvanov.virtualpets.server.controller.game.domain.Drink> resultDrinks
+        List<ru.urvanov.virtualpets.server.controller.api.domain.Drink> resultDrinks
                 = drinks
                 .values().stream()
                 .map(d -> conversionService.convert(
                         d,
-                        ru.urvanov.virtualpets.server.controller.game.domain.Drink.class))
+                        ru.urvanov.virtualpets.server.controller.api.domain.Drink.class))
                 .collect(Collectors.toList());
 
         return new GetPetDrinksResult(resultDrinks);
@@ -301,11 +301,11 @@ public class PetServiceImpl implements PetService, PetApiService {
         Pet pet = petDao
                 .findByIdWithFullFoods(userPetDetails.getPetId())
                 .orElseThrow();
-        List<ru.urvanov.virtualpets.server.controller.game.domain.Food> resultFoods = pet
+        List<ru.urvanov.virtualpets.server.controller.api.domain.Food> resultFoods = pet
                 .getFoods().values().stream()
                 .map(f -> conversionService.convert(
                         f,
-                        ru.urvanov.virtualpets.server.controller.game.domain.Food.class))
+                        ru.urvanov.virtualpets.server.controller.api.domain.Food.class))
                 .collect(Collectors.toList());
         return new GetPetFoodsResult(resultFoods);
     }
@@ -323,10 +323,10 @@ public class PetServiceImpl implements PetService, PetApiService {
                 ru.urvanov.virtualpets.server.dao.domain.PetJournalEntry::isReaded))
                 .forEach(v -> v.setReaded(true));
 
-        List<ru.urvanov.virtualpets.server.controller.game.domain.PetJournalEntry> apiEntries = serverPetJournalEntries
+        List<ru.urvanov.virtualpets.server.controller.api.domain.PetJournalEntry> apiEntries = serverPetJournalEntries
                 .stream()
                 .map(serverPetJournalEntry ->
-                new ru.urvanov.virtualpets.server.controller.game.domain.PetJournalEntry(
+                new ru.urvanov.virtualpets.server.controller.api.domain.PetJournalEntry(
                         serverPetJournalEntry.getCreatedAt(),
                         serverPetJournalEntry.getJournalEntry()))
                 .sorted().toList();
