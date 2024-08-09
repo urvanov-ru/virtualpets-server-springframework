@@ -18,12 +18,20 @@ import ru.urvanov.virtualpets.server.auth.UserDetailsImpl;
 import ru.urvanov.virtualpets.server.dao.UserDao;
 import ru.urvanov.virtualpets.server.dao.domain.User;
 
+/**
+ * Сервис получения экземпляра {@link UserDetails} для слоя безопасности.
+ */
 @Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private UserDao userDao;
 
+    /**
+     * Основной метод сервиса. Загружает экземпляр
+     * {@link UserDetailsImpl} из базы данных.
+     * @return Заполненный экземпляр {@link UserDetailsImpl}.
+     */
     @Override
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
@@ -34,12 +42,20 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 u.getName(),
                 u.getPassword(),
                 u.isEnabled(),
-                this.getAuthorities(u)))
+                this.fillAuthorities(u)))
                 .orElseThrow(() ->
                         new UsernameNotFoundException(username));
     }
 
-    private Collection<? extends GrantedAuthority> getAuthorities(
+    /**
+     * Заполняет коллекцию полномочий на основе строки
+     * {@link User#getRoles()}. Строка содержит список ролей, 
+     * разделённых запятой.
+     * @param user Информация о пользователе из слоя постоянства.
+     * @return Заполненную коллекцию полномочий, как того требует
+     * Spring Security.
+     */
+    private Collection<? extends GrantedAuthority> fillAuthorities(
             User user) {
         Set<GrantedAuthority> granted = new HashSet<GrantedAuthority>();
         StringTokenizer t = new StringTokenizer(user.getRoles(), ",");
