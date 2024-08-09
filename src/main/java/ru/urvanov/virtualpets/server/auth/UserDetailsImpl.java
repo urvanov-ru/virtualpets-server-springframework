@@ -20,6 +20,8 @@ import org.springframework.security.core.userdetails.User;
  */
 public class UserDetailsImpl extends User {
 
+    private static final long serialVersionUID = -3285304553448604871L;
+
     /**
      * Первичный ключ пользователя.
      */
@@ -47,8 +49,6 @@ public class UserDetailsImpl extends User {
         this.userId = userId;
         this.name = name;
     }
-
-    private static final long serialVersionUID = -3285304553448604871L;
 
     /**
      * @return Первичный ключ пользователя
