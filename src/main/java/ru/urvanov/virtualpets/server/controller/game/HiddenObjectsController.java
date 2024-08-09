@@ -19,7 +19,7 @@ import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 @RestController
-@RequestMapping(value = "api/v1/HiddenObjectsService")
+@RequestMapping(value = "game/v1HiddenObjectsService")
 public class HiddenObjectsController extends ControllerBase {
     
     @Autowired

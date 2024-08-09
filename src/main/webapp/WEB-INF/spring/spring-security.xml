@@ -68,7 +68,8 @@
         <property name = "passwordEncoder" ref = "passwordEncoder" />
     </bean>
     
-    <security:authentication-manager>
+    <security:authentication-manager
+            alias = "authenticationManager">
         <security:authentication-provider
             ref = "authenticationProvider" >
         </security:authentication-provider>

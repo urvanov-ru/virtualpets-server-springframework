@@ -11,7 +11,7 @@ import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 @RestController
-@RequestMapping(value = "api/v1/TownService")
+@RequestMapping(value = "game/v1TownService")
 public class TownController extends ControllerBase {
     @Autowired
     private TownGameService townService;

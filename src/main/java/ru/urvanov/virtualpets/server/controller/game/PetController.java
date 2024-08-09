@@ -30,7 +30,7 @@ import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 @RestController("apiPetController")
-@RequestMapping("api/v1/PetService")
+@RequestMapping("game/v1PetService")
 public class PetController extends ControllerBase {
 
     @Autowired
