@@ -1,8 +1,8 @@
 package ru.urvanov.virtualpets.server.service;
 
-import ru.urvanov.virtualpets.server.api.domain.CollectObjectArg;
-import ru.urvanov.virtualpets.server.api.domain.HiddenObjectsGame;
-import ru.urvanov.virtualpets.server.api.domain.JoinHiddenObjectsGameArg;
+import ru.urvanov.virtualpets.server.controller.game.domain.CollectObjectArg;
+import ru.urvanov.virtualpets.server.controller.game.domain.HiddenObjectsGame;
+import ru.urvanov.virtualpets.server.controller.game.domain.JoinHiddenObjectsGameArg;
 import ru.urvanov.virtualpets.server.service.domain.HiddenObjectsGameStatus;
 import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;

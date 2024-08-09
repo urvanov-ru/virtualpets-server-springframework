@@ -11,10 +11,10 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ru.urvanov.virtualpets.server.api.domain.RefreshUsersOnlineResult;
-import ru.urvanov.virtualpets.server.api.domain.UserInfo;
-import ru.urvanov.virtualpets.server.api.domain.UserInformation;
-import ru.urvanov.virtualpets.server.api.domain.UserInformationArg;
+import ru.urvanov.virtualpets.server.controller.game.domain.RefreshUsersOnlineResult;
+import ru.urvanov.virtualpets.server.controller.game.domain.UserInfo;
+import ru.urvanov.virtualpets.server.controller.game.domain.UserInformation;
+import ru.urvanov.virtualpets.server.controller.game.domain.UserInformationArg;
 import ru.urvanov.virtualpets.server.dao.UserDao;
 import ru.urvanov.virtualpets.server.dao.domain.Role;
 import ru.urvanov.virtualpets.server.dao.domain.User;

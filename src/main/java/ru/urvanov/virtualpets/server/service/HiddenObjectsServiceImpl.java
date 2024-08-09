@@ -15,8 +15,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.PostConstruct;
-import ru.urvanov.virtualpets.server.api.domain.HiddenObjectsGameType;
-import ru.urvanov.virtualpets.server.api.domain.LevelInfo;
+import ru.urvanov.virtualpets.server.controller.game.domain.HiddenObjectsGameType;
+import ru.urvanov.virtualpets.server.controller.game.domain.LevelInfo;
 import ru.urvanov.virtualpets.server.dao.BookDao;
 import ru.urvanov.virtualpets.server.dao.BuildingMaterialDao;
 import ru.urvanov.virtualpets.server.dao.ClothDao;
@@ -115,10 +115,10 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsApiService {
     private int lastGameId;
 
     @Override
-    public synchronized ru.urvanov.virtualpets.server.api.domain.HiddenObjectsGame joinGame(
+    public synchronized ru.urvanov.virtualpets.server.controller.game.domain.HiddenObjectsGame joinGame(
             UserPetDetails userPetDetails,
             HiddenObjectsGameStatus hiddenObjectsGameStatus,
-            ru.urvanov.virtualpets.server.api.domain.JoinHiddenObjectsGameArg joinHiddenObjectsGameArg)
+            ru.urvanov.virtualpets.server.controller.game.domain.JoinHiddenObjectsGameArg joinHiddenObjectsGameArg)
             throws ServiceException {
         User user = userDao.findById(userPetDetails.getUserId())
                 .orElseThrow();
@@ -172,15 +172,15 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsApiService {
         return getResult(userPetDetails, foundGame);
     }
 
-    private ru.urvanov.virtualpets.server.api.domain.HiddenObjectsGame getResult(
+    private ru.urvanov.virtualpets.server.controller.game.domain.HiddenObjectsGame getResult(
             UserPetDetails userPetDetails,
             HiddenObjectsGame foundGame) {
-        ru.urvanov.virtualpets.server.api.domain.HiddenObjectsGame result = new ru.urvanov.virtualpets.server.api.domain.HiddenObjectsGame();
+        ru.urvanov.virtualpets.server.controller.game.domain.HiddenObjectsGame result = new ru.urvanov.virtualpets.server.controller.game.domain.HiddenObjectsGame();
         result.setObjects(foundGame.getObjectsForSearch());
         HiddenObjectsPlayer[] players = foundGame.getDisplayablePlayers();
         for (int n = 0; n < players.length; n++) {
             if (players[n] != null) {
-                ru.urvanov.virtualpets.server.api.domain.HiddenObjectsPlayer resultPlayer = new ru.urvanov.virtualpets.server.api.domain.HiddenObjectsPlayer();
+                ru.urvanov.virtualpets.server.controller.game.domain.HiddenObjectsPlayer resultPlayer = new ru.urvanov.virtualpets.server.controller.game.domain.HiddenObjectsPlayer();
                 resultPlayer.setPetId(players[n].getPetId());
                 resultPlayer.setPetName(players[n].getPetName());
                 resultPlayer.setUserId(players[n].getUserId());
@@ -203,12 +203,12 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsApiService {
 
         HiddenObjectsCollected[] collectedObjects = foundGame
                 .getCollectedObjects();
-        ru.urvanov.virtualpets.server.api.domain.HiddenObjectsCollected[] resultCollectedObjects = new ru.urvanov.virtualpets.server.api.domain.HiddenObjectsCollected[collectedObjects.length];
+        ru.urvanov.virtualpets.server.controller.game.domain.HiddenObjectsCollected[] resultCollectedObjects = new ru.urvanov.virtualpets.server.controller.game.domain.HiddenObjectsCollected[collectedObjects.length];
         for (n = 0; n < collectedObjects.length; n++) {
             int objectId = collectedObjects[n].getObjectId();
-            ru.urvanov.virtualpets.server.api.domain.HiddenObjectsPlayer player = result.getPlayer(collectedObjects[n].getPlayer()
+            ru.urvanov.virtualpets.server.controller.game.domain.HiddenObjectsPlayer player = result.getPlayer(collectedObjects[n].getPlayer()
                     .getUserId());
-            ru.urvanov.virtualpets.server.api.domain.HiddenObjectsCollected hoc = new ru.urvanov.virtualpets.server.api.domain.HiddenObjectsCollected(objectId, player);
+            ru.urvanov.virtualpets.server.controller.game.domain.HiddenObjectsCollected hoc = new ru.urvanov.virtualpets.server.controller.game.domain.HiddenObjectsCollected(objectId, player);
             resultCollectedObjects[n] = hoc;
         }
         result.setCollectedObjects(resultCollectedObjects);
@@ -219,7 +219,7 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsApiService {
                     .orElseThrow();
             HiddenObjectsPlayer player = foundGame.getPlayer(pet.getUser()
                     .getId());
-            ru.urvanov.virtualpets.server.api.domain.HiddenObjectsReward resultReward = new ru.urvanov.virtualpets.server.api.domain.HiddenObjectsReward();
+            ru.urvanov.virtualpets.server.controller.game.domain.HiddenObjectsReward resultReward = new ru.urvanov.virtualpets.server.controller.game.domain.HiddenObjectsReward();
             HiddenObjectsReward playerReward = player.getReward();
             resultReward.setFoodId(playerReward.getFoodId());
             resultReward.setClothId(playerReward.getClothId());
@@ -246,7 +246,7 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsApiService {
     }
 
     @Override
-    public synchronized ru.urvanov.virtualpets.server.api.domain.HiddenObjectsGame getGameInfo(
+    public synchronized ru.urvanov.virtualpets.server.controller.game.domain.HiddenObjectsGame getGameInfo(
             UserPetDetails userPetDetails,
             HiddenObjectsGameStatus hiddenObjectsGameStatus)
             throws ServiceException {
@@ -294,10 +294,10 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsApiService {
     }
 
     @Override
-    public synchronized ru.urvanov.virtualpets.server.api.domain.HiddenObjectsGame collectObject(
+    public synchronized ru.urvanov.virtualpets.server.controller.game.domain.HiddenObjectsGame collectObject(
             UserPetDetails userPetDetails,
             HiddenObjectsGameStatus hiddenObjectsGameStatus,
-            ru.urvanov.virtualpets.server.api.domain.CollectObjectArg arg)
+            ru.urvanov.virtualpets.server.controller.game.domain.CollectObjectArg arg)
             throws ServiceException {
 
         Integer userId = userPetDetails.getUserId();
@@ -540,7 +540,7 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsApiService {
     }
 
     @Override
-    public synchronized ru.urvanov.virtualpets.server.api.domain.HiddenObjectsGame startGame(
+    public synchronized ru.urvanov.virtualpets.server.controller.game.domain.HiddenObjectsGame startGame(
             UserPetDetails userPetDetails,
             HiddenObjectsGameStatus hiddenObjectsGameStatus)
             throws ServiceException {

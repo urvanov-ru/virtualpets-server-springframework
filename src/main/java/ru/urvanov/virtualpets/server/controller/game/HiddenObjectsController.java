@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
-import ru.urvanov.virtualpets.server.api.domain.CollectObjectArg;
-import ru.urvanov.virtualpets.server.api.domain.HiddenObjectsGame;
-import ru.urvanov.virtualpets.server.api.domain.JoinHiddenObjectsGameArg;
+import ru.urvanov.virtualpets.server.controller.game.domain.CollectObjectArg;
+import ru.urvanov.virtualpets.server.controller.game.domain.HiddenObjectsGame;
+import ru.urvanov.virtualpets.server.controller.game.domain.JoinHiddenObjectsGameArg;
 import ru.urvanov.virtualpets.server.service.HiddenObjectsApiService;
 import ru.urvanov.virtualpets.server.service.domain.HiddenObjectsGameStatus;
 import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;

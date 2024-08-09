@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ru.urvanov.virtualpets.server.api.domain.GetTownInfoResult;
+import ru.urvanov.virtualpets.server.controller.game.domain.GetTownInfoResult;
 import ru.urvanov.virtualpets.server.service.TownApiService;
 import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;

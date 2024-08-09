@@ -1,9 +1,9 @@
 package ru.urvanov.virtualpets.server.service;
 
-import ru.urvanov.virtualpets.server.api.domain.GetRoomInfoResult;
-import ru.urvanov.virtualpets.server.api.domain.OpenBoxNewbieResult;
-import ru.urvanov.virtualpets.server.api.domain.Point;
-import ru.urvanov.virtualpets.server.api.domain.RoomBuildMenuCosts;
+import ru.urvanov.virtualpets.server.controller.game.domain.GetRoomInfoResult;
+import ru.urvanov.virtualpets.server.controller.game.domain.OpenBoxNewbieResult;
+import ru.urvanov.virtualpets.server.controller.game.domain.Point;
+import ru.urvanov.virtualpets.server.controller.game.domain.RoomBuildMenuCosts;
 import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 

@@ -3,7 +3,7 @@ package ru.urvanov.virtualpets.server.service.domain;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
-import ru.urvanov.virtualpets.server.api.domain.HiddenObjectsGameType;
+import ru.urvanov.virtualpets.server.controller.game.domain.HiddenObjectsGameType;
 
 @Component
 @SessionScope

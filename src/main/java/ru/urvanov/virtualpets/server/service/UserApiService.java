@@ -1,8 +1,8 @@
 package ru.urvanov.virtualpets.server.service;
 
-import ru.urvanov.virtualpets.server.api.domain.RefreshUsersOnlineResult;
-import ru.urvanov.virtualpets.server.api.domain.UserInformation;
-import ru.urvanov.virtualpets.server.api.domain.UserInformationArg;
+import ru.urvanov.virtualpets.server.controller.game.domain.RefreshUsersOnlineResult;
+import ru.urvanov.virtualpets.server.controller.game.domain.UserInformation;
+import ru.urvanov.virtualpets.server.controller.game.domain.UserInformationArg;
 import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
