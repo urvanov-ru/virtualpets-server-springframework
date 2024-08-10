@@ -18,9 +18,9 @@
     <security:http pattern = "/site/**"
             authentication-manager-ref = "authenticationManager">
         <security:intercept-url pattern = "/site/admin/**"
-            access = "hasRole('ROLE_ADMIN')" />
+            access = "hasRole('ADMIN')" />
         <security:intercept-url pattern = "/site/user/**"
-            access = "hasRole('ROLE_USER')" />
+            access = "hasRole('USER')" />
         <security:intercept-url pattern = "/site/**"
             access = "permitAll" />
         <security:cors  /> 
@@ -40,7 +40,7 @@
         <security:intercept-url pattern = "/api/v1/PublicService/**"
             access = "permitAll" />
         <security:intercept-url pattern = "/api/**"
-            access = "hasRole('ROLE_USER')" />
+            access = "hasRole('USER')" />
         <security:cors /> 
         <security:csrf disabled = "true" />
     </security:http>
