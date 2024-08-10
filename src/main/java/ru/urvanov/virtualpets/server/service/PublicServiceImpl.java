@@ -33,7 +33,7 @@ import ru.urvanov.virtualpets.server.service.exception.SendMailException;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 @Service
-public class PublicServiceImpl implements PublicGameService {
+public class PublicServiceImpl implements PublicApiService {
 
     @Autowired
     private UserDao userDao;

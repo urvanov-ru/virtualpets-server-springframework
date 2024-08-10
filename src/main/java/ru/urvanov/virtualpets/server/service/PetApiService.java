@@ -16,7 +16,7 @@ import ru.urvanov.virtualpets.server.dao.domain.Pet;
 import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
-public interface PetGameService {
+public interface PetApiService {
     PetListResult getUserPets(UserPetDetails userPetDetails)
             throws ServiceException;
 

@@ -66,7 +66,7 @@ import ru.urvanov.virtualpets.server.service.exception.PetNotFoundException;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 @Service("petService")
-public class PetServiceImpl implements PetService, PetGameService {
+public class PetServiceImpl implements PetService, PetApiService {
 
     @Autowired
     private RoomDao roomDao;

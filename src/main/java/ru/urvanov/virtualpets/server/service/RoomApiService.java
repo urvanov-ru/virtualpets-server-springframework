@@ -7,7 +7,7 @@ import ru.urvanov.virtualpets.server.controller.api.domain.RoomBuildMenuCosts;
 import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
-public interface RoomGameService {
+public interface RoomApiService {
     GetRoomInfoResult getRoomInfo(UserPetDetails userPetDetails)
             throws ServiceException;
 

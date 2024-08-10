@@ -5,7 +5,7 @@ import ru.urvanov.virtualpets.server.controller.api.domain.RefreshChatResult;
 import ru.urvanov.virtualpets.server.controller.api.domain.SendChatMessageArg;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
-public interface ChatGameService {
+public interface ChatApiService {
     RefreshChatResult getMessages(RefreshChatArg arg)
             throws ServiceException;
 

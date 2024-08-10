@@ -22,7 +22,7 @@ import ru.urvanov.virtualpets.server.dao.domain.User;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 @Service
-public class ChatServiceImpl implements ChatGameService {
+public class ChatServiceImpl implements ChatApiService {
 
     @Autowired
     private ChatDao chatDao;

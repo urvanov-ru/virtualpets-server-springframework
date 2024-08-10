@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import ru.urvanov.virtualpets.server.controller.api.domain.LoginArg;
 import ru.urvanov.virtualpets.server.controller.api.domain.LoginResult;
-import ru.urvanov.virtualpets.server.service.UserGameService;
+import ru.urvanov.virtualpets.server.service.UserApiService;
 import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 

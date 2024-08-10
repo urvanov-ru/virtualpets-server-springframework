@@ -15,7 +15,7 @@ import ru.urvanov.virtualpets.server.controller.api.domain.GetRoomInfoResult;
 import ru.urvanov.virtualpets.server.controller.api.domain.OpenBoxNewbieResult;
 import ru.urvanov.virtualpets.server.controller.api.domain.Point;
 import ru.urvanov.virtualpets.server.controller.api.domain.RoomBuildMenuCosts;
-import ru.urvanov.virtualpets.server.service.RoomGameService;
+import ru.urvanov.virtualpets.server.service.RoomApiService;
 import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
@@ -24,7 +24,7 @@ import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 public class RoomController extends ControllerBase {
 
     @Autowired
-    private RoomGameService roomService;
+    private RoomApiService roomService;
 
     @Autowired
     private UserPetDetails userPetDetails;

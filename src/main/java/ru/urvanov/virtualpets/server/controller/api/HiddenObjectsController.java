@@ -13,7 +13,7 @@ import jakarta.validation.Valid;
 import ru.urvanov.virtualpets.server.controller.api.domain.CollectObjectArg;
 import ru.urvanov.virtualpets.server.controller.api.domain.HiddenObjectsGame;
 import ru.urvanov.virtualpets.server.controller.api.domain.JoinHiddenObjectsGameArg;
-import ru.urvanov.virtualpets.server.service.HiddenObjectsGameService;
+import ru.urvanov.virtualpets.server.service.HiddenObjectsApiService;
 import ru.urvanov.virtualpets.server.service.domain.HiddenObjectsGameStatus;
 import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
@@ -23,7 +23,7 @@ import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 public class HiddenObjectsController extends ControllerBase {
     
     @Autowired
-    private HiddenObjectsGameService hiddenObjectsService;
+    private HiddenObjectsApiService hiddenObjectsService;
 
     @Autowired
     private HiddenObjectsGameStatus hiddenObjectsGameStatus;

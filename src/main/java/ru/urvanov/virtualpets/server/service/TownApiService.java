@@ -4,7 +4,7 @@ import ru.urvanov.virtualpets.server.controller.api.domain.GetTownInfoResult;
 import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
-public interface TownGameService {
+public interface TownApiService {
     GetTownInfoResult getTownInfo(UserPetDetails userPetDetails)
             throws ServiceException;
 }

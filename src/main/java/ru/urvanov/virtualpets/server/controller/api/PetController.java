@@ -25,7 +25,7 @@ import ru.urvanov.virtualpets.server.controller.api.domain.PetListResult;
 import ru.urvanov.virtualpets.server.controller.api.domain.SatietyArg;
 import ru.urvanov.virtualpets.server.controller.api.domain.SavePetCloths;
 import ru.urvanov.virtualpets.server.controller.api.domain.SelectPetArg;
-import ru.urvanov.virtualpets.server.service.PetGameService;
+import ru.urvanov.virtualpets.server.service.PetApiService;
 import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
@@ -34,7 +34,7 @@ import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 public class PetController extends ControllerBase {
 
     @Autowired
-    private PetGameService petService;
+    private PetApiService petService;
 
     @Autowired
     private UserPetDetails userPetDetails;

@@ -25,7 +25,7 @@ import ru.urvanov.virtualpets.server.controller.api.domain.RecoverPasswordArg;
 import ru.urvanov.virtualpets.server.controller.api.domain.RegisterArgument;
 import ru.urvanov.virtualpets.server.controller.api.domain.ServerTechnicalInfo;
 import ru.urvanov.virtualpets.server.dao.domain.Role;
-import ru.urvanov.virtualpets.server.service.PublicGameService;
+import ru.urvanov.virtualpets.server.service.PublicApiService;
 import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
@@ -34,7 +34,7 @@ import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 public class PublicController extends ControllerBase { // (3)
 
     @Autowired
-    public PublicGameService publicService;
+    public PublicApiService publicService;
 
     @Autowired
     private UserPetDetails userPetDetails;

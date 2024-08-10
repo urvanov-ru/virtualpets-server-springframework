@@ -26,7 +26,7 @@ import ru.urvanov.virtualpets.server.service.exception.UserNotFoundException;
 
 @Service("userService")
 public class UserServiceImpl
-        implements UserGameService, UserService {
+        implements UserApiService, UserService {
 
     @Autowired
     private UserDao userDao;

@@ -6,7 +6,7 @@ import ru.urvanov.virtualpets.server.controller.api.domain.UserInformationArg;
 import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
-public interface UserGameService {
+public interface UserApiService {
 
     RefreshUsersOnlineResult getUsersOnline(
             UserPetDetails userPetDetails)

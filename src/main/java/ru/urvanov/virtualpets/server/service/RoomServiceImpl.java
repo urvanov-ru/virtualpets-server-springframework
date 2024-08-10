@@ -57,7 +57,7 @@ import ru.urvanov.virtualpets.server.service.exception.NotNowException;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 @Service
-public class RoomServiceImpl implements RoomGameService {
+public class RoomServiceImpl implements RoomApiService {
 
     private static final Logger logger = LoggerFactory
             .getLogger(RoomServiceImpl.class);

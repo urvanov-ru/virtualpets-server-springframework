@@ -7,7 +7,7 @@ import ru.urvanov.virtualpets.server.service.domain.HiddenObjectsGameStatus;
 import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
-public interface HiddenObjectsGameService {
+public interface HiddenObjectsApiService {
     HiddenObjectsGame joinGame(
             UserPetDetails userPetDetails,
             HiddenObjectsGameStatus hiddenObjectsGameStatus,

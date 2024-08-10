@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ru.urvanov.virtualpets.server.controller.api.domain.GetTownInfoResult;
-import ru.urvanov.virtualpets.server.service.TownGameService;
+import ru.urvanov.virtualpets.server.service.TownApiService;
 import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
@@ -14,7 +14,7 @@ import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 @RequestMapping(value = "api/v1/TownService")
 public class TownController extends ControllerBase {
     @Autowired
-    private TownGameService townService;
+    private TownApiService townService;
     
     @Autowired
     private UserPetDetails userPetDetails;
