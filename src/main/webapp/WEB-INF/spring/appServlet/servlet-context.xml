@@ -86,7 +86,7 @@
         view-name = "login" />
     
     <mvc:cors>
-        <mvc:mapping path = "/rest/**"
+        <mvc:mapping path = "/api/**"
             allow-credentials = "true"
             allowed-origins
                 = "http://localhost:8081,http://localhost:8081/,http://virtualpets.urvanov.ru"
