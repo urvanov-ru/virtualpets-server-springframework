@@ -37,9 +37,9 @@
             authentication-manager-ref = "authenticationManager"
             entry-point-ref = "authenticationEntryPoint"
             >
-        <security:intercept-url pattern = "/rest/v1/PublicService/**"
+        <security:intercept-url pattern = "/api/v1/PublicService/**"
             access = "permitAll" />
-        <security:intercept-url pattern = "/rest/**"
+        <security:intercept-url pattern = "/api/**"
             access = "hasRole('ROLE_USER')" />
         <security:cors /> 
         <security:csrf disabled = "true" />

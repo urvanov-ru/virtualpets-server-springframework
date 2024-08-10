@@ -19,11 +19,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ru.urvanov.virtualpets.server.controller.game.domain.LoginArg;
-import ru.urvanov.virtualpets.server.controller.game.domain.LoginResult;
-import ru.urvanov.virtualpets.server.controller.game.domain.RecoverPasswordArg;
-import ru.urvanov.virtualpets.server.controller.game.domain.RegisterArgument;
-import ru.urvanov.virtualpets.server.controller.game.domain.ServerTechnicalInfo;
+import ru.urvanov.virtualpets.server.controller.api.domain.LoginArg;
+import ru.urvanov.virtualpets.server.controller.api.domain.LoginResult;
+import ru.urvanov.virtualpets.server.controller.api.domain.RecoverPasswordArg;
+import ru.urvanov.virtualpets.server.controller.api.domain.RegisterArgument;
+import ru.urvanov.virtualpets.server.controller.api.domain.ServerTechnicalInfo;
 import ru.urvanov.virtualpets.server.dao.UserDao;
 import ru.urvanov.virtualpets.server.dao.domain.Role;
 import ru.urvanov.virtualpets.server.dao.domain.User;
