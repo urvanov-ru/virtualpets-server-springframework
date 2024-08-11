@@ -5,13 +5,12 @@ import java.util.Optional;
 
 import ru.urvanov.virtualpets.server.dao.domain.User;
 import ru.urvanov.virtualpets.server.service.domain.UserAccessRights;
-import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.domain.UserProfile;
 import ru.urvanov.virtualpets.server.service.exception.UserNotFoundException;
 
 public interface UserService {
 
-    UserProfile getProfile(UserPetDetails userPetDetails)
+    UserProfile getProfile(Integer integer)
             throws UserNotFoundException;
 
     List<User> findLastRegisteredUsers(int start, int limit);

@@ -93,17 +93,18 @@ public class UserServiceImpl
     }
 
     @Override
-    public UserProfile getProfile(UserPetDetails userPetDetails)
+    @PreAuthorize("hasRole('USER') && (#userId eq principal.userId)")
+    public UserProfile getProfile(Integer userId)
             throws UserNotFoundException {
         UserProfile userProfile = new UserProfile();
-        Optional<User> user = userDao.findById(userPetDetails.userId());
+        Optional<User> user = userDao.findById(userId);
         user.ifPresent(u -> {
             userProfile.setBirthdate(u.getBirthdate());
             userProfile.setName(u.getLogin());
             userProfile.setEmail(u.getEmail());
         });
         user.orElseThrow(() ->
-                new UserNotFoundException(userPetDetails.userId()));
+                new UserNotFoundException(userId));
         return userProfile;
     }
 
