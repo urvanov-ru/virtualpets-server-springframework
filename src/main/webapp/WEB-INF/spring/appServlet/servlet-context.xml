@@ -89,7 +89,7 @@
         <mvc:mapping path = "/api/**"
             allow-credentials = "true"
             allowed-origins
-                = "http://localhost:8081,http://localhost:8081/,http://virtualpets.urvanov.ru"
+                = "http://localhost:8081,http://virtualpets.urvanov.ru"
             allowed-methods = "GET, POST, PUT, DELETE, OPTIONS"/>
     </mvc:cors> 
 </beans:beans>
