@@ -58,14 +58,14 @@
                 name = "${_csrf.parameterName}"
                 value = "${_csrf.token}"/>
             <c:if test = "${param.error != null}">
-            <div class = "error">
-            ${login_error_var}
-            </div>
+                <div class = "error">
+                    ${login_error_var}
+                </div>
             </c:if>
             <c:if test = "${param.logout != null}">
-            <div>
-            ${logout_success_var}
-            </div>
+                <div>
+                    ${logout_success_var}
+                </div>
             </c:if>
             <div>
                 <input type = "submit" value = "${login_var}" />
