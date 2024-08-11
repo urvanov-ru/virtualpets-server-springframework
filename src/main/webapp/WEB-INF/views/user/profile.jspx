@@ -46,17 +46,17 @@
         <div>
             <spring:url value = "/site/admin"
                 var = "admin_panel_url" />
-            <a href="${admin_panel_url}">${admin_panel_var}</a>
+            <a href = "${admin_panel_url}">${admin_panel_var}</a>
         </div>
     </sec:authorize>
     <div>
         <spring:url value = "/site/logout"
             var = "logout_url" />
        <form method = "POST" action = "${logout_url}">
-            <input type="hidden"
-                name="${_csrf.parameterName}"
-                value="${_csrf.token}"/>
-            <input type="submit" value = "${logout_var}" />
+            <input type = "hidden"
+                name = "${_csrf.parameterName}"
+                value = "${_csrf.token}"/>
+            <input type = "submit" value = "${logout_var}" />
         </form>
     </div>
     <div>
