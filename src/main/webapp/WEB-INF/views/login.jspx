@@ -45,11 +45,13 @@
     <form action="${login_url}" method="post">
         <div style = "width: 300px;" class = "form">
             <div>
-                <input type = "text" name = "username" placeholder = "${name_var}" />
+                <input type = "text" name = "username"
+                        placeholder = "${name_var}" />
             </div>
             
             <div>
-                <input type = "password" name = "password" placeholder = "${password_var}"/>
+                <input type = "password" name = "password"
+                        placeholder = "${password_var}"/>
             </div>
             
             <input type="hidden"
