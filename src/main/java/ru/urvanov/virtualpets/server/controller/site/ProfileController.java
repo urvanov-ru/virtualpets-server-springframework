@@ -27,7 +27,8 @@ public class ProfileController extends ControllerBase {
     private UserService userService;
     
     /**
-     * Получает данные от социальной сети и сохраняет в пользователях игры.
+     * Получает данные от социальной сети и сохраняет
+     * в пользователях игры.
      * @throws UserNotFoundException 
      */
     @GetMapping
@@ -38,7 +39,8 @@ public class ProfileController extends ControllerBase {
             @AuthenticationPrincipal UserDetailsImpl userDetailsImpl)
                     throws UserNotFoundException {
         logger.info("Welcome home! The client locale is {}.", locale);
-        UserProfile userProfile = userService.getProfile(userDetailsImpl.getUserId());
+        UserProfile userProfile = userService.getProfile(
+                userDetailsImpl.getUserId());
         model.addAttribute("userProfile", userProfile);
         return "user/profile";
     }
