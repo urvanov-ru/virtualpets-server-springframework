@@ -9,9 +9,6 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import ru.urvanov.virtualpets.server.service.exception.IncompatibleVersionException;
-import ru.urvanov.virtualpets.server.service.exception.NameIsBusyException;
-import ru.urvanov.virtualpets.server.service.exception.NotEnoughPetResourcesException;
-import ru.urvanov.virtualpets.server.service.exception.NotNowException;
 import ru.urvanov.virtualpets.server.service.exception.PetNotFoundException;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 import ru.urvanov.virtualpets.server.service.exception.UserNotFoundException;
