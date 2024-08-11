@@ -42,7 +42,7 @@
         code = "virtualpets-server-springframework.site.logout-success"
         var = "logout_success_var" />
     
-    <form action="${login_url}" method="post">
+    <form action = "${login_url}" method = "post">
         <div style = "width: 300px;" class = "form">
             <div>
                 <input type = "text" name = "username"
@@ -54,9 +54,9 @@
                         placeholder = "${password_var}"/>
             </div>
             
-            <input type="hidden"
-                name="${_csrf.parameterName}"
-                value="${_csrf.token}"/>
+            <input type = "hidden"
+                name = "${_csrf.parameterName}"
+                value = "${_csrf.token}"/>
             <c:if test = "${param.error != null}">
             <div class = "error">
             ${login_error_var}
