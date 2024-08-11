@@ -45,7 +45,7 @@ public class PetController extends ControllerBase {
     @RequestMapping(value = "getUserPets", method = RequestMethod.GET)
     public PetListResult getUserPets(
             @AuthenticationPrincipal UserDetailsImpl userDetailsImpl)
-            throws ServiceException {
+                    throws ServiceException {
         return petService.getUserPets(
                 new UserPetDetails(
                     userDetailsImpl.getUserId(),
@@ -57,7 +57,7 @@ public class PetController extends ControllerBase {
     public void create(
             @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
             @RequestBody @Valid CreatePetArg createPetArg)
-            throws ServiceException {
+                    throws ServiceException {
         petService.create(
                 new UserPetDetails(
                         userDetailsImpl.getUserId(),
@@ -70,7 +70,7 @@ public class PetController extends ControllerBase {
     public void select(
             @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
             @RequestBody @Valid SelectPetArg selectPetArg)
-            throws ServiceException {
+                    throws ServiceException {
         petService.select(
                 new UserPetDetails(
                         userDetailsImpl.getUserId(),
@@ -85,7 +85,7 @@ public class PetController extends ControllerBase {
     public void delete(
             @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
             @PathVariable("petId") Integer petId)
-            throws ServiceException {
+                    throws ServiceException {
         petService.delete(
                 new UserPetDetails(
                         userDetailsImpl.getUserId(),
@@ -98,7 +98,7 @@ public class PetController extends ControllerBase {
     public void drink(
             @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
             @RequestBody @Valid DrinkArg drinkArg)
-            throws ServiceException {
+                    throws ServiceException {
         petService.drink(
                 new UserPetDetails(
                         userDetailsImpl.getUserId(),
@@ -111,7 +111,7 @@ public class PetController extends ControllerBase {
     public void eat(
             @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
             @RequestBody @Valid SatietyArg satietyArg)
-            throws ServiceException {
+                    throws ServiceException {
         petService.satiety(
                 new UserPetDetails(
                         userDetailsImpl.getUserId(),
@@ -133,7 +133,7 @@ public class PetController extends ControllerBase {
     @GetMapping(value = "getPetBooks")
     public GetPetBooksResult getPetBooks(
             @AuthenticationPrincipal UserDetailsImpl userDetailsImpl)
-            throws ServiceException {
+                    throws ServiceException {
         return petService.getPetBooks(
                 new UserPetDetails(
                         userDetailsImpl.getUserId(),
@@ -143,7 +143,7 @@ public class PetController extends ControllerBase {
     @GetMapping(value = "getPetCloths")
     public GetPetClothsResult getPetCloths(
             @AuthenticationPrincipal UserDetailsImpl userDetailsImpl)
-            throws ServiceException {
+                    throws ServiceException {
         return petService.getPetCloths(
                 new UserPetDetails(
                         userDetailsImpl.getUserId(),
@@ -155,7 +155,7 @@ public class PetController extends ControllerBase {
     public void savePetCloth(
             @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
             @RequestBody @Valid SavePetCloths saveClothArg)
-            throws ServiceException {
+                    throws ServiceException {
         petService.savePetCloths(
                 new UserPetDetails(
                         userDetailsImpl.getUserId(),
@@ -166,7 +166,7 @@ public class PetController extends ControllerBase {
     @GetMapping(value = "getPetDrinks")
     public GetPetDrinksResult getPetDrinks(
             @AuthenticationPrincipal UserDetailsImpl userDetailsImpl)
-            throws ServiceException {
+                    throws ServiceException {
         return petService.getPetDrinks(
                 new UserPetDetails(
                         userDetailsImpl.getUserId(),
@@ -176,7 +176,7 @@ public class PetController extends ControllerBase {
     @GetMapping(value = "getPetFoods")
     public GetPetFoodsResult getPetFoods(
             @AuthenticationPrincipal UserDetailsImpl userDetailsImpl)
-            throws ServiceException {
+                    throws ServiceException {
         return petService.getPetFoods(
                 new UserPetDetails(
                         userDetailsImpl.getUserId(),
@@ -188,7 +188,7 @@ public class PetController extends ControllerBase {
     public GetPetJournalEntriesResult getPetJournalEntries(
             @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
             @RequestParam(name = "count") int count)
-            throws ServiceException {
+                    throws ServiceException {
         return petService.getPetJournalEntries(
                 new UserPetDetails(
                         userDetailsImpl.getUserId(),
@@ -199,7 +199,7 @@ public class PetController extends ControllerBase {
     @GetMapping(value = "getPetRucksackInner")
     public GetPetRucksackInnerResult getPetRucksackInner(
             @AuthenticationPrincipal UserDetailsImpl userDetailsImpl)
-            throws ServiceException {
+                    throws ServiceException {
         return petService.getPetRucksackInner(
                 new UserPetDetails(
                         userDetailsImpl.getUserId(),

@@ -46,7 +46,7 @@ public class PublicController extends ControllerBase { // (3)
     public void register(
             @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
             @RequestBody @Valid RegisterArgument registerArgument) // (3)
-            throws ServiceException {
+                    throws ServiceException {
         publicService.register(registerArgument);
     }
 
@@ -56,7 +56,7 @@ public class PublicController extends ControllerBase { // (3)
     public void recoverPassword(
             @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
             @RequestBody @Valid RecoverPasswordArg recoverPasswordArg)
-            throws ServiceException {
+                    throws ServiceException {
         publicService.recoverPassword(recoverPasswordArg);
     }
 
@@ -74,7 +74,7 @@ public class PublicController extends ControllerBase { // (3)
             @RequestBody @Valid LoginArg loginArg,
             HttpServletRequest httpServletRequest,
             HttpServletResponse httpServletResponse)
-            throws ServiceException {
+                    throws ServiceException {
         
         Authentication authenticationRequest =
                 UsernamePasswordAuthenticationToken.unauthenticated(
@@ -93,7 +93,7 @@ public class PublicController extends ControllerBase { // (3)
     @RequestMapping(method = RequestMethod.GET, value = "checkSession")
     public LoginResult checkSession(
             @AuthenticationPrincipal UserDetailsImpl userDetailsImpl)
-            throws ServiceException {
+                    throws ServiceException {
         if (userDetailsImpl != null && userDetailsImpl.getAuthorities()
                 .stream()
                 .anyMatch(a -> a.getAuthority()
