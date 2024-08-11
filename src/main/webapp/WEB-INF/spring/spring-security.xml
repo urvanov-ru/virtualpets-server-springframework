@@ -23,7 +23,6 @@
             access = "hasRole('USER')" />
         <security:intercept-url pattern = "/site/**"
             access = "permitAll" />
-        <security:cors  />
         <security:csrf />
         <security:form-login login-page = "/site/login"
             login-processing-url = "/site/login"
