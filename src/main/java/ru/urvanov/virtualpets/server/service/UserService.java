@@ -11,7 +11,8 @@ import ru.urvanov.virtualpets.server.service.exception.UserNotFoundException;
 
 public interface UserService {
 
-    UserProfile getProfile(UserPetDetails userPetDetails);
+    UserProfile getProfile(UserPetDetails userPetDetails)
+            throws UserNotFoundException;
 
     List<User> findLastRegisteredUsers(int start, int limit);
 

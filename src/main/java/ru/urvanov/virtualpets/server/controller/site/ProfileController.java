@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.servlet.http.HttpServletRequest;
+import ru.urvanov.virtualpets.server.controller.api.domain.SelectedPet;
 import ru.urvanov.virtualpets.server.service.UserService;
-import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.domain.UserProfile;
 
 @Controller
@@ -25,7 +25,7 @@ public class ProfileController extends ControllerBase {
     private UserService userService;
 
     @Autowired
-    private UserPetDetails userPetDetails;
+    private SelectedPet selectedPet;
     
     /**
      * Получает данные от социальной сети и сохраняет в пользователях игры.
@@ -33,7 +33,7 @@ public class ProfileController extends ControllerBase {
     @GetMapping
     public String home(Locale locale, Model model, HttpServletRequest request) {
         logger.info("Welcome home! The client locale is {}.", locale);
-        UserProfile userProfile = userService.getProfile(userPetDetails);
+        UserProfile userProfile = userService.getProfile(selectedPet);
         model.addAttribute("userProfile", userProfile);
         return "user/profile";
     }

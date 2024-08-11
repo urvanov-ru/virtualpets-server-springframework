@@ -41,7 +41,7 @@ public class TownServiceImpl implements ru.urvanov.virtualpets.server.service.To
     public GetTownInfoResult getTownInfo(UserPetDetails userPetDetails)
             throws ServiceException {
         Pet pet = petDao.findByIdWithJournalEntriesAndAchievements(
-                userPetDetails.getPetId())
+                userPetDetails.petId())
                 .orElseThrow();
 
         Map<JournalEntryId, PetJournalEntry> mapJournalEntries = pet

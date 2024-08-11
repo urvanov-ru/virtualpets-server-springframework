@@ -1,11 +1,14 @@
 package ru.urvanov.virtualpets.server.controller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ru.urvanov.virtualpets.server.auth.UserDetailsImpl;
 import ru.urvanov.virtualpets.server.controller.api.domain.GetTownInfoResult;
+import ru.urvanov.virtualpets.server.controller.api.domain.SelectedPet;
 import ru.urvanov.virtualpets.server.service.TownApiService;
 import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
@@ -17,10 +20,15 @@ public class TownController extends ControllerBase {
     private TownApiService townService;
     
     @Autowired
-    private UserPetDetails userPetDetails;
+    private SelectedPet selectedPet;
     
     @GetMapping(value = "getTownInfo")
-    public GetTownInfoResult getTownInfo() throws ServiceException {
-        return townService.getTownInfo(userPetDetails);
+    public GetTownInfoResult getTownInfo(
+            @AuthenticationPrincipal UserDetailsImpl userDetailsImpl)
+                    throws ServiceException {
+        return townService.getTownInfo(
+                new UserPetDetails(
+                        userDetailsImpl.getUserId(),
+                        selectedPet.getPetId()));
     }
 }

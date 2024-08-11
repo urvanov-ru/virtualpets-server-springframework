@@ -12,7 +12,6 @@ import ru.urvanov.virtualpets.server.controller.api.domain.PetListResult;
 import ru.urvanov.virtualpets.server.controller.api.domain.SatietyArg;
 import ru.urvanov.virtualpets.server.controller.api.domain.SavePetCloths;
 import ru.urvanov.virtualpets.server.controller.api.domain.SelectPetArg;
-import ru.urvanov.virtualpets.server.dao.domain.Pet;
 import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 

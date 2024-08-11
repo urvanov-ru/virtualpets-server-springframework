@@ -75,8 +75,8 @@ public class UserServiceImpl
                 throw new ServiceException("Too big file.");
             }
         }
-        if (userPetDetails.getUserId().equals(userInformation.getId())) {
-            User user = userDao.findById(userPetDetails.getUserId())
+        if (userPetDetails.userId().equals(userInformation.getId())) {
+            User user = userDao.findById(userPetDetails.userId())
                     .orElseThrow();
             user.setName(userInformation.getName());
             user.setSex(userInformation.getSex());
@@ -93,11 +93,17 @@ public class UserServiceImpl
     }
 
     @Override
-    public UserProfile getProfile(UserPetDetails userPetDetails) {
+    public UserProfile getProfile(UserPetDetails userPetDetails)
+            throws UserNotFoundException {
         UserProfile userProfile = new UserProfile();
-        userProfile.setBirthdate(userPetDetails.getUserBirthdate());
-        userProfile.setName(userPetDetails.getUserName());
-        userProfile.setEmail(userPetDetails.getUserEmail());
+        Optional<User> user = userDao.findById(userPetDetails.userId());
+        user.ifPresent(u -> {
+            userProfile.setBirthdate(u.getBirthdate());
+            userProfile.setName(u.getLogin());
+            userProfile.setEmail(u.getEmail());
+        });
+        user.orElseThrow(() ->
+                new UserNotFoundException(userPetDetails.userId()));
         return userProfile;
     }
 

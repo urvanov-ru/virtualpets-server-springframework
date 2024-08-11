@@ -2,6 +2,7 @@ package ru.urvanov.virtualpets.server.controller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
+import ru.urvanov.virtualpets.server.auth.UserDetailsImpl;
 import ru.urvanov.virtualpets.server.controller.api.domain.CreatePetArg;
 import ru.urvanov.virtualpets.server.controller.api.domain.DrinkArg;
 import ru.urvanov.virtualpets.server.controller.api.domain.GetPetBooksResult;
@@ -25,6 +27,7 @@ import ru.urvanov.virtualpets.server.controller.api.domain.PetListResult;
 import ru.urvanov.virtualpets.server.controller.api.domain.SatietyArg;
 import ru.urvanov.virtualpets.server.controller.api.domain.SavePetCloths;
 import ru.urvanov.virtualpets.server.controller.api.domain.SelectPetArg;
+import ru.urvanov.virtualpets.server.controller.api.domain.SelectedPet;
 import ru.urvanov.virtualpets.server.service.PetApiService;
 import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
@@ -37,99 +40,169 @@ public class PetController extends ControllerBase {
     private PetApiService petService;
 
     @Autowired
-    private UserPetDetails userPetDetails;
+    private SelectedPet selectedPet;
 
     @RequestMapping(value = "getUserPets", method = RequestMethod.GET)
-    public PetListResult getUserPets()
+    public PetListResult getUserPets(
+            @AuthenticationPrincipal UserDetailsImpl userDetailsImpl)
             throws ServiceException {
-        return petService.getUserPets(userPetDetails);
+        return petService.getUserPets(
+                new UserPetDetails(
+                    userDetailsImpl.getUserId(),
+                    selectedPet.getPetId()));
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value = "create", method = RequestMethod.POST)
-    public void create(@RequestBody @Valid CreatePetArg createPetArg)
+    public void create(
+            @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
+            @RequestBody @Valid CreatePetArg createPetArg)
             throws ServiceException {
-        petService.create(userPetDetails, createPetArg);
+        petService.create(
+                new UserPetDetails(
+                        userDetailsImpl.getUserId(),
+                        selectedPet.getPetId()),
+                createPetArg);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value = "select", method = RequestMethod.POST)
-    public void select(@RequestBody @Valid SelectPetArg selectPetArg)
+    public void select(
+            @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
+            @RequestBody @Valid SelectPetArg selectPetArg)
             throws ServiceException {
-        petService.select(userPetDetails, selectPetArg);
+        petService.select(
+                new UserPetDetails(
+                        userDetailsImpl.getUserId(),
+                        selectedPet.getPetId()),
+                selectPetArg);
+        selectedPet.setPetId(selectPetArg.petId());
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value = "delete/{petId}",
             method = RequestMethod.DELETE)
-    public void delete(@PathVariable("petId") Integer petId)
+    public void delete(
+            @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
+            @PathVariable("petId") Integer petId)
             throws ServiceException {
-        petService.delete(userPetDetails, petId);
+        petService.delete(
+                new UserPetDetails(
+                        userDetailsImpl.getUserId(),
+                        selectedPet.getPetId()),
+                petId);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value = "drink", method = RequestMethod.POST)
-    public void drink(@RequestBody @Valid DrinkArg drinkArg)
+    public void drink(
+            @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
+            @RequestBody @Valid DrinkArg drinkArg)
             throws ServiceException {
-        petService.drink(userPetDetails, drinkArg);
+        petService.drink(
+                new UserPetDetails(
+                        userDetailsImpl.getUserId(),
+                        selectedPet.getPetId()),
+                drinkArg);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value = "satiety", method = RequestMethod.POST)
-    public void eat(@RequestBody @Valid SatietyArg satietyArg)
+    public void eat(
+            @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
+            @RequestBody @Valid SatietyArg satietyArg)
             throws ServiceException {
-        petService.satiety(userPetDetails, satietyArg);
+        petService.satiety(
+                new UserPetDetails(
+                        userDetailsImpl.getUserId(),
+                        selectedPet.getPetId()),
+                satietyArg);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value = "education", method = RequestMethod.POST)
-    public void education() throws ServiceException {
-        petService.education(userPetDetails);
+    public void education(
+            @AuthenticationPrincipal UserDetailsImpl userDetailsImpl)
+                    throws ServiceException {
+        petService.education(
+                new UserPetDetails(
+                        userDetailsImpl.getUserId(),
+                        selectedPet.getPetId()));
     }
 
     @GetMapping(value = "getPetBooks")
-    public GetPetBooksResult getPetBooks()
+    public GetPetBooksResult getPetBooks(
+            @AuthenticationPrincipal UserDetailsImpl userDetailsImpl)
             throws ServiceException {
-        return petService.getPetBooks(userPetDetails);
+        return petService.getPetBooks(
+                new UserPetDetails(
+                        userDetailsImpl.getUserId(),
+                        selectedPet.getPetId()));
     }
 
     @GetMapping(value = "getPetCloths")
-    public GetPetClothsResult getPetCloths()
+    public GetPetClothsResult getPetCloths(
+            @AuthenticationPrincipal UserDetailsImpl userDetailsImpl)
             throws ServiceException {
-        return petService.getPetCloths(userPetDetails);
+        return petService.getPetCloths(
+                new UserPetDetails(
+                        userDetailsImpl.getUserId(),
+                        selectedPet.getPetId()));
     }
 
     @PostMapping(value = "savePetCloths")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void savePetCloth(
+            @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
             @RequestBody @Valid SavePetCloths saveClothArg)
             throws ServiceException {
-        petService.savePetCloths(userPetDetails, saveClothArg);
+        petService.savePetCloths(
+                new UserPetDetails(
+                        userDetailsImpl.getUserId(),
+                        selectedPet.getPetId()),
+                saveClothArg);
     }
 
     @GetMapping(value = "getPetDrinks")
-    public GetPetDrinksResult getPetDrinks()
+    public GetPetDrinksResult getPetDrinks(
+            @AuthenticationPrincipal UserDetailsImpl userDetailsImpl)
             throws ServiceException {
-        return petService.getPetDrinks(userPetDetails);
+        return petService.getPetDrinks(
+                new UserPetDetails(
+                        userDetailsImpl.getUserId(),
+                        selectedPet.getPetId()));
     }
 
     @GetMapping(value = "getPetFoods")
-    public GetPetFoodsResult getPetFoods()
+    public GetPetFoodsResult getPetFoods(
+            @AuthenticationPrincipal UserDetailsImpl userDetailsImpl)
             throws ServiceException {
-        return petService.getPetFoods(userPetDetails);
+        return petService.getPetFoods(
+                new UserPetDetails(
+                        userDetailsImpl.getUserId(),
+                        selectedPet.getPetId()));
     }
 
     @RequestMapping(method = RequestMethod.GET,
             value = "getPetJournalEntries")
     public GetPetJournalEntriesResult getPetJournalEntries(
+            @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
             @RequestParam(name = "count") int count)
             throws ServiceException {
-        return petService.getPetJournalEntries(userPetDetails, count);
+        return petService.getPetJournalEntries(
+                new UserPetDetails(
+                        userDetailsImpl.getUserId(),
+                        selectedPet.getPetId()),
+                count);
     }
 
     @GetMapping(value = "getPetRucksackInner")
-    public GetPetRucksackInnerResult getPetRucksackInner()
+    public GetPetRucksackInnerResult getPetRucksackInner(
+            @AuthenticationPrincipal UserDetailsImpl userDetailsImpl)
             throws ServiceException {
-        return petService.getPetRucksackInner(userPetDetails);
+        return petService.getPetRucksackInner(
+                new UserPetDetails(
+                        userDetailsImpl.getUserId(),
+                        selectedPet.getPetId()));
     }
 }

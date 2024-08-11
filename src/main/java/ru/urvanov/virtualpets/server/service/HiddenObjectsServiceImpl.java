@@ -120,10 +120,10 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsApiService {
             HiddenObjectsGameStatus hiddenObjectsGameStatus,
             ru.urvanov.virtualpets.server.controller.api.domain.JoinHiddenObjectsGameArg joinHiddenObjectsGameArg)
             throws ServiceException {
-        User user = userDao.findById(userPetDetails.getUserId())
+        User user = userDao.findById(userPetDetails.userId())
                 .orElseThrow();
         
-        Pet pet = petDao.findById(userPetDetails.getPetId())
+        Pet pet = petDao.findById(userPetDetails.petId())
                 .orElseThrow();
 
         HiddenObjectsGame foundGame = null;
@@ -215,7 +215,7 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsApiService {
         result.setGameStarted(foundGame.isStarted());
         result.setGameOver(foundGame.isGameOver());
         if (foundGame.isGameOver()) {
-            Pet pet = petDao.findById(userPetDetails.getPetId())
+            Pet pet = petDao.findById(userPetDetails.petId())
                     .orElseThrow();
             HiddenObjectsPlayer player = foundGame.getPlayer(pet.getUser()
                     .getId());
@@ -300,7 +300,7 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsApiService {
             ru.urvanov.virtualpets.server.controller.api.domain.CollectObjectArg arg)
             throws ServiceException {
 
-        Integer userId = userPetDetails.getUserId();
+        Integer userId = userPetDetails.userId();
 
 //        if (hiddenObjectsGameStarted == null) {
 //            hiddenObjectsGameStarted = false;
