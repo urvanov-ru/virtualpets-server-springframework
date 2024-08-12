@@ -2,6 +2,7 @@ package ru.urvanov.virtualpets.server.controller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +23,8 @@ import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 @RestController
-@RequestMapping(value = "api/v1/HiddenObjectsService")
+@RequestMapping(value = "api/v1/HiddenObjectsService",
+        consumes = MediaType.APPLICATION_JSON_VALUE)
 public class HiddenObjectsController extends ControllerBase {
     
     @Autowired

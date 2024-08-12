@@ -2,6 +2,7 @@ package ru.urvanov.virtualpets.server.controller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -29,7 +30,8 @@ import ru.urvanov.virtualpets.server.service.PublicApiService;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 @RestController // (1)
-@RequestMapping(value = "api/v1/PublicService") // (2)
+@RequestMapping(value = "api/v1/PublicService",
+        consumes = MediaType.APPLICATION_JSON_VALUE) // (2)
 public class PublicController extends ControllerBase { // (3)
 
     @Autowired
