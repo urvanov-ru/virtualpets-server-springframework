@@ -136,9 +136,13 @@ public class UserServiceImpl
     }
 
     @Override
-    @PreAuthorize("hasRole('ADMIN') && (#userAccessRights.id ne principal.userId)")
+    @PreAuthorize("""
+            hasRole('ADMIN') \
+            && (#userAccessRights.id ne principal.userId)
+            """)
     @Transactional(rollbackFor = ServiceException.class)
-    public UserAccessRights saveUserAccessRights(@P("userAccessRights") UserAccessRights userAccessRights)
+    public UserAccessRights saveUserAccessRights(
+            @P("userAccessRights") UserAccessRights userAccessRights)
             throws UserNotFoundException {
         User user = userDao.findById(userAccessRights.getId())
                 .orElseThrow(() -> new UserNotFoundException(
