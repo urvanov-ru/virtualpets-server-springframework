@@ -72,28 +72,54 @@ public class PublicController extends ControllerBase { // (3)
 
     @RequestMapping(method = RequestMethod.POST, value = "login")
     public LoginResult login(
-            @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
             @RequestBody @Valid LoginArg loginArg,
             HttpServletRequest httpServletRequest,
             HttpServletResponse httpServletResponse)
                     throws ServiceException {
         
+        // UsernamePasswordAuthenticationToken с 
+        // неаутентифицированным пользователем.
         Authentication authenticationRequest =
                 UsernamePasswordAuthenticationToken.unauthenticated(
                         loginArg.login(), loginArg.password());
-        Authentication authenticationResponse;
-        authenticationResponse = 
-                this.authenticationManager.authenticate(
+        
+        // Попытка аутентифицировать пользователя
+        // при этом будет вызван метод севриса UserDetailsService
+        // для получения информации о пользователе из базы данных
+        // по логину.
+        Authentication authenticationResponse
+                = authenticationManager.authenticate(
                         authenticationRequest);
+        // Если оказались здесь, значит аутентификация прошла успешно.
+        // В противном случае authenticationManager#authenticate
+        // бросил бы исключение.
+        
+        // Вызов логики бизнес-слоя.
+        publicService.login(loginArg);
+        
+        // Текущий контекст безопасности
         SecurityContext securityContext
                 = SecurityContextHolder.getContext();
+        // Заполнение текущий контекст аутентифицированным пользователем.
         securityContext.setAuthentication(authenticationResponse);
+        
+        // Сохранение контекста безопасности
+        // в requestAttributes и в сессии.
         securityContextRepository.saveContext(
                 securityContext,
                 httpServletRequest,
                 httpServletResponse);
-        LoginResult result = publicService.login(loginArg);
-        return result;
+        
+        // Возвращение результат в клиент JavaScript.
+        UserDetailsImpl userDetailsImpl
+                = (UserDetailsImpl) authenticationResponse
+                        .getPrincipal();
+        return new LoginResult(
+                true,
+                null,
+                userDetailsImpl.getUserId(),
+                userDetailsImpl.getUsername(),
+                userDetailsImpl.getName());
     }
     
     @RequestMapping(method = RequestMethod.GET, value = "checkSession")

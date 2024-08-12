@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ru.urvanov.virtualpets.server.controller.api.domain.LoginArg;
-import ru.urvanov.virtualpets.server.controller.api.domain.LoginResult;
 import ru.urvanov.virtualpets.server.controller.api.domain.RecoverPasswordArg;
 import ru.urvanov.virtualpets.server.controller.api.domain.RegisterArgument;
 import ru.urvanov.virtualpets.server.controller.api.domain.ServerTechnicalInfo;
@@ -82,17 +81,13 @@ public class PublicServiceImpl implements PublicApiService {
     }
     
     @Override
-    @Transactional(rollbackFor = ServiceException.class)
-    public LoginResult login(LoginArg loginArg)
+    public void login(LoginArg loginArg)
             throws ServiceException {
         String clientVersion = loginArg.version();
         if (!version.equals(clientVersion)) {
             throw new IncompatibleVersionException("", version,
                     clientVersion);
         }
-        User user = userDao.findByLogin(loginArg.login()).orElseThrow();
-        return new LoginResult(true, null, user.getId(),
-                user.getLogin(), user.getName());
     }
 
 
