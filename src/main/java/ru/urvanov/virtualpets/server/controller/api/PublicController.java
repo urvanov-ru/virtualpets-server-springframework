@@ -83,11 +83,15 @@ public class PublicController extends ControllerBase { // (3)
                         loginArg.login(), loginArg.password());
         Authentication authenticationResponse;
         authenticationResponse = 
-                this.authenticationManager.authenticate(authenticationRequest);
-        SecurityContext securityContext = SecurityContextHolder.getContext();
+                this.authenticationManager.authenticate(
+                        authenticationRequest);
+        SecurityContext securityContext
+                = SecurityContextHolder.getContext();
         securityContext.setAuthentication(authenticationResponse);
-        securityContextRepository.saveContext(securityContext, httpServletRequest, httpServletResponse);
-        httpServletRequest.setAttribute("remember-me", true);
+        securityContextRepository.saveContext(
+                securityContext,
+                httpServletRequest,
+                httpServletResponse);
         LoginResult result = publicService.login(loginArg);
         return result;
     }
