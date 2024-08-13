@@ -35,7 +35,8 @@ import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 @RestController("apiPetController")
 @RequestMapping(value = "api/v1/PetService",
-        consumes = MediaType.APPLICATION_JSON_VALUE)
+        consumes = MediaType.APPLICATION_JSON_VALUE,
+        produces = MediaType.APPLICATION_JSON_VALUE)
 public class PetController extends ControllerBase {
 
     @Autowired

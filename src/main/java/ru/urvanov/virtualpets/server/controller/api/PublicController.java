@@ -31,7 +31,8 @@ import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 @RestController // (1)
 @RequestMapping(value = "api/v1/PublicService",
-        consumes = MediaType.APPLICATION_JSON_VALUE) // (2)
+        consumes = MediaType.APPLICATION_JSON_VALUE,
+        produces = MediaType.APPLICATION_JSON_VALUE) // (2)
 public class PublicController extends ControllerBase { // (3)
 
     @Autowired
