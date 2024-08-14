@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import ru.urvanov.virtualpets.server.auth.UserDetailsImpl;
 import ru.urvanov.virtualpets.server.controller.api.domain.GetRoomInfoResult;
 import ru.urvanov.virtualpets.server.controller.api.domain.OpenBoxNewbieResult;
@@ -80,7 +82,7 @@ public class RoomController extends ControllerBase {
     @PostMapping(value = "openBoxNewbie/{index}/")
     public OpenBoxNewbieResult openBoxNewbie(
             @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
-            @PathVariable("index") int index)
+            @PathVariable("index") @Min(0) @Max(2) int index)
                     throws ServiceException {
         return roomService.openBoxNewbie(
                 new UserPetDetails(
