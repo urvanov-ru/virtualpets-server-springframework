@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import jakarta.validation.constraints.Min;
 import ru.urvanov.virtualpets.server.service.UserService;
 import ru.urvanov.virtualpets.server.service.domain.UserAccessRights;
 import ru.urvanov.virtualpets.server.service.exception.UserNotFoundException;
@@ -27,7 +28,7 @@ public class AdminController extends ControllerBase {
 
     @GetMapping("user/{userId}")
     public String showUserAccess(Model model,
-            @PathVariable("userId") Integer userId)
+            @PathVariable("userId") @Min(1) Integer userId)
             throws UserNotFoundException {
         UserAccessRights userAccessRights = userService
                 .findUserAccessRights(userId);
@@ -37,7 +38,7 @@ public class AdminController extends ControllerBase {
 
     @PostMapping("user/{userId}")
     public String saveUserAccess(Model model,
-            @PathVariable("userId") Integer userId,
+            @PathVariable("userId") @Min(1) Integer userId,
             @ModelAttribute UserAccessRights userAccessRights)
             throws UserNotFoundException {
         userAccessRights.setId(userId);
