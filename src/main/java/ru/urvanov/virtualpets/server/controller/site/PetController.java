@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jakarta.validation.constraints.Min;
 import ru.urvanov.virtualpets.server.service.PetService;
 import ru.urvanov.virtualpets.server.service.domain.PetDetails;
 import ru.urvanov.virtualpets.server.service.exception.PetNotFoundException;
@@ -24,7 +25,7 @@ public class PetController extends ControllerBase {
     private PetService petService;
 
     @RequestMapping(value = "/information/pet", method = RequestMethod.GET)
-    public String petInfo(@RequestParam(value = "id") Integer id,
+    public String petInfo(@RequestParam(value = "id") @Min(1) Integer id,
             Model model) throws PetNotFoundException {
         logger.info("/information/pet started.");
         PetDetails pet = petService.petInformationPage(id);
