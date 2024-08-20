@@ -1,6 +1,5 @@
 package ru.urvanov.virtualpets.server.dao.domain;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -13,9 +12,7 @@ import jakarta.persistence.Table;
  */
 @Entity
 @Table(name = "book")
-public class Book implements Serializable {
-
-    private static final long serialVersionUID = 1086408475266576270L;
+public class Book {
     
     public static final String FIRST_BOOOK_ID = "DESTINY";
 
@@ -33,12 +30,32 @@ public class Book implements Serializable {
     
     private float hiddenObjectsGameDropRate;
 
-    public String getId() {
-        return id;
+    /**
+     * Конструктор по умолчанию требуется JPA для создания объекта.
+     */
+    public Book() {
+        super();
     }
 
-    public static long getSerialversionuid() {
-        return serialVersionUID;
+    /**
+     * Конструктор для создания экземпляров в самом приложении
+     * виртуальных питомцев, например в тестах.
+     * @param id {@link #id}
+     * @param bookcaseLevel {@link #bookcaseLevel}
+     * @param bookcaseOrder {@link #bookcaseOrder}
+     * @param hiddenObjectsGameDropRate {@link hiddenObjectsGameDropRate} 
+     */
+    public Book(String id, int bookcaseLevel, int bookcaseOrder,
+            float hiddenObjectsGameDropRate) {
+        super();
+        this.id = id;
+        this.bookcaseLevel = bookcaseLevel;
+        this.bookcaseOrder = bookcaseOrder;
+        this.hiddenObjectsGameDropRate = hiddenObjectsGameDropRate;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public int getBookcaseLevel() {
@@ -74,7 +91,8 @@ public class Book implements Serializable {
     public String toString() {
         return "Book [id=" + id + ", bookcaseLevel=" + bookcaseLevel
                 + ", bookcaseOrder=" + bookcaseOrder
-                + ", hiddenObjectsGameDropRate=" + hiddenObjectsGameDropRate
+                + ", hiddenObjectsGameDropRate="
+                        + hiddenObjectsGameDropRate
                 + "]";
     }
 

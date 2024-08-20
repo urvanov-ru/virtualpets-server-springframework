@@ -30,7 +30,7 @@ public class RefrigeratorDaoImplTest extends AbstractDaoImplTest {
         Refrigerator refrigerator = refrigeratorDao.findFullById(2)
                 .orElseThrow();
         assertNotNull(refrigerator);
-        assertNotNull(refrigerator.getRefrigeratorCost());
+        assertNotNull(refrigerator.getRefrigeratorCosts());
     }
 
     @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/RefrigeratorServiceImplTest.xls")

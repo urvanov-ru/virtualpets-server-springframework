@@ -1,6 +1,5 @@
 package ru.urvanov.virtualpets.server.dao.domain;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
@@ -14,9 +13,7 @@ import jakarta.persistence.Table;
  */
 @Entity
 @Table(name="cloth")
-public class Cloth implements Serializable {
-    
-    private static final long serialVersionUID = 6431503399036752134L;
+public class Cloth {
 
     /**
      * Первичный ключ. Новые записи в справочник одежды добавляются только
@@ -36,6 +33,31 @@ public class Cloth implements Serializable {
     
     private float hiddenObjectsGameDropRate;
     
+    /**
+     * Конструктор по умолчанию требуется JPA для создания объекта.
+     */
+    public Cloth() {
+        super();
+    }
+    
+    /**
+     * Конструктор для создания экземпляров в самом приложении
+     * виртуальных питомцев, например в тестах.
+     * @param id {@link #id}
+     * @param clothType {@link #clothType}
+     * @param wardrobeOrder {@link #wardrobeOrer}
+     * @param hiddenObjectsGameDropRate {@link
+     * #hiddenObjectsGameDropRate}
+     */
+    public Cloth(String id, ClothType clothType, int wardrobeOrder,
+            float hiddenObjectsGameDropRate) {
+        super();
+        this.id = id;
+        this.clothType = clothType;
+        this.wardrobeOrder = wardrobeOrder;
+        this.hiddenObjectsGameDropRate = hiddenObjectsGameDropRate;
+    }
+
     public String getId() {
         return id;
     }

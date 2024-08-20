@@ -41,7 +41,7 @@ public class RefrigeratorDaoImpl implements RefrigeratorDao {
         CriteriaQuery<Refrigerator> criteriaQuery = criteriaBuilder
                 .createQuery(Refrigerator.class);
         Root<Refrigerator> root = criteriaQuery.from(Refrigerator.class);
-        root.fetch(Refrigerator_.refrigeratorCost);
+        root.fetch(Refrigerator_.refrigeratorCosts);
         Predicate predicate = criteriaBuilder.equal(
                 root.get(Refrigerator_.id),
                 id);
@@ -62,7 +62,7 @@ public class RefrigeratorDaoImpl implements RefrigeratorDao {
         CriteriaQuery<Refrigerator> criteriaQuery = criteriaBuilder
                 .createQuery(Refrigerator.class);
         Root<Refrigerator> root = criteriaQuery.from(Refrigerator.class);
-        root.fetch(Refrigerator_.refrigeratorCost, JoinType.LEFT);
+        root.fetch(Refrigerator_.refrigeratorCosts, JoinType.LEFT);
         TypedQuery<Refrigerator> query = em.createQuery(criteriaQuery);
         return query.getResultList();
     }

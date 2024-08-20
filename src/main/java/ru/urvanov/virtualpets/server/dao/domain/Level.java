@@ -30,12 +30,38 @@ public class Level implements Serializable {
      */
     private int experience;
 
+    /**
+     * Конструктор по умолчанию требуется JPA для создания объекта.
+     */
+    public Level() {
+        
+    }
+    
+    /**
+     * Конструктор для создания экземпляров в самом приложении
+     * виртуальных питомцев, например в тестах.
+     * @param id {@link #id Первичный ключ}
+     * @param experience {@link #experience}.
+     */
+    public Level(int id, int experience) {
+        this.id = id;
+        this.experience = experience;
+    }
+    
     public int getId() {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getExperience() {
         return experience;
+    }
+
+    public void setExperience(int experience) {
+        this.experience = experience;
     }
 
     @Override

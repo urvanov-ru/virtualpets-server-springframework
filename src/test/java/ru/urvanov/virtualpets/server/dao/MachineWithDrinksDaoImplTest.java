@@ -1,8 +1,6 @@
 package ru.urvanov.virtualpets.server.dao;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Optional;
@@ -10,8 +8,6 @@ import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import jakarta.persistence.NoResultException;
-import ru.urvanov.virtualpets.server.dao.MachineWithDrinksDao;
 import ru.urvanov.virtualpets.server.dao.domain.MachineWithDrinks;
 import ru.urvanov.virtualpets.server.test.annotation.DataSets;
 
@@ -34,7 +30,7 @@ public class MachineWithDrinksDaoImplTest extends AbstractDaoImplTest {
         MachineWithDrinks drink = machineWithDrinksDao.findFullById(1)
                 .orElseThrow();
         assertNotNull(drink);
-        assertNotNull(drink.getMachineWithDrinksCost());
+        assertNotNull(drink.getMachineWithDrinksCosts());
     }
 
     @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/BookcaseServiceImplTest.xls")

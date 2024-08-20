@@ -13,3 +13,4 @@ dependency-reduced-pom.xml
 /.factoryPath
 /bin
 ./virtualpets_server_springframework*.log
+/test-output/

@@ -1,6 +1,5 @@
 package ru.urvanov.virtualpets.server.dao.domain;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -46,9 +45,7 @@ import jakarta.persistence.Table;
         resultSetMapping = "Drink.defaultMapping"
         
         )
-public class Drink implements Serializable {
-
-    private static final long serialVersionUID = -5407671889327194327L;
+public class Drink {
 
     /**
      * Первичный ключ. Новые записи в справочник напитков добавляются
@@ -65,6 +62,33 @@ public class Drink implements Serializable {
     private int machineWithDrinksOrder;
     
     private float hiddenObjectsGameDropRate;
+
+    /**
+     * Конструктор по умолчанию требуется JPA для создания объекта.
+     */
+    public Drink() {
+        super();
+    }
+
+    /**
+     * Конструктор для создания экземпляров в самом приложении
+     * виртуальных питомцев, например в тестах.
+     * @param id {@link #id Первичный ключ}
+     * @param machineWithDrinksLevel {@link #machineWithDrinksLevel}
+     * @param machineWithDrinksOrder {@link #machineWithDrinksOrder}
+     * @param hiddenObjectsGameDropRate {@link
+     * #hiddenObjectsGameDropRate}
+     */
+    public Drink(DrinkId id, int machineWithDrinksLevel,
+            int machineWithDrinksOrder,
+            float hiddenObjectsGameDropRate) {
+        super();
+        this.id = id;
+        this.machineWithDrinksLevel = machineWithDrinksLevel;
+        this.machineWithDrinksOrder = machineWithDrinksOrder;
+        this.hiddenObjectsGameDropRate = hiddenObjectsGameDropRate;
+    }
+
 
     public DrinkId getId() {
         return id;

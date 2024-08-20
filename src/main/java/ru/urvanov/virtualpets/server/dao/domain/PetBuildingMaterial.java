@@ -1,6 +1,5 @@
 package ru.urvanov.virtualpets.server.dao.domain;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
@@ -18,9 +17,7 @@ import jakarta.persistence.Version;
  */
 @Entity
 @Table (name = "pet_building_material")
-public class PetBuildingMaterial implements Serializable {
-
-    private static final long serialVersionUID = 2864536542057382514L;
+public class PetBuildingMaterial {
 
     /**
      * Первичный ключ. Генерируемый.

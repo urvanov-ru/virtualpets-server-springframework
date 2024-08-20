@@ -12,7 +12,6 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ru.urvanov.virtualpets.server.dao.UserDao;
 import ru.urvanov.virtualpets.server.dao.domain.User;
 import ru.urvanov.virtualpets.server.test.annotation.DataSets;
 

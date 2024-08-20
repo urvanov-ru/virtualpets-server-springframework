@@ -512,7 +512,7 @@ public class RoomServiceImpl implements RoomApiService {
         for (Refrigerator refrigerator : refrigerators) {
             Map<BuildingMaterialId, Integer> map = new HashMap<BuildingMaterialId, Integer>();
             for (Entry<BuildingMaterialId, RefrigeratorCost> entry : refrigerator
-                    .getRefrigeratorCost().entrySet()) {
+                    .getRefrigeratorCosts().entrySet()) {
                 map.put(entry.getKey(), entry.getValue().getCost());
             }
             refrigeratorCosts.add(map);
@@ -524,7 +524,7 @@ public class RoomServiceImpl implements RoomApiService {
         for (Bookcase bookcase : bookcases) {
             Map<BuildingMaterialId, Integer> map = new HashMap<BuildingMaterialId, Integer>();
             for (Entry<BuildingMaterialId, BookcaseCost> entry : bookcase
-                    .getBookcaseCost().entrySet()) {
+                    .getBookcaseCosts().entrySet()) {
                 map.put(entry.getKey(), entry.getValue().getCost());
             }
             bookcaseCosts.add(map);
@@ -537,7 +537,7 @@ public class RoomServiceImpl implements RoomApiService {
         for (MachineWithDrinks machineWithDrinks : machineWithDrinksList) {
             Map<BuildingMaterialId, Integer> map = new HashMap<BuildingMaterialId, Integer>();
             for (Entry<BuildingMaterialId, MachineWithDrinksCost> entry : machineWithDrinks
-                    .getMachineWithDrinksCost().entrySet()) {
+                    .getMachineWithDrinksCosts().entrySet()) {
                 map.put(entry.getKey(), entry.getValue().getCost());
             }
             drinkCosts.add(map);

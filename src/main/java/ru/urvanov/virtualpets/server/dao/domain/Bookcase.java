@@ -1,6 +1,5 @@
 package ru.urvanov.virtualpets.server.dao.domain;
 
-import java.io.Serializable;
 import java.util.Map;
 import java.util.Objects;
 
@@ -17,10 +16,8 @@ import jakarta.persistence.Table;
  * Книжный шкаф.
  */
 @Entity
-@Table(name="bookcase")
-public class Bookcase implements Serializable {
-
-    private static final long serialVersionUID = 6636132588014164542L;
+@Table(name = "bookcase")
+public class Bookcase {
 
     /**
      * Первичный ключ. Новые записи в справочнике книжных шкафов добавляются
@@ -38,7 +35,20 @@ public class Bookcase implements Serializable {
     @OneToMany(mappedBy = "bookcase", cascade = CascadeType.ALL, orphanRemoval = true)
     @MapKeyEnumerated(EnumType.STRING)
     @MapKeyColumn(name = "building_material_id")
-    private Map<BuildingMaterialId, BookcaseCost> bookcaseCost;
+    private Map<BuildingMaterialId, BookcaseCost> bookcaseCosts;
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setExperience(int experience) {
+        this.experience = experience;
+    }
+
+    public void setBookcaseCosts(
+            Map<BuildingMaterialId, BookcaseCost> bookcaseCosts) {
+        this.bookcaseCosts = bookcaseCosts;
+    }
 
     public int getId() {
         return id;
@@ -48,8 +58,8 @@ public class Bookcase implements Serializable {
         return experience;
     }
 
-    public Map<BuildingMaterialId, BookcaseCost> getBookcaseCost() {
-        return bookcaseCost;
+    public Map<BuildingMaterialId, BookcaseCost> getBookcaseCosts() {
+        return bookcaseCosts;
     }
 
     @Override
@@ -71,7 +81,7 @@ public class Bookcase implements Serializable {
 
     @Override
     public String toString() {
-        return "Bookcase [id=" + id + "]";
+        return "Bookcase [id = " + id + "]";
     }
 
 }

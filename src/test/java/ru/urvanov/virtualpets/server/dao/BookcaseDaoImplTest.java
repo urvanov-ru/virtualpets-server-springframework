@@ -30,7 +30,7 @@ public class BookcaseDaoImplTest extends AbstractDaoImplTest {
     void testFind2() {
         Bookcase bookcase = bookcaseDao.findFullById(1).orElseThrow();
         assertNotNull(bookcase);
-        assertNotNull(bookcase.getBookcaseCost());
+        assertNotNull(bookcase.getBookcaseCosts());
     }
     
     @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/BookcaseServiceImplTest.xls")

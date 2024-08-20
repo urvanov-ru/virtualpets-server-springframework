@@ -39,21 +39,62 @@ public class MachineWithDrinksCost {
      * строительства / улучшения {@link #machineWithDrinks}.
      */
     private int cost;
+    
+    /**
+     * Конструктор без параметров, необходимый JPA.
+     */
+    public MachineWithDrinksCost() {
+        super();
+    }
+    
+    /**
+     * Конструктор с параметрами для создания экземпляров приложением,
+     * например в тестах.
+     * @param id {@link #id}
+     * @param machineWithDrinks {@link #machineWithDrinks}
+     * @param buildingMaterial {@link #buildingMaterial}
+     * @param cost {@link #cost}
+     */
+    public MachineWithDrinksCost(int id,
+            MachineWithDrinks machineWithDrinks,
+            BuildingMaterial buildingMaterial, int cost) {
+        super();
+        this.id = id;
+        this.machineWithDrinks = machineWithDrinks;
+        this.buildingMaterial = buildingMaterial;
+        this.cost = cost;
+    }
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public MachineWithDrinks getMachineWithDrinks() {
         return machineWithDrinks;
     }
 
+    public void setMachineWithDrinks(MachineWithDrinks machineWithDrinks) {
+        this.machineWithDrinks = machineWithDrinks;
+    }
+
     public BuildingMaterial getBuildingMaterial() {
         return buildingMaterial;
     }
 
+    public void setBuildingMaterial(BuildingMaterial buildingMaterial) {
+        this.buildingMaterial = buildingMaterial;
+    }
+
     public int getCost() {
         return cost;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
     }
 
     @Override

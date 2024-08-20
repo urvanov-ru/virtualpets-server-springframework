@@ -37,6 +37,24 @@ public class BuildingMaterial implements Serializable {
     
     private float hiddenObjectsGameDropRate;
 
+    /**
+     * Конструктор по умолчанию, необходимый JPA
+     */
+    public BuildingMaterial() {
+        super();
+    }
+    
+    /**
+     * Конструктор, используемый приложением, например тестами.
+     * @param id {@link #id}
+     */
+    public BuildingMaterial(BuildingMaterialId id) {
+        super();
+        this.id = id;
+    }
+
+
+
     public BuildingMaterialId getId() {
         return id;
     }

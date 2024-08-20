@@ -47,7 +47,7 @@ public class MachineWithDrinksDaoImpl implements MachineWithDrinksDao {
                 = criteriaBuilder.createQuery(MachineWithDrinks.class);
         Root<MachineWithDrinks> root
                 = criteriaQuery.from(MachineWithDrinks.class);
-        root.fetch(MachineWithDrinks_.machineWithDrinksCost,
+        root.fetch(MachineWithDrinks_.machineWithDrinksCosts,
                 JoinType.LEFT);
         criteriaQuery.select(root);
         Predicate predicate = criteriaBuilder.equal(
@@ -72,7 +72,7 @@ public class MachineWithDrinksDaoImpl implements MachineWithDrinksDao {
                 = criteriaBuilder.createQuery(MachineWithDrinks.class);
         Root<MachineWithDrinks> root
                 = criteriaQuery.from(MachineWithDrinks.class);
-        root.fetch(MachineWithDrinks_.machineWithDrinksCost,
+        root.fetch(MachineWithDrinks_.machineWithDrinksCosts,
                 JoinType.LEFT);
         criteriaQuery.select(root);
         TypedQuery<MachineWithDrinks> typedQuery

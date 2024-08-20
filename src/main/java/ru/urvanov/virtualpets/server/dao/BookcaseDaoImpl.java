@@ -35,7 +35,7 @@ public class BookcaseDaoImpl implements BookcaseDao {
          CriteriaQuery<Bookcase> criteriaQuery = criteriaBuilder
                  .createQuery(Bookcase.class);
          Root<Bookcase> root = criteriaQuery.from(Bookcase.class);
-         root.fetch(Bookcase_.bookcaseCost, JoinType.LEFT);
+         root.fetch(Bookcase_.bookcaseCosts, JoinType.LEFT);
          criteriaQuery.select(root);
          Predicate predicate = criteriaBuilder.equal(
                  root.get(Bookcase_.id), id);
@@ -59,7 +59,7 @@ public class BookcaseDaoImpl implements BookcaseDao {
         CriteriaQuery<Bookcase> criteriaQuery = criteriaBuilder
                 .createQuery(Bookcase.class);
         Root<Bookcase> root = criteriaQuery.from(Bookcase.class);
-        root.fetch(Bookcase_.bookcaseCost, JoinType.LEFT);
+        root.fetch(Bookcase_.bookcaseCosts, JoinType.LEFT);
         criteriaQuery.select(root);
         TypedQuery<Bookcase> typedQuery = em.createQuery(
                 criteriaQuery);

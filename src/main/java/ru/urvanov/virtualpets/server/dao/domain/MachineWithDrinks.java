@@ -1,6 +1,5 @@
 package ru.urvanov.virtualpets.server.dao.domain;
 
-import java.io.Serializable;
 import java.util.Map;
 import java.util.Objects;
 
@@ -18,9 +17,7 @@ import jakarta.persistence.Table;
  */
 @Entity
 @Table(name="machine_with_drinks")
-public class MachineWithDrinks implements Serializable {
-
-    private static final long serialVersionUID = -2181386187900603405L;
+public class MachineWithDrinks {
 
     /**
      * Перввичный ключ. Новые записи в справочник машин с напитками
@@ -42,18 +39,34 @@ public class MachineWithDrinks implements Serializable {
             cascade = CascadeType.ALL, orphanRemoval = true)
     @MapKeyEnumerated(EnumType.STRING)
     @MapKeyColumn(name = "building_material_id")
-    private Map<BuildingMaterialId, MachineWithDrinksCost> machineWithDrinksCost;
+    private Map<BuildingMaterialId, MachineWithDrinksCost>
+            machineWithDrinksCosts;
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getExperience() {
         return experience;
     }
 
-    public Map<BuildingMaterialId, MachineWithDrinksCost> getMachineWithDrinksCost() {
-        return machineWithDrinksCost;
+    public void setExperience(int experience) {
+        this.experience = experience;
+    }
+
+    public Map<BuildingMaterialId, MachineWithDrinksCost>
+            getMachineWithDrinksCosts() {
+        return machineWithDrinksCosts;
+    }
+
+    public void setMachineWithDrinksCosts(
+            Map<BuildingMaterialId, MachineWithDrinksCost>
+                    machineWithDrinksCosts) {
+        this.machineWithDrinksCosts = machineWithDrinksCosts;
     }
 
     @Override
@@ -76,7 +89,7 @@ public class MachineWithDrinks implements Serializable {
     @Override
     public String toString() {
         return "MachineWithDrinks [id=" + id + ", machineWithDrinksCost="
-                + machineWithDrinksCost + "]";
+                + machineWithDrinksCosts + "]";
     }
 
     

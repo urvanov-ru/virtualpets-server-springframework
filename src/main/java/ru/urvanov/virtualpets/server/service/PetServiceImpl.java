@@ -4,6 +4,7 @@ import java.time.Clock;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -98,18 +99,19 @@ public class PetServiceImpl implements PetService, PetApiService {
     @Override
     public void addExperience(Pet pet, Integer exp) {
         int nextExperience = pet.getExperience() + exp;
-        Level nextLevel = levelDao.findById(pet.getLevel().getId() + 1)
-                .orElseThrow();
-        if (nextLevel == null) {
-            Level lastLevel = levelDao.findById(pet.getLevel().getId())
-                    .orElseThrow();
-            pet.setExperience(Math.min(nextExperience, lastLevel.getExperience()));
-        } else {
+        Optional<Level> nextLevelOpt = levelDao.findById(
+                pet.getLevel().getId() + 1);
+        nextLevelOpt.ifPresentOrElse((nextLevel) -> {
             pet.setExperience(nextExperience);
             if (nextExperience >= nextLevel.getExperience()) {
                 pet.setLevel(nextLevel);
             }
-        }
+        }, () -> {
+            Level lastLevel = levelDao.findById(pet.getLevel().getId())
+                    .orElseThrow();
+            pet.setExperience(Math.min(nextExperience,
+                    lastLevel.getExperience()));
+        });
     }
     
     @Override
@@ -117,18 +119,21 @@ public class PetServiceImpl implements PetService, PetApiService {
         petDao.updatePetsTask();
     }
     
-    @Override
-    public void substractPetResources(Pet fullPet, Refrigerator refrigerator) throws NotEnoughPetResourcesException {
-        Map<BuildingMaterialId, PetBuildingMaterial> petBuildingMaterials = fullPet.getBuildingMaterials();
-        Map<BuildingMaterialId, RefrigeratorCost> resourceCosts =  refrigerator.getRefrigeratorCost();
-        for (Entry<BuildingMaterialId, RefrigeratorCost> entry : resourceCosts.entrySet()) {
-            BuildingMaterialId buildingMaterialType = entry.getKey();
-            RefrigeratorCost resourceCost = entry.getValue();
-            PetBuildingMaterial petBuildingMaterial = petBuildingMaterials.get(buildingMaterialType);
+    private void substractPetResources(
+            Map<BuildingMaterialId, PetBuildingMaterial> petBuildingMaterials,
+            Map<BuildingMaterialId, Integer> costs)
+                    throws NotEnoughPetResourcesException {
+        for (Entry<BuildingMaterialId, Integer> entry : costs.entrySet()) {
+            BuildingMaterialId buildingMaterialId = entry.getKey();
+            int resourceCost = entry.getValue();
+            PetBuildingMaterial petBuildingMaterial
+                    = petBuildingMaterials.get(buildingMaterialId);
             if (petBuildingMaterial == null) {
                 throw new NotEnoughPetResourcesException();
             } else {
-                int newCount = petBuildingMaterial.getBuildingMaterialCount() - resourceCost.getCost();
+                int currentResourceCount = petBuildingMaterial
+                        .getBuildingMaterialCount();
+                int newCount = currentResourceCount - resourceCost;
                 if (newCount < 0) {
                     throw new NotEnoughPetResourcesException();
                 }
@@ -138,43 +143,58 @@ public class PetServiceImpl implements PetService, PetApiService {
     }
     
     @Override
-    public void substractPetResources(Pet fullPet, Bookcase bookcase) throws NotEnoughPetResourcesException {
-        Map<BuildingMaterialId, PetBuildingMaterial> petBuildingMaterials = fullPet.getBuildingMaterials();
-        Map<BuildingMaterialId, BookcaseCost> resourceCosts =  bookcase.getBookcaseCost();
-        for (Entry<BuildingMaterialId, BookcaseCost> entry : resourceCosts.entrySet()) {
-            BuildingMaterialId buildingMaterialType = entry.getKey();
-            BookcaseCost resourceCost = entry.getValue();
-            PetBuildingMaterial petBuildingMaterial = petBuildingMaterials.get(buildingMaterialType);
-            if (petBuildingMaterial == null) {
-                throw new NotEnoughPetResourcesException();
-            } else {
-                int newCount = petBuildingMaterial.getBuildingMaterialCount() - resourceCost.getCost();
-                if (newCount < 0) {
-                    throw new NotEnoughPetResourcesException();
-                }
-                petBuildingMaterial.setBuildingMaterialCount(newCount);
-            }
-        }
+    public void substractPetResources(Pet pet, Refrigerator refrigerator)
+            throws NotEnoughPetResourcesException {
+        Map<BuildingMaterialId, PetBuildingMaterial> petBuildingMaterials
+                = pet.getBuildingMaterials();
+        Map<BuildingMaterialId, RefrigeratorCost> refrigeratorCosts
+                = refrigerator.getRefrigeratorCosts();
+        Map<BuildingMaterialId, Integer> resourceCosts
+                = refrigeratorCosts.entrySet().stream().collect(
+                () -> new HashMap<BuildingMaterialId, Integer>(),
+                (map, entry) -> {
+                    map.put(entry.getKey(), entry.getValue().getCost());
+                }, (map1, map2) -> {
+                    map1.putAll(map2);
+                });
+        substractPetResources(petBuildingMaterials, resourceCosts);
     }
     
     @Override
-    public void substractPetResources(Pet fullPet, MachineWithDrinks drink) throws NotEnoughPetResourcesException {
-        Map<BuildingMaterialId, PetBuildingMaterial> petBuildingMaterials = fullPet.getBuildingMaterials();
-        Map<BuildingMaterialId, MachineWithDrinksCost> resourceCosts =  drink.getMachineWithDrinksCost();
-        for (Entry<BuildingMaterialId, MachineWithDrinksCost> entry : resourceCosts.entrySet()) {
-            BuildingMaterialId buildingMaterialType = entry.getKey();
-            MachineWithDrinksCost resourceCost = entry.getValue();
-            PetBuildingMaterial petBuildingMaterial = petBuildingMaterials.get(buildingMaterialType);
-            if (petBuildingMaterial == null) {
-                throw new NotEnoughPetResourcesException();
-            } else {
-                int newCount = petBuildingMaterial.getBuildingMaterialCount() - resourceCost.getCost();
-                if (newCount < 0) {
-                    throw new NotEnoughPetResourcesException();
-                }
-                petBuildingMaterial.setBuildingMaterialCount(newCount);
-            }
-        }
+    public void substractPetResources(Pet pet, Bookcase bookcase)
+            throws NotEnoughPetResourcesException {
+        Map<BuildingMaterialId, PetBuildingMaterial> petBuildingMaterials
+                = pet.getBuildingMaterials();
+        Map<BuildingMaterialId, BookcaseCost> refrigeratorCosts
+                = bookcase.getBookcaseCosts();
+        Map<BuildingMaterialId, Integer> resourceCosts
+                = refrigeratorCosts.entrySet().stream().collect(
+        () -> new HashMap<BuildingMaterialId, Integer>(),
+                (map, entry) -> {
+                    map.put(entry.getKey(), entry.getValue().getCost());
+                }, (map1, map2) -> {
+                    map1.putAll(map2);
+                });
+        substractPetResources(petBuildingMaterials, resourceCosts);
+    }
+    
+    @Override
+    public void substractPetResources(Pet pet,
+            MachineWithDrinks machineWithDrinks)
+                throws NotEnoughPetResourcesException {
+        Map<BuildingMaterialId, PetBuildingMaterial> petBuildingMaterials
+                = pet.getBuildingMaterials();
+        Map<BuildingMaterialId, MachineWithDrinksCost> machineWithDrinksCosts
+                = machineWithDrinks.getMachineWithDrinksCosts();
+        Map<BuildingMaterialId, Integer> resourceCosts
+                = machineWithDrinksCosts.entrySet().stream().collect(
+        () -> new HashMap<BuildingMaterialId, Integer>(),
+                (map, entry) -> {
+                    map.put(entry.getKey(), entry.getValue().getCost());
+                }, (map1, map2) -> {
+                    map1.putAll(map2);
+                });
+        substractPetResources(petBuildingMaterials, resourceCosts);
     }
 
     @Override
@@ -183,9 +203,9 @@ public class PetServiceImpl implements PetService, PetApiService {
     }
 
     @Override
-    public List<AchievementId> calculateAchievements(Pet fullPet) {
+    public List<AchievementId> calculateAchievements(Pet pet) {
         List<AchievementId> result = new ArrayList<AchievementId>();
-        Map<AchievementId, PetAchievement> map = fullPet.getAchievements();
+        Map<AchievementId, PetAchievement> map = pet.getAchievements();
         for (PetAchievement pa : map.values()) {
             if (!pa.getWasShown()) {
                 pa.setWasShown(true);

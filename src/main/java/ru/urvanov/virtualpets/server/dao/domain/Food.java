@@ -34,6 +34,31 @@ public class Food implements Serializable {
     private int refrigeratorOrder;
     
     private float hiddenObjectsGameDropRate;
+    
+    /**
+     * Конструктор по умолчанию требуется JPA для создания объекта.
+     */
+    public Food() {
+        super();
+    }
+
+    /**
+     * Конструктор для создания экземпляров в самом приложении
+     * виртуальных питомцев, например в тестах.
+     * @param id {@link #id}
+     * @param refrigeratorLevel {@link #refrigeratorLevel}
+     * @param refrigeratorOrder {@link #refrigeratorOrder}
+     * @param hiddenObjectsGameDropRate {@link
+     * #hiddenObjectsGameDropRate}
+     */
+    public Food(FoodId id, int refrigeratorLevel, int refrigeratorOrder,
+            float hiddenObjectsGameDropRate) {
+        super();
+        this.id = id;
+        this.refrigeratorLevel = refrigeratorLevel;
+        this.refrigeratorOrder = refrigeratorOrder;
+        this.hiddenObjectsGameDropRate = hiddenObjectsGameDropRate;
+    }
 
     public FoodId getId() {
         return id;
