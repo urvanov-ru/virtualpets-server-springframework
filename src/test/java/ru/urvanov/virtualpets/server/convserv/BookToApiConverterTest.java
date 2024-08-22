@@ -8,7 +8,7 @@ import ru.urvanov.virtualpets.server.dao.domain.Book;
 
 
 /**
- * Тесты для {@link PetToApiConverter}.
+ * Тесты для {@link BookToApiConverter}.
  */
 class BookToApiConverterTest {
 
