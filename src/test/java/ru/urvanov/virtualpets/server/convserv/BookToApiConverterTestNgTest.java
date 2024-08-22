@@ -10,7 +10,7 @@ import ru.urvanov.virtualpets.server.dao.domain.Book;
 /**
  * Тесты для {@link BookToApiConverter}.
  */
-class BookToApiConverterTest {
+class BookToApiConverterTestNgTest {
 
     private static final float HIDDEN_OBJECTS_GAME_DROP_RATE = 0;
     private static final int BOOKCASE_ORDER = 0;
