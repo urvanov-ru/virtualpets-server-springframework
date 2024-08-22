@@ -19,11 +19,12 @@ public class FoodToApiConverter implements Converter<PetFood,
      */
     @Override
     public Food convert(PetFood source) {
-        return new ru.urvanov.virtualpets.server.controller.api.domain.Food(
-                source.getFood().getId(),
-                source.getFood().getRefrigeratorLevel(),
-                source.getFood().getRefrigeratorOrder(),
-                source.getFoodCount());
+        return new ru.urvanov.virtualpets.server.controller.api.domain
+                .Food(
+                        source.getFood().getId(),
+                        source.getFood().getRefrigeratorLevel(),
+                        source.getFood().getRefrigeratorOrder(),
+                        source.getFoodCount());
     }
 
 

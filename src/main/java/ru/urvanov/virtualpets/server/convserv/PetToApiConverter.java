@@ -18,7 +18,9 @@ public class PetToApiConverter implements Converter<Pet, PetInfo> {
      */
     @Override
     public PetInfo convert(Pet source) {
-        return new PetInfo(source.getId(), source.getName(),
+        return new PetInfo(
+                source.getId(),
+                source.getName(),
                 source.getPetType());
     }
 

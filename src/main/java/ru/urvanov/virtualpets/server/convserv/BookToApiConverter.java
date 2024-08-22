@@ -17,11 +17,14 @@ public class BookToApiConverter implements Converter<Book,
      * ru.urvanov.virtualpets.server.controller.api.domain.Book} API
      */
     @Override
-    public ru.urvanov.virtualpets.server.controller.api.domain.Book convert(
-            Book source) {
-        return new ru.urvanov.virtualpets.server.controller.api.domain.Book(
-                source.getId(), source.getBookcaseLevel(),
-                source.getBookcaseOrder());
+    public ru.urvanov.virtualpets.server.controller.api.domain.Book
+            convert(
+                    Book source) {
+        return new ru.urvanov.virtualpets.server.controller.api.domain
+                .Book(
+                        source.getId(),
+                        source.getBookcaseLevel(),
+                        source.getBookcaseOrder());
     }
 
 }

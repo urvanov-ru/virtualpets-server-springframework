@@ -17,12 +17,14 @@ public class ClothToApiConverter implements Converter<Cloth,
      * ru.urvanov.virtualpets.server.controller.api.domain.Cloth} API
      */
     @Override
-    public ru.urvanov.virtualpets.server.controller.api.domain.Cloth convert(
-            Cloth source) {
-        return new ru.urvanov.virtualpets.server.controller.api.domain.Cloth(
-                source.getId(),
-                source.getClothType(),
-                source.getWardrobeOrder());
+    public ru.urvanov.virtualpets.server.controller.api.domain.Cloth
+            convert(
+                    Cloth source) {
+        return new ru.urvanov.virtualpets.server.controller.api.domain
+                .Cloth(
+                        source.getId(),
+                        source.getClothType(),
+                        source.getWardrobeOrder());
     }
 
 }
