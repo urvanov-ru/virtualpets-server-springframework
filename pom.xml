@@ -16,6 +16,7 @@
         <hibernate.version>6.5.2.Final</hibernate.version>
         <hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
         <mockito.version>5.12.0</mockito.version>
+        <junit.version>5.11.0</junit.version>
     </properties>
     <dependencies>
         <!-- Spring -->
@@ -103,6 +104,7 @@
        <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -300,15 +302,5 @@
         
         
     </build>
-    <dependencyManagement>
-        <dependencies>
-                <dependency>
-                    <groupId>org.junit</groupId>
-                    <artifactId>junit-bom</artifactId>
-                    <version>5.11.0</version>
-                    <type>pom</type>
-                    <scope>import</scope>
-                </dependency>
-            </dependencies>
-    </dependencyManagement>
+
 </project>
