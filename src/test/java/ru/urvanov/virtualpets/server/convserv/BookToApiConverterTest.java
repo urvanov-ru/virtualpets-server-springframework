@@ -20,17 +20,21 @@ class BookToApiConverterTest {
     @Test
     void convert() {
         BookToApiConverter converter = new BookToApiConverter();
+        
         Book source = new Book(
                 BOOK_ID,
                 BOOKCASE_LEVEL,
                 BOOKCASE_ORDER,
                 HIDDEN_OBJECTS_GAME_DROP_RATE);
+        
         var expected = new ru.urvanov.virtualpets.server.controller.api
                 .domain.Book(
                         BOOK_ID,
                         BOOKCASE_LEVEL,
                         BOOKCASE_ORDER);
+        
         var actual = converter.convert(source);
+        
         assertEquals(expected,  actual);
     }
 
