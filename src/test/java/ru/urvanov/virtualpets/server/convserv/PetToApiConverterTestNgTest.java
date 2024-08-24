@@ -36,7 +36,7 @@ class PetToApiConverterTestNgTest {
     }
     
     /**
-     * Простейший пример параметризованного теста JUnit.
+     * Простейший пример параметризованного теста TestNg.
      * @param petId Первичный ключ питомца.
      * @param petName Имя питомца.
      * @param petType Тип питомца.
