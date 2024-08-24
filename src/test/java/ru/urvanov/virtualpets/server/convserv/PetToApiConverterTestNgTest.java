@@ -15,7 +15,6 @@ import ru.urvanov.virtualpets.server.dao.domain.PetType;
  */
 class PetToApiConverterTestNgTest {
 
-
     private static final Integer PET1_ID = 1;
     private static final String PET1_NAME = "Vasya";
     private static final PetType PET1_TYPE = PetType.CAT;
@@ -33,7 +32,6 @@ class PetToApiConverterTestNgTest {
     }
     
     @Test(dataProvider = "convertDataProvider")
-    
     void convert(Integer petId, String petName, PetType petType) {
         PetToApiConverter converter = new PetToApiConverter();
         

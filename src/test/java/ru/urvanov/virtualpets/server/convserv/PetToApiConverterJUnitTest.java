@@ -19,7 +19,6 @@ import ru.urvanov.virtualpets.server.dao.domain.PetType;
  */
 class PetToApiConverterJUnitTest {
 
-
     private static final Integer PET1_ID = 1;
     private static final String PET1_NAME = "Vasya";
     private static final PetType PET1_TYPE = PetType.CAT;
