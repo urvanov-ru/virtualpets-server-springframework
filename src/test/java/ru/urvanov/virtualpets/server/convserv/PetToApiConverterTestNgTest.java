@@ -23,6 +23,10 @@ class PetToApiConverterTestNgTest {
     private static final String PET2_NAME = "Котик";
     private static final PetType PET2_TYPE = PetType.CAT;
 
+    /**
+     * Подготовка данных параметризованного теста.
+     * @return Параметры теста.
+     */
     @DataProvider
     static Object[][] convertDataProvider() {
         return new Object[][] {
@@ -31,22 +35,33 @@ class PetToApiConverterTestNgTest {
         };
     }
     
+    /**
+     * Простейший пример параметризованного теста JUnit.
+     * @param petId Первичный ключ питомца.
+     * @param petName Имя питомца.
+     * @param petType Тип питомца.
+     */
     @Test(dataProvider = "convertDataProvider")
     void convert(Integer petId, String petName, PetType petType) {
+        // Экземпляр тестируемого класса
         PetToApiConverter converter = new PetToApiConverter();
         
+        // Подготовка исходных данных
         Pet source = new Pet();
         source.setId(petId);
         source.setName(petName);
         source.setPetType(petType);
         
+        // Подготовка ожидаемого результата
         var expected = new PetInfo(
                         petId,
                         petName,
                         petType);
         
+        // Вызов метода
         var actual = converter.convert(source);
         
+        // Проверка результата
         assertEquals(expected,  actual);
     }
 

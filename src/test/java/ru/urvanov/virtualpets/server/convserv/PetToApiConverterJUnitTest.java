@@ -27,29 +27,44 @@ class PetToApiConverterJUnitTest {
     private static final String PET2_NAME = "Котик";
     private static final PetType PET2_TYPE = PetType.CAT;
 
+    /**
+     * Подготовка данных параметризованного теста.
+     * @return Параметры теста.
+     */
     static Stream<Arguments> convertMethodSource() {
         return Stream.of(
                 arguments(PET1_ID, PET1_NAME, PET1_TYPE),
                 arguments(PET2_ID, PET2_NAME, PET2_TYPE));
     }
     
+    /**
+     * Простейший пример параметризованного теста JUnit.
+     * @param petId Первичный ключ питомца.
+     * @param petName Имя питомца.
+     * @param petType Тип питомца.
+     */
     @ParameterizedTest
     @MethodSource("convertMethodSource")
     void convert(Integer petId, String petName, PetType petType) {
+        // Экземпляр тестируемого класса
         PetToApiConverter converter = new PetToApiConverter();
         
+        // Подготовка исходных данных
         Pet source = new Pet();
         source.setId(petId);
         source.setName(petName);
         source.setPetType(petType);
         
+        // Подготовка ожидаемого результата
         var expected = new PetInfo(
                         petId,
                         petName,
                         petType);
         
+        // Вызов метода
         var actual = converter.convert(source);
         
+        // Проверка результата
         assertEquals(expected,  actual);
     }
 
