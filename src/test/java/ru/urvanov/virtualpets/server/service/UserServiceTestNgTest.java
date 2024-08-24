@@ -2,7 +2,6 @@ package ru.urvanov.virtualpets.server.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.CALLS_REAL_METHODS;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;

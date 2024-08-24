@@ -64,7 +64,7 @@ import ru.urvanov.virtualpets.server.service.exception.NotEnoughPetResourcesExce
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
 @ExtendWith(MockitoExtension.class)
-public class PetServiceImplJUnitTest {
+class PetServiceImplJUnitTest {
 
     private static final Logger logger = LoggerFactory.getLogger(PetServiceImplJUnitTest.class);
 
