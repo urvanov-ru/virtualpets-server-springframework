@@ -58,7 +58,7 @@ class PetToApiConverterTestNgTest {
                         petName,
                         petType);
         
-        // Вызов метода
+        // Вызов тестируемого метода
         var actual = converter.convert(source);
         
         // Проверка результата
