@@ -199,7 +199,8 @@ class PetServiceImplJUnitTest {
         pet.setLevel(level1);
         
         // Настройка mock-объектов
-        when(levelDao.findById(LEVEL2_ID)).thenReturn(Optional.of(level2));
+        when(levelDao.findById(LEVEL2_ID))
+                .thenReturn(Optional.of(level2));
         
         // Вызов тестируемого метода
         service.addExperience(pet, 1);
@@ -222,8 +223,10 @@ class PetServiceImplJUnitTest {
         pet.setLevel(level2);
         
         // Настройка mock-объектов
-        when(levelDao.findById(LEVEL2_ID)).thenReturn(Optional.of(level2));
-        when(levelDao.findById(LEVEL2_ID + 1)).thenReturn(Optional.empty());
+        when(levelDao.findById(LEVEL2_ID))
+                .thenReturn(Optional.of(level2));
+        when(levelDao.findById(LEVEL2_ID + 1))
+                .thenReturn(Optional.empty());
         
         // Вызов тестируемого метода
         service.addExperience(pet, 1);
