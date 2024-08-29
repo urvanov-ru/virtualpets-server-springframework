@@ -96,6 +96,12 @@ public class PetServiceImpl implements PetService, PetApiService {
     @Autowired
     private ConversionService conversionService;
     
+    /**
+     * Добавление опыта питомцу. Обрабатывает переход питомца на 
+     * следующий уровень при достижении необходимого порога опыта.
+     * @param pet Питомец.
+     * @param exp Добавляемый опыт.
+     */
     @Override
     public void addExperience(Pet pet, Integer exp) {
         int nextExperience = pet.getExperience() + exp;
