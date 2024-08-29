@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.time.Clock;
@@ -234,6 +235,15 @@ class PetServiceImplJUnitTest {
         // Проверка результата
         assertEquals(10, pet.getExperience());
         assertEquals(level2, pet.getLevel());
+    }
+    
+    @Test
+    void updatePetTask() {
+        // Вызов тестируемого метода
+        service.updatePetsTask();
+        
+        // Проверка, что метод слоя DAO действительно вызывался.
+        verify(petDao).updatePetsTask();
     }
     
     @Test
