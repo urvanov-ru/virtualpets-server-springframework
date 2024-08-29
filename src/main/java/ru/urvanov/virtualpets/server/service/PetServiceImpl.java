@@ -203,6 +203,12 @@ public class PetServiceImpl implements PetService, PetApiService {
         substractPetResources(petBuildingMaterials, resourceCosts);
     }
 
+    /**
+     * Возвращает количество новых, ещё непрочитанных записей
+     * в дневнике питомца.
+     * @param petId Первичный ключ питомца.
+     * @return Количество новых записей.
+     */
     @Override
     public Long getPetNewJournalEntriesCount(Integer petId) {
         return petDao.getPetNewJournalEntriesCount(petId);
