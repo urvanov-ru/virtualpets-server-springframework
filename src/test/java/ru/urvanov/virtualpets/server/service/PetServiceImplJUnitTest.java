@@ -63,6 +63,9 @@ import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.NotEnoughPetResourcesException;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
 
+/**
+ * Тесты для {@link PetServiceImpl}.
+ */
 @ExtendWith(MockitoExtension.class)
 class PetServiceImplJUnitTest {
 
@@ -161,38 +164,60 @@ class PetServiceImplJUnitTest {
     
     @Test
     void testAddExperience_ok() {
+        // Подготовка тестовых данных
         Pet pet = new Pet();
         pet.setExperience(0);
         Level level1 = new Level(LEVEL1_ID, LEVEL1_EXPERIENCE);
         Level level2 = new Level(LEVEL2_ID, LEVEL2_EXPERIENCE);
         pet.setLevel(level1);
-        when(levelDao.findById(LEVEL2_ID)).thenReturn(Optional.of(level2));
+        
+        // Настройка mock-объектов
+        when(levelDao.findById(LEVEL2_ID))
+                .thenReturn(Optional.of(level2));
+        
+        // Вызов тестируемого метода
         service.addExperience(pet, 1);
+        
+        // Проверка результата
         assertEquals(1, pet.getExperience());
     }
     
     @Test
     void testAddExperience_levelUp() {
+        // Подготовка тестовых данных
         Pet pet = new Pet();
         pet.setExperience(9);
         Level level1 = new Level(LEVEL1_ID, LEVEL1_EXPERIENCE);
         Level level2 = new Level(LEVEL2_ID, LEVEL2_EXPERIENCE);
         pet.setLevel(level1);
+        
+        // Настройка mock-объектов
         when(levelDao.findById(LEVEL2_ID)).thenReturn(Optional.of(level2));
+        
+        // Вызов тестируемого метода
         service.addExperience(pet, 1);
+        
+        // Проверка результата
         assertEquals(10, pet.getExperience());
         assertEquals(level2, pet.getLevel());
     }
     
     @Test
     void testAddExperience_lastLevel() {
+        // Подготовка тестовых данных
         Pet pet = new Pet();
         pet.setExperience(10);
         Level level2 = new Level(LEVEL2_ID, LEVEL2_EXPERIENCE);
         pet.setLevel(level2);
+        
+        // Настройка mock-объектов
         when(levelDao.findById(LEVEL2_ID)).thenReturn(Optional.of(level2));
         when(levelDao.findById(LEVEL2_ID + 1)).thenReturn(Optional.empty());
+        
+        // Вызов тестируемого метода
         service.addExperience(pet, 1);
+        
+        // Проверка результата
         assertEquals(10, pet.getExperience());
         assertEquals(level2, pet.getLevel());
     }
@@ -200,6 +225,7 @@ class PetServiceImplJUnitTest {
     @Test
     void substractPetResources_refrigerator_ok()
             throws NotEnoughPetResourcesException {
+        // Подготовка тестовых данных
         Pet pet = new Pet();
         Map<BuildingMaterialId, PetBuildingMaterial> petBuildingMaterials
                 = new HashMap<>();
@@ -208,7 +234,6 @@ class PetServiceImplJUnitTest {
         petBuildingMaterial.setBuildingMaterialCount(10);
         petBuildingMaterials.put(BuildingMaterialId.STONE,
                 petBuildingMaterial);
-
         Map<BuildingMaterialId, RefrigeratorCost> refrigeratorCosts
                 = new HashMap<>();
         BuildingMaterial buidingMaterialStone = new BuildingMaterial(
@@ -219,9 +244,12 @@ class PetServiceImplJUnitTest {
         refrigeratorCosts.put(BuildingMaterialId.STONE,
                 refrigeratorCost);
         refrigerator.setRefrigeratorCosts(refrigeratorCosts);
-
+        
+        
+        // Вызов тестируемого метода
         service.substractPetResources(pet, refrigerator);
 
+        // Проверка результата
         assertEquals(8,
                 pet.getBuildingMaterials().get(BuildingMaterialId.STONE)
                         .getBuildingMaterialCount());
@@ -230,6 +258,7 @@ class PetServiceImplJUnitTest {
     @Test
     void substractPetResources_refrigerator_exception()
             throws NotEnoughPetResourcesException {
+        // Подготовка тестовых данных
         Pet pet = new Pet();
         Map<BuildingMaterialId, PetBuildingMaterial> petBuildingMaterials
                 = new HashMap<>();
@@ -238,7 +267,6 @@ class PetServiceImplJUnitTest {
         petBuildingMaterial.setBuildingMaterialCount(1);
         petBuildingMaterials.put(BuildingMaterialId.STONE,
                 petBuildingMaterial);
-
         Map<BuildingMaterialId, RefrigeratorCost> refrigeratorCosts
                 = new HashMap<>();
         BuildingMaterial buidingMaterialStone = new BuildingMaterial(
@@ -250,6 +278,7 @@ class PetServiceImplJUnitTest {
                 refrigeratorCost);
         refrigerator.setRefrigeratorCosts(refrigeratorCosts);
 
+        // Вызов тестируемого метода и проверка результата
         assertThrows(NotEnoughPetResourcesException.class, () ->
                 service.substractPetResources(pet, refrigerator));
     }
@@ -257,6 +286,7 @@ class PetServiceImplJUnitTest {
     @Test
     void substractPetResources_machineWithDrinks_ok()
             throws NotEnoughPetResourcesException {
+        // Подготовка тестовых данных
         Pet pet = new Pet();
         Map<BuildingMaterialId, PetBuildingMaterial> petBuildingMaterials
                 = new HashMap<>();
@@ -265,7 +295,6 @@ class PetServiceImplJUnitTest {
         petBuildingMaterial.setBuildingMaterialCount(10);
         petBuildingMaterials.put(BuildingMaterialId.STONE,
                 petBuildingMaterial);
-
         Map<BuildingMaterialId, MachineWithDrinksCost> machineWithDrinksCosts
                 = new HashMap<>();
         BuildingMaterial buidingMaterialStone = new BuildingMaterial(
@@ -277,8 +306,10 @@ class PetServiceImplJUnitTest {
                 machineWithDrinksCost);
         machineWithDrinks.setMachineWithDrinksCosts(machineWithDrinksCosts);
 
+        // Вызов тестируемого метода
         service.substractPetResources(pet, machineWithDrinks);
 
+        // Проверка результата
         assertEquals(8,
                 pet.getBuildingMaterials().get(BuildingMaterialId.STONE)
                         .getBuildingMaterialCount());
@@ -287,6 +318,7 @@ class PetServiceImplJUnitTest {
     @Test
     void substractPetResources_Bookcase_ok()
             throws NotEnoughPetResourcesException {
+        // Подготовка тестовых данных
         Pet pet = new Pet();
         Map<BuildingMaterialId, PetBuildingMaterial> petBuildingMaterials
                 = new HashMap<>();
@@ -295,7 +327,6 @@ class PetServiceImplJUnitTest {
         petBuildingMaterial.setBuildingMaterialCount(10);
         petBuildingMaterials.put(BuildingMaterialId.STONE,
                 petBuildingMaterial);
-
         Map<BuildingMaterialId, BookcaseCost> bookcaseCosts
                 = new HashMap<>();
         BuildingMaterial buidingMaterialStone = new BuildingMaterial(
@@ -307,8 +338,10 @@ class PetServiceImplJUnitTest {
                 bookcaseCost);
         bookcase.setBookcaseCosts(bookcaseCosts);
 
+        // Вызов тестируемого метода
         service.substractPetResources(pet, bookcase);
 
+        // Проверка результата
         assertEquals(8,
                 pet.getBuildingMaterials().get(BuildingMaterialId.STONE)
                         .getBuildingMaterialCount());
@@ -316,13 +349,19 @@ class PetServiceImplJUnitTest {
     
     @Test
     void getPetJournalEntriesCount_ok() {
+        // Подготовка mock-объектов
         when(petDao.getPetNewJournalEntriesCount(eq(10))).thenReturn(2L);
+        
+        // Вызов тестируемого метода 
         Long actual = service.getPetNewJournalEntriesCount(10);
+        
+        // Проверка результата
         assertEquals(Long.valueOf(2L), actual);
     }
     
     @Test
     void calculateAchievements_ok() {
+        // Подготовка тестовых данных
         Pet pet = new Pet();
         Map<AchievementId, PetAchievement> achievements = new HashMap<>();
         PetAchievement petAchievement = new PetAchievement();
@@ -330,22 +369,33 @@ class PetServiceImplJUnitTest {
         petAchievement.setWasShown(false);
         achievements.put(AchievementId.BUILD_1, petAchievement);
         pet.setAchievements(achievements);
+        
+        // Вызов тестируемого метода
         List<AchievementId> actual = service.calculateAchievements(pet);
+        
+        // Проверка результата
         assertEquals(1, actual.size());
         assertTrue(actual.contains(AchievementId.BUILD_1));
     }
     
     @Test
     void findLastCreatedPets() {
+        // Подготовка тестовых данных
         Pet pet = new Pet();
         pet.setId(PET_ID);
         pet.setCreatedDate(PET_CREATED_DATE);
         pet.setName(PET_FULL_NAME);
         List<Pet> petList = List.of(pet);
+        
+        // Подготовка mock-объектов
         when(petDao.findLastCreatedPets(START, LIMIT))
                 .thenReturn(petList);
+        
+        // Вызов тестируемого метода
         List<LastCreatedPet> actual = service.findLastCreatedPets(
                 START, LIMIT);
+        
+        // Проверка результата
         assertFalse(actual.isEmpty());
         assertEquals(1, actual.size());
         LastCreatedPet actualPet = actual.get(0);
@@ -357,6 +407,7 @@ class PetServiceImplJUnitTest {
     
     @Test
     void getPetBooks() throws ServiceException {
+        // Подготовка тестовых данных
         Pet pet = new Pet();
         pet.setId(PET_ID);
         Set<Book> books = new HashSet<>();
@@ -369,6 +420,10 @@ class PetServiceImplJUnitTest {
                 BOOK2_HIDDEN_OBJECTS_GAME_DROP_RATE);
         books.add(book2);
         pet.setBooks(books );
+        UserPetDetails userPetDetails = new UserPetDetails(
+                USER_ID, PET_ID);
+        
+        // Настройка mock-объектов
         when(petDao.findByIdWithFullBooks(PET_ID))
                 .thenReturn(Optional.of(pet));
         ru.urvanov.virtualpets.server.controller.api.domain.Book actualBook1
@@ -387,9 +442,11 @@ class PetServiceImplJUnitTest {
         when(conversionService.convert(book2,
                 ru.urvanov.virtualpets.server.controller.api.domain.Book.class))
                         .thenReturn(actualBook2);
-        UserPetDetails userPetDetails = new UserPetDetails(
-                USER_ID, PET_ID);
+        
+        // Вызов тестируемого сервиса
         GetPetBooksResult actual = service.getPetBooks(userPetDetails);
+        
+        // Проверка результата
         assertNotNull(actual);
         assertNotNull(actual.books());
         assertEquals(books.size(), actual.books().size());

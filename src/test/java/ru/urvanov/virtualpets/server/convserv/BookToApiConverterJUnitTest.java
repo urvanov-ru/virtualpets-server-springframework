@@ -25,7 +25,7 @@ class BookToApiConverterJUnitTest {
         // Экземпляр тестируемого класса
         BookToApiConverter converter = new BookToApiConverter();
         
-        // Подготовка исходных данных
+        // Подготовка тестовых данных
         Book source = new Book(
                 BOOK_ID,
                 BOOKCASE_LEVEL,

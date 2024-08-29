@@ -46,7 +46,7 @@ class PetToApiConverterTestNgTest {
         // Экземпляр тестируемого класса
         PetToApiConverter converter = new PetToApiConverter();
         
-        // Подготовка исходных данных
+        // Подготовка тестовых данных
         Pet source = new Pet();
         source.setId(petId);
         source.setName(petName);
