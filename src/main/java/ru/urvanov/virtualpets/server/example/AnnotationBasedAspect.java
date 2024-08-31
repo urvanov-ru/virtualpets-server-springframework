@@ -68,11 +68,12 @@ public class AnnotationBasedAspect {
     }
     
     @Around("execution(* ru.urvanov.virtualpets.server.service.RoomServiceImpl.getBuildMenuCosts(..))")
-    public void aroundGetBuildMenuCostsAround(
+    public Object aroundGetBuildMenuCostsAround(
             ProceedingJoinPoint proceedingJoinPoint)
             throws Throwable {
         logger.info("around getBuildMenuCosts advice");
-        proceedingJoinPoint.proceed();
+        return proceedingJoinPoint.proceed();
+        
     }
     
 
