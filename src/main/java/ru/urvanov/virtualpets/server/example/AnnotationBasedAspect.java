@@ -73,7 +73,6 @@ public class AnnotationBasedAspect {
             throws Throwable {
         logger.info("around getBuildMenuCosts advice");
         return proceedingJoinPoint.proceed();
-        
     }
     
 
