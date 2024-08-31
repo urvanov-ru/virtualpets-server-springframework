@@ -499,7 +499,6 @@ class PetServiceImplJUnitTest {
         CreatePetArg createPetArg = new CreatePetArg(
                 PET_NAME, PetType.CAT, PET_COMMENT);
         
-        
         // Подготовка mock-объектов
         User user = new User();
         when(userDao.getReference(userPetDetails.userId()))
@@ -507,7 +506,6 @@ class PetServiceImplJUnitTest {
         Level level = new Level(1, 0);
         Optional<Level> levelOpt = Optional.of(level);
         when(levelDao.findById(eq(1))).thenReturn(levelOpt);
-        
         
         // Вызов тестируемого метода
         service.create(userPetDetails, createPetArg);
