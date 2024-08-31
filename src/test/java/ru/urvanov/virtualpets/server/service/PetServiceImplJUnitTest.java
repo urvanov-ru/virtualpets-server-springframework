@@ -476,5 +476,15 @@ class PetServiceImplJUnitTest {
         assertEquals(books.size(), actual.books().size());
         assertEquals(BOOK1_ID, actual.books().get(0).id());
     }
+    
+    /**
+     * Пример использования ArgumentCaptor
+     */
+    @Test
+    void create() {
+        // Подготовка тестовых данных
+        UserPetDetails userPetDetails = new UserPetDetails(null, null);
+        
+    }
 
 }
