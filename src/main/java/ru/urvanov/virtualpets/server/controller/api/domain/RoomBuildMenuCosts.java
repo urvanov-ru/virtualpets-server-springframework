@@ -1,13 +1,11 @@
 package ru.urvanov.virtualpets.server.controller.api.domain;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
 import ru.urvanov.virtualpets.server.dao.domain.BuildingMaterialId;
 
-public class RoomBuildMenuCosts implements Serializable {
-    private static final long serialVersionUID = -7317824338376286772L;
+public class RoomBuildMenuCosts {
     private List<Map<BuildingMaterialId, Integer>> refrigeratorCosts;
     private List<Map<BuildingMaterialId, Integer>> machineWithDrinksCosts;
     private List<Map<BuildingMaterialId, Integer>> bookcaseCosts;

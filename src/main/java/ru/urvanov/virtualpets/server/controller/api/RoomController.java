@@ -58,7 +58,7 @@ public class RoomController extends ControllerBase {
                         selectedPet.getPetId()));
     }
 
-    @PostMapping(value = "getBuildMenuCosts")
+    @GetMapping(value = "getBuildMenuCosts")
     public RoomBuildMenuCosts getBuildMenuCosts(
             @AuthenticationPrincipal UserDetailsImpl userDetailsImpl)
                     throws ServiceException {
