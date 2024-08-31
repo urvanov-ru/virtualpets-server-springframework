@@ -19,10 +19,10 @@ public interface PetApiService {
     PetListResult getUserPets(UserPetDetails userPetDetails)
             throws ServiceException;
 
-    void create(UserPetDetails userPetDetails, CreatePetArg arg)
+    void create(UserPetDetails userPetDetails, CreatePetArg createPetArg)
             throws ServiceException;
 
-    void select(UserPetDetails userPetDetails, SelectPetArg arg)
+    void select(UserPetDetails userPetDetails, SelectPetArg selectPetArg)
             throws ServiceException;
 
     void drink(UserPetDetails userPetDetails, DrinkArg arg)

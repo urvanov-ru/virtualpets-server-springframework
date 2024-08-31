@@ -386,14 +386,14 @@ public class PetServiceImpl implements PetService, PetApiService {
     @Override
     @PreAuthorize("hasRole('USER')")
     @Transactional(rollbackFor = ServiceException.class)
-    public void create(UserPetDetails userPetDetails, CreatePetArg arg)
-            throws ServiceException {
+    public void create(UserPetDetails userPetDetails,
+            CreatePetArg createPetArg) throws ServiceException {
         Pet pet = new Pet();
-        pet.setName(arg.name());
+        pet.setName(createPetArg.name());
         pet.setCreatedDate(OffsetDateTime.now(clock));
         pet.setUser(userDao.getReference(userPetDetails.userId()));
-        pet.setComment(arg.comment());
-        pet.setPetType(arg.petType());
+        pet.setComment(createPetArg.comment());
+        pet.setPetType(createPetArg.petType());
         Level level = levelDao.findById(1).orElseThrow();
         pet.setLevel(level);
         petDao.save(pet);
@@ -402,9 +402,9 @@ public class PetServiceImpl implements PetService, PetApiService {
     @Override
     @PreAuthorize("hasRole('USER')")
     @Transactional(rollbackFor = ServiceException.class)
-    public void select(UserPetDetails userPetDetails, SelectPetArg arg)
-            throws ServiceException {
-        int id = arg.petId();
+    public void select(UserPetDetails userPetDetails,
+            SelectPetArg selectPetArg) throws ServiceException {
+        int id = selectPetArg.petId();
         Pet pet = petDao.findById(id)
                 .orElseThrow(() -> new PetNotFoundException(id));
         if (!pet.getUser().getId().equals(userPetDetails.userId())) {
