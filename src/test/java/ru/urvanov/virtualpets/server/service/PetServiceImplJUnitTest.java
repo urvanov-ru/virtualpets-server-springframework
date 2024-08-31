@@ -29,6 +29,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
@@ -37,6 +38,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.ConversionService;
 
+import ru.urvanov.virtualpets.server.controller.api.domain.CreatePetArg;
 import ru.urvanov.virtualpets.server.controller.api.domain.GetPetBooksResult;
 import ru.urvanov.virtualpets.server.dao.ClothDao;
 import ru.urvanov.virtualpets.server.dao.LevelDao;
@@ -58,8 +60,10 @@ import ru.urvanov.virtualpets.server.dao.domain.MachineWithDrinksCost;
 import ru.urvanov.virtualpets.server.dao.domain.Pet;
 import ru.urvanov.virtualpets.server.dao.domain.PetAchievement;
 import ru.urvanov.virtualpets.server.dao.domain.PetBuildingMaterial;
+import ru.urvanov.virtualpets.server.dao.domain.PetType;
 import ru.urvanov.virtualpets.server.dao.domain.Refrigerator;
 import ru.urvanov.virtualpets.server.dao.domain.RefrigeratorCost;
+import ru.urvanov.virtualpets.server.dao.domain.User;
 import ru.urvanov.virtualpets.server.service.domain.UserPetDetails;
 import ru.urvanov.virtualpets.server.service.exception.NotEnoughPetResourcesException;
 import ru.urvanov.virtualpets.server.service.exception.ServiceException;
@@ -82,6 +86,12 @@ class PetServiceImplJUnitTest {
     private static final int LIMIT = 10;
 
     private static final Integer PET_ID = 1;
+    
+    private static final String PET_NAME = "Котик";
+    
+    private static final PetType PET_TYPE = PetType.CAT;
+    
+    private static final String PET_COMMENT = "Просто комментарий";
 
     private static final OffsetDateTime PET_CREATED_DATE
             = OffsetDateTime.of(
@@ -479,12 +489,39 @@ class PetServiceImplJUnitTest {
     
     /**
      * Пример использования ArgumentCaptor
+     * @throws ServiceException 
      */
     @Test
-    void create() {
+    void create() throws ServiceException {
         // Подготовка тестовых данных
-        UserPetDetails userPetDetails = new UserPetDetails(null, null);
+        UserPetDetails userPetDetails = new UserPetDetails(
+                USER_ID, PET_ID);
+        CreatePetArg createPetArg = new CreatePetArg(
+                PET_NAME, PetType.CAT, PET_COMMENT);
         
+        
+        // Подготовка mock-объектов
+        User user = new User();
+        when(userDao.getReference(userPetDetails.userId()))
+            .thenReturn(user);
+        Level level = new Level(1, 0);
+        Optional<Level> levelOpt = Optional.of(level);
+        when(levelDao.findById(eq(1))).thenReturn(levelOpt);
+        
+        
+        // Вызов тестируемого метода
+        service.create(userPetDetails, createPetArg);
+        
+        // Проверка результата
+        ArgumentCaptor<Pet> captor = ArgumentCaptor.forClass(Pet.class);
+        // Перехват значения, переданного в petDao.save
+        verify(petDao).save(captor.capture());
+        // Проверка перехваченного значения
+        Pet actual = captor.getValue();
+        assertEquals(PET_NAME, actual.getName());
+        assertEquals(PET_TYPE, actual.getPetType());
+        assertEquals(PET_COMMENT, actual.getComment());
+        assertEquals(user, actual.getUser());
     }
 
 }
