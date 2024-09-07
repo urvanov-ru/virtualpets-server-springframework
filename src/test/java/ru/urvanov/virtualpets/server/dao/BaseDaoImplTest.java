@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.dao;
 
 import org.junit.jupiter.api.Test;
@@ -21,17 +18,13 @@ import ru.urvanov.virtualpets.server.test.config.DaoTestConfig;
 import ru.urvanov.virtualpets.server.test.listener.DaoTestExecutionListener;
 
 
-/**
- * @author fedya
- *
- */
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes={DaoTestConfig.class})
 @Testcontainers
 @TestExecutionListeners(value = {DaoTestExecutionListener.class}, mergeMode = MergeMode.MERGE_WITH_DEFAULTS)
 @ActiveProfiles("test")
 @Transactional
-public class AbstractDaoImplTest {
+public class BaseDaoImplTest {
 
     @Container
     public static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:16.1");

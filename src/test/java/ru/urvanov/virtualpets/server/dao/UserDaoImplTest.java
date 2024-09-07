@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ru.urvanov.virtualpets.server.dao;
 
 
@@ -11,27 +8,23 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.jdbc.Sql;
 
 import ru.urvanov.virtualpets.server.dao.domain.User;
-import ru.urvanov.virtualpets.server.test.annotation.DataSets;
 
-/**
- * @author fedya
- * 
- */
-public class UserDaoImplTest extends AbstractDaoImplTest {
+@Sql({ "/ru/urvanov/virtualpets/server/clean.sql",
+        "UserDaoImplTest.sql" })
+public class UserDaoImplTest extends BaseDaoImplTest {
 
     @Autowired
     private UserDao userDao;
 
-    @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/UserServiceImplTest.xls")
     @Test
     public void findByName() throws Exception {
         User user = userDao.findByLogin("Clarence").orElseThrow();
         assertNotNull(user);
     }
     
-    @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/UserServiceImplTest.xls")
     @Test
     public void findLastRegisteredUsers() throws Exception {
         List<User> users = userDao.findLastRegisteredUsers(0, 999999);

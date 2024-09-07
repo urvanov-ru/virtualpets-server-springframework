@@ -8,6 +8,17 @@
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <beans profile = "test">
+        <context:property-placeholder
+            location = "classpath:application_test.properties"
+            file-encoding = "utf-8"
+            ignore-unresolvable = "true" />
+        <context:property-placeholder
+            location = "classpath:mail_test.properties"
+            file-encoding = "utf-8"
+            ignore-unresolvable = "true" />
+    </beans>
+    
     <beans profile = "development">
         <context:property-placeholder
             location = "classpath:application_dev.properties"

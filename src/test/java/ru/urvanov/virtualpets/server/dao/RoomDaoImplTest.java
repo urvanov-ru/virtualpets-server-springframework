@@ -8,12 +8,14 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.jdbc.Sql;
 
 import ru.urvanov.virtualpets.server.dao.domain.Pet;
 import ru.urvanov.virtualpets.server.dao.domain.Room;
-import ru.urvanov.virtualpets.server.test.annotation.DataSets;
 
-public class RoomDaoImplTest extends AbstractDaoImplTest {
+@Sql({ "/ru/urvanov/virtualpets/server/clean.sql",
+        "RoomDaoImplTest.sql" })
+public class RoomDaoImplTest extends BaseDaoImplTest {
     
     @Autowired
     private RoomDao roomDao;
@@ -21,7 +23,6 @@ public class RoomDaoImplTest extends AbstractDaoImplTest {
     @Autowired
     private PetDao petDao;
 
-    @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/RoomServiceImplTest.xls")
     @Test
     public void testFind1() {
         Room room = roomDao.findByPetId(1).orElseThrow();
@@ -29,14 +30,12 @@ public class RoomDaoImplTest extends AbstractDaoImplTest {
         assertNotNull(room.getPetId());
     }
     
-    @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/RoomServiceImplTest.xls")
     @Test
     public void testFind2() {
         Optional<Room> room = roomDao.findByPetId(-1);
         assertTrue(room.isEmpty());
     }
     
-    @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/RoomServiceImplTest.xls")
     @Test
     public void testSaveNew() {
         Room room = new Room();
@@ -50,7 +49,6 @@ public class RoomDaoImplTest extends AbstractDaoImplTest {
         assertNotNull(actual);
     }
     
-    @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/RoomServiceImplTest.xls")
     @Test
     public void testSaveExist() {
         Room room = roomDao.findByPetId(1).orElseThrow();

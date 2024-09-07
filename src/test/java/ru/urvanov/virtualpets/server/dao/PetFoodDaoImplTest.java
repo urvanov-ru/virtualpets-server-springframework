@@ -9,14 +9,16 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.jdbc.Sql;
 
 import ru.urvanov.virtualpets.server.dao.domain.Food;
 import ru.urvanov.virtualpets.server.dao.domain.FoodId;
 import ru.urvanov.virtualpets.server.dao.domain.Pet;
 import ru.urvanov.virtualpets.server.dao.domain.PetFood;
-import ru.urvanov.virtualpets.server.test.annotation.DataSets;
 
-public class PetFoodDaoImplTest extends AbstractDaoImplTest {
+@Sql({ "/ru/urvanov/virtualpets/server/clean.sql",
+        "PetFoodDaoImplTest.sql" })
+public class PetFoodDaoImplTest extends BaseDaoImplTest {
 
     @Autowired
     private PetFoodDao petFoodDao;
@@ -27,14 +29,12 @@ public class PetFoodDaoImplTest extends AbstractDaoImplTest {
     @Autowired
     private PetDao petDao;
 
-    @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/PetFoodServiceImplTest.xls")
     @Test
     public void testFindByPetId() {
         List<PetFood> foods = petFoodDao.findByPetId(1);
         assertEquals(foods.size(), 4);
     }
 
-    @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/PetFoodServiceImplTest.xls")
     @Test
     public void testFindByPet() {
         Pet pet = petDao.findById(1).orElseThrow();
@@ -43,7 +43,6 @@ public class PetFoodDaoImplTest extends AbstractDaoImplTest {
         assertEquals(foods.size(), 4);
     }
 
-    @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/PetFoodServiceImplTest.xls")
     @Test
     public void testFindById() {
         PetFood food = petFoodDao.findById(10).orElseThrow();
@@ -51,7 +50,6 @@ public class PetFoodDaoImplTest extends AbstractDaoImplTest {
         assertEquals(food.getId(), Integer.valueOf(10));
     }
 
-    @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/PetFoodServiceImplTest.xls")
     @Test
     public void testSave() {
         Food foodCarrot = foodDao.findById(FoodId.CARROT).orElseThrow();
@@ -64,7 +62,6 @@ public class PetFoodDaoImplTest extends AbstractDaoImplTest {
         assertNotNull(petFood.getId());
     }
 
-    @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/PetFoodServiceImplTest.xls")
     @Test
     public void testFindByPetIdAndFoodType() {
         PetFood food = petFoodDao
@@ -73,7 +70,6 @@ public class PetFoodDaoImplTest extends AbstractDaoImplTest {
         assertNotNull(food);
     }
 
-    @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/PetFoodServiceImplTest.xls")
     @Test
     public void testFindByPetIdAndFoodType2() {
         Optional<PetFood> petFood = petFoodDao

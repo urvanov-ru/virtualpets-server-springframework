@@ -9,7 +9,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.test.context.jdbc.Sql;
 
 import ru.urvanov.virtualpets.server.dao.domain.Food;
 import ru.urvanov.virtualpets.server.dao.domain.FoodId;
@@ -18,9 +18,10 @@ import ru.urvanov.virtualpets.server.dao.domain.Pet;
 import ru.urvanov.virtualpets.server.dao.domain.PetFood;
 import ru.urvanov.virtualpets.server.dao.domain.PetJournalEntry;
 import ru.urvanov.virtualpets.server.dao.domain.PetType;
-import ru.urvanov.virtualpets.server.test.annotation.DataSets;
 
-public class PetDaoImplTest extends AbstractDaoImplTest {
+@Sql({ "/ru/urvanov/virtualpets/server/clean.sql",
+        "PetDaoImplTest.sql" })
+public class PetDaoImplTest extends BaseDaoImplTest {
 
     @Autowired
     private PetDao petDao;
@@ -37,7 +38,6 @@ public class PetDaoImplTest extends AbstractDaoImplTest {
     @Autowired
     private Clock clock;
 
-    @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/PetServiceImplTest.xls")
     @Test
     public void testSave() {
         List<Pet> pets = petDao.findByUserId(1);
@@ -54,7 +54,6 @@ public class PetDaoImplTest extends AbstractDaoImplTest {
         assertEquals(lastSize + 1, newSize);
     }
 
-    @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/PetServiceImplTest.xls")
     @Test
     public void testGetNewJournalEntriesCount() {
         Pet pet = petDao.findById(1).orElseThrow();
@@ -63,7 +62,6 @@ public class PetDaoImplTest extends AbstractDaoImplTest {
         assertEquals(Long.valueOf(0L), newJournalEntriesCount);
     }
 
-    @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/PetServiceImplTest.xls")
     @Test
     public void testAddJournalEntry() {
         Pet pet = petDao.findById(1).orElseThrow();
@@ -82,9 +80,7 @@ public class PetDaoImplTest extends AbstractDaoImplTest {
                 .isReaded());
     }
 
-    @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/PetServiceImplTest.xls")
     @Test
-    @Transactional
     public void testAddFood() {
         Pet pet = petDao.findById(1).orElseThrow();
         Food food = foodDao.getReference(FoodId.CARROT);

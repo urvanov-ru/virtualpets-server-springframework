@@ -7,16 +7,16 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.jdbc.Sql;
 
 import ru.urvanov.virtualpets.server.dao.domain.MachineWithDrinks;
-import ru.urvanov.virtualpets.server.test.annotation.DataSets;
 
-public class MachineWithDrinksDaoImplTest extends AbstractDaoImplTest {
+@Sql("/ru/urvanov/virtualpets/server/clean.sql")
+public class MachineWithDrinksDaoImplTest extends BaseDaoImplTest {
 
     @Autowired
     private MachineWithDrinksDao machineWithDrinksDao;
 
-    @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/BookcaseServiceImplTest.xls")
     @Test
     public void testFind1() {
         MachineWithDrinks drink = machineWithDrinksDao.findById(1)
@@ -24,7 +24,6 @@ public class MachineWithDrinksDaoImplTest extends AbstractDaoImplTest {
         assertNotNull(drink);
     }
 
-    @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/BookcaseServiceImplTest.xls")
     @Test
     public void testFind2() {
         MachineWithDrinks drink = machineWithDrinksDao.findFullById(1)
@@ -33,14 +32,12 @@ public class MachineWithDrinksDaoImplTest extends AbstractDaoImplTest {
         assertNotNull(drink.getMachineWithDrinksCosts());
     }
 
-    @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/BookcaseServiceImplTest.xls")
     @Test
     public void testFind3() {
         Optional<MachineWithDrinks> drink = machineWithDrinksDao.findById(-1);
         assertTrue(drink.isEmpty());
     }
 
-    @DataSets(setUpDataSet = "/ru/urvanov/virtualpets/server/service/BookcaseServiceImplTest.xls")
     @Test
     public void testFind4() {
         Optional<MachineWithDrinks> machineWithDrinks =  machineWithDrinksDao.findFullById(-1);

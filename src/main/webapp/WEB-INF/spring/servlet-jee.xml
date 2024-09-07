@@ -14,10 +14,11 @@
     http://www.springframework.org/schema/jdbc
     http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
 
-
-    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
-        <property name="jndiName"
-            value="java:/comp/env/jdbc/virtualpetsDB" />
-    </bean>
+    <beans profile = "development,production">
+        <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+            <property name="jndiName"
+                value="java:/comp/env/jdbc/virtualpetsDB" />
+        </bean>
+    </beans>
 
 </beans>
