@@ -33,6 +33,6 @@ class BaseDaoImplTest {
     protected EntityManager em;
     
     @Test
-    public void test() {
+    void test() {
     }
 }
