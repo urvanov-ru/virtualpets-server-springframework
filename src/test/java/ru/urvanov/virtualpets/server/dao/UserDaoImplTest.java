@@ -14,19 +14,19 @@ import ru.urvanov.virtualpets.server.dao.domain.User;
 
 @Sql({ "/ru/urvanov/virtualpets/server/clean.sql",
         "UserDaoImplTest.sql" })
-public class UserDaoImplTest extends BaseDaoImplTest {
+class UserDaoImplTest extends BaseDaoImplTest {
 
     @Autowired
     private UserDao userDao;
 
     @Test
-    public void findByName() throws Exception {
+    void findByName() throws Exception {
         User user = userDao.findByLogin("Clarence").orElseThrow();
         assertNotNull(user);
     }
     
     @Test
-    public void findLastRegisteredUsers() throws Exception {
+    void findLastRegisteredUsers() throws Exception {
         List<User> users = userDao.findLastRegisteredUsers(0, 999999);
         assertEquals(users.size(), 1);
     }

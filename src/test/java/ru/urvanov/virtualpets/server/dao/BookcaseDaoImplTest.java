@@ -13,7 +13,7 @@ import org.springframework.test.context.jdbc.Sql;
 import ru.urvanov.virtualpets.server.dao.domain.Bookcase;
 
 @Sql("/ru/urvanov/virtualpets/server/clean.sql")
-public class BookcaseDaoImplTest extends BaseDaoImplTest {
+class BookcaseDaoImplTest extends BaseDaoImplTest {
     
     @Autowired
     BookcaseDao bookcaseDao;

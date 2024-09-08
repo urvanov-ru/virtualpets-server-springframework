@@ -20,7 +20,7 @@ import ru.urvanov.virtualpets.server.test.config.DaoTestConfig;
 @Testcontainers
 @ActiveProfiles({"test", "test-dao"})
 @Transactional
-public class BaseDaoImplTest {
+class BaseDaoImplTest {
 
     /**
      * TestContainers PostgreSQL контейнер.

@@ -21,7 +21,7 @@ import ru.urvanov.virtualpets.server.dao.domain.PetType;
 
 @Sql({ "/ru/urvanov/virtualpets/server/clean.sql",
         "PetDaoImplTest.sql" })
-public class PetDaoImplTest extends BaseDaoImplTest {
+class PetDaoImplTest extends BaseDaoImplTest {
 
     @Autowired
     private PetDao petDao;
@@ -39,7 +39,7 @@ public class PetDaoImplTest extends BaseDaoImplTest {
     private Clock clock;
 
     @Test
-    public void testSave() {
+    void testSave() {
         List<Pet> pets = petDao.findByUserId(1);
         int lastSize = pets.size();
         Pet pet = new Pet();
@@ -55,7 +55,7 @@ public class PetDaoImplTest extends BaseDaoImplTest {
     }
 
     @Test
-    public void testGetNewJournalEntriesCount() {
+    void testGetNewJournalEntriesCount() {
         Pet pet = petDao.findById(1).orElseThrow();
         Long newJournalEntriesCount = petDao
                 .getPetNewJournalEntriesCount(pet.getId());
@@ -63,7 +63,7 @@ public class PetDaoImplTest extends BaseDaoImplTest {
     }
 
     @Test
-    public void testAddJournalEntry() {
+    void testAddJournalEntry() {
         Pet pet = petDao.findById(1).orElseThrow();
         PetJournalEntry petJournalEntry = new PetJournalEntry();
         petJournalEntry.setCreatedAt(OffsetDateTime.now(clock));
@@ -81,7 +81,7 @@ public class PetDaoImplTest extends BaseDaoImplTest {
     }
 
     @Test
-    public void testAddFood() {
+    void testAddFood() {
         Pet pet = petDao.findById(1).orElseThrow();
         Food food = foodDao.getReference(FoodId.CARROT);
         PetFood petFood = new PetFood();

@@ -18,7 +18,7 @@ import ru.urvanov.virtualpets.server.dao.domain.PetFood;
 
 @Sql({ "/ru/urvanov/virtualpets/server/clean.sql",
         "PetFoodDaoImplTest.sql" })
-public class PetFoodDaoImplTest extends BaseDaoImplTest {
+class PetFoodDaoImplTest extends BaseDaoImplTest {
 
     @Autowired
     private PetFoodDao petFoodDao;
@@ -30,13 +30,13 @@ public class PetFoodDaoImplTest extends BaseDaoImplTest {
     private PetDao petDao;
 
     @Test
-    public void testFindByPetId() {
+    void testFindByPetId() {
         List<PetFood> foods = petFoodDao.findByPetId(1);
         assertEquals(foods.size(), 4);
     }
 
     @Test
-    public void testFindByPet() {
+    void testFindByPet() {
         Pet pet = petDao.findById(1).orElseThrow();
         assertNotNull(pet);
         List<PetFood> foods = petFoodDao.findByPet(pet);
@@ -44,14 +44,14 @@ public class PetFoodDaoImplTest extends BaseDaoImplTest {
     }
 
     @Test
-    public void testFindById() {
+    void testFindById() {
         PetFood food = petFoodDao.findById(10).orElseThrow();
         assertNotNull(food);
         assertEquals(food.getId(), Integer.valueOf(10));
     }
 
     @Test
-    public void testSave() {
+    void testSave() {
         Food foodCarrot = foodDao.findById(FoodId.CARROT).orElseThrow();
         PetFood petFood = new PetFood();
         Pet pet = petDao.getReference(1);
@@ -63,7 +63,7 @@ public class PetFoodDaoImplTest extends BaseDaoImplTest {
     }
 
     @Test
-    public void testFindByPetIdAndFoodType() {
+    void testFindByPetIdAndFoodType() {
         PetFood food = petFoodDao
                 .findByPetIdAndFoodType(1, FoodId.DRY_FOOD)
                 .orElseThrow();
@@ -71,7 +71,7 @@ public class PetFoodDaoImplTest extends BaseDaoImplTest {
     }
 
     @Test
-    public void testFindByPetIdAndFoodType2() {
+    void testFindByPetIdAndFoodType2() {
         Optional<PetFood> petFood = petFoodDao
                 .findByPetIdAndFoodType(13463456, FoodId.CHOCOLATE);
         assertTrue(petFood.isEmpty());
