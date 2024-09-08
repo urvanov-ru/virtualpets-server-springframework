@@ -26,10 +26,8 @@
         <constructor-arg value="0.21" />
     </bean>
     
-    <beans profile = "!test">
-        <beans:bean id = "clock" class = "java.time.Clock"
-                factory-method = "systemDefaultZone" />
-    </beans>
+    <bean id = "clock" class = "java.time.Clock"
+            factory-method = "systemDefaultZone" />
 
     <bean id="conversionService"
         class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
