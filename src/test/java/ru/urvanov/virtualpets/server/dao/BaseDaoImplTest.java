@@ -14,7 +14,9 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import ru.urvanov.virtualpets.server.test.config.DaoTestConfig;
 
-
+/**
+ * Базовый класс для тестов слоя DAO
+ */
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes={DaoTestConfig.class})
 @Testcontainers
@@ -23,16 +25,12 @@ import ru.urvanov.virtualpets.server.test.config.DaoTestConfig;
 class BaseDaoImplTest {
 
     /**
-     * TestContainers PostgreSQL контейнер.
+     * Управляет запуском и остановкой контейнера PostgreSQL.
+     * При запуске нескольких тестов контейнер создаётся один раз
+     * и переиспользуется последующими тестами.
      */
     @Container
     public static PostgreSQLContainer<?> postgreSQLContainer
             = new PostgreSQLContainer<>("postgres:16.1");
-    
-    @PersistenceContext
-    protected EntityManager em;
-    
-    @Test
-    void test() {
-    }
+
 }
