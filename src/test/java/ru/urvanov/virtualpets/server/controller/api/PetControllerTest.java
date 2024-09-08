@@ -60,7 +60,7 @@ class PetControllerTest extends BaseControllerTest {
                 values (1, 'DRY_FOOD', 10)""")
     void eat() throws Exception {
         MockHttpSession session = new MockHttpSession(
-                mockMvc.getDispatcherServlet().getServletContext(),
+                wac.getServletContext(),
                 "test");
         selectPet(session);
         mockMvc.perform(post("/api/v1/PetService/satiety")

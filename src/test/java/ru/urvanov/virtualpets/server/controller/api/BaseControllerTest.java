@@ -22,6 +22,9 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import ru.urvanov.virtualpets.server.test.config.MockMvcConfig;
 
+/**
+ * Базовый класс для тестов MockMvc слоя контроллеров.
+ */
 @ExtendWith(SpringExtension.class)
 @Testcontainers
 @ActiveProfiles({"test", "test-spring-boot"})
@@ -33,17 +36,31 @@ import ru.urvanov.virtualpets.server.test.config.MockMvcConfig;
                 "file:src/main/webapp/WEB-INF/spring/security.xml",
                 "file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml" }) })
 abstract class BaseControllerTest {
+    
+    /**
+     * Конфигурация веб-приложения. С помощью 
+     * {@code wac.getServletContext()} осуществляется доступ к экземпляру
+     * {@link jakarta.servlet.ServletContext}
+     */
     @Autowired
     protected WebApplicationContext wac;
 
+    /**
+     * Методы наследников используют это поле для выполнения запросов:
+     *  <pre>{@code
+     *     mockMvc.perform(...
+     * }</pre>
+     */
     protected MockMvc mockMvc;
 
+    /**
+     * Управляет запуском и остановкой контейнера PostgreSQL.
+     * При запуске нескольких тестов контейнер создаётся один раз
+     * и переиспользуется последующими тестами.
+     */
     @Container
     public static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>(
             "postgres:16.1");
-
-    @PersistenceContext
-    protected EntityManager em;
 
     @BeforeEach
     void setUp() {
