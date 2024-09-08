@@ -17,11 +17,11 @@ import org.dbunit.ext.postgresql.PostgresqlDataTypeFactory;
 import org.dbunit.util.fileloader.XlsDataFileLoader;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 
 @Configuration
-@Profile("test")
-
+@Profile("test-spring-boot")
 public class MockMvcConfig {
 
     

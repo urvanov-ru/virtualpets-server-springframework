@@ -24,7 +24,7 @@ import ru.urvanov.virtualpets.server.test.config.MockMvcConfig;
 
 @ExtendWith(SpringExtension.class)
 @Testcontainers
-@ActiveProfiles("test")
+@ActiveProfiles({"test", "test-spring-boot"})
 @WebAppConfiguration("classpath:src/main/webapp")
 @ContextHierarchy({
         @ContextConfiguration(classes = { MockMvcConfig.class }),
