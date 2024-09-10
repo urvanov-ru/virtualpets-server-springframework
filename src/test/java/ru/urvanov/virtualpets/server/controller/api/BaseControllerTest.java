@@ -17,6 +17,9 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import ru.urvanov.virtualpets.server.controller.config.ClockConfig;
+import ru.urvanov.virtualpets.server.controller.config.DataSourceConfig;
+
 /**
  * Базовый класс для тестов MockMvc слоя контроллеров.
  */
@@ -25,7 +28,8 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @ActiveProfiles({"test", "test-spring-boot"})
 @WebAppConfiguration("classpath:src/main/webapp")
 @ContextHierarchy({
-        @ContextConfiguration(classes = { MockMvcConfig.class }),
+        @ContextConfiguration(classes = { ClockConfig.class,
+                DataSourceConfig.class }),
         @ContextConfiguration(locations = {
                 "file:src/main/webapp/WEB-INF/spring/root-context.xml",
                 "file:src/main/webapp/WEB-INF/spring/security.xml",

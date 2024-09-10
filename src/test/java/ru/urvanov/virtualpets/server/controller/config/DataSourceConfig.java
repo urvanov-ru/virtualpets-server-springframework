@@ -1,32 +1,18 @@
-package ru.urvanov.virtualpets.server.dao;
+package ru.urvanov.virtualpets.server.controller.config;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.Clock;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.temporal.TemporalAccessor;
 
 import javax.sql.DataSource;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ImportResource;
-import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
-/**
- * Конфигурация Spring для тестирования слоя DAO отдельно от всех
- * остальных слоёв приложения.
- */
 @Configuration
-@ImportResource("file:src/main/webapp/WEB-INF/spring/servlet-tx.xml")
-@ComponentScan(basePackages = {"ru.urvanov.virtualpets.server.dao"})
-@Profile("test")
-public class DaoTestConfig {
+@Profile({"test-dao", "test-spring-boot"})
+public class DataSourceConfig {
 
     /**
      * Настройка источника данных на базу данных
@@ -64,19 +50,4 @@ public class DaoTestConfig {
         return result;
     }
 
-    /**
-     * Настраивает экземпляр Clock, возвращающий всегда 
-     * одну и ту же дату и одно и то же время для предсказуемости
-     * тестов.
-     * @return Экземпляр Clock с фиксированной датой и временем.
-     */
-    @Bean
-    @Primary
-    public Clock fixedClock() {
-        ZoneId zoneId = ZoneId.of("Europe/Moscow");
-        TemporalAccessor offsetDateTime = ZonedDateTime.of(
-                2024, 3, 15, 18, 52, 0, 0, zoneId);
-        Instant instant = Instant.from(offsetDateTime );
-        return Clock.fixed(instant, zoneId);
-    }
 }

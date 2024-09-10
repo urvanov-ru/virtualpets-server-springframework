@@ -9,11 +9,16 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import ru.urvanov.virtualpets.server.controller.config.ClockConfig;
+import ru.urvanov.virtualpets.server.controller.config.DaoTestConfig;
+import ru.urvanov.virtualpets.server.controller.config.DataSourceConfig;
+
 /**
  * Базовый класс для тестов слоя DAO
  */
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {DaoTestConfig.class})
+@ContextConfiguration(classes = {DaoTestConfig.class, ClockConfig.class,
+        DataSourceConfig.class})
 @Testcontainers
 @ActiveProfiles({"test", "test-dao"})
 @Transactional
