@@ -31,7 +31,9 @@ import ru.urvanov.virtualpets.server.test.config.MockMvcConfig;
         @ContextConfiguration(locations = {
                 "file:src/main/webapp/WEB-INF/spring/root-context.xml",
                 "file:src/main/webapp/WEB-INF/spring/security.xml",
-                "file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml" }) })
+                """
+                file:src/main/webapp/WEB-INF/spring/appServlet\
+                /servlet-context.xml""" }) })
 abstract class BaseControllerTest {
     
     /**

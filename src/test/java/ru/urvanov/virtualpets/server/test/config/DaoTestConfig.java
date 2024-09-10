@@ -1,6 +1,5 @@
 package ru.urvanov.virtualpets.server.test.config;
 
-import java.io.IOException;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -17,20 +16,37 @@ import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 
+/**
+ * Конфигурация Spring для тестирования слоя DAO отдельно от всех
+ * остальных слоёв приложения.
+ */
 @Configuration
 @ImportResource("file:src/main/webapp/WEB-INF/spring/servlet-tx.xml")
 @ComponentScan(basePackages = {"ru.urvanov.virtualpets.server.dao"})
 @Profile("test")
 public class DaoTestConfig {
 
+    /**
+     * Настраивает источник данных, подключающийся к базе данных
+     * PostgreSQL в контейнере Testcontainers.
+     * @return Источник данных для тестов.
+     */
     @Bean
-    public DataSource dataSource() throws IOException {
+    public DataSource dataSource() {
         BasicDataSource result = new BasicDataSource();
-        result.setUrl("jdbc:tc:postgresql:16.1:///databasename?TC_INITSCRIPT=init.sql");
+        result.setUrl("""
+                jdbc:tc:postgresql:16.1:///databasename?\
+                TC_INITSCRIPT=init.sql""");
         result.setDefaultSchema("virtualpets_server_springframework");
         return result;
     }
 
+    /**
+     * Настраивает экземпляр Clock, возвращающий всегда 
+     * одну и ту же дату и одно и то же время для предсказуемости
+     * тестов.
+     * @return Экземпляр Clock с фиксированной датой и временем.
+     */
     @Bean
     @Primary
     public Clock fixedClock() {
