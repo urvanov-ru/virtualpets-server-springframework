@@ -1,4 +1,4 @@
-package ru.urvanov.virtualpets.server.test.config;
+package ru.urvanov.virtualpets.server.dao;
 
 import java.time.Clock;
 import java.time.Instant;

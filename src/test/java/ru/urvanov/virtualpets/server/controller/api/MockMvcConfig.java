@@ -1,4 +1,4 @@
-package ru.urvanov.virtualpets.server.test.config;
+package ru.urvanov.virtualpets.server.controller.api;
 
 import java.io.IOException;
 import java.time.Clock;
