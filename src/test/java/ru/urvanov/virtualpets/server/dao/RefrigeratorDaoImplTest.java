@@ -19,22 +19,24 @@ class RefrigeratorDaoImplTest extends BaseDaoImplTest {
 
     @Test
     void testFind1() {
-        Refrigerator refrigerator = refrigeratorDao.findById(1)
-                .orElseThrow();
-        assertNotNull(refrigerator);
+        Optional<Refrigerator> refrigerator = refrigeratorDao
+                .findById(1);
+        assertTrue(refrigerator.isPresent());
     }
 
     @Test
     void testFind2() {
-        Refrigerator refrigerator = refrigeratorDao.findFullById(2)
-                .orElseThrow();
-        assertNotNull(refrigerator);
-        assertNotNull(refrigerator.getRefrigeratorCosts());
+        Optional<Refrigerator> refrigerator = refrigeratorDao
+                .findFullById(2);
+        assertTrue(refrigerator.isPresent());
+        assertNotNull(refrigerator.map(
+                Refrigerator::getRefrigeratorCosts).orElse(null));
     }
 
     @Test
     void testFind3() {
-        Optional<Refrigerator> refrigerator = refrigeratorDao.findById(-1);
+        Optional<Refrigerator> refrigerator = refrigeratorDao
+                .findById(-1);
         assertTrue(refrigerator.isEmpty());
     }
 

@@ -25,9 +25,9 @@ class RoomDaoImplTest extends BaseDaoImplTest {
 
     @Test
     void testFind1() {
-        Room room = roomDao.findByPetId(1).orElseThrow();
-        assertNotNull(room);
-        assertNotNull(room.getPetId());
+        Optional<Room> room = roomDao.findByPetId(1);
+        assertTrue(room.isPresent());
+        assertNotNull(room.map(Room::getPetId).orElse(null));
     }
     
     @Test
@@ -45,8 +45,8 @@ class RoomDaoImplTest extends BaseDaoImplTest {
         room.setBoxNewbie2(true);
         room.setBoxNewbie3(true);
         roomDao.save(room);
-        Room actual = roomDao.findByPetId(2).orElseThrow();
-        assertNotNull(actual);
+        Optional<Room> actual = roomDao.findByPetId(2);
+        assertTrue(actual.isPresent());
     }
     
     @Test

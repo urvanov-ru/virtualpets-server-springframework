@@ -38,16 +38,15 @@ class PetFoodDaoImplTest extends BaseDaoImplTest {
     @Test
     void testFindByPet() {
         Pet pet = petDao.findById(1).orElseThrow();
-        assertNotNull(pet);
         List<PetFood> foods = petFoodDao.findByPet(pet);
         assertEquals(foods.size(), 4);
     }
 
     @Test
     void testFindById() {
-        PetFood food = petFoodDao.findById(10).orElseThrow();
-        assertNotNull(food);
-        assertEquals(food.getId(), Integer.valueOf(10));
+        Optional<PetFood> food = petFoodDao.findById(10);
+        assertTrue(food.isPresent());
+        assertEquals(food.map(PetFood::getId), Integer.valueOf(10));
     }
 
     @Test
@@ -64,10 +63,9 @@ class PetFoodDaoImplTest extends BaseDaoImplTest {
 
     @Test
     void testFindByPetIdAndFoodType() {
-        PetFood food = petFoodDao
-                .findByPetIdAndFoodType(1, FoodId.DRY_FOOD)
-                .orElseThrow();
-        assertNotNull(food);
+        Optional<PetFood> food = petFoodDao
+                .findByPetIdAndFoodType(1, FoodId.DRY_FOOD);
+        assertTrue(food.isPresent());
     }
 
     @Test

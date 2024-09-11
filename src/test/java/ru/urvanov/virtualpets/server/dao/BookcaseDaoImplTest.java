@@ -21,16 +21,17 @@ class BookcaseDaoImplTest extends BaseDaoImplTest {
     
     @Test
     void testFind1() {
-        Bookcase bookcase = bookcaseDao.findById(1).orElseThrow();
-        assertNotNull(bookcase);
+        Optional<Bookcase> bookcase = bookcaseDao.findById(1);
+        assertTrue(bookcase.isPresent());
     }
     
     
     @Test
     void testFind2() {
-        Bookcase bookcase = bookcaseDao.findFullById(1).orElseThrow();
-        assertNotNull(bookcase);
-        assertNotNull(bookcase.getBookcaseCosts());
+        Optional<Bookcase> bookcase = bookcaseDao.findFullById(1);
+        assertTrue(bookcase.isPresent());
+        assertNotNull(bookcase.map(Bookcase::getBookcaseCosts)
+                .orElse(null));
     }
     
     @Test

@@ -2,9 +2,10 @@ package ru.urvanov.virtualpets.server.dao;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,8 @@ class UserDaoImplTest extends BaseDaoImplTest {
 
     @Test
     void findByName() throws Exception {
-        User user = userDao.findByLogin("Clarence").orElseThrow();
-        assertNotNull(user);
+        Optional<User> user = userDao.findByLogin("Clarence");
+        assertTrue(user.isPresent());
     }
     
     @Test

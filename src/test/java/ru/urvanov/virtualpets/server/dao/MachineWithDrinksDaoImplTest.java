@@ -19,28 +19,31 @@ class MachineWithDrinksDaoImplTest extends BaseDaoImplTest {
 
     @Test
     void testFind1() {
-        MachineWithDrinks drink = machineWithDrinksDao.findById(1)
-                .orElseThrow();
-        assertNotNull(drink);
+        Optional<MachineWithDrinks> drink = machineWithDrinksDao
+                .findById(1);
+        assertTrue(drink.isPresent());
     }
 
     @Test
     void testFind2() {
-        MachineWithDrinks drink = machineWithDrinksDao.findFullById(1)
-                .orElseThrow();
-        assertNotNull(drink);
-        assertNotNull(drink.getMachineWithDrinksCosts());
+        Optional<MachineWithDrinks> drink = machineWithDrinksDao
+                .findFullById(1);
+        assertTrue(drink.isPresent());
+        assertNotNull(drink.map(MachineWithDrinks
+                ::getMachineWithDrinksCosts).orElse(null));
     }
 
     @Test
     void testFind3() {
-        Optional<MachineWithDrinks> drink = machineWithDrinksDao.findById(-1);
+        Optional<MachineWithDrinks> drink = machineWithDrinksDao
+                .findById(-1);
         assertTrue(drink.isEmpty());
     }
 
     @Test
     void testFind4() {
-        Optional<MachineWithDrinks> machineWithDrinks =  machineWithDrinksDao.findFullById(-1);
+        Optional<MachineWithDrinks> machineWithDrinks
+                = machineWithDrinksDao.findFullById(-1);
         assertTrue(machineWithDrinks.isEmpty());
     }
 }
