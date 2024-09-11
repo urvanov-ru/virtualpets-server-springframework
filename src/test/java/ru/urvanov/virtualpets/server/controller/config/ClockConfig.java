@@ -9,7 +9,7 @@ import java.time.temporal.TemporalAccessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 
-@Profile({"test-dao", "test-spring-boot"})
+@Profile({"test-dao", "test-mock-mvc"})
 public class ClockConfig {
     /**
      * Настраивает экземпляр Clock, возвращающий всегда 

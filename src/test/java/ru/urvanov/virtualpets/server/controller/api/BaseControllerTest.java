@@ -25,7 +25,7 @@ import ru.urvanov.virtualpets.server.controller.config.DataSourceConfig;
  */
 @ExtendWith(SpringExtension.class)
 @Testcontainers
-@ActiveProfiles({"test", "test-spring-boot"})
+@ActiveProfiles({"test", "test-mock-mvc"})
 @WebAppConfiguration("classpath:src/main/webapp")
 @ContextHierarchy({
         @ContextConfiguration(classes = { ClockConfig.class,

@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
 @Configuration
-@Profile({"test-dao", "test-spring-boot"})
+@Profile({"test-dao", "test-mock-mvc"})
 public class DataSourceConfig {
 
     /**
