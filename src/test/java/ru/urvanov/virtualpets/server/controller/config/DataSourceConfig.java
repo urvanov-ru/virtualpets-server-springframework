@@ -26,7 +26,8 @@ public class DataSourceConfig {
         // Фактически это не пул подключений, он всегда
         // возвращает одно и то же подключение к базе данных,
         // не создавая новое.
-        SingleConnectionDataSource result = new SingleConnectionDataSource();
+        SingleConnectionDataSource result
+                = new SingleConnectionDataSource();
         
         // jdbc:tc ... - это адрес к базе данных в контейнере
         // Адрес взят из документации Testcontainers.
