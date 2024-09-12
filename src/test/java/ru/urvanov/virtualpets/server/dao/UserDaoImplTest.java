@@ -29,7 +29,7 @@ class UserDaoImplTest extends BaseDaoImplTest {
     @Test
     void findLastRegisteredUsers() throws Exception {
         List<User> users = userDao.findLastRegisteredUsers(0, 999999);
-        assertEquals(users.size(), 1);
+        assertEquals(1, users.size());
     }
 
 }

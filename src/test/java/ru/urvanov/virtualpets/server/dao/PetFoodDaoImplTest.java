@@ -32,21 +32,22 @@ class PetFoodDaoImplTest extends BaseDaoImplTest {
     @Test
     void testFindByPetId() {
         List<PetFood> foods = petFoodDao.findByPetId(1);
-        assertEquals(foods.size(), 4);
+        assertEquals(4, foods.size());
     }
 
     @Test
     void testFindByPet() {
         Pet pet = petDao.findById(1).orElseThrow();
         List<PetFood> foods = petFoodDao.findByPet(pet);
-        assertEquals(foods.size(), 4);
+        assertEquals(4, foods.size());
     }
 
     @Test
     void testFindById() {
         Optional<PetFood> food = petFoodDao.findById(10);
         assertTrue(food.isPresent());
-        assertEquals(food.map(PetFood::getId), Integer.valueOf(10));
+        assertEquals(Integer.valueOf(10), food.map(PetFood::getId)
+                .orElse(null));
     }
 
     @Test
