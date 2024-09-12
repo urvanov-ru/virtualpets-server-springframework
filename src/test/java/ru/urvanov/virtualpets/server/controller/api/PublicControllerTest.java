@@ -14,13 +14,15 @@ class PublicControllerTest extends BaseControllerTest {
 
     @Test
     void getServerTechnicalInfo() throws Exception {
-        mockMvc.perform(get("/api/v1/PublicService/server-technical-info")
+        mockMvc.perform(get(
+                "/api/v1/PublicService/server-technical-info")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpectAll(status().isOk(), content()
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.info").isMap())
-                .andExpect(jsonPath("$.info['java.version']").isString());
+                .andExpect(jsonPath("$.info['java.version']")
+                        .isString());
         ;
     }
 }
