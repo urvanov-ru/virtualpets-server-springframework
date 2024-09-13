@@ -91,7 +91,8 @@
             allowed-origins
                 = "http://localhost:8081,
                 http://localhost:8082,
-                http://virtualpets.urvanov.ru"
+                http://virtualpets.urvanov.ru,
+                https://virtualpets.urvanov.ru"
             allowed-methods = "GET, POST, PUT, DELETE, OPTIONS"/>
     </mvc:cors> 
 </beans:beans>
