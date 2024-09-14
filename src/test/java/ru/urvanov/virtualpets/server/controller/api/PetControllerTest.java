@@ -32,8 +32,6 @@ class PetControllerTest extends BaseControllerTest {
             "123",
             true,
             List.of(new SimpleGrantedAuthority("ROLE_USER")));
-    
-    
 
     @Test
     @Sql({"/ru/urvanov/virtualpets/server/clean.sql",
@@ -46,7 +44,6 @@ class PetControllerTest extends BaseControllerTest {
                 .andExpectAll(status().isOk(), content()
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.petsInfo").isArray());
-        ;
     }
     
     @Test
