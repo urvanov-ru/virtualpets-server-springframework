@@ -59,6 +59,31 @@ a:visited {
     background-color: #553707;
 }
 
+@media screen and (max-width: 540px) {
+
+  .menu {
+      float: none;
+      width : auto;
+  }
+  .menu ul {
+    display : inline;
+    padding: 1px;
+  }
+  
+  .menu ul li {
+    display : inline;
+  }
+  
+  .menu a {
+    display : inline;
+    padding: 1px 5px 1px 5px;
+  }
+  
+  .header {
+    display : none;
+  }
+}
+
 .body {
     overflow: hidden;
     display: box;
