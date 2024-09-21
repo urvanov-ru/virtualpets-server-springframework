@@ -14,7 +14,7 @@
         name = "jdbc/virtualpetsDB"
         password = "postgres"
         type = "javax.sql.DataSource"
-        url = "jdbc:postgresql://localhost:5432/postgres"
+        url = "jdbc:postgresql://localhost:5432/postgres?currentSchema=virtualpets_server_springframework"
         username = "postgres"/>
     
     <Environment
