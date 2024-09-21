@@ -16,46 +16,25 @@
         type = "javax.sql.DataSource"
         url = "jdbc:postgresql://localhost:5432/postgres?currentSchema=virtualpets_server_springframework"
         username = "postgres"/>
-    
-    <Environment
-        name = "virtualpets-server-springframework.servers.url"
-        value = "http://virtualpets.urvanov.ru/virtualpets-server-springframework/site"
-        type = "java.lang.String"
+
+    <!--<Environment
+        name="virtualpets-server-springframework.servers.url"
+        value="http://virtualpets.urvanov.ru/virtualpets-server-springframework/site"
+        type="java.lang.String"
         override = "false" />
     <Environment
-        name = "virtualpets-server-springframework.servers.name"
-        value = "Русскоязычный основной"
-        type = "java.lang.String"
+        name="virtualpets-server-springframework.servers.name"
+        value="Русскоязычный основной"
+        type="java.lang.String"
         override = "false" />
     <Environment
-        name = "virtualpets-server-springframework.servers.locale"
-        value = "ru"
-        type = "java.lang.String"
-        override = "false" />
-        
-    <Environment
-        name = "virtualpets-server-springframework.mail.server"
-        value = "realsmtphost"
-        type = "java.lang.String"
-        override = "false" />
-    <Environment
-        name = "virtualpets-server-springframework.mail.port"
-        value = "587"
-        type = "java.lang.Integer"
-        override = "false" />
-    <Environment
-        name = "virtualpets-server-springframework.mail.username"
-        value = "realusername"
-        type = "java.lang.String"
-        override = "false" />
-    <Environment
-        name = "virtualpets-server-springframework.mail.password"
-        value = "realpassword"
-        type = "java.lang.String"
-        override = "false" />
-    
+        name="virtualpets-server-springframework.servers.locale"
+        value="ru"
+        type="java.lang.String"
+        override = "false" />-->
+
     <Parameter
         name = "spring.profiles.active"
-        value = "production"
+        value = "development"
         override = "false"/>
 </Context>
