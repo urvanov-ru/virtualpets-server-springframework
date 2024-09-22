@@ -15,9 +15,10 @@ public class InitDestroyExample
         implements InitializingBean,
                    DisposableBean {
 
-    private static final Logger logger = LoggerFactory.getLogger(InitDestroyExample.class);
+    private static final Logger logger = LoggerFactory.getLogger(
+            InitDestroyExample.class);
     
-    ////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////
     // Аннотации из jakarta.annotation
     
     @PostConstruct
@@ -30,12 +31,15 @@ public class InitDestroyExample
         logger.info("(4) @PreDestroy from jakarta.annotation");
     }
     
-    ////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////
     // Методы из InitializingBean и DisposableBean
     
     @Override
     public void afterPropertiesSet() throws Exception {
-        logger.info("(2) afterPropertiesSet from InitializingBean interface");
+        logger.error(
+                """
+                (2) afterPropertiesSet from \
+                InitializingBean interface""");
     }
     
     @Override
@@ -45,7 +49,7 @@ public class InitDestroyExample
 
 
     
-    ////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////
     // Методы init-method из  destroy-method из XML-конфигурации бина
     
     public void initMethodFromXmlConfiguration() {
