@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:context="http://www.springframework.org/schema/context"
-    xmlns:task="http://www.springframework.org/schema/task"
-    xmlns:aop="http://www.springframework.org/schema/aop"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="
+<?xml version = "1.0" encoding = "UTF-8"?>
+<beans xmlns = "http://www.springframework.org/schema/beans"
+    xmlns:context = "http://www.springframework.org/schema/context"
+    xmlns:task = "http://www.springframework.org/schema/task"
+    xmlns:aop = "http://www.springframework.org/schema/aop"
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation = "
     http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/context
@@ -17,62 +17,62 @@
     <!-- Root Context: defines shared resources visible to all other web 
         components -->
 
-    <import resource="properties.xml" />
-    <import resource="servlet-jee.xml" />
-    <import resource="servlet-tx.xml" />
+    <import resource = "properties.xml" />
+    <import resource = "servlet-jee.xml" />
+    <import resource = "servlet-tx.xml" />
 
 
-    <bean id="version" class="java.lang.String">
-        <constructor-arg value="0.21" />
+    <bean id = "version" class = "java.lang.String">
+        <constructor-arg value = "0.21" />
     </bean>
     
     <bean id = "clock" class = "java.time.Clock"
             factory-method = "systemDefaultZone" />
 
-    <bean id="conversionService"
-        class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
-        <property name="converters">
+    <bean id = "conversionService"
+        class = "org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name = "converters">
             <set>
                 <bean
-                    class="ru.urvanov.virtualpets.server.convserv.BookToApiConverter" />
+                    class = "ru.urvanov.virtualpets.server.convserv.BookToApiConverter" />
                 <bean
-                    class="ru.urvanov.virtualpets.server.convserv.ClothToApiConverter" />
+                    class = "ru.urvanov.virtualpets.server.convserv.ClothToApiConverter" />
                 <bean
-                    class="ru.urvanov.virtualpets.server.convserv.DrinkToApiConverter" />
+                    class = "ru.urvanov.virtualpets.server.convserv.DrinkToApiConverter" />
                 <bean
-                    class="ru.urvanov.virtualpets.server.convserv.FoodToApiConverter" />
+                    class = "ru.urvanov.virtualpets.server.convserv.FoodToApiConverter" />
                 <bean
-                    class="ru.urvanov.virtualpets.server.convserv.PetToApiConverter" />
+                    class = "ru.urvanov.virtualpets.server.convserv.PetToApiConverter" />
             </set>
         </property>
     </bean>
     
-    <bean class="ru.urvanov.virtualpets.server.example.InjectExample">
-        <property name="names">
+    <bean class = "ru.urvanov.virtualpets.server.example.InjectExample">
+        <property name = "names">
             <list>
                 <value>Вася</value>
                 <value>Шурик</value>
                 <value>Оксана</value>
                 <value>Семён</value>
-                <ref bean="version" />
-                <bean class="java.lang.String">
-                    <constructor-arg value="Святослав-Бинов" />
+                <ref bean = "version" />
+                <bean class = "java.lang.String">
+                    <constructor-arg value = "Святослав-Бинов" />
                 </bean>
             </list>
         </property>
-        <property name="numberSumMap">
+        <property name = "numberSumMap">
             <map>
-                <entry key="D-001" value="100.00" />
-                <entry key="D-002" value="55.01" />
-                <entry key="D-003" value="34.23" />
+                <entry key = "D-001" value = "100.00" />
+                <entry key = "D-002" value = "55.01" />
+                <entry key = "D-003" value = "34.23" />
                 <entry>
                     <key>
-                        <ref bean="version"/>
+                        <ref bean = "version"/>
                     </key>
                     <value>1000.00</value>
                 </entry>
-                <entry key="D-005">
-                    <bean class="java.math.BigDecimal">
+                <entry key = "D-005">
+                    <bean class = "java.math.BigDecimal">
                         <constructor-arg value = "100000.00" />
                     </bean>
                 </entry>
@@ -82,31 +82,31 @@
     
     <!-- Примеры аспектно-ориентированного программирования -->
 
-    <bean id = "schemaBasedAdvice" class="ru.urvanov.virtualpets.server.example.SchemaBasedAdvice" />
+    <bean id = "schemaBasedAdvice" class = "ru.urvanov.virtualpets.server.example.SchemaBasedAdvice" />
     
     <aop:config>
-        <aop:aspect id="beforeAspectExample" ref="schemaBasedAdvice">
-            <aop:pointcut id="beforeDaoPointcut"
-                expression="execution(* ru.urvanov.virtualpets.server.dao.*.*(..))" />
-            <aop:before pointcut-ref="beforeDaoPointcut"
+        <aop:aspect id = "beforeAspectExample" ref = "schemaBasedAdvice">
+            <aop:pointcut id = "beforeDaoPointcut"
+                expression = "execution(* ru.urvanov.virtualpets.server.dao.*.*(..))" />
+            <aop:before pointcut-ref = "beforeDaoPointcut"
                 method = "beforeDaoAdvice" />
 
             <aop:after-returning
-                pointcut="execution(* ru.urvanov.virtualpets.server.service.HiddenObjectsServiceImpl.joinGame(..))"
+                pointcut = "execution(* ru.urvanov.virtualpets.server.service.HiddenObjectsServiceImpl.joinGame(..))"
                 method = "afterJoinGameReturningAdvice"
-                returning="hiddenObjectsGame" />
+                returning = "hiddenObjectsGame" />
             
             <aop:after-throwing
-                pointcut="execution(* ru.urvanov.virtualpets.server.service.RoomServiceImpl.build*(..))"
+                pointcut = "execution(* ru.urvanov.virtualpets.server.service.RoomServiceImpl.build*(..))"
                 throwing = "throwableParameter"
                 method = "afterBuildThrowingAdvice" />
             
             <aop:after
-                pointcut="execution(* ru.urvanov.virtualpets.server.service.RoomServiceImpl.build*(..))"
+                pointcut = "execution(* ru.urvanov.virtualpets.server.service.RoomServiceImpl.build*(..))"
                 method = "afterBuildAdvice" />
             
             <aop:around
-                pointcut="execution(* ru.urvanov.virtualpets.server.service.RoomServiceImpl.openBoxNewbie(..))"
+                pointcut = "execution(* ru.urvanov.virtualpets.server.service.RoomServiceImpl.openBoxNewbie(..))"
                 method = "aroundOpenBoxNewbieAdvice" />
         </aop:aspect>
     </aop:config>
@@ -118,7 +118,7 @@
     <!-- *** -->
     
     
-    <bean class="ru.urvanov.virtualpets.server.example.InitDestroyExample"
+    <bean class = "ru.urvanov.virtualpets.server.example.InitDestroyExample"
             init-method = "initMethodFromXmlConfiguration"
             destroy-method = "destroyMethodFromXmlConfiguration" />
 
@@ -126,22 +126,22 @@
 
     <bean id = "mailSender"
         class = "org.springframework.mail.javamail.JavaMailSenderImpl">
-        <property name="javaMailProperties">
+        <property name = "javaMailProperties">
             <props>
-                <prop key="mail.smtp.auth">true</prop>
+                <prop key = "mail.smtp.auth">true</prop>
             </props>
         </property>
-        <property name="host"
+        <property name = "host"
             value = "${virtualpets-server-springframework.mail.host}" />
-        <property name="port"
+        <property name = "port"
             value = "${virtualpets-server-springframework.mail.port}" />
-        <property name="username"
-           value="${virtualpets-server-springframework.mail.username}"/>
-        <property name="password"
-           value="${virtualpets-server-springframework.mail.password}"/>
+        <property name = "username"
+           value = "${virtualpets-server-springframework.mail.username}"/>
+        <property name = "password"
+           value = "${virtualpets-server-springframework.mail.password}"/>
     </bean>
     <!-- this is a template message that we can pre-load with default state -->
-    <bean id="templateMessage"
+    <bean id = "templateMessage"
             class = "org.springframework.mail.SimpleMailMessage">
         <property name = "from"
         value = "${virtualpets-server-springframework.mail.from}" />
@@ -153,10 +153,10 @@
                           ru.urvanov.virtualpets.server.service
             " />
 
-    <task:scheduler id="sheduler" pool-size="1" />
+    <task:scheduler id = "sheduler" pool-size = "1" />
 
-    <task:scheduled-tasks scheduler="sheduler">
-        <task:scheduled ref="petService" method="updatePetsTask"
-            fixed-delay="3600000" />
+    <task:scheduled-tasks scheduler = "sheduler">
+        <task:scheduled ref = "petService" method = "updatePetsTask"
+            fixed-delay = "3600000" />
     </task:scheduled-tasks>
 </beans>
