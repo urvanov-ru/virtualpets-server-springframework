@@ -47,7 +47,8 @@ public class SchemaBasedAdvice {
                 joinPoint.getArgs().length);
     }
     
-    public Object aroundOpenBoxNewbieAdvice(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+    public Object aroundOpenBoxNewbieAdvice(
+            ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         logger.info("We are in openBoxNewbiew around advice.");
         return proceedingJoinPoint.proceed();
     }
