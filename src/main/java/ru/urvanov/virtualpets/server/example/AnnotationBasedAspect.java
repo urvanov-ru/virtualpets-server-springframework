@@ -19,7 +19,10 @@ public class AnnotationBasedAspect {
     private static final Logger logger = LoggerFactory.getLogger(
             AnnotationBasedAspect.class);
     
-    @Before("execution(* ru.urvanov.virtualpets.server.controller.site.*.*(..))")
+    @Before("""
+            execution(* \
+            ru.urvanov.virtualpets.server.controller.site.*.*\
+            (..))""")
     public void beforeSitePage(JoinPoint joinPoint) {
         logger.info("Requesting controller {}.{}, arguments count {}.",
                 joinPoint.getTarget().getClass().getName(),
@@ -28,7 +31,11 @@ public class AnnotationBasedAspect {
     }
     
     @AfterReturning(
-            value = "execution(* ru.urvanov.virtualpets.server.service.HiddenObjectsServiceImpl.getGameInfo(..))",
+            value = """
+                    execution(* \
+                    ru.urvanov.virtualpets.server.service\
+                    .HiddenObjectsServiceImpl.getGameInfo\
+                    (..))""",
             returning = "hiddenObjectsGame")
     public void afterReturningHiddenObjectGameInfo(
             JoinPoint joinPoint,
@@ -43,23 +50,30 @@ public class AnnotationBasedAspect {
     }
     
     @AfterThrowing(
-            value = "execution(* ru.urvanov.virtualpets.server.service.RoomServiceImpl.openBoxNewbie(..))",
+            value = """
+                    execution(* \
+                    ru.urvanov.virtualpets.server.service\
+                    .RoomServiceImpl.openBoxNewbie\
+                    (..))""",
             throwing = "throwableParameter"
             )
     public void openBoxNewbieException(
             JoinPoint joinPoint,
             Throwable throwableParameter) {
         logger.info("""
-                
                 OpenBoxNewbie thrown an exception. \
                 Arguments count {}. \
-                Throwing {} \
+                Throwing \
                 """,
             joinPoint.getArgs().length,
             throwableParameter);
     }
     
-    @After("execution(* ru.urvanov.virtualpets.server.service.RoomServiceImpl.move*(..))")
+    @After("""
+           execution(* \
+           ru.urvanov.virtualpets.server.service\
+           .RoomServiceImpl.move*\
+           (..))""")
     public void afterBuildingMoved(JoinPoint joinPoint) {
         logger.info("""
                 After building moved. \
@@ -68,7 +82,11 @@ public class AnnotationBasedAspect {
                 joinPoint.getArgs().length);
     }
     
-    @Around("execution(* ru.urvanov.virtualpets.server.service.RoomServiceImpl.getBuildMenuCosts(..))")
+    @Around("""
+            execution(* \
+            ru.urvanov.virtualpets.server.service.\
+            RoomServiceImpl.getBuildMenuCosts\
+            (..))""")
     public Object aroundGetBuildMenuCostsAround(
             ProceedingJoinPoint proceedingJoinPoint)
             throws Throwable {
