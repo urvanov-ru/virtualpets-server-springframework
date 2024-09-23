@@ -23,7 +23,7 @@ public class ClothDaoImpl implements ClothDao {
     private EntityManager em;
 
     @Override
-    @Transactional(readOnly= true)
+    @Transactional(readOnly = true)
     public Optional<Cloth> findById(String id) {
         Cloth cloth = em.find(Cloth.class, id);
         return Optional.ofNullable(cloth);
