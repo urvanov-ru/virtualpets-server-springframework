@@ -82,7 +82,8 @@
     
     <!-- Примеры аспектно-ориентированного программирования -->
 
-    <bean id = "schemaBasedAdvice" class = "ru.urvanov.virtualpets.server.example.SchemaBasedAdvice" />
+    <bean id = "schemaBasedAdvice"
+        class = "ru.urvanov.virtualpets.server.example.SchemaBasedAdvice" />
     
     <aop:config>
         <aop:aspect id = "beforeAspectExample" ref = "schemaBasedAdvice">
