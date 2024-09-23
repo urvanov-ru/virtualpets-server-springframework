@@ -34,7 +34,6 @@ public class SchemaBasedAdvice {
             JoinPoint joinPoint,
             Throwable throwableParameter) {
         logger.info("""
-                
                     A build method thrown an exception. \
                     Throwing {} \
                     Arguments count {}. \
