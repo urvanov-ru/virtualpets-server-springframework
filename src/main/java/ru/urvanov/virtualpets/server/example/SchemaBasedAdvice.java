@@ -9,7 +9,8 @@ import ru.urvanov.virtualpets.server.controller.api.domain.HiddenObjectsGame;
 
 public class SchemaBasedAdvice {
 
-    private static final Logger logger = LoggerFactory.getLogger(SchemaBasedAdvice.class);
+    private static final Logger logger = LoggerFactory.getLogger(
+            SchemaBasedAdvice.class);
     
     public void beforeDaoAdvice(JoinPoint joinPoint) {
         logger.info("Accessing DAO layer {}.{}, arguments count {}.",
