@@ -87,7 +87,7 @@ public class AnnotationBasedAspect {
             ru.urvanov.virtualpets.server.service.\
             RoomServiceImpl.getBuildMenuCosts\
             (..))""")
-    public Object aroundGetBuildMenuCostsAround(
+    public Object aroundGetBuildMenuCostsAdvice(
             ProceedingJoinPoint proceedingJoinPoint)
             throws Throwable {
         logger.info("around getBuildMenuCosts advice");
