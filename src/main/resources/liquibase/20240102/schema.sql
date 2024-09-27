@@ -570,6 +570,9 @@ insert into level(id, experience) values(3, 30);
 insert into level(id, experience) values(4, 60);
 insert into level(id, experience) values(5, 180);
 
+alter table pet add constraint fk_pet_level_id foreign key (level_id)
+    references level(id) on update no action on delete no action;
+
 
 create table pet_achievement(
                                 id serial NOT NULL,
