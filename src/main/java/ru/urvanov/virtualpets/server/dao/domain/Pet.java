@@ -200,7 +200,7 @@ public class Pet implements Serializable {
     @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL,
             orphanRemoval = true)
     @MapKeyEnumerated(EnumType.STRING)
-    @MapKeyColumn(name="food_id")
+    @MapKeyColumn(name = "food_id")
     private Map<FoodId, PetFood> foods;
 
     @ManyToMany
@@ -217,7 +217,7 @@ public class Pet implements Serializable {
     
     @ManyToMany
     @JoinTable(
-            inverseJoinColumns = @JoinColumn(name="book_id"))
+            inverseJoinColumns = @JoinColumn(name = "book_id"))
     private Set<Book> books;
     
     @OneToMany(mappedBy= "pet", cascade = CascadeType.ALL,
@@ -226,13 +226,13 @@ public class Pet implements Serializable {
     @MapKeyColumn(name = "drink_id")
     private Map<DrinkId, PetDrink> drinks;
     
-    @OneToMany(mappedBy="pet", cascade = CascadeType.ALL,
+    @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL,
             orphanRemoval = true)
     @MapKeyEnumerated(EnumType.STRING)
     @MapKeyColumn(name = "journal_entry_id")
     private Map<JournalEntryId, PetJournalEntry> journalEntries;
     
-    @OneToMany(mappedBy="pet", cascade = CascadeType.ALL,
+    @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL,
             orphanRemoval = true)
     @MapKeyEnumerated(EnumType.STRING)
     @MapKeyColumn(name = "achievement_id")
