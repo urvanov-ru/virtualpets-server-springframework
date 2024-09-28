@@ -135,9 +135,9 @@ public class Pet implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
-            generator="pet_seq")
-    @SequenceGenerator(name="pet_seq",
-            sequenceName="pet_id_seq", allocationSize=1)
+            generator = "pet_seq")
+    @SequenceGenerator(name = "pet_seq",
+            sequenceName = "pet_id_seq", allocationSize = 1)
     private Integer id;
 
     @Size(max = 50)
