@@ -62,12 +62,13 @@ public class Refrigerator implements Serializable {
         this.experience = experience;
     }
 
-    public Map<BuildingMaterialId, RefrigeratorCost> getRefrigeratorCosts() {
+    public Map<BuildingMaterialId, RefrigeratorCost>
+            getRefrigeratorCosts() {
         return refrigeratorCosts;
     }
 
-    public void setRefrigeratorCosts(
-            Map<BuildingMaterialId, RefrigeratorCost> refrigeratorCosts) {
+    public void setRefrigeratorCosts(Map<BuildingMaterialId,
+            RefrigeratorCost> refrigeratorCosts) {
         this.refrigeratorCosts = refrigeratorCosts;
     }
 
