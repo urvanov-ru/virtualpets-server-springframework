@@ -23,6 +23,27 @@
         type = "java.lang.String"
         override = "false" />
     -->
+    
+    <Environment
+        name = "virtualpets-server-springframework.mail.server"
+        value = "realsmtphost"
+        type = "java.lang.String"
+        override = "false" />
+    <Environment
+        name = "virtualpets-server-springframework.mail.port"
+        value = "587"
+        type = "java.lang.Integer"
+        override = "false" />
+    <Environment
+        name = "virtualpets-server-springframework.mail.username"
+        value = "realusername"
+        type = "java.lang.String"
+        override = "false" />
+    <Environment
+        name = "virtualpets-server-springframework.mail.password"
+        value = "realpassword"
+        type = "java.lang.String"
+        override = "false" />
 
     <Parameter
         name = "spring.profiles.active"
