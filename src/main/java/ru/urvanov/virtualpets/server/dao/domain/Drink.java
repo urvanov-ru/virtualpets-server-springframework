@@ -21,13 +21,20 @@ import jakarta.persistence.Table;
 @SqlResultSetMapping(
         name = "Drink.defaultMapping",
         entities = {
-                @EntityResult(entityClass = Drink.class,
-                        fields = {
-                                @FieldResult(name = "id", column = "id"),
-                                @FieldResult(name = "machineWithDrinksLevel", column = "machine_with_drinks_id"),
-                                @FieldResult(name = "machineWithDrinksOrder", column = "machine_with_drinks_order"),
-                                @FieldResult(name = "hiddenObjectsGameDropRate", column = "hidden_objects_game_drop_rate")
-                        })
+                @EntityResult(entityClass = Drink.class, fields = {
+                        @FieldResult(
+                                name = "id",
+                                column = "id"),
+                        @FieldResult(
+                                name = "machineWithDrinksLevel",
+                                column = "machine_with_drinks_id"),
+                        @FieldResult(
+                                name = "machineWithDrinksOrder",
+                                column = "machine_with_drinks_order"),
+                        @FieldResult(
+                                name = "hiddenObjectsGameDropRate",
+                                column = "hidden_objects_game_drop_rate")
+                })
         }
 )
 @NamedNativeQuery(
