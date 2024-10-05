@@ -47,7 +47,6 @@ public class PublicController extends ControllerBase { // (3)
     @ResponseStatus(HttpStatus.NO_CONTENT) // (1)
     @RequestMapping(method = RequestMethod.POST, value = "register")//(2)
     public void register(
-            @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
             @RequestBody @Valid RegisterArgument registerArgument) // (3)
                     throws ServiceException {
         publicService.register(registerArgument);
