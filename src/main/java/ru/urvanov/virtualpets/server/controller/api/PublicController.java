@@ -64,11 +64,10 @@ public class PublicController extends ControllerBase { // (3)
     }
 
     @RequestMapping(method = RequestMethod.GET,
-            value = "server-technical-info")
-    public ServerTechnicalInfo getServerTechnicalInfo(
-            @AuthenticationPrincipal UserDetailsImpl userDetailsImpl)
+            value = "server-technical-info")  // (1)
+    public ServerTechnicalInfo getServerTechnicalInfo()
             throws ServiceException {
-        return publicService.getServerTechnicalInfo();
+        return publicService.getServerTechnicalInfo(); // (2)
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "login")
