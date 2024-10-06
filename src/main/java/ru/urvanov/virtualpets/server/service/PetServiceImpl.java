@@ -596,6 +596,7 @@ public class PetServiceImpl implements PetService, PetApiService {
         result.setId(fullPet.getId());
         result.setName(fullPet.getName());
         result.setLevel(fullPet.getLevel().getId());
+        result.setExperience(fullPet.getExperience());
         List<PetInformationPageAchievement> achievements = new ArrayList<>();
         result.setAchievements(achievements);
         for (AchievementId achievement : AchievementId.values()) {
