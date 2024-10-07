@@ -20,12 +20,14 @@ public class ControllerBase {
     }
 
     @ExceptionHandler(UserNotFoundException.class)
-    @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "User was not found.")
+    @ResponseStatus(value = HttpStatus.NOT_FOUND,
+            reason = "User was not found.")
     public void userNotFound() throws NoHandlerFoundException {
     }
     
     @ExceptionHandler(PetNotFoundException.class)
-    @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Pet was not found.")
+    @ResponseStatus(value = HttpStatus.NOT_FOUND,
+            reason = "Pet was not found.")
     public void petNotFound() throws NoHandlerFoundException {
     }
 }
