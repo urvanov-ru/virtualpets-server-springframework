@@ -52,7 +52,7 @@ public class ServerInfoController extends ControllerBase {
     @RequestMapping(value = "/information/serverInfo",
             method = RequestMethod.GET)
     public String serverInfo(Locale locale, Model model) {
-        logger.info("Welcome home! The client locale is {}.", locale);
+        logger.info("Server info. The client locale is {}.", locale);
 
         String[] propertyNames = { "java.version", "java.vendor",
                 "os.name", "os.arch", "os.version" };
