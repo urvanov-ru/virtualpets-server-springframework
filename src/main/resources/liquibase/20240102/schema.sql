@@ -88,10 +88,10 @@ INSERT INTO "user"(login, name,password,registration_date,roles)
 values('admin', 'Admin','{bcrypt}$2a$10$JT0l8oNHQuohL8SMLHCBludsjTiJNpG.uDHc3QGkP5V.aMMLSEa7G',now(),'ADMIN,USER');
 
 INSERT INTO "user"(login, name,password,registration_date,roles)
-values('test', 'Tester','$2a$10$JT0l8oNHQuohL8SMLHCBludsjTiJNpG.uDHc3QGkP5V.aMMLSEa7G',now(),'USER');
+values('test', 'Tester','{bcrypt}$2a$10$JT0l8oNHQuohL8SMLHCBludsjTiJNpG.uDHc3QGkP5V.aMMLSEa7G',now(),'USER');
 
 INSERT INTO "user"(login, name,password,registration_date,roles)
-values('user', 'Tester','$2a$10$JT0l8oNHQuohL8SMLHCBludsjTiJNpG.uDHc3QGkP5V.aMMLSEa7G',now(),'USER');
+values('user', 'Tester','{bcrypt}$2a$10$JT0l8oNHQuohL8SMLHCBludsjTiJNpG.uDHc3QGkP5V.aMMLSEa7G',now(),'USER');
 
 INSERT INTO pet(name,created_date,login_date,user_id,pet_type)
 select 'Admin',now(),now(),t_user.id,0
