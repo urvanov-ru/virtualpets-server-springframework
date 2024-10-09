@@ -19,7 +19,8 @@
     <annotation-driven>
         <argument-resolvers>
             <!-- Поддержка @AuthenticationPrincipal --> 
-            <beans:bean class="org.springframework.security.web.method.annotation.AuthenticationPrincipalArgumentResolver" />
+            <beans:bean class = 
+            "org.springframework.security.web.method.annotation.AuthenticationPrincipalArgumentResolver" />
         </argument-resolvers>
     </annotation-driven>
 
