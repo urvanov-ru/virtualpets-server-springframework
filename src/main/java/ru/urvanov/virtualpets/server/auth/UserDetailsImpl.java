@@ -45,7 +45,8 @@ public class UserDetailsImpl extends User {
             String password,
             boolean enabled,
             Collection<? extends GrantedAuthority> authorities) {
-        super(username, password, enabled, true, true, true, authorities);
+        super(username, password, enabled, true, true, true,
+                authorities);
         this.userId = userId;
         this.name = name;
     }
