@@ -59,7 +59,8 @@
     </bean>
     
     <bean id = "passwordEncoder"
-        class = "org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+        class = "org.springframework.security.crypto.factory.PasswordEncoderFactories"
+        factory-method = "createDelegatingPasswordEncoder" />
     
     <bean id = "authenticationProvider"
         class = "org.springframework.security.authentication.dao.DaoAuthenticationProvider">

@@ -85,7 +85,7 @@ ALTER TABLE "user"  ADD CONSTRAINT chk_user_sex CHECK (sex = 'MAN' OR sex = 'WOM
 
 
 INSERT INTO "user"(login, name,password,registration_date,roles)
-values('admin', 'Admin','$2a$10$JT0l8oNHQuohL8SMLHCBludsjTiJNpG.uDHc3QGkP5V.aMMLSEa7G',now(),'ADMIN,USER');
+values('admin', 'Admin','{bcrypt}$2a$10$JT0l8oNHQuohL8SMLHCBludsjTiJNpG.uDHc3QGkP5V.aMMLSEa7G',now(),'ADMIN,USER');
 
 INSERT INTO "user"(login, name,password,registration_date,roles)
 values('test', 'Tester','$2a$10$JT0l8oNHQuohL8SMLHCBludsjTiJNpG.uDHc3QGkP5V.aMMLSEa7G',now(),'USER');
