@@ -41,7 +41,7 @@ public class DataSourceConfig {
                 "org.testcontainers.jdbc.ContainerDatabaseDriver");
         
         // Рабочая схема с таблицами проекта.
-        result.setSchema("virtualpets_server_springboot");
+        result.setSchema("virtualpets_server_springframework");
         
         // Заглушаем вызовы close в возвращаемом подключении, 
         // чтобы никто не закрывал наше единственное подключение.
