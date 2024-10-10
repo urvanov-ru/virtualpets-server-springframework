@@ -28,21 +28,23 @@
         var = "information_var" />
     <spring:message code = "virtualpets-server-springframework.site.statistics"
         var = "statistics_var" />
-    <H1>${information}</H1>
-    <p>
+    <H1>${information_var}</H1>
+    <ul>
+    <li>
         <spring:url value = "/site/information/gameHelp"
         var = "game_help_url" />
         <a href = "${game_help_url}">${game_help_var}</a>
-    </p>
-    <p>
+    </li>
+    <li>
         <spring:url value = "/site/information/serverInfo"
         var = "server_info_url" />
         <a href = "${server_info_url}">${server_info_var}</a>
-    </p>
-    <p>
+    </li>
+    <li>
         <spring:url value = "/site/information/statistics"
         var = "statistics_url" />
         <a href = "${statistics_url}">${statistics_var}</a>
-    </p>
+    </li>
+    </ul>
 </div>
 </custom:defaultLayout>
