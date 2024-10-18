@@ -62,7 +62,7 @@ public class HiddenObjectsServiceImpl implements HiddenObjectsApiService {
 
     private static final int TREASURY_HIDDEN_OBJECTS_COUNT = 42;
     private static final int RUBBISH_HIDDEN_OBJECTS_COUNT = 52;
-    private static final int AFTERNOONTEA_HIDDEN_OBJECTS_COUNT = 56;
+    private static final int AFTERNOONTEA_HIDDEN_OBJECTS_COUNT = 55;
 
     private TreeMap<Float, Cloth> clothDrop = new TreeMap<>();
     private float clothMaxDropRate;
