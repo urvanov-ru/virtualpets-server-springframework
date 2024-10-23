@@ -92,7 +92,7 @@ a:visited {
     text-indent: 20px;
 }
 
-.body p:first-of-type::first-letter {
+.body>#main>p:first-of-type::first-letter {
     font-size: 2em;
     font-family: fantasy;
 }
