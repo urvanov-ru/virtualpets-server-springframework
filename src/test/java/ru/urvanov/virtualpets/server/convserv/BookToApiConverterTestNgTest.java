@@ -43,7 +43,7 @@ public class BookToApiConverterTestNgTest {
         var actual = converter.convert(source);
         
         // Проверка результата
-        assertEquals(expected,  actual);
+        assertEquals(actual, expected);
     }
 
 }
