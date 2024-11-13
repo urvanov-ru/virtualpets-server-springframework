@@ -37,6 +37,7 @@ public class UserServiceTestNgTest {
 
     @Test
     void getUsersOnline() throws ServiceException {
+        // Подготовка тестовых данных
         UserPetDetails userPetDetails = new UserPetDetails(USER_ID,
                 PET_ID);
         List<User> usersOnline = new ArrayList<>();
@@ -44,9 +45,15 @@ public class UserServiceTestNgTest {
         user1.setId(USER_ID);
         user1.setName(USER_FULL_NAME);
         usersOnline.add(user1);
+        
+        // Настройка mock-объектов
         when(userDao.findOnline()).thenReturn(usersOnline);
+        
+        // Вызов тестируемого метода
         RefreshUsersOnlineResult actual = userService
                 .getUsersOnline(userPetDetails);
+        
+        // Проверка результата
         assertNotNull(actual.users());
         assertEquals(actual.users().size(), 1);
         UserInfo actualUser0 = actual.users().get(0);
