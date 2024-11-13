@@ -1,7 +1,7 @@
 package ru.urvanov.virtualpets.server.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -48,10 +48,10 @@ public class UserServiceTestNgTest {
         RefreshUsersOnlineResult actual = userService
                 .getUsersOnline(userPetDetails);
         assertNotNull(actual.users());
-        assertEquals(1, actual.users().size());
+        assertEquals(actual.users().size(), 1);
         UserInfo actualUser0 = actual.users().get(0);
-        assertEquals((Integer) USER_ID, (Integer) actualUser0.id());
-        assertEquals(USER_FULL_NAME, actualUser0.name());
+        assertEquals((Integer) actualUser0.id(), (Integer) USER_ID);
+        assertEquals(actualUser0.name(), USER_FULL_NAME);
     }
 
 }
