@@ -5,8 +5,7 @@ Spring Framework version.
 
 Это исходные коды игры про виртуальных питомцев. 
 Используются следующие технологии:
-Java + Spring Framework + Jpa + Hibernate + PostgreSQL + JUnit + TestNG
-+ Mockito + Testcontainers.
+Java + Spring Framework + Jpa + Hibernate + PostgreSQL + JUnit + TestNG + Mockito + Testcontainers.
 
 Клиент и сервер взаимодействуют между собой через REST.
 
